@@ -4,6 +4,7 @@
 # name in this file is not possible until a known issue in just is fixed,
 # https://github.com/casey/just/issues/2540
 
+# Run parser.py tests to validate parse/validate behavior and expected errors when ANTLR artifacts are missing or incompatible.
 [group('model development')]
 gen-stix-pattern-parser:
 	-mkdir -p src/stix/pattern/antlr
@@ -23,4 +24,16 @@ gen-stix-pattern-parser:
 		-no-listener \
 		-o src/stix/pattern/antlr \
 		"$TMP_G4"
+
+# Runs the standardized Python test flow from justfile (_test-python).
+[group('model development')]
+test-custom:
+	# Use this entrypoint for project-level test automation hooks.
+	just _test-python
+
+
+# Runs only the upstream example-focused tests for quick targeted checks.
+[group('model development')]
+test-upstream-examples:
+	uv run python -m pytest -q tests/data/test_upstream_examples.py
 

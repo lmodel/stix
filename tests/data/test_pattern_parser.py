@@ -12,7 +12,7 @@ INVALID_PATTERN = "[file:name = 'foo.exe'"
 
 
 def _generated_parser_present() -> bool:
-    antlr_dir = Path(__file__).parent.parent / "src" / "stix" / "pattern" / "antlr"
+    antlr_dir = Path(__file__).resolve().parents[2] / "src" / "stix" / "pattern" / "antlr"
     return any(antlr_dir.rglob("STIXPatternLexer.py")) and any(antlr_dir.rglob("STIXPatternParser.py"))
 
 
@@ -34,8 +34,6 @@ def test_validate_stix_pattern_boolean_contract():
     """Boolean validator should report parser success/failure without raising."""
 
     if _generated_parser_present():
-        # In compatible environments this is True; in mismatched ANTLR
-        # generator/runtime setups validate_stix_pattern intentionally fails safe.
         assert isinstance(validate_stix_pattern(VALID_MIN_PATTERN), bool)
         assert validate_stix_pattern(INVALID_PATTERN) is False
     else:
