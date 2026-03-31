@@ -1,0 +1,3614 @@
+---
+id: https://w3id.org/lmodel/stix
+name: stix
+title: STIX
+description: |-
+  Structured Threat Information Expression (STIX): LinkML Schema
+  derived from OASIS CTI STIX 2.1 JSON Schemas.
+license: Apache-2.0
+see_also:
+  - https://lmodel.github.io/stix
+  - https://github.com/oasis-open/cti-stix2-json-schemas
+
+prefixes:
+  stix: https://w3id.org/lmodel/stix/
+  linkml: https://w3id.org/linkml/
+  schema: http://schema.org/
+default_prefix: stix
+default_range: string
+
+source: https://github.com/oasis-open/cti-stix2-json-schemas/tree/master/schemas
+
+imports:
+  - linkml:types
+
+annotations:
+  constraint_strategy: linkml-plus-validator-annotations
+
+subsets:
+  common:
+    description: Classes converted from schemas/common/*.json
+  observables:
+    description: Classes converted from schemas/observables/*.json
+  sdos:
+    description: Classes converted from schemas/sdos/*.json
+  sros:
+    description: Classes converted from schemas/sros/*.json
+
+types:
+  stix_identifier:
+    base: str
+    uri: xsd:string
+    pattern: "^[a-z][a-z0-9-]*--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+  stix_type_name:
+    base: str
+    uri: xsd:string
+    pattern: "^([a-z][a-z0-9]*)+(-[a-z0-9]+)*-?$"
+
+enums:
+  SpecVersionEnum:
+    description: STIX specification versions allowed by the upstream JSON Schema.
+    permissible_values:
+      "2.0":
+      "2.1":
+  OpinionEnum:
+    description: Opinion vocabulary from STIX opinion object.
+    permissible_values:
+      strongly-disagree:
+      disagree:
+      neutral:
+      agree:
+      strongly-agree:
+  ExtensionTypeEnum:
+    description: Extension-definition extension type vocabulary.
+    permissible_values:
+      new-sdo:
+      new-sco:
+      new-sro:
+      property-extension:
+      toplevel-property-extension:
+  RegistryDataTypeEnum:
+    description: Windows registry data type vocabulary.
+    permissible_values:
+      REG_NONE:
+      REG_SZ:
+      REG_EXPAND_SZ:
+      REG_BINARY:
+      REG_DWORD:
+      REG_DWORD_BIG_ENDIAN:
+      REG_DWORD_LITTLE_ENDIAN:
+      REG_LINK:
+      REG_MULTI_SZ:
+      REG_RESOURCE_LIST:
+      REG_FULL_RESOURCE_DESCRIPTION:
+      REG_RESOURCE_REQUIREMENTS_LIST:
+      REG_QWORD:
+      REG_INVALID_TYPE:
+
+  # ── Open Vocabulary Enums (STIX 2.1 §2.1) ─────────────────────────────────
+  # These enumerate suggested values; producers MAY use any string.
+  IdentityClassOv:
+    description: "Open vocabulary for identity class (identity-class-ov). Additional string values are allowed."
+    annotations:
+      open_vocabulary: "true"
+    permissible_values:
+      individual:
+      group:
+      system:
+      organization:
+      class:
+      unknown:
+
+  IndustrySectorOv:
+    description: "Open vocabulary for industry sector (industry-sector-ov). Additional string values are allowed."
+    annotations:
+      open_vocabulary: "true"
+    permissible_values:
+      agriculture:
+      aerospace:
+      automotive:
+      chemical:
+      commercial:
+      communications:
+      construction:
+      defense:
+      education:
+      energy:
+      entertainment:
+      financial-services:
+      government:
+      emergency-services:
+      government-local:
+      government-national:
+      government-public-services:
+      government-regional:
+      healthcare:
+      hospitality-leisure:
+      infrastructure:
+      infrastructure-dams:
+      infrastructure-nuclear:
+      infrastructure-water:
+      insurance:
+      manufacturing:
+      mining:
+      non-profit:
+      pharmaceuticals:
+      retail:
+      technology:
+      telecommunications:
+      transportation:
+      utilities:
+
+  ThreatActorTypeOv:
+    description: "Open vocabulary for threat actor type (threat-actor-type-ov). Additional string values are allowed."
+    annotations:
+      open_vocabulary: "true"
+    permissible_values:
+      activist:
+      competitor:
+      crime-syndicate:
+      criminal:
+      hacker:
+      insider-accidental:
+      insider-disgruntled:
+      nation-state:
+      sensationalist:
+      spy:
+      terrorist:
+      unknown:
+
+  ThreatActorRoleOv:
+    description: "Open vocabulary for threat actor role (threat-actor-role-ov). Additional string values are allowed."
+    annotations:
+      open_vocabulary: "true"
+    permissible_values:
+      agent:
+      director:
+      independent:
+      infrastructure-architect:
+      infrastructure-operator:
+      malware-author:
+      sponsor:
+
+  ThreatActorSophisticationOv:
+    description: "Open vocabulary for threat actor sophistication (threat-actor-sophistication-ov). Additional string values are allowed."
+    annotations:
+      open_vocabulary: "true"
+    permissible_values:
+      none:
+      minimal:
+      intermediate:
+      advanced:
+      expert:
+      innovator:
+      strategic:
+
+  AttackResourceLevelOv:
+    description: "Open vocabulary for attack resource level (attack-resource-level-ov). Additional string values are allowed."
+    annotations:
+      open_vocabulary: "true"
+    permissible_values:
+      individual:
+      club:
+      contest:
+      team:
+      organization:
+      government:
+
+  AttackMotivationOv:
+    description: "Open vocabulary for attack motivation (attack-motivation-ov). Additional string values are allowed."
+    annotations:
+      open_vocabulary: "true"
+    permissible_values:
+      accidental:
+      coercion:
+      dominance:
+      ideology:
+      notoriety:
+      organizational-gain:
+      personal-gain:
+      personal-satisfaction:
+      revenge:
+      unpredictable:
+
+  MalwareTypeOv:
+    description: "Open vocabulary for malware type (malware-type-ov). Additional string values are allowed."
+    annotations:
+      open_vocabulary: "true"
+    permissible_values:
+      adware:
+      backdoor:
+      bot:
+      bootkit:
+      ddos:
+      downloader:
+      dropper:
+      exploit-kit:
+      keylogger:
+      ransomware:
+      remote-access-trojan:
+      resource-exploitation:
+      rogue-security-software:
+      rootkit:
+      screen-capture:
+      spyware:
+      trojan:
+      unknown:
+      virus:
+      webshell:
+      wiper:
+      worm:
+
+  MalwareCapabilityOv:
+    description: "Open vocabulary for malware capabilities (malware-capabilities-ov). Additional string values are allowed."
+    annotations:
+      open_vocabulary: "true"
+    permissible_values:
+      accesses-remote-machines:
+      anti-debugging:
+      anti-disassembly:
+      anti-emulation:
+      anti-memory-forensics:
+      anti-sandbox:
+      anti-vm:
+      captures-input-peripherals:
+      captures-output-peripherals:
+      captures-system-state-data:
+      cleans-traces-of-infection:
+      commits-fraud:
+      communicates-with-c2:
+      compromises-data-availability:
+      compromises-data-integrity:
+      compromises-system-availability:
+      controls-local-machine:
+      degrades-security-software:
+      degrades-system-updates:
+      determines-c2-server:
+      emails-spam:
+      escalates-privileges:
+      evades-av:
+      exfiltrates-data:
+      fingerprints-host:
+      hides-artifacts:
+      hides-executing-code:
+      infects-files:
+      infects-remote-machines:
+      installs-other-components:
+      persists-after-system-reboot:
+      prevents-artifact-access:
+      prevents-artifact-deletion:
+      probes-network-environment:
+      self-modifies:
+      steals-authentication-credentials:
+      violates-system-operational-integrity:
+
+  InfrastructureTypeOv:
+    description: "Open vocabulary for infrastructure type (infrastructure-type-ov). Additional string values are allowed."
+    annotations:
+      open_vocabulary: "true"
+    permissible_values:
+      amplification:
+      anonymization:
+      botnet:
+      command-and-control:
+      exfiltration:
+      hosting-malware:
+      hosting-target-lists:
+      phishing:
+      reconnaissance:
+      staging:
+      undefined:
+
+  ToolTypeOv:
+    description: "Open vocabulary for tool type (tool-type-ov). Additional string values are allowed."
+    annotations:
+      open_vocabulary: "true"
+    permissible_values:
+      denial-of-service:
+      exploitation:
+      information-gathering:
+      network-capture:
+      credential-exploitation:
+      remote-access:
+      vulnerability-scanning:
+      unknown:
+
+  ReportTypeOv:
+    description: "Open vocabulary for report type (report-type-ov). Additional string values are allowed."
+    annotations:
+      open_vocabulary: "true"
+    permissible_values:
+      attack-pattern:
+      campaign:
+      identity:
+      indicator:
+      intrusion-set:
+      malware:
+      observed-data:
+      threat-actor:
+      threat-report:
+      tool:
+      vulnerability:
+
+  IndicatorTypeOv:
+    description: "Open vocabulary for indicator type (indicator-type-ov). Additional string values are allowed."
+    annotations:
+      open_vocabulary: "true"
+    permissible_values:
+      anomalous-activity:
+      anonymization:
+      benign:
+      compromised:
+      malicious-activity:
+      attribution:
+      unknown:
+
+  PatternTypeOv:
+    description: "Open vocabulary for pattern type (pattern-type-ov). Additional string values are allowed."
+    annotations:
+      open_vocabulary: "true"
+      jsonschema_source: schemas/sdos/indicator.json#/definitions/pattern-type-ov
+    permissible_values:
+      stix:
+      pcre:
+      sigma:
+      snort:
+      suricata:
+      yara:
+
+  MalwareAvResultOv:
+    description: "Open vocabulary for malware AV result (malware-av-result-ov). Additional string values are allowed."
+    annotations:
+      open_vocabulary: "true"
+    permissible_values:
+      malicious:
+      suspicious:
+      benign:
+      unknown:
+
+  ImplementationLanguageOv:
+    description: "Open vocabulary for implementation languages (implementation-language-ov). Additional string values are allowed."
+    annotations:
+      open_vocabulary: "true"
+    permissible_values:
+      applescript:
+      bash:
+      c:
+      "c++":
+      "c#":
+      go:
+      java:
+      javascript:
+      lua:
+      objective-c:
+      perl:
+      php:
+      powershell:
+      python:
+      ruby:
+      scala:
+      swift:
+      typescript:
+      visual-basic:
+      x86-32:
+      x86-64:
+
+  ProcessorArchitectureOv:
+    description: "Open vocabulary for processor architecture (processor-architecture-ov). Additional string values are allowed."
+    annotations:
+      open_vocabulary: "true"
+    permissible_values:
+      alpha:
+      arm:
+      ia-64:
+      mips:
+      powerpc:
+      sparc:
+      x86:
+      x86-64:
+
+  AccountTypeOv:
+    description: "Open vocabulary for user account type (account-type-ov). Additional string values are allowed."
+    annotations:
+      open_vocabulary: "true"
+    permissible_values:
+      unix:
+      "windows-local":
+      "windows-domain":
+      ldap:
+      tacacs:
+      radius:
+      nis:
+      openid:
+      facebook:
+      skype:
+      twitter:
+      kavi:
+
+  # ── Closed Vocabulary Enums for Extension Sub-Classes ──────────────────────
+  WindowsIntegrityLevelEnum:
+    description: "Windows process integrity level (trustworthiness) enumeration."
+    permissible_values:
+      low:
+      medium:
+      high:
+      system:
+
+  WindowsServiceStartEnum:
+    description: "Windows service start type enumeration."
+    permissible_values:
+      SERVICE_AUTO_START:
+      SERVICE_BOOT_START:
+      SERVICE_DEMAND_START:
+      SERVICE_DISABLED:
+      SERVICE_SYSTEM_ALERT:
+
+  WindowsServiceTypeEnum:
+    description: "Windows service type enumeration."
+    permissible_values:
+      SERVICE_KERNEL_DRIVER:
+      SERVICE_FILE_SYSTEM_DRIVER:
+      SERVICE_WIN32_OWN_PROCESS:
+      SERVICE_WIN32_SHARE_PROCESS:
+
+  WindowsServiceStatusEnum:
+    description: "Windows service status enumeration."
+    permissible_values:
+      SERVICE_CONTINUE_PENDING:
+      SERVICE_PAUSE_PENDING:
+      SERVICE_PAUSED:
+      SERVICE_RUNNING:
+      SERVICE_START_PENDING:
+      SERVICE_STOP_PENDING:
+      SERVICE_STOPPED:
+
+  NetworkSocketAddressFamilyEnum:
+    description: "Network socket address family enumeration."
+    permissible_values:
+      AF_UNSPEC:
+      AF_INET:
+      AF_IPX:
+      AF_APPLETALK:
+      AF_NETBIOS:
+      AF_INET6:
+      AF_IRDA:
+      AF_BTH:
+
+  NetworkSocketTypeEnum:
+    description: "Network socket type enumeration."
+    permissible_values:
+      SOCK_STREAM:
+      SOCK_DGRAM:
+      SOCK_RAW:
+      SOCK_RDM:
+      SOCK_SEQPACKET:
+
+  WindowsPEBinaryTypeOv:
+    description: "Open vocabulary for Windows PE binary type (windows-pebinary-type-ov). Suggested values are exe, dll, sys; additional string values are allowed."
+    annotations:
+      open_vocabulary: "true"
+      jsonschema_source: schemas/observables/file.json#/definitions/windows-pebinary-type-ov
+    permissible_values:
+      exe:
+      dll:
+      sys:
+
+slots:
+  id:
+    description: STIX object identifier.
+    range: stix_identifier
+  type:
+    description: STIX object type.
+    range: stix_type_name
+  spec_version:
+    description: STIX specification version.
+    range: SpecVersionEnum
+  name:
+    description: Human-readable name.
+    range: string
+  description:
+    description: Human-readable description.
+    range: string
+  created:
+    description: Creation timestamp.
+    range: datetime
+  modified:
+    description: Modification timestamp.
+    range: datetime
+  created_by_ref:
+    description: ID of the object that created this object.
+    range: stix_identifier
+  labels:
+    description: Terms used to describe this object.
+    range: string
+    multivalued: true
+  revoked:
+    description: Indicates whether this object has been revoked.
+    range: boolean
+  confidence:
+    description: Confidence that the producer has in this data.
+    range: integer
+    minimum_value: 0
+    maximum_value: 100
+  lang:
+    description: Language of textual properties.
+    range: string
+  external_references:
+    description: External references to non-STIX information.
+    range: ExternalReference
+    multivalued: true
+  object_marking_refs:
+    description: Marking definition references applied to this object.
+    range: stix_identifier
+    multivalued: true
+  granular_markings:
+    description: Granular markings that apply to selected content.
+    range: GranularMarking
+    multivalued: true
+  extensions:
+    description: Open-ended extension payloads.
+    range: string
+    multivalued: true
+    notes:
+      - JSON Schema uses patternProperties for extension keys; exact key validation is delegated to validator tooling.
+    annotations:
+      jsonschema_rule: patternProperties
+      validator_hint: validate-extension-keys-and-values
+  defanged:
+    description: Defines whether or not the data contained within the object has been defanged.
+    range: boolean
+  source_name:
+    description: Name of the external source.
+    range: string
+  url:
+    description: A URL reference to an external resource.
+    range: uriorcurie
+  hashes:
+    description: Specifies a dictionary of hashes for the file or content.
+    range: HashesType
+  external_id:
+    description: An identifier for the external reference content.
+    range: string
+  marking_ref:
+    description: Marking-definition reference.
+    range: stix_identifier
+  selectors:
+    description: A list of selectors for content contained within the STIX object in which this property appears.
+    range: string
+    multivalued: true
+  kill_chain_name:
+    description: Name of the kill chain.
+    range: string
+    required: true
+  phase_name:
+    description: Name of the kill chain phase.
+    range: string
+    required: true
+  relationship_type:
+    description: Name of the relationship type.
+    range: string
+    pattern: "^[a-z0-9\\-]+$"
+  source_ref:
+    description: Relationship source object reference.
+    range: stix_identifier
+    annotations:
+      validator_hint: reject-disallowed-source-prefixes
+  target_ref:
+    description: Relationship target object reference.
+    range: stix_identifier
+    annotations:
+      validator_hint: reject-disallowed-target-prefixes
+  start_time:
+    description: Start timestamp for temporal relationship validity.
+    range: datetime
+  stop_time:
+    description: End timestamp for temporal relationship validity.
+    range: datetime
+  sighting_of_ref:
+    description: Reference to the object being sighted.
+    range: stix_identifier
+  observed_data_refs:
+    description: References to observed-data objects.
+    range: stix_identifier
+    multivalued: true
+  where_sighted_refs:
+    description: References to identities or locations where sighted.
+    range: stix_identifier
+    multivalued: true
+  count:
+    description: This is an integer between 0 and 999,999,999 inclusive and represents the number of times the object was sighted.
+    range: integer
+    minimum_value: 0
+  pattern:
+    description: The detection pattern for this indicator.
+    range: string
+    annotations:
+      source: https://github.com/oasis-open/cti-stix2-json-schemas/blob/master/pattern_grammar/STIXPattern.g4
+      validator_hint: parse-with-stix-pattern-antlr-grammar
+  pattern_type:
+    description: The type of pattern used in this indicator.
+    any_of:
+      - range: PatternTypeOv
+      - range: string
+    pattern: "^[a-z0-9\\-]+$"
+    annotations:
+      open_vocabulary: PatternTypeOv
+  pattern_version:
+    description: The version of the pattern that is used.
+    range: string
+  valid_from:
+    description: The time from which this indicator should be considered valuable intelligence.
+    range: datetime
+  valid_until:
+    description: The time at which this indicator should no longer be considered valuable intelligence.
+    range: datetime
+  indicator_types:
+    description: This field is an Open Vocabulary that specifies the type of indicator. Open vocab - indicator-type-ov
+    multivalued: true
+    any_of:
+      - range: IndicatorTypeOv
+      - range: string
+    annotations:
+      open_vocabulary: IndicatorTypeOv
+  kill_chain_phases:
+    description: Kill chain phases associated with this object.
+    range: KillChainPhase
+    multivalued: true
+  first_seen:
+    description: First time observed.
+    range: datetime
+  last_seen:
+    description: Last time observed.
+    range: datetime
+  definition_type:
+    description: Type discriminator for marking definition content.
+    range: string
+  definition:
+    description: Marking definition payload.
+    range: string
+  value:
+    description: Canonical string value for simple cyber observables.
+    range: string
+  resolves_to_refs:
+    description: References this observable resolves to.
+    range: stix_identifier
+    multivalued: true
+  belongs_to_refs:
+    description: References this observable belongs to.
+    range: stix_identifier
+    multivalued: true
+  display_name:
+    description: Human-friendly display name.
+    range: string
+  belongs_to_ref:
+    description: Single reference this observable belongs to.
+    range: stix_identifier
+  aliases:
+    description: Alternative names for the object.
+    range: string
+    multivalued: true
+  report_types:
+    description: Open-vocabulary report categories.
+    multivalued: true
+    any_of:
+      - range: ReportTypeOv
+      - range: string
+    annotations:
+      open_vocabulary: ReportTypeOv
+  published:
+    description: Timestamp when a report was published.
+    range: datetime
+  object_refs:
+    description: Referenced STIX objects.
+    range: stix_identifier
+    multivalued: true
+  threat_actor_types:
+    description: Open-vocabulary threat actor categories.
+    multivalued: true
+    any_of:
+      - range: ThreatActorTypeOv
+      - range: string
+    annotations:
+      open_vocabulary: ThreatActorTypeOv
+  roles:
+    description: Open-vocabulary threat actor roles.
+    multivalued: true
+    any_of:
+      - range: ThreatActorRoleOv
+      - range: string
+    annotations:
+      open_vocabulary: ThreatActorRoleOv
+  goals:
+    description: Threat actor goals.
+    range: string
+    multivalued: true
+  sophistication:
+    description: Threat actor sophistication level.
+    any_of:
+      - range: ThreatActorSophisticationOv
+      - range: string
+    annotations:
+      open_vocabulary: ThreatActorSophisticationOv
+  resource_level:
+    description: Threat actor resource level (attack-resource-level-ov).
+    any_of:
+      - range: AttackResourceLevelOv
+      - range: string
+    annotations:
+      open_vocabulary: AttackResourceLevelOv
+  primary_motivation:
+    description: Primary motivation (attack-motivation-ov).
+    any_of:
+      - range: AttackMotivationOv
+      - range: string
+    annotations:
+      open_vocabulary: AttackMotivationOv
+  secondary_motivations:
+    description: Secondary motivations (attack-motivation-ov).
+    multivalued: true
+    any_of:
+      - range: AttackMotivationOv
+      - range: string
+    annotations:
+      open_vocabulary: AttackMotivationOv
+  personal_motivations:
+    description: Personal motivations of the threat actor (attack-motivation-ov).
+    multivalued: true
+    any_of:
+      - range: AttackMotivationOv
+      - range: string
+    annotations:
+      open_vocabulary: AttackMotivationOv
+  is_family:
+    description: Indicates if malware object is a family.
+    range: boolean
+  operating_system_refs:
+    description: References to software operating systems.
+    range: stix_identifier
+    multivalued: true
+  architecture_execution_envs:
+    description: Open-vocabulary processor architectures (processor-architecture-ov).
+    multivalued: true
+    any_of:
+      - range: ProcessorArchitectureOv
+      - range: string
+    annotations:
+      open_vocabulary: ProcessorArchitectureOv
+  implementation_languages:
+    description: Open-vocabulary implementation languages (implementation-language-ov).
+    multivalued: true
+    any_of:
+      - range: ImplementationLanguageOv
+      - range: string
+    annotations:
+      open_vocabulary: ImplementationLanguageOv
+  capabilities:
+    description: Open-vocabulary malware capabilities (malware-capabilities-ov).
+    multivalued: true
+    any_of:
+      - range: MalwareCapabilityOv
+      - range: string
+    annotations:
+      open_vocabulary: MalwareCapabilityOv
+  sample_refs:
+    description: References to associated sample artifacts/files.
+    range: stix_identifier
+    multivalued: true
+  malware_types:
+    description: Open-vocabulary malware types (malware-type-ov).
+    multivalued: true
+    any_of:
+      - range: MalwareTypeOv
+      - range: string
+    annotations:
+      open_vocabulary: MalwareTypeOv
+  infrastructure_types:
+    description: Open-vocabulary infrastructure categories (infrastructure-type-ov).
+    multivalued: true
+    any_of:
+      - range: InfrastructureTypeOv
+      - range: string
+    annotations:
+      open_vocabulary: InfrastructureTypeOv
+  tool_types:
+    description: Open-vocabulary tool categories (tool-type-ov).
+    multivalued: true
+    any_of:
+      - range: ToolTypeOv
+      - range: string
+    annotations:
+      open_vocabulary: ToolTypeOv
+  tool_version:
+    description: Version identifier for a tool.
+    range: string
+  context:
+    description: Grouping context classifier.
+    range: string
+  abstract:
+    description: Brief summary text.
+    range: string
+  content:
+    description: Main text content payload.
+    range: string
+  authors:
+    description: Author list.
+    range: string
+    multivalued: true
+  explanation:
+    description: Explanation text for an opinion.
+    range: string
+  opinion:
+    description: Opinion value.
+    range: OpinionEnum
+  first_observed:
+    description: Start of observation window.
+    range: datetime
+  last_observed:
+    description: End of observation window.
+    range: datetime
+  number_observed:
+    description: Number of observations.
+    range: integer
+    minimum_value: 1
+    maximum_value: 999999999
+  objects:
+    description: Embedded cyber observable dictionary payload.
+    range: CyberObservableObject
+    multivalued: true
+    inlined: true
+    notes:
+      - JSON Schema models this as a pattern-keyed dictionary of SCO objects.
+    annotations:
+      jsonschema_rule: patternProperties+oneOf
+      validator_hint: validate-observed-data-objects-dictionary
+  size:
+    description: Object size in bytes.
+    range: integer
+    minimum_value: 0
+  name_enc:
+    description: Encoding for a name field.
+    range: string
+    pattern: "^[a-zA-Z0-9/\\.+_:-]{2,250}$"
+  magic_number_hex:
+    description: Hex magic number.
+    range: string
+  parent_directory_ref:
+    description: Parent directory reference.
+    range: stix_identifier
+  content_ref:
+    description: Referenced content object.
+    range: stix_identifier
+  number:
+    description: Numeric identifier value.
+    range: integer
+  rir:
+    description: Regional Internet Registry name.
+    range: string
+  path:
+    description: Filesystem path.
+    range: string
+  path_enc:
+    description: Encoding used for a filesystem path.
+    range: string
+    pattern: "^[a-zA-Z0-9/\\.+_:-]{2,250}$"
+  ctime:
+    description: Creation time.
+    range: datetime
+  mtime:
+    description: Last modification time.
+    range: datetime
+  atime:
+    description: Last access time.
+    range: datetime
+  contains_refs:
+    description: References to contained objects.
+    range: stix_identifier
+    multivalued: true
+  mime_type:
+    description: MIME type value.
+    range: string
+  payload_bin:
+    description: Base64 binary payload.
+    range: string
+  encryption_algorithm:
+    description: Artifact encryption algorithm.
+    range: string
+  decryption_key:
+    description: Decryption key material.
+    range: string
+  email_date:
+    description: Date/time the email message was sent.
+    range: datetime
+  content_type:
+    description: Specifies the value of the 'Content-Type' header of the email message.
+    range: string
+  from_ref:
+    description: Sender mailbox reference.
+    range: stix_identifier
+  sender_ref:
+    description: Sender reference.
+    range: stix_identifier
+  to_refs:
+    description: To-recipient references.
+    range: stix_identifier
+    multivalued: true
+  cc_refs:
+    description: Cc-recipient references.
+    range: stix_identifier
+    multivalued: true
+  bcc_refs:
+    description: Bcc-recipient references.
+    range: stix_identifier
+    multivalued: true
+  message_id:
+    description: Message identifier field.
+    range: string
+  subject:
+    description: Subject value.
+    range: string
+  received_lines:
+    description: Received header lines.
+    range: string
+    multivalued: true
+  additional_header_fields:
+    description: Additional email headers.
+    range: string
+  raw_email_ref:
+    description: Reference to raw email artifact.
+    range: stix_identifier
+  is_multipart:
+    description: Indicates whether the email body contains multiple MIME parts.
+    range: boolean
+  body:
+    description: Specifies a string containing the email body. This field MAY only be used if is_multipart is false.
+    range: string
+  body_multipart:
+    description: List of MIME parts comprising the email body (multipart emails only).
+    range: MimePartType
+    multivalued: true
+    inlined: true
+  cpe:
+    description: Specifies the Common Platform Enumeration (CPE) entry for the software.
+    range: string
+  swid:
+    description: SWID tag value.
+    range: string
+  languages:
+    description: Specifies the languages supported by the software.
+    range: string
+    multivalued: true
+  vendor:
+    description: Vendor name.
+    range: string
+  version:
+    description: Version string.
+    range: string
+  user_id:
+    description: User account identifier.
+    range: string
+  credential:
+    description: Account credential value.
+    range: string
+  account_login:
+    description: Account login string.
+    range: string
+  account_type:
+    description: Account type value (account-type-ov).
+    any_of:
+      - range: AccountTypeOv
+      - range: string
+    annotations:
+      open_vocabulary: AccountTypeOv
+  is_service_account:
+    description: Service account flag.
+    range: boolean
+  is_privileged:
+    description: Privileged account flag.
+    range: boolean
+  can_escalate_privs:
+    description: Privilege escalation capability flag.
+    range: boolean
+  is_disabled:
+    description: Disabled account flag.
+    range: boolean
+  account_created:
+    description: Account creation timestamp.
+    range: datetime
+  account_expires:
+    description: Account expiration timestamp.
+    range: datetime
+  credential_last_changed:
+    description: Credential last-changed timestamp.
+    range: datetime
+  account_first_login:
+    description: Account first-login timestamp.
+    range: datetime
+  account_last_login:
+    description: Account last-login timestamp.
+    range: datetime
+  key:
+    description: Registry key path.
+    range: string
+  values:
+    description: Registry value entries.
+    range: WindowsRegistryValue
+    multivalued: true
+    inlined: true
+  modified_time:
+    description: Modification timestamp.
+    range: datetime
+  creator_user_ref:
+    description: Creating user reference.
+    range: stix_identifier
+  number_of_subkeys:
+    description: Number of registry subkeys.
+    range: integer
+  start:
+    description: Network traffic start time.
+    range: datetime
+  end:
+    description: Network traffic end time.
+    range: datetime
+  src_ref:
+    description: Source observable reference.
+    range: stix_identifier
+  dst_ref:
+    description: Destination observable reference.
+    range: stix_identifier
+  src_port:
+    description: Source port number.
+    range: integer
+    minimum_value: 0
+    maximum_value: 65535
+  dst_port:
+    description: Destination port number.
+    range: integer
+    minimum_value: 0
+    maximum_value: 65535
+  protocols:
+    description: Network protocols list.
+    range: string
+    multivalued: true
+  src_byte_count:
+    description: Bytes sent source to destination.
+    range: integer
+  dst_byte_count:
+    description: Bytes sent destination to source.
+    range: integer
+  src_packets:
+    description: Source-to-destination packet count.
+    range: integer
+  dst_packets:
+    description: Destination-to-source packet count.
+    range: integer
+  ipfix:
+    description: Specifies any IP Flow Information Export (IPFIX) data for the traffic.
+    range: string
+  src_payload_ref:
+    description: Source payload reference.
+    range: stix_identifier
+  dst_payload_ref:
+    description: Destination payload reference.
+    range: stix_identifier
+  encapsulates_refs:
+    description: Referenced encapsulated network-traffic objects.
+    range: stix_identifier
+    multivalued: true
+  encapsulated_by_ref:
+    description: Referencing encapsulating network-traffic object.
+    range: stix_identifier
+  is_active:
+    description: Indicates traffic is still active.
+    range: boolean
+  is_hidden:
+    description: Specifies whether the process is hidden.
+    range: boolean
+  pid:
+    description: Specifies the Process ID, or PID, of the process.
+    range: integer
+  created_time:
+    description: Process creation time.
+    range: datetime
+  cwd:
+    description: Current working directory.
+    range: string
+  command_line:
+    description: Process command line.
+    range: string
+  environment_variables:
+    description: Environment variable payload.
+    range: string
+  opened_connection_refs:
+    description: Referenced opened network connections.
+    range: stix_identifier
+    multivalued: true
+  image_ref:
+    description: Process image file reference.
+    range: stix_identifier
+  parent_ref:
+    description: Parent process reference.
+    range: stix_identifier
+  child_refs:
+    description: Child process references.
+    range: stix_identifier
+    multivalued: true
+  is_self_signed:
+    description: Specifies whether the certificate is self-signed.
+    range: boolean
+  serial_number:
+    description: X509 serial number.
+    range: string
+  signature_algorithm:
+    description: X509 signature algorithm.
+    range: string
+  issuer:
+    description: Certificate issuer.
+    range: string
+  validity_not_before:
+    description: Certificate validity start.
+    range: datetime
+  validity_not_after:
+    description: Certificate validity end.
+    range: datetime
+  subject_public_key_algorithm:
+    description: Subject public key algorithm.
+    range: string
+  subject_public_key_modulus:
+    description: Subject public key modulus.
+    range: string
+  subject_public_key_exponent:
+    description: Subject public key exponent.
+    range: integer
+  x509_v3_extensions:
+    description: X509 v3 extensions payload.
+    range: X509V3ExtensionsType
+    inlined: true
+  objective:
+    description: Campaign objective.
+    range: string
+  identity_class:
+    description: Identity class value (identity-class-ov).
+    any_of:
+      - range: IdentityClassOv
+      - range: string
+    annotations:
+      open_vocabulary: IdentityClassOv
+  sectors:
+    description: Identity sector values (industry-sector-ov).
+    multivalued: true
+    any_of:
+      - range: IndustrySectorOv
+      - range: string
+    annotations:
+      open_vocabulary: IndustrySectorOv
+  contact_information:
+    description: Identity contact information.
+    range: string
+  latitude:
+    description: Latitude in decimal degrees.
+    range: float
+    minimum_value: -90
+    maximum_value: 90
+  longitude:
+    description: Longitude in decimal degrees.
+    range: float
+    minimum_value: -180
+    maximum_value: 180
+  precision:
+    description: Coordinate precision in meters.
+    range: float
+  region:
+    description: Geographic region.
+    range: string
+  country:
+    description: Country name.
+    range: string
+  administrative_area:
+    description: Sub-national administrative area.
+    range: string
+  city:
+    description: City name.
+    range: string
+  street_address:
+    description: Street address.
+    range: string
+  postal_code:
+    description: Postal code.
+    range: string
+  product:
+    description: Malware analysis product name.
+    range: string
+  configuration_version:
+    description: Malware analysis product configuration version.
+    range: string
+  modules:
+    description: Malware analysis module names.
+    range: string
+    multivalued: true
+  analysis_engine_version:
+    description: Malware analysis engine version.
+    range: string
+  analysis_definition_version:
+    description: Malware analysis definition version.
+    range: string
+  submitted:
+    description: Malware sample submission timestamp.
+    range: datetime
+  analysis_started:
+    description: Analysis start timestamp.
+    range: datetime
+  analysis_ended:
+    description: Analysis end timestamp.
+    range: datetime
+  result_name:
+    description: Analysis result name.
+    range: string
+  result:
+    description: Malware analysis result value (malware-av-result-ov).
+    any_of:
+      - range: MalwareAvResultOv
+      - range: string
+    annotations:
+      open_vocabulary: MalwareAvResultOv
+  host_vm_ref:
+    description: Host VM software reference.
+    range: stix_identifier
+  operating_system_ref:
+    description: Operating system software reference.
+    range: stix_identifier
+  installed_software_refs:
+    description: Installed software references.
+    range: stix_identifier
+    multivalued: true
+  analysis_sco_refs:
+    description: Referenced SCOs captured in analysis.
+    range: stix_identifier
+    multivalued: true
+  sample_ref:
+    description: Analysis subject sample reference.
+    range: stix_identifier
+  schema:
+    description: Extension schema definition or URL.
+    range: string
+  extension_types:
+    description: Extension-definition type list.
+    range: ExtensionTypeEnum
+    multivalued: true
+  extension_properties:
+    description: Extension-defined property names.
+    range: string
+    multivalued: true
+  object_ref:
+    description: Single object reference.
+    range: stix_identifier
+  object_modified:
+    description: Referenced object modified timestamp.
+    range: datetime
+  contents:
+    description: Language content dictionary payload.
+    range: string
+  bundle_objects:
+    description: Objects contained in a bundle.
+    range: StixEntity
+    multivalued: true
+    inlined: true
+  extension_type:
+    description: Type discriminator for extension payloads.
+    range: ExtensionTypeEnum
+  registry_value_name:
+    description: Registry value name.
+    range: string
+  registry_value_data:
+    description: Registry value data content.
+    range: string
+  registry_value_data_type:
+    description: Registry value data type.
+    range: RegistryDataTypeEnum
+
+  # ── MimePartType slots ─────────────────────────────────────────────────────
+  body_raw_ref:
+    description: Reference to an Artifact or File object for non-textual MIME part content.
+    range: stix_identifier
+  content_disposition:
+    description: Value of the Content-Disposition header field of the MIME part.
+    range: string
+
+  # ── WindowsProcessExt slots ────────────────────────────────────────────────
+  aslr_enabled:
+    description: Specifies whether Address Space Layout Randomization (ASLR) is enabled for the process.
+    range: boolean
+  dep_enabled:
+    description: Specifies whether Data Execution Prevention (DEP) is enabled for the process.
+    range: boolean
+  priority:
+    description: Specifies the current priority class of the process in Windows.
+    range: string
+  owner_sid:
+    description: Specifies the Security ID (SID) value of the owner of the process.
+    range: string
+  window_title:
+    description: Specifies the title of the main window of the process.
+    range: string
+  startup_info:
+    description: Specifies the STARTUP_INFO struct used by the process.
+    range: string
+    annotations:
+      jsonschema_rule: patternProperties
+      validator_hint: validate-startup-info-dictionary
+  integrity_level:
+    description: Specifies the Windows integrity level of the process.
+    range: WindowsIntegrityLevelEnum
+
+  # ── WindowsServiceExt slots ────────────────────────────────────────────────
+  service_name:
+    description: Specifies the name of the service.
+    range: string
+  descriptions:
+    description: Specifies the descriptions defined for the service.
+    range: string
+    multivalued: true
+  group_name:
+    description: Specifies the name of the load ordering group of which the service is a member.
+    range: string
+  start_type:
+    description: Specifies the start options defined for the service.
+    range: WindowsServiceStartEnum
+  service_dll_refs:
+    description: Specifies the DLLs loaded by the service.
+    range: stix_identifier
+    multivalued: true
+  service_type:
+    description: Specifies the type of the service.
+    range: WindowsServiceTypeEnum
+  service_status:
+    description: Specifies the current status of the service.
+    range: WindowsServiceStatusEnum
+
+  # ── HttpRequestExt slots ───────────────────────────────────────────────────
+  request_method:
+    description: Specifies the HTTP method portion of the HTTP request line.
+    range: string
+  request_value:
+    description: Specifies the value (typically a resource path) portion of the HTTP request line.
+    range: string
+  request_version:
+    description: Specifies the HTTP version portion of the HTTP request line.
+    range: string
+  request_header:
+    description: Specifies all of the HTTP header fields that may be found in the HTTP client request.
+    range: string
+    annotations:
+      jsonschema_rule: patternProperties
+      validator_hint: validate-http-request-header-dictionary
+  message_body_length:
+    description: Specifies the length of the HTTP message body, if included in the request.
+    range: integer
+    minimum_value: 0
+  message_body_data_ref:
+    description: Specifies the data contained in the HTTP message body, as a reference to an Artifact object.
+    range: stix_identifier
+
+  # ── IcmpExt slots ──────────────────────────────────────────────────────────
+  icmp_type_hex:
+    description: Specifies the ICMP type byte.
+    range: string
+    annotations:
+      jsonschema_format: hex
+  icmp_code_hex:
+    description: Specifies the ICMP code byte.
+    range: string
+    annotations:
+      jsonschema_format: hex
+
+  # ── SocketExt slots ────────────────────────────────────────────────────────
+  address_family:
+    description: Specifies the address family (AF_*) that the socket is configured for.
+    range: NetworkSocketAddressFamilyEnum
+  is_blocking:
+    description: Specifies whether the socket is in blocking mode.
+    range: boolean
+  is_listening:
+    description: Specifies whether the socket is in listening mode.
+    range: boolean
+  socket_options:
+    description: Specifies any options (SO_*) that may be used by the socket.
+    range: string
+    annotations:
+      jsonschema_rule: patternProperties
+      validator_hint: validate-socket-options-dictionary
+  socket_type:
+    description: Specifies the type of the socket.
+    range: NetworkSocketTypeEnum
+  socket_descriptor:
+    description: Specifies the socket file descriptor value associated with the socket.
+    range: integer
+  socket_handle:
+    description: Specifies the handle or inode value associated with the socket.
+    range: integer
+
+  # ── TcpExt slots ───────────────────────────────────────────────────────────
+  src_flags_hex:
+    description: Specifies the source TCP flags, as the union of all TCP flags observed between the start and end of the session.
+    range: string
+    annotations:
+      jsonschema_format: hex
+  dst_flags_hex:
+    description: Specifies the destination TCP flags, as the union of all TCP flags observed between the start and end of the session.
+    range: string
+    annotations:
+      jsonschema_format: hex
+
+  # ── UnixAccountExt slots ───────────────────────────────────────────────────
+  gid:
+    description: Specifies the primary group ID of the account.
+    range: integer
+  groups:
+    description: Specifies a list of names of groups the account is a member of.
+    range: string
+    multivalued: true
+  home_dir:
+    description: Specifies the home directory of the account.
+    range: string
+  shell:
+    description: Specifies the account's command shell.
+    range: string
+
+  # ── Sighting additional slot ───────────────────────────────────────────────
+  summary:
+    description: "The summary property indicates whether the Sighting should be considered summary data."
+    range: boolean
+
+  # ── MarkingDefinition statement slot ──────────────────────────────────────
+  statement:
+    description: "A statement (e.g., copyright, terms of use) applied to the content marked by this marking definition."
+    range: string
+
+  # ── X509 v3 Extension Type slots ──────────────────────────────────────────
+  basic_constraints:
+    description: "Specifies a multi-valued extension which indicates whether a certificate is a CA certificate."
+    range: string
+  name_constraints:
+    description: "Specifies a namespace within which all subject names in subsequent certificates in a certification path must be located."
+    range: string
+  policy_constraints:
+    description: "Specifies any constraints on path validation for certificates issued to CAs."
+    range: string
+  key_usage:
+    description: "Specifies a multi-valued extension consisting of a list of names of the permitted key usages."
+    range: string
+  extended_key_usage:
+    description: "Specifies a list of usages indicating purposes for which the certificate public key can be used."
+    range: string
+  subject_key_identifier:
+    description: "Specifies the identifier that provides a means of identifying certificates that contain a particular public key."
+    range: string
+  authority_key_identifier:
+    description: "Specifies the identifier that provides a means of identifying the public key corresponding to the private key used to sign a certificate."
+    range: string
+  subject_alternative_name:
+    description: "Specifies the additional identities to be bound to the subject of the certificate."
+    range: string
+  issuer_alternative_name:
+    description: "Specifies the additional identities to be bound to the issuer of the certificate."
+    range: string
+  subject_directory_attributes:
+    description: "Specifies the identification attributes (e.g., nationality) of the subject."
+    range: string
+  crl_distribution_points:
+    description: "Specifies how CRL information is obtained."
+    range: string
+  inhibit_any_policy:
+    description: "Specifies the number of additional certificates that may appear in the path before anyPolicy is no longer permitted."
+    range: string
+  private_key_usage_period_not_before:
+    description: "Specifies the date on which the validity period begins for the private key, if it is different from the validity period of the certificate."
+    range: datetime
+  private_key_usage_period_not_after:
+    description: "Specifies the date on which the validity period ends for the private key, if it is different from the validity period of the certificate."
+    range: datetime
+  certificate_policies:
+    description: "Specifies a sequence of one or more policy information terms, each of which consists of an object identifier (OID) and optional qualifiers."
+    range: string
+  policy_mappings:
+    description: "Specifies one or more pairs of OIDs; each pair includes an issuerDomainPolicy and a subjectDomainPolicy."
+    range: string
+
+  # ── NtfsExt slots ──────────────────────────────────────────────────────────
+  sid:
+    description: "Specifies the security ID (SID) value assigned to the file."
+    range: string
+  alternate_data_streams:
+    description: "Specifies a list of NTFS alternate data streams that exist for the file."
+    range: AlternateDataStreamType
+    multivalued: true
+    inlined: true
+
+  # ── AlternateDataStreamType slots ─────────────────────────────────────────
+  ads_name:
+    description: "Specifies the name of the alternate data stream."
+    range: string
+  ads_size:
+    description: "Specifies the size of the alternate data stream, in bytes."
+    range: integer
+    minimum_value: 0
+  ads_hashes:
+    description: "Specifies a dictionary of hashes for the alternate data stream."
+    range: HashesType
+
+  # ── RasterImageExt slots ───────────────────────────────────────────────────
+  image_height:
+    description: "Specifies the height of the image in the image file, in pixels."
+    range: integer
+  image_width:
+    description: "Specifies the width of the image in the image file, in pixels."
+    range: integer
+  bits_per_pixel:
+    description: "Specifies the sum of bits used for each color channel in the image in the image file, and thus the total number of pixels used for expressing the color depth of the image."
+    range: integer
+  exif_tags:
+    description: "Specifies the set of EXIF tags found in the image file, as a dictionary. Each key/value pair in the dictionary represents the name/value of a single EXIF tag."
+    range: string
+    annotations:
+      jsonschema_rule: patternProperties
+      validator_hint: validate-exif-tags-dictionary
+
+  # ── PdfExt slots ───────────────────────────────────────────────────────────
+  pdfid0:
+    description: "Specifies the first file identifier found for the PDF file."
+    range: string
+  pdfid1:
+    description: "Specifies the second file identifier found for the PDF file."
+    range: string
+  is_optimized:
+    description: "Specifies whether the PDF file has been optimized."
+    range: boolean
+  document_info_dict:
+    description: "Specifies details of the PDF document information dictionary (DID), which includes properties like the document creation date and producer, as a dictionary."
+    range: string
+    annotations:
+      jsonschema_rule: patternProperties
+      validator_hint: validate-pdf-document-info-dictionary
+
+  # ── ArchiveExt slots ───────────────────────────────────────────────────────
+  comment:
+    description: "Specifies a comment included as part of the archive file."
+    range: string
+
+  # ── PEBinaryExt slots ──────────────────────────────────────────────────────
+  pe_type:
+    description: "Specifies the type of the PE binary. Open Vocabulary - windows-pebinary-type-ov"
+    any_of:
+      - range: WindowsPEBinaryTypeOv
+      - range: string
+    annotations:
+      open_vocabulary: WindowsPEBinaryTypeOv
+  imphash:
+    description: "Specifies the special import hash, or 'imphash', calculated for the PE binary."
+    range: string
+  machine_hex:
+    description: "Specifies the type of target machine."
+    range: string
+    annotations:
+      jsonschema_format: hex
+  number_of_sections:
+    description: "Specifies the number of sections in the PE binary, as a non-negative integer."
+    range: integer
+    minimum_value: 0
+  time_date_stamp:
+    description: "Specifies the time when the PE binary was created. The timestamp value MUST BE precise to the second."
+    range: datetime
+  pointer_to_symbol_table_hex:
+    description: "Specifies the file offset of the COFF symbol table."
+    range: string
+    annotations:
+      jsonschema_format: hex
+  number_of_symbols:
+    description: "Specifies the number of entries in the symbol table of the PE binary, as a non-negative integer."
+    range: integer
+    minimum_value: 0
+  size_of_optional_header:
+    description: "Specifies the size of the optional header of the PE binary."
+    range: integer
+    minimum_value: 0
+  characteristics_hex:
+    description: "Specifies the flags that indicate the file's characteristics."
+    range: string
+    annotations:
+      jsonschema_format: hex
+  file_header_hashes:
+    description: "Specifies any hashes that were computed for the file header."
+    range: HashesType
+  optional_header:
+    description: "Specifies the PE optional header of the PE binary."
+    range: WindowsPEOptionalHeaderType
+    inlined: true
+  sections:
+    description: "Specifies metadata about the sections in the PE file."
+    range: WindowsPESection
+    multivalued: true
+    inlined: true
+
+  # ── WindowsPESection slots ─────────────────────────────────────────────────
+  pe_section_name:
+    description: "Specifies the name of the PE section."
+    range: string
+  pe_section_size:
+    description: "Specifies the size of the PE section, in bytes."
+    range: integer
+    minimum_value: 0
+  entropy:
+    description: "Specifies the calculated entropy for the section, as calculated using the Shannon algorithm."
+    range: float
+  pe_section_hashes:
+    description: "Specifies any hashes computed over the section."
+    range: HashesType
+
+  # ── WindowsPEOptionalHeaderType slots ─────────────────────────────────────
+  magic_hex:
+    description: "Specifies the unsigned integer that indicates the type of the PE binary (e.g. PE32 or PE32+)."
+    range: string
+    annotations:
+      jsonschema_format: hex
+  major_linker_version:
+    description: "Specifies the linker major version number."
+    range: integer
+  minor_linker_version:
+    description: "Specifies the linker minor version number."
+    range: integer
+  size_of_code:
+    description: "Specifies the size of the code (text) section. If there are multiple such sections, this refers to the sum of the sizes of each section."
+    range: integer
+    minimum_value: 0
+  size_of_initialized_data:
+    description: "Specifies the size of the initialized data section. If there are multiple such sections, this refers to the sum of the sizes of each section."
+    range: integer
+    minimum_value: 0
+  size_of_uninitialized_data:
+    description: "Specifies the size of the uninitialized data section. If there are multiple such sections, this refers to the sum of the sizes of each section."
+    range: integer
+    minimum_value: 0
+  address_of_entry_point:
+    description: "Specifies the address of the entry point relative to the image base when the executable is loaded into memory."
+    range: integer
+  base_of_code:
+    description: "Specifies the address that is relative to the image base of the beginning-of-code section when it is loaded into memory."
+    range: integer
+  base_of_data:
+    description: "Specifies the address that is relative to the image base of the beginning-of-data section when it is loaded into memory."
+    range: integer
+  image_base:
+    description: "Specifies the preferred address of the first byte of the image when it is loaded into memory."
+    range: integer
+  section_alignment:
+    description: "Specifies the alignment (in bytes) of PE sections when they are loaded into memory."
+    range: integer
+    minimum_value: 0
+  file_alignment:
+    description: "Specifies the factor (in bytes) that is used to align the raw data of sections in the image file."
+    range: integer
+    minimum_value: 0
+  major_os_version:
+    description: "Specifies the major version number of the required operating system."
+    range: integer
+  minor_os_version:
+    description: "Specifies the minor version number of the required operating system."
+    range: integer
+  major_image_version:
+    description: "Specifies the major version number of the image."
+    range: integer
+  minor_image_version:
+    description: "Specifies the minor version number of the image."
+    range: integer
+  major_subsystem_version:
+    description: "Specifies the major version number of the subsystem."
+    range: integer
+  minor_subsystem_version:
+    description: "Specifies the minor version number of the subsystem."
+    range: integer
+  win32_version_value_hex:
+    description: "Specifies the reserved win32 version value."
+    range: string
+    annotations:
+      jsonschema_format: hex
+  size_of_image:
+    description: "Specifies the size, in bytes, of the image, including all headers, as the image is loaded in memory."
+    range: integer
+    minimum_value: 0
+  size_of_headers:
+    description: "Specifies the combined size of the MS-DOS, PE header, and section headers, rounded to a multiple of the value specified in file_alignment."
+    range: integer
+    minimum_value: 0
+  checksum_hex:
+    description: "Specifies the checksum of the PE binary."
+    range: string
+    annotations:
+      jsonschema_format: hex
+  subsystem_hex:
+    description: "Specifies the subsystem (e.g., GUI, device driver, etc.) that is required to run this image."
+    range: string
+    annotations:
+      jsonschema_format: hex
+  dll_characteristics_hex:
+    description: "Specifies the flags that characterize the PE binary."
+    range: string
+    annotations:
+      jsonschema_format: hex
+  size_of_stack_reserve:
+    description: "Specifies the size of the stack to reserve."
+    range: integer
+    minimum_value: 0
+  size_of_stack_commit:
+    description: "Specifies the size of the stack to commit."
+    range: integer
+    minimum_value: 0
+  size_of_heap_reserve:
+    description: "Specifies the size of the local heap space to reserve."
+    range: integer
+    minimum_value: 0
+  size_of_heap_commit:
+    description: "Specifies the size of the local heap space to commit."
+    range: integer
+    minimum_value: 0
+  loader_flags_hex:
+    description: "Specifies the reserved loader flags."
+    range: string
+    annotations:
+      jsonschema_format: hex
+  number_of_rva_and_sizes:
+    description: "Specifies the number of data-directory entries in the remainder of the optional header."
+    range: integer
+    minimum_value: 0
+classes:
+  StixEntity:
+    abstract: true
+    slots:
+      - id
+      - type
+      - name
+      - description
+
+  CommonSchemaComponent:
+    abstract: true
+    is_a: StixEntity
+
+  CyberObservableObject:
+    abstract: true
+    is_a: CyberObservableCore
+
+  StixDomainObject:
+    abstract: true
+    is_a: Core
+
+  StixRelationshipObject:
+    abstract: true
+    is_a: Core
+
+  Binary:
+    is_a: CommonSchemaComponent
+    in_subset:
+      - common
+    description: "The ​binary data type represents a sequence of bytes. In order to allow pattern matching on custom objects, for all properties that use the binary type, the property name MUST end with '_bin'. The JSON MTI serialization represents this as a base64-­encoded string as specified in RFC4648​. Other serializations SHOULD use a native binary type, if available. "
+    annotations:
+      jsonschema_type: string
+      jsonschema_pattern: "^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$"
+      jsonschema_source: schemas/common/binary.json
+
+  Bundle:
+    is_a: CommonSchemaComponent
+    in_subset:
+      - common
+    description: "A Bundle is a collection of arbitrary STIX Objects and Marking Definitions grouped together in a single container. "
+    slots:
+      - type
+      - id
+      - bundle_objects
+    slot_usage:
+      type:
+        required: true
+        pattern: "^bundle$"
+      id:
+        required: true
+        pattern: "^bundle--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      bundle_objects:
+        annotations:
+          jsonschema_minItems: "1"
+    notes:
+      - JSON Schema defines bundle objects as a heterogeneous anyOf/oneOf set including custom objects.
+    annotations:
+      jsonschema_rule: anyOf+oneOf
+      validator_hint: validate-bundle-object-members
+      jsonschema_source: schemas/common/bundle.json
+
+  Core:
+    abstract: true
+    is_a: CommonSchemaComponent
+    in_subset:
+      - common
+    description: "Common properties and behavior across all STIX Domain Objects and STIX Relationship Objects. "
+    slots:
+      - type
+      - spec_version
+      - id
+      - created
+      - modified
+      - created_by_ref
+      - labels
+      - revoked
+      - confidence
+      - lang
+      - external_references
+      - object_marking_refs
+      - granular_markings
+      - extensions
+    slot_usage:
+      type:
+        required: true
+      spec_version:
+        required: true
+      id:
+        required: true
+      created:
+        required: true
+        pattern: "T\\d{2}:\\d{2}:\\d{2}\\.\\d{3,}Z$"
+        notes:
+          - STIX core timestamps require millisecond precision.
+      modified:
+        required: true
+        pattern: "T\\d{2}:\\d{2}:\\d{2}\\.\\d{3,}Z$"
+        notes:
+          - STIX core timestamps require millisecond precision.
+      labels:
+        annotations:
+          jsonschema_minItems: "1"
+      external_references:
+        annotations:
+          jsonschema_minItems: "1"
+      object_marking_refs:
+        annotations:
+          jsonschema_minItems: "1"
+      granular_markings:
+        annotations:
+          jsonschema_minItems: "1"
+    annotations:
+      jsonschema_source: schemas/common/core.json
+
+  CyberObservableCore:
+    abstract: true
+    is_a: CommonSchemaComponent
+    in_subset:
+      - common
+    description: "Common properties and behavior across all Cyber Observable Objects. "
+    slots:
+      - type
+      - spec_version
+      - id
+      - object_marking_refs
+      - granular_markings
+      - defanged
+      - extensions
+    slot_usage:
+      type:
+        required: true
+      spec_version:
+        required: true
+      id:
+        required: true
+      object_marking_refs:
+        annotations:
+          jsonschema_minItems: "1"
+      granular_markings:
+        annotations:
+          jsonschema_minItems: "1"
+    annotations:
+      jsonschema_source: schemas/common/cyber-observable-core.json
+
+  Dictionary:
+    is_a: CommonSchemaComponent
+    in_subset:
+      - common
+    description: "A dictionary captures a set of key/value pairs "
+    annotations:
+      jsonschema_source: schemas/common/dictionary.json
+
+  ExtensionDefinition:
+    is_a: Core
+    in_subset:
+      - common
+    description: "The STIX Extension Definition object allows producers of threat intelligence to extend existing STIX objects or to create entirely new STIX objects in a standardized way. "
+    slots:
+      - type
+      - id
+      - name
+      - description
+      - schema
+      - version
+      - extension_types
+      - extension_properties
+    slot_usage:
+      type:
+        pattern: "^extension-definition$"
+      id:
+        pattern: "^extension-definition--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      name:
+        required: true
+      schema:
+        required: true
+      version:
+        required: true
+      extension_types:
+        required: true
+        annotations:
+          jsonschema_minItems: "1"
+      extension_properties:
+        annotations:
+          jsonschema_minItems: "1"
+          jsonschema_conditional_required: "required when extension_types contains toplevel-property-extension"
+    annotations:
+      jsonschema_rule: if-then
+      validator_hint: extension-definition-top-level-property-constraint
+      jsonschema_source: schemas/common/extension-definition.json
+
+  Extension:
+    is_a: CommonSchemaComponent
+    in_subset:
+      - common
+    description: "Converted from common/extension.json"
+    slots:
+      - extension_type
+    slot_usage:
+      extension_type:
+        required: true
+    annotations:
+      jsonschema_minProperties: "1"
+      jsonschema_source: schemas/common/extension.json
+
+  ExternalReference:
+    is_a: CommonSchemaComponent
+    in_subset:
+      - common
+    description: "External references are used to describe pointers to information represented outside of STIX. "
+    slots:
+      - source_name
+      - description
+      - url
+      - hashes
+      - external_id
+    slot_usage:
+      source_name:
+        required: true
+      url:
+        pattern: "^\\w+:"
+    notes:
+      - Upstream JSON Schema uses oneOf branches keyed by source_name; exact branch logic is delegated to validator tooling.
+    annotations:
+      jsonschema_rule: oneOf
+      validator_hint: external-reference-branch-validation
+      jsonschema_source: schemas/common/external-reference.json
+
+  GranularMarking:
+    is_a: CommonSchemaComponent
+    in_subset:
+      - common
+    description: "The granular-marking type defines how the list of marking-definition objects referenced by the marking_refs property to apply to a set of content identified by the list of selectors in the selectors property. "
+    slots:
+      - marking_ref
+      - selectors
+      - lang
+    slot_usage:
+      marking_ref:
+        required: true
+        pattern: "^marking-definition--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      selectors:
+        required: true
+        annotations:
+          jsonschema_minItems: "1"
+    annotations:
+      jsonschema_source: schemas/common/granular-marking.json
+
+  HashesType:
+    is_a: CommonSchemaComponent
+    in_subset:
+      - common
+    description: "The Hashes type represents one or more cryptographic hashes, as a special set of key/value pairs "
+    notes:
+      - JSON Schema defines strict hash key patternProperties with algorithm-specific regex value constraints.
+    annotations:
+      jsonschema_rule: patternProperties+additionalProperties=false
+      validator_hint: validate-hash-key-specific-patterns
+      jsonschema_source: schemas/common/hashes-type.json
+
+  Hex:
+    is_a: CommonSchemaComponent
+    in_subset:
+      - common
+    description: "The hex data type encodes an array of octets (8-bit bytes) as hexadecimal. The string MUST consist of an even number of hexadecimal characters, which are the digits '0' through '9' and the letters 'a' through 'f'. In order to allow pattern matching on custom objects, all properties that use the hex type, the property name MUST end with '_hex'. "
+    annotations:
+      jsonschema_type: string
+      jsonschema_pattern: "^([a-fA-F0-9]{2})+$"
+      jsonschema_source: schemas/common/hex.json
+
+  Identifier:
+    is_a: CommonSchemaComponent
+    in_subset:
+      - common
+    description: "Represents identifiers across the CTI specifications. The format consists of the name of the top-level object being identified, followed by two dashes (--), followed by a UUIDv4. "
+    annotations:
+      backed_by_type: stix_identifier
+      jsonschema_source: schemas/common/identifier.json
+
+  KillChainPhase:
+    is_a: CommonSchemaComponent
+    in_subset:
+      - common
+    description: "The kill-chain-phase represents a phase in a kill chain. "
+    slots:
+      - kill_chain_name
+      - phase_name
+    annotations:
+      jsonschema_source: schemas/common/kill-chain-phase.json
+
+  LanguageContent:
+    is_a: Core
+    in_subset:
+      - common
+    description: "The language-content object represents text content for STIX Objects represented in languages other than that of the original object. "
+    slots:
+      - type
+      - id
+      - object_ref
+      - object_modified
+      - contents
+    slot_usage:
+      type:
+        pattern: "^language-content$"
+      id:
+        pattern: "^language-content--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      object_ref:
+        required: true
+      contents:
+        required: true
+    notes:
+      - object_ref cannot target bundle or language-content IDs.
+    annotations:
+      jsonschema_rule: not
+      validator_hint: language-content-object-ref-restrictions
+      jsonschema_source: schemas/common/language-content.json
+
+  MarkingDefinition:
+    is_a: CommonSchemaComponent
+    in_subset:
+      - common
+    description: "The marking-definition object represents a specific marking. "
+    slots:
+      - type
+      - spec_version
+      - id
+      - name
+      - created_by_ref
+      - created
+      - external_references
+      - object_marking_refs
+      - granular_markings
+      - extensions
+      - definition_type
+      - definition
+      - statement
+    slot_usage:
+      type:
+        required: true
+        pattern: "^marking-definition$"
+      spec_version:
+        required: true
+      id:
+        required: true
+        pattern: "^marking-definition--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      created:
+        required: true
+      object_marking_refs:
+        pattern: "^marking-definition--"
+        annotations:
+          jsonschema_minItems: "1"
+      external_references:
+        annotations:
+          jsonschema_minItems: "1"
+      granular_markings:
+        annotations:
+          jsonschema_minItems: "1"
+      definition_type:
+        annotations:
+          jsonschema_conditional_required: "required unless extensions present"
+      definition:
+        annotations:
+          jsonschema_conditional_required: "required unless extensions present"
+    notes:
+      - TLP and statement variants use oneOf/if-then logic in JSON Schema and are represented with validator hints.
+    annotations:
+      jsonschema_rule: oneOf+if-then
+      validator_hint: enforce-marking-definition-branches
+      jsonschema_source: schemas/common/marking-definition.json
+
+  Properties:
+    is_a: CommonSchemaComponent
+    in_subset:
+      - common
+    description: "Rules for custom properties "
+    annotations:
+      jsonschema_rule: patternProperties+additionalProperties=false
+      validator_hint: validate-custom-properties
+      jsonschema_source: schemas/common/properties.json
+
+  Timestamp:
+    is_a: CommonSchemaComponent
+    in_subset:
+      - common
+    description: "Represents timestamps across the CTI specifications. The format is an RFC3339 timestamp, with a required timezone specification of 'Z'. "
+    annotations:
+      jsonschema_type: string
+      jsonschema_pattern: "^[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60)(\\.[0-9]+)?Z$"
+      jsonschema_source: schemas/common/timestamp.json
+
+  UrlRegex:
+    is_a: CommonSchemaComponent
+    in_subset:
+      - common
+    description: "Matches a URI according to RFC 3986. "
+    annotations:
+      jsonschema_type: string
+      jsonschema_format: uri
+      jsonschema_source: schemas/common/url-regex.json
+
+  Artifact:
+    is_a: CyberObservableObject
+    in_subset:
+      - observables
+    description: "The Artifact Object permits capturing an array of bytes (8-bits), as a base64-encoded string string, or linking to a file-like payload. "
+    slots:
+      - mime_type
+      - payload_bin
+      - url
+      - hashes
+      - encryption_algorithm
+      - decryption_key
+    slot_usage:
+      id:
+        pattern: "^artifact--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      type:
+        pattern: "^artifact$"
+      mime_type:
+        pattern: "^(application|audio|font|image|message|model|multipart|text|video)/[a-zA-Z0-9.+_-]+"
+    notes:
+      - JSON Schema enforces oneOf for payload_bin vs url+hashes and conditional decryption rules.
+    annotations:
+      jsonschema_rule: oneOf
+      validator_hint: enforce-artifact-exclusive-payload-and-encryption-rules
+      jsonschema_source: schemas/observables/artifact.json
+
+  AutonomousSystem:
+    is_a: CyberObservableObject
+    in_subset:
+      - observables
+    description: "The AS object represents the properties of an Autonomous Systems (AS). "
+    slots:
+      - number
+      - name
+      - rir
+    slot_usage:
+      id:
+        pattern: "^autonomous-system--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      type:
+        pattern: "^autonomous-system$"
+      number:
+        required: true
+    annotations:
+      jsonschema_source: schemas/observables/autonomous-system.json
+
+  Directory:
+    is_a: CyberObservableObject
+    in_subset:
+      - observables
+    description: "The Directory Object represents the properties common to a file system directory. "
+    slots:
+      - path
+      - path_enc
+      - ctime
+      - mtime
+      - atime
+      - contains_refs
+    slot_usage:
+      id:
+        pattern: "^directory--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      type:
+        pattern: "^directory$"
+      path:
+        required: true
+      contains_refs:
+        annotations:
+          jsonschema_minItems: "1"
+    annotations:
+      jsonschema_source: schemas/observables/directory.json
+
+  DomainName:
+    is_a: CyberObservableObject
+    in_subset:
+      - observables
+    description: "The Domain Name represents the properties of a network domain name. "
+    slots:
+      - value
+      - resolves_to_refs
+    slot_usage:
+      id:
+        pattern: "^domain-name--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      type:
+        pattern: "^domain-name$"
+      value:
+        required: true
+      resolves_to_refs:
+        annotations:
+          jsonschema_minItems: "1"
+    annotations:
+      jsonschema_source: schemas/observables/domain-name.json
+
+  EmailAddr:
+    is_a: CyberObservableObject
+    in_subset:
+      - observables
+    description: "The Email Address Object represents a single email address. "
+    slots:
+      - value
+      - display_name
+      - belongs_to_ref
+    slot_usage:
+      id:
+        pattern: "^email-addr--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      type:
+        pattern: "^email-addr$"
+      value:
+        required: true
+        pattern: "^[^@]+@[^@]+$"
+    annotations:
+      jsonschema_source: schemas/observables/email-addr.json
+
+  EmailMessage:
+    is_a: CyberObservableObject
+    in_subset:
+      - observables
+    description: "The Email Message Object represents an instance of an email message. "
+    slots:
+      - email_date
+      - content_type
+      - from_ref
+      - sender_ref
+      - to_refs
+      - cc_refs
+      - bcc_refs
+      - message_id
+      - subject
+      - received_lines
+      - additional_header_fields
+      - raw_email_ref
+      - is_multipart
+      - body
+      - body_multipart
+    slot_usage:
+      id:
+        pattern: "^email-message--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      type:
+        pattern: "^email-message$"
+      to_refs:
+        annotations:
+          jsonschema_minItems: "1"
+      cc_refs:
+        annotations:
+          jsonschema_minItems: "1"
+      bcc_refs:
+        annotations:
+          jsonschema_minItems: "1"
+    notes:
+      - JSON Schema includes oneOf multipart semantics between body and body_multipart.
+    annotations:
+      jsonschema_rule: oneOf
+      validator_hint: enforce-email-message-multipart-constraints
+      jsonschema_source: schemas/observables/email-message.json
+
+  File:
+    is_a: CyberObservableObject
+    in_subset:
+      - observables
+    description: "The File Object represents the properties of a file. "
+    slots:
+      - type
+      - id
+      - hashes
+      - size
+      - name
+      - name_enc
+      - magic_number_hex
+      - mime_type
+      - ctime
+      - mtime
+      - atime
+      - parent_directory_ref
+      - contains_refs
+      - content_ref
+      - extensions
+    slot_usage:
+      id:
+        pattern: "^file--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      type:
+        pattern: "^file$"
+      contains_refs:
+        annotations:
+          jsonschema_minItems: "1"
+    notes:
+      - JSON Schema requires at least one of hashes or name.
+    annotations:
+      jsonschema_rule: anyOf
+      exactly_one_of_hint: "hashes|name-at-least-one"
+      jsonschema_source: schemas/observables/file.json
+
+  Ipv4Addr:
+    is_a: CyberObservableObject
+    in_subset:
+      - observables
+    description: "The IPv4 Address Object represents one or more IPv4 addresses expressed using CIDR notation. "
+    slots:
+      - value
+      - resolves_to_refs
+      - belongs_to_refs
+    slot_usage:
+      id:
+        pattern: "^ipv4-addr--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      type:
+        pattern: "^ipv4-addr$"
+      value:
+        required: true
+        pattern: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\\/(3[0-2]|[1-2][0-9]|[0-9]))?$"
+      resolves_to_refs:
+        annotations:
+          jsonschema_minItems: "1"
+      belongs_to_refs:
+        annotations:
+          jsonschema_minItems: "1"
+    annotations:
+      jsonschema_source: schemas/observables/ipv4-addr.json
+
+  Ipv6Addr:
+    is_a: CyberObservableObject
+    in_subset:
+      - observables
+    description: "The IPv6 Address Object represents one or more IPv6 addresses expressed using CIDR notation. "
+    slots:
+      - value
+      - resolves_to_refs
+      - belongs_to_refs
+    slot_usage:
+      id:
+        pattern: "^ipv6-addr--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      type:
+        pattern: "^ipv6-addr$"
+      value:
+        required: true
+      resolves_to_refs:
+        annotations:
+          jsonschema_minItems: "1"
+      belongs_to_refs:
+        annotations:
+          jsonschema_minItems: "1"
+    annotations:
+      jsonschema_source: schemas/observables/ipv6-addr.json
+
+  MacAddr:
+    is_a: CyberObservableObject
+    in_subset:
+      - observables
+    description: "The MAC Address Object represents a single Media Access Control (MAC) address. "
+    slots:
+      - value
+    slot_usage:
+      id:
+        pattern: "^mac-addr--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      type:
+        pattern: "^mac-addr$"
+      value:
+        required: true
+        pattern: "^([0-9a-f]{2}[:]){5}([0-9a-f]{2})$"
+    annotations:
+      jsonschema_source: schemas/observables/mac-addr.json
+
+  Mutex:
+    is_a: CyberObservableObject
+    in_subset:
+      - observables
+    description: "The Mutex Object represents the properties of a mutual exclusion (mutex) object. "
+    slot_usage:
+      id:
+        pattern: "^mutex--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      type:
+        pattern: "^mutex$"
+      name:
+        required: true
+    annotations:
+      jsonschema_source: schemas/observables/mutex.json
+
+  NetworkTraffic:
+    is_a: CyberObservableObject
+    in_subset:
+      - observables
+    description: "The Network Traffic Object represents arbitrary network traffic that originates from a source and is addressed to a destination. "
+    slots:
+      - start
+      - end
+      - src_ref
+      - dst_ref
+      - src_port
+      - dst_port
+      - protocols
+      - src_byte_count
+      - dst_byte_count
+      - src_packets
+      - dst_packets
+      - ipfix
+      - src_payload_ref
+      - dst_payload_ref
+      - encapsulates_refs
+      - encapsulated_by_ref
+      - is_active
+    slot_usage:
+      id:
+        pattern: "^network-traffic--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      type:
+        pattern: "^network-traffic$"
+      protocols:
+        required: true
+        annotations:
+          jsonschema_minItems: "1"
+      encapsulates_refs:
+        annotations:
+          jsonschema_minItems: "1"
+    notes:
+      - JSON Schema requires at least one of src_ref or dst_ref and constrains is_active/end combinations.
+    annotations:
+      jsonschema_rule: anyOf+oneOf
+      validator_hint: enforce-network-traffic-endpoint-and-active-rules
+      jsonschema_source: schemas/observables/network-traffic.json
+
+  Process:
+    is_a: CyberObservableObject
+    in_subset:
+      - observables
+    description: "The Process Object represents common properties of an instance of a computer program as executed on an operating system. "
+    slots:
+      - is_hidden
+      - pid
+      - created_time
+      - cwd
+      - command_line
+      - environment_variables
+      - opened_connection_refs
+      - creator_user_ref
+      - image_ref
+      - parent_ref
+      - child_refs
+    slot_usage:
+      id:
+        pattern: "^process--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      type:
+        pattern: "^process$"
+      opened_connection_refs:
+        annotations:
+          jsonschema_minItems: "1"
+      child_refs:
+        annotations:
+          jsonschema_minItems: "1"
+    notes:
+      - JSON Schema uses anyOf presence constraints across many optional process fields.
+    annotations:
+      jsonschema_rule: anyOf
+      validator_hint: process-any-of-field-presence
+      jsonschema_source: schemas/observables/process.json
+
+  Software:
+    is_a: CyberObservableObject
+    in_subset:
+      - observables
+    description: "The Software Object represents high-level properties associated with software, including software products. "
+    slots:
+      - cpe
+      - swid
+      - languages
+      - vendor
+      - version
+    slot_usage:
+      id:
+        pattern: "^software--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      type:
+        pattern: "^software$"
+      name:
+        required: true
+      languages:
+        annotations:
+          jsonschema_minItems: "1"
+    annotations:
+      jsonschema_source: schemas/observables/software.json
+
+  Url:
+    is_a: CyberObservableObject
+    in_subset:
+      - observables
+    description: "The URL Object represents the properties of a uniform resource locator (URL). "
+    slots:
+      - value
+    slot_usage:
+      id:
+        pattern: "^url--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      type:
+        pattern: "^url$"
+      value:
+        required: true
+    annotations:
+      jsonschema_source: schemas/observables/url.json
+
+  UserAccount:
+    is_a: CyberObservableObject
+    in_subset:
+      - observables
+    description: "The User Account Object represents an instance of any type of user account, including but not limited to operating system, device, messaging service, and social media platform accounts. "
+    slots:
+      - user_id
+      - credential
+      - account_login
+      - account_type
+      - display_name
+      - is_service_account
+      - is_privileged
+      - can_escalate_privs
+      - is_disabled
+      - account_created
+      - account_expires
+      - credential_last_changed
+      - account_first_login
+      - account_last_login
+    slot_usage:
+      id:
+        pattern: "^user-account--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      type:
+        pattern: "^user-account$"
+    notes:
+      - JSON Schema defines anyOf presence constraints requiring at least one key identity/account property.
+    annotations:
+      jsonschema_rule: anyOf
+      validator_hint: user-account-at-least-one-property
+      jsonschema_source: schemas/observables/user-account.json
+
+  WindowsRegistryValue:
+    is_a: CommonSchemaComponent
+    in_subset:
+      - common
+    description: "Structured value entry under a Windows registry key."
+    slots:
+      - registry_value_name
+      - registry_value_data
+      - registry_value_data_type
+    notes:
+      - Source JSON schema uses anyOf to require at least one of name, data, or data_type.
+    annotations:
+      jsonschema_rule: anyOf
+      validator_hint: windows-registry-value-at-least-one-field
+      jsonschema_source: schemas/observables/windows-registry-key.json#/definitions/windows-registry-value-type
+
+  MimePartType:
+    is_a: CommonSchemaComponent
+    in_subset:
+      - common
+    description: "Specifies a component of a multi-part email body as defined in the email-message observable."
+    slots:
+      - body
+      - body_raw_ref
+      - content_type
+      - content_disposition
+    notes:
+      - JSON Schema requires exactly one of body (for text/* content) or body_raw_ref (for non-text content).
+    annotations:
+      jsonschema_rule: oneOf
+      validator_hint: enforce-mime-part-body-or-body-raw-ref-exclusive
+      jsonschema_source: schemas/observables/email-message.json#/definitions/mime-part-type
+
+  # ── Observable Extension Sub-Classes ──────────────────────────────────────
+  # These represent the structured extension payloads keyed by extension name
+  # in the parent object's extensions dictionary (patternProperties in JSON Schema).
+
+  WindowsProcessExt:
+    is_a: CommonSchemaComponent
+    in_subset:
+      - observables
+    description: "The Windows Process extension specifies properties specific to Windows processes. Used as the value of the 'windows-process-ext' key in a Process object's extensions dictionary."
+    slots:
+      - aslr_enabled
+      - dep_enabled
+      - priority
+      - owner_sid
+      - window_title
+      - startup_info
+      - integrity_level
+    annotations:
+      stix_extension_key: windows-process-ext
+      stix_parent_type: process
+      jsonschema_source: schemas/observables/process.json
+
+  WindowsServiceExt:
+    is_a: CommonSchemaComponent
+    in_subset:
+      - observables
+    description: "The Windows Service extension specifies properties specific to Windows services. Used as the value of the 'windows-service-ext' key in a Process object's extensions dictionary."
+    slots:
+      - service_name
+      - descriptions
+      - display_name
+      - group_name
+      - start_type
+      - service_dll_refs
+      - service_type
+      - service_status
+    slot_usage:
+      service_dll_refs:
+        annotations:
+          jsonschema_minItems: "1"
+      descriptions:
+        annotations:
+          jsonschema_minItems: "1"
+    annotations:
+      stix_extension_key: windows-service-ext
+      stix_parent_type: process
+      jsonschema_source: schemas/observables/process.json
+
+  HttpRequestExt:
+    is_a: CommonSchemaComponent
+    in_subset:
+      - observables
+    description: "The HTTP Request extension specifies a default extension for capturing network traffic properties specific to HTTP requests. Used as the value of the 'http-request-ext' key in a NetworkTraffic object's extensions dictionary."
+    slots:
+      - request_method
+      - request_value
+      - request_version
+      - request_header
+      - message_body_length
+      - message_body_data_ref
+    slot_usage:
+      request_method:
+        required: true
+      request_value:
+        required: true
+    annotations:
+      stix_extension_key: http-request-ext
+      stix_parent_type: network-traffic
+      jsonschema_source: schemas/observables/network-traffic.json
+
+  IcmpExt:
+    is_a: CommonSchemaComponent
+    in_subset:
+      - observables
+    description: "The ICMP extension specifies a default extension for capturing network traffic properties specific to ICMP. Used as the value of the 'icmp-ext' key in a NetworkTraffic object's extensions dictionary."
+    slots:
+      - icmp_type_hex
+      - icmp_code_hex
+    slot_usage:
+      icmp_type_hex:
+        required: true
+      icmp_code_hex:
+        required: true
+    annotations:
+      stix_extension_key: icmp-ext
+      stix_parent_type: network-traffic
+      jsonschema_source: schemas/observables/network-traffic.json
+
+  SocketExt:
+    is_a: CommonSchemaComponent
+    in_subset:
+      - observables
+    description: "The Socket extension specifies a default extension for capturing network traffic properties specific to network sockets. Used as the value of the 'socket-ext' key in a NetworkTraffic object's extensions dictionary."
+    slots:
+      - address_family
+      - is_blocking
+      - is_listening
+      - socket_options
+      - socket_type
+      - socket_descriptor
+      - socket_handle
+    slot_usage:
+      address_family:
+        required: true
+    annotations:
+      stix_extension_key: socket-ext
+      stix_parent_type: network-traffic
+      jsonschema_source: schemas/observables/network-traffic.json
+
+  TcpExt:
+    is_a: CommonSchemaComponent
+    in_subset:
+      - observables
+    description: "The TCP extension specifies a default extension for capturing network traffic properties specific to TCP. Used as the value of the 'tcp-ext' key in a NetworkTraffic object's extensions dictionary."
+    slots:
+      - src_flags_hex
+      - dst_flags_hex
+    annotations:
+      stix_extension_key: tcp-ext
+      stix_parent_type: network-traffic
+      jsonschema_source: schemas/observables/network-traffic.json
+
+  UnixAccountExt:
+    is_a: CommonSchemaComponent
+    in_subset:
+      - observables
+    description: "The Unix Account extension specifies a default extension for capturing the additional information for an account on a Unix system. Used as the value of the 'unix-account-ext' key in a UserAccount object's extensions dictionary."
+    slots:
+      - gid
+      - groups
+      - home_dir
+      - shell
+    slot_usage:
+      groups:
+        annotations:
+          jsonschema_minItems: "1"
+    annotations:
+      stix_extension_key: unix-account-ext
+      stix_parent_type: user-account
+      jsonschema_source: schemas/observables/user-account.json
+
+  X509V3ExtensionsType:
+    is_a: CommonSchemaComponent
+    in_subset:
+      - common
+    description: "Specifies any standard X.509 v3 extensions that may be used in the certificate."
+    slots:
+      - basic_constraints
+      - name_constraints
+      - policy_constraints
+      - key_usage
+      - extended_key_usage
+      - subject_key_identifier
+      - authority_key_identifier
+      - subject_alternative_name
+      - issuer_alternative_name
+      - subject_directory_attributes
+      - crl_distribution_points
+      - inhibit_any_policy
+      - private_key_usage_period_not_before
+      - private_key_usage_period_not_after
+      - certificate_policies
+      - policy_mappings
+    annotations:
+      jsonschema_source: schemas/observables/x509-certificate.json#/definitions/x509-v3-extensions-type
+
+  AlternateDataStreamType:
+    is_a: CommonSchemaComponent
+    in_subset:
+      - common
+    description: "Specifies properties of an NTFS alternate data stream."
+    slots:
+      - ads_name
+      - ads_size
+      - ads_hashes
+    slot_usage:
+      ads_name:
+        required: true
+    annotations:
+      jsonschema_source: schemas/observables/file.json#/definitions/ntfs-ext/properties/alternate_data_streams/items
+
+  NtfsExt:
+    is_a: CommonSchemaComponent
+    in_subset:
+      - observables
+    description: "The NTFS extension specifies a default extension for capturing properties specific to the storage of the file on the NTFS file system."
+    slots:
+      - sid
+      - alternate_data_streams
+    annotations:
+      stix_extension_key: ntfs-ext
+      stix_parent_type: file
+      jsonschema_source: schemas/observables/file.json
+
+  RasterImageExt:
+    is_a: CommonSchemaComponent
+    in_subset:
+      - observables
+    description: "The Raster Image extension specifies a default extension for capturing properties specific to raster image files."
+    slots:
+      - image_height
+      - image_width
+      - bits_per_pixel
+      - exif_tags
+    annotations:
+      stix_extension_key: raster-image-ext
+      stix_parent_type: file
+      jsonschema_source: schemas/observables/file.json
+
+  PdfExt:
+    is_a: CommonSchemaComponent
+    in_subset:
+      - observables
+    description: "The PDF extension specifies a default extension for capturing properties specific to PDF files."
+    slots:
+      - version
+      - is_optimized
+      - document_info_dict
+      - pdfid0
+      - pdfid1
+    annotations:
+      stix_extension_key: pdf-ext
+      stix_parent_type: file
+      jsonschema_source: schemas/observables/file.json
+
+  ArchiveExt:
+    is_a: CommonSchemaComponent
+    in_subset:
+      - observables
+    description: "The Archive File extension specifies a default extension for capturing properties specific to archive files, such as ZIP."
+    slots:
+      - contains_refs
+      - comment
+    slot_usage:
+      contains_refs:
+        required: true
+        annotations:
+          jsonschema_minItems: "1"
+    annotations:
+      stix_extension_key: archive-ext
+      stix_parent_type: file
+      jsonschema_source: schemas/observables/file.json
+
+  WindowsPESection:
+    is_a: CommonSchemaComponent
+    in_subset:
+      - observables
+    description: "The Windows PE Section type specifies metadata about a PE file section."
+    slots:
+      - pe_section_name
+      - pe_section_size
+      - entropy
+      - pe_section_hashes
+    slot_usage:
+      pe_section_name:
+        required: true
+    annotations:
+      jsonschema_source: schemas/observables/file.json#/definitions/windows-pe-section
+
+  WindowsPEOptionalHeaderType:
+    is_a: CommonSchemaComponent
+    in_subset:
+      - observables
+    description: "The Windows PE Optional Header type represents the properties of the PE optional header. At least one property from this type MUST be included."
+    slots:
+      - magic_hex
+      - major_linker_version
+      - minor_linker_version
+      - size_of_code
+      - size_of_initialized_data
+      - size_of_uninitialized_data
+      - address_of_entry_point
+      - base_of_code
+      - base_of_data
+      - image_base
+      - section_alignment
+      - file_alignment
+      - major_os_version
+      - minor_os_version
+      - major_image_version
+      - minor_image_version
+      - major_subsystem_version
+      - minor_subsystem_version
+      - win32_version_value_hex
+      - size_of_image
+      - size_of_headers
+      - checksum_hex
+      - subsystem_hex
+      - dll_characteristics_hex
+      - size_of_stack_reserve
+      - size_of_stack_commit
+      - size_of_heap_reserve
+      - size_of_heap_commit
+      - loader_flags_hex
+      - number_of_rva_and_sizes
+    notes:
+      - JSON Schema requires at least one property (minProperties=1).
+    annotations:
+      jsonschema_rule: minProperties=1
+      jsonschema_source: schemas/observables/file.json#/definitions/windows-pe-optional-header-type
+
+  PEBinaryExt:
+    is_a: CommonSchemaComponent
+    in_subset:
+      - observables
+    description: "The Windows PE Binary File extension specifies a default extension for capturing properties specific to Windows portable executable (PE) files."
+    slots:
+      - pe_type
+      - imphash
+      - machine_hex
+      - number_of_sections
+      - time_date_stamp
+      - pointer_to_symbol_table_hex
+      - number_of_symbols
+      - size_of_optional_header
+      - characteristics_hex
+      - file_header_hashes
+      - optional_header
+      - sections
+    slot_usage:
+      pe_type:
+        required: true
+      sections:
+        annotations:
+          jsonschema_minItems: "1"
+    annotations:
+      stix_extension_key: windows-pebinary-ext
+      stix_parent_type: file
+      jsonschema_source: schemas/observables/file.json
+  
+  WindowsRegistryKey:
+    is_a: CyberObservableObject
+    in_subset:
+      - observables
+    description: "The Registry Key Object represents the properties of a Windows registry key. "
+    slots:
+      - key
+      - values
+      - modified_time
+      - creator_user_ref
+      - number_of_subkeys
+    slot_usage:
+      id:
+        pattern: "^windows-registry-key--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      type:
+        pattern: "^windows-registry-key$"
+      key:
+        pattern: "^(?!HKLM|HKCC|HKCR|HKCU|HKU|hklm|hkcc|hkcr|hkcu|hku).*$"
+    notes:
+      - JSON Schema uses anyOf for key/value/modified/creator/subkey presence requirements.
+    annotations:
+      jsonschema_rule: anyOf
+      validator_hint: registry-key-presence-requirements
+      jsonschema_source: schemas/observables/windows-registry-key.json
+
+  X509Certificate:
+    is_a: CyberObservableObject
+    in_subset:
+      - observables
+    description: "The X509 Certificate Object represents the properties of an X.509 certificate. "
+    slots:
+      - is_self_signed
+      - hashes
+      - version
+      - serial_number
+      - signature_algorithm
+      - issuer
+      - validity_not_before
+      - validity_not_after
+      - subject
+      - subject_public_key_algorithm
+      - subject_public_key_modulus
+      - subject_public_key_exponent
+      - x509_v3_extensions
+    slot_usage:
+      id:
+        pattern: "^x509-certificate--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      type:
+        pattern: "^x509-certificate$"
+    notes:
+      - JSON Schema defines anyOf requiring at least one certificate detail field.
+    annotations:
+      jsonschema_rule: anyOf
+      validator_hint: x509-at-least-one-detail-field
+      jsonschema_source: schemas/observables/x509-certificate.json
+
+  AttackPattern:
+    is_a: StixDomainObject
+    in_subset:
+      - sdos
+    description: "Attack Patterns are a type of TTP that describe ways that adversaries attempt to compromise targets. "
+    slots:
+      - aliases
+      - kill_chain_phases
+    slot_usage:
+      id:
+        pattern: "^attack-pattern--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      type:
+        pattern: "^attack-pattern$"
+      name:
+        required: true
+      kill_chain_phases:
+        annotations:
+          jsonschema_minItems: "1"
+    annotations:
+      jsonschema_source: schemas/sdos/attack-pattern.json
+
+  Campaign:
+    is_a: StixDomainObject
+    in_subset:
+      - sdos
+    description: "A Campaign is a grouping of adversary behavior that describes a set of malicious activities or attacks that occur over a period of time against a specific set of targets. "
+    slots:
+      - aliases
+      - first_seen
+      - last_seen
+      - objective
+    slot_usage:
+      id:
+        pattern: "^campaign--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      type:
+        pattern: "^campaign$"
+      name:
+        required: true
+      aliases:
+        annotations:
+          jsonschema_minItems: "1"
+    annotations:
+      jsonschema_source: schemas/sdos/campaign.json
+
+  CourseOfAction:
+    is_a: StixDomainObject
+    in_subset:
+      - sdos
+    description: "A Course of Action is an action taken either to prevent an attack or to respond to an attack that is in progress. "
+    slot_usage:
+      id:
+        pattern: "^course-of-action--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      type:
+        pattern: "^course-of-action$"
+      name:
+        required: true
+    annotations:
+      jsonschema_source: schemas/sdos/course-of-action.json
+
+  Grouping:
+    is_a: StixDomainObject
+    in_subset:
+      - sdos
+    description: "A Grouping object explicitly asserts that the referenced STIX Objects have a shared content. "
+    slots:
+      - context
+      - object_refs
+    slot_usage:
+      id:
+        pattern: "^grouping--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      type:
+        pattern: "^grouping$"
+      context:
+        required: true
+      object_refs:
+        required: true
+        annotations:
+          jsonschema_minItems: "1"
+    annotations:
+      jsonschema_source: schemas/sdos/grouping.json
+
+  Identity:
+    is_a: StixDomainObject
+    in_subset:
+      - sdos
+    description: "Identities can represent actual individuals, organizations, or groups (e.g., ACME, Inc.) as well as classes of individuals, organizations, or groups. "
+    slots:
+      - roles
+      - identity_class
+      - sectors
+      - contact_information
+    slot_usage:
+      id:
+        pattern: "^identity--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      type:
+        pattern: "^identity$"
+      name:
+        required: true
+      roles:
+        annotations:
+          jsonschema_minItems: "1"
+      sectors:
+        annotations:
+          jsonschema_minItems: "1"
+    annotations:
+      jsonschema_source: schemas/sdos/identity.json
+
+  Incident:
+    is_a: StixDomainObject
+    in_subset:
+      - sdos
+    description: "The Incident object in STIX 2.1 is a stub, to be expanded in future STIX 2 releases. "
+    slot_usage:
+      id:
+        pattern: "^incident--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      type:
+        pattern: "^incident$"
+      name:
+        required: true
+    annotations:
+      jsonschema_source: schemas/sdos/incident.json
+
+  Indicator:
+    is_a: StixDomainObject
+    in_subset:
+      - sdos
+    description: "Indicators contain a pattern that can be used to detect suspicious or malicious cyber activity. "
+    slots:
+      - indicator_types
+      - pattern
+      - pattern_type
+      - pattern_version
+      - valid_from
+      - valid_until
+      - kill_chain_phases
+    slot_usage:
+      id:
+        pattern: "^indicator--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      type:
+        pattern: "^indicator$"
+      pattern:
+        required: true
+      pattern_type:
+        required: true
+      valid_from:
+        required: true
+      indicator_types:
+        annotations:
+          jsonschema_minItems: "1"
+      kill_chain_phases:
+        annotations:
+          jsonschema_minItems: "1"
+    notes:
+      - pattern syntax and parse validity are enforced by the STIX pattern ANTLR grammar.
+    annotations:
+      jsonschema_source: schemas/sdos/indicator.json
+      source: https://github.com/oasis-open/cti-stix2-json-schemas/blob/master/pattern_grammar/STIXPattern.g4
+      validator_hint: validate-indicator-pattern-with-antlr
+
+  Infrastructure:
+    is_a: StixDomainObject
+    in_subset:
+      - sdos
+    description: "Infrastructure objects describe systems, software services, and associated physical or virtual resources. "
+    slots:
+      - infrastructure_types
+      - aliases
+      - kill_chain_phases
+      - first_seen
+      - last_seen
+    slot_usage:
+      id:
+        pattern: "^infrastructure--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      type:
+        pattern: "^infrastructure$"
+      name:
+        required: true
+      infrastructure_types:
+        annotations:
+          jsonschema_minItems: "1"
+      aliases:
+        annotations:
+          jsonschema_minItems: "1"
+      kill_chain_phases:
+        annotations:
+          jsonschema_minItems: "1"
+    annotations:
+      jsonschema_source: schemas/sdos/infrastructure.json
+
+  IntrusionSet:
+    is_a: StixDomainObject
+    in_subset:
+      - sdos
+    description: "An Intrusion Set is a grouped set of adversary behavior and resources with common properties that is believed to be orchestrated by a single organization. "
+    slots:
+      - aliases
+      - first_seen
+      - last_seen
+      - goals
+      - resource_level
+      - primary_motivation
+      - secondary_motivations
+    slot_usage:
+      id:
+        pattern: "^intrusion-set--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      type:
+        pattern: "^intrusion-set$"
+      name:
+        required: true
+      aliases:
+        annotations:
+          jsonschema_minItems: "1"
+      goals:
+        annotations:
+          jsonschema_minItems: "1"
+      secondary_motivations:
+        annotations:
+          jsonschema_minItems: "1"
+    annotations:
+      jsonschema_source: schemas/sdos/intrusion-set.json
+
+  Location:
+    is_a: StixDomainObject
+    in_subset:
+      - sdos
+    description: "A Location represents a geographic location. The location may be described as any, some or all of the following: region (e.g., North America), civic address (e.g. New York, US), latitude and longitude. "
+    slots:
+      - latitude
+      - longitude
+      - precision
+      - region
+      - country
+      - administrative_area
+      - city
+      - street_address
+      - postal_code
+    slot_usage:
+      id:
+        pattern: "^location--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      type:
+        pattern: "^location$"
+    notes:
+      - JSON Schema requires one of region, country, or latitude+longitude and constrains precision usage.
+    annotations:
+      jsonschema_rule: anyOf+oneOf
+      validator_hint: enforce-location-coordinate-and-region-rules
+      jsonschema_source: schemas/sdos/location.json
+
+  MalwareAnalysis:
+    is_a: StixDomainObject
+    in_subset:
+      - sdos
+    description: "Malware Analysis captures the metadata and results of a particular analysis performed (static or dynamic) on the malware instance or family. "
+    slots:
+      - product
+      - version
+      - configuration_version
+      - modules
+      - analysis_engine_version
+      - analysis_definition_version
+      - submitted
+      - analysis_started
+      - analysis_ended
+      - result_name
+      - result
+      - host_vm_ref
+      - operating_system_ref
+      - installed_software_refs
+      - analysis_sco_refs
+      - sample_ref
+    slot_usage:
+      id:
+        pattern: "^malware-analysis--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      type:
+        pattern: "^malware-analysis$"
+      product:
+        required: true
+      modules:
+        annotations:
+          jsonschema_minItems: "1"
+      installed_software_refs:
+        pattern: "^software--"
+        annotations:
+          jsonschema_minItems: "1"
+      analysis_sco_refs:
+        annotations:
+          jsonschema_minItems: "1"
+      host_vm_ref:
+        pattern: "^software--"
+      operating_system_ref:
+        pattern: "^software--"
+      sample_ref:
+        pattern: "^(artifact--|file--|network-traffic--)"
+    notes:
+      - JSON Schema requires either result or analysis_sco_refs.
+    annotations:
+      jsonschema_rule: anyOf
+      validator_hint: malware-analysis-result-or-analysis-sco-refs
+      jsonschema_source: schemas/sdos/malware-analysis.json
+
+  Malware:
+    is_a: StixDomainObject
+    in_subset:
+      - sdos
+    description: "Malware is a type of TTP that is also known as malicious code and malicious software, refers to a program that is inserted into a system, usually covertly, with the intent of compromising the confidentiality, integrity, or availability of the victim's data, applications, or operating system (OS) or of otherwise annoying or disrupting the victim. "
+    slots:
+      - aliases
+      - first_seen
+      - last_seen
+      - operating_system_refs
+      - architecture_execution_envs
+      - implementation_languages
+      - capabilities
+      - sample_refs
+      - malware_types
+      - is_family
+      - kill_chain_phases
+    slot_usage:
+      id:
+        pattern: "^malware--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      type:
+        pattern: "^malware$"
+      is_family:
+        required: true
+      malware_types:
+        annotations:
+          jsonschema_minItems: "1"
+      operating_system_refs:
+        pattern: "^software--"
+        annotations:
+          jsonschema_minItems: "1"
+      architecture_execution_envs:
+        annotations:
+          jsonschema_minItems: "1"
+      implementation_languages:
+        annotations:
+          jsonschema_minItems: "1"
+      capabilities:
+        annotations:
+          jsonschema_minItems: "1"
+      sample_refs:
+        annotations:
+          jsonschema_minItems: "1"
+      aliases:
+        annotations:
+          jsonschema_minItems: "1"
+      kill_chain_phases:
+        annotations:
+          jsonschema_minItems: "1"
+    notes:
+      - JSON Schema includes oneOf semantics where name is required when is_family=true.
+    annotations:
+      jsonschema_rule: oneOf
+      validator_hint: enforce-malware-family-name-constraint
+      jsonschema_source: schemas/sdos/malware.json
+
+  Note:
+    is_a: StixDomainObject
+    in_subset:
+      - sdos
+    description: "A Note is a comment or note containing informative text to help explain the context of one or more STIX Objects (SDOs or SROs) or to provide additional analysis that is not contained in the original object. "
+    slots:
+      - abstract
+      - content
+      - authors
+      - object_refs
+    slot_usage:
+      id:
+        pattern: "^note--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      type:
+        pattern: "^note$"
+      content:
+        required: true
+      object_refs:
+        required: true
+        annotations:
+          jsonschema_minItems: "1"
+      authors:
+        annotations:
+          jsonschema_minItems: "1"
+    annotations:
+      jsonschema_source: schemas/sdos/note.json
+
+  ObservedData:
+    is_a: StixDomainObject
+    in_subset:
+      - sdos
+    description: "Observed data conveys information that was observed on systems and networks, such as log data or network traffic, using the Cyber Observable specification. "
+    slots:
+      - first_observed
+      - last_observed
+      - number_observed
+      - objects
+      - object_refs
+    slot_usage:
+      id:
+        pattern: "^observed-data--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      type:
+        pattern: "^observed-data$"
+      first_observed:
+        required: true
+      last_observed:
+        required: true
+      number_observed:
+        required: true
+      object_refs:
+        annotations:
+          jsonschema_minItems: "1"
+    notes:
+      - JSON Schema requires one of objects or object_refs.
+    annotations:
+      jsonschema_rule: oneOf
+      validator_hint: observed-data-objects-or-object-refs
+      jsonschema_source: schemas/sdos/observed-data.json
+
+  Opinion:
+    is_a: StixDomainObject
+    in_subset:
+      - sdos
+    description: "An Opinion is an assessment of the correctness of the information in a STIX Object produced by a different entity and captures the level of agreement or disagreement using a fixed scale. "
+    slots:
+      - explanation
+      - authors
+      - object_refs
+      - opinion
+    slot_usage:
+      id:
+        pattern: "^opinion--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      type:
+        pattern: "^opinion$"
+      object_refs:
+        required: true
+        annotations:
+          jsonschema_minItems: "1"
+      opinion:
+        required: true
+      authors:
+        annotations:
+          jsonschema_minItems: "1"
+    annotations:
+      jsonschema_source: schemas/sdos/opinion.json
+
+  Report:
+    is_a: StixDomainObject
+    in_subset:
+      - sdos
+    description: "Reports are collections of threat intelligence focused on one or more topics, such as a description of a threat actor, malware, or attack technique, including context and related details. "
+    slots:
+      - report_types
+      - published
+      - object_refs
+    slot_usage:
+      id:
+        pattern: "^report--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      type:
+        pattern: "^report$"
+      name:
+        required: true
+      published:
+        required: true
+      object_refs:
+        required: true
+        annotations:
+          jsonschema_minItems: "1"
+      report_types:
+        annotations:
+          jsonschema_minItems: "1"
+    annotations:
+      jsonschema_source: schemas/sdos/report.json
+
+  ThreatActor:
+    is_a: StixDomainObject
+    in_subset:
+      - sdos
+    description: "Threat Actors are actual individuals, groups, or organizations believed to be operating with malicious intent. "
+    slots:
+      - threat_actor_types
+      - aliases
+      - roles
+      - goals
+      - first_seen
+      - last_seen
+      - sophistication
+      - resource_level
+      - primary_motivation
+      - secondary_motivations
+      - personal_motivations
+    slot_usage:
+      id:
+        pattern: "^threat-actor--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      type:
+        pattern: "^threat-actor$"
+      name:
+        required: true
+      threat_actor_types:
+        annotations:
+          jsonschema_minItems: "1"
+      aliases:
+        annotations:
+          jsonschema_minItems: "1"
+      roles:
+        annotations:
+          jsonschema_minItems: "1"
+      goals:
+        annotations:
+          jsonschema_minItems: "1"
+      secondary_motivations:
+        annotations:
+          jsonschema_minItems: "1"
+      personal_motivations:
+        annotations:
+          jsonschema_minItems: "1"
+    annotations:
+      jsonschema_source: schemas/sdos/threat-actor.json
+
+  Tool:
+    is_a: StixDomainObject
+    in_subset:
+      - sdos
+    description: "Tools are legitimate software that can be used by threat actors to perform attacks. "
+    slots:
+      - aliases
+      - tool_types
+      - tool_version
+      - kill_chain_phases
+    slot_usage:
+      id:
+        pattern: "^tool--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      type:
+        pattern: "^tool$"
+      name:
+        required: true
+      aliases:
+        annotations:
+          jsonschema_minItems: "1"
+      tool_types:
+        annotations:
+          jsonschema_minItems: "1"
+      kill_chain_phases:
+        annotations:
+          jsonschema_minItems: "1"
+    annotations:
+      jsonschema_source: schemas/sdos/tool.json
+
+  Vulnerability:
+    is_a: StixDomainObject
+    in_subset:
+      - sdos
+    description: "A Vulnerability is a mistake in software that can be directly used by a hacker to gain access to a system or network. "
+    slot_usage:
+      id:
+        pattern: "^vulnerability--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      type:
+        pattern: "^vulnerability$"
+      name:
+        required: true
+    annotations:
+      jsonschema_source: schemas/sdos/vulnerability.json
+
+  Relationship:
+    is_a: StixRelationshipObject
+    in_subset:
+      - sros
+    description: "The Relationship object is used to link together two SDOs in order to describe how they are related to each other. "
+    slots:
+      - relationship_type
+      - source_ref
+      - target_ref
+      - start_time
+      - stop_time
+    slot_usage:
+      id:
+        pattern: "^relationship--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      type:
+        pattern: "^relationship$"
+      relationship_type:
+        required: true
+      source_ref:
+        required: true
+      target_ref:
+        required: true
+    notes:
+      - source_ref and target_ref cannot target relationship, sighting, bundle, marking-definition, or language-content IDs.
+    annotations:
+      jsonschema_rule: not
+      validator_hint: relationship-ref-prefix-exclusion
+      jsonschema_source: schemas/sros/relationship.json
+
+  Sighting:
+    is_a: StixRelationshipObject
+    in_subset:
+      - sros
+    description: "A Sighting denotes the belief that something in CTI (e.g., an indicator, malware, tool, threat actor, etc.) was seen. "
+    slots:
+      - sighting_of_ref
+      - observed_data_refs
+      - where_sighted_refs
+      - first_seen
+      - last_seen
+      - count
+      - summary
+    slot_usage:
+      id:
+        pattern: "^sighting--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      type:
+        pattern: "^sighting$"
+      sighting_of_ref:
+        required: true
+      where_sighted_refs:
+        annotations:
+          jsonschema_minItems: "1"
+    annotations:
+      jsonschema_source: schemas/sros/sighting.json
