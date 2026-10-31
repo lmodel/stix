@@ -42,11 +42,19 @@ otherwise:
 
 - The IPv6 address pattern restores the backslashes the JSON schema lost,
   so it accepts an IPv4-mapped address such as `::ffff:192.0.2.128`.
-- The "at least one property" rules name only properties the object has:
-  the JSON schemas also name `name`, `created` and `arguments` for a
-  process, `modified` for a Windows registry key and
+- The "at least one property" rules name every property the object has,
+  and only those: the JSON schemas also name `name`, `created` and
+  `arguments` for a process, `modified` for a Windows registry key and
   `image_compression_algorithm` for a raster image, none of which STIX 2.1
-  defines there.
+  defines there, and leave out a process's `created_time` and the Windows
+  process extension's `integrity_level`.
+- A granular marking names exactly one of `marking_ref` and `lang`. The
+  JSON schema requires `marking_ref`, which rejects a language marking.
+- A marking definition's `created` is precise to the millisecond, like
+  every other object's. The JSON schema takes any precision there.
+- A sighting's `sighting_of_ref` points at a domain object, and a malware
+  analysis's `analysis_sco_refs` and a file's `contains_refs` at
+  observables. The JSON schemas take a wider set of identifiers.
 - The vocabularies follow the standard's tables (see above).
 
 `tests/test_upstream.py` lists each difference, so a new one fails.
