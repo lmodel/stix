@@ -6576,28 +6576,6 @@ slots:
     usage_slot_name: phase_name
     range: string
     required: true
-  StixGranularMarking_marking_ref:
-    name: StixGranularMarking_marking_ref
-    definition_uri: https://w3id.org/lmodel/stix/marking_ref
-    description: The marking_ref property specifies the ID of the marking-definition
-      object that describes the marking.
-    from_schema: https://w3id.org/lmodel/stix/stix_core
-    mappings:
-    - stix:marking_ref
-    close_mappings:
-    - uco-marking:marking
-    is_a: marking_ref
-    domain: StixGranularMarking
-    slot_uri: stix:marking_ref
-    alias: marking_ref
-    owner: StixGranularMarking
-    domain_of:
-    - StixGranularMarking
-    is_usage_slot: true
-    usage_slot_name: marking_ref
-    range: StixMarkingDefinition
-    required: true
-    pattern: ^marking-definition--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
   StixGranularMarking_selectors:
     name: StixGranularMarking_selectors
     definition_uri: https://w3id.org/lmodel/stix/selectors
@@ -9954,24 +9932,32 @@ classes:
   StixGranularMarking:
     name: StixGranularMarking
     definition_uri: https://w3id.org/lmodel/stix/StixGranularMarking
-    description: The granular-marking type defines how the list of marking-definition
-      objects referenced by the marking_refs property to apply to a set of content
-      identified by the list of selectors in the selectors property.
+    description: 'A marking of parts of an object: the properties its selectors name,
+      marked either by a marking definition or with a language.'
+    comments:
+    - STIX 2.1 requires exactly one of marking_ref and lang. OASIS's JSON schema requires
+      marking_ref, which rejects a language marking; the schema follows the standard.
     from_schema: https://w3id.org/lmodel/stix/stix_core
     close_mappings:
     - uco-marking:GranularMarking
     slots:
-    - StixGranularMarking_marking_ref
+    - marking_ref
     - StixGranularMarking_selectors
     - lang
     slot_usage:
-      marking_ref:
-        name: marking_ref
-        required: true
       selectors:
         name: selectors
         required: true
     class_uri: stix:StixGranularMarking
+    exactly_one_of:
+    - slot_conditions:
+        marking_ref:
+          name: marking_ref
+          required: true
+    - slot_conditions:
+        lang:
+          name: lang
+          required: true
   StixStatementMarking:
     name: StixStatementMarking
     definition_uri: https://w3id.org/lmodel/stix/StixStatementMarking

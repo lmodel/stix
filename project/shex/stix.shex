@@ -348,7 +348,7 @@ linkml:Sparqlpath xsd:string
 }
 
 <StixGranularMarking> CLOSED {
-    (  $<StixGranularMarking_tes> (  <marking_ref> @<StixMarkingDefinition> ;
+    (  $<StixGranularMarking_tes> (  <marking_ref> @<StixMarkingDefinition> ? ;
           <selectors> @linkml:String + ;
           <lang> @linkml:String ?
        ) ;

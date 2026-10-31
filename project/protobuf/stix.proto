@@ -509,7 +509,7 @@ message StixFile {
 // The extensions of a file: the predefined ntfs-ext, raster-image-ext, pdf-ext, archive-ext and windows-pebinary-ext, and extensions that an extension definition defines.
 message StixFileExtensions {
 }
-// The granular-marking type defines how the list of marking-definition objects referenced by the marking_refs property to apply to a set of content identified by the list of selectors in the selectors property.
+// A marking of parts of an object: the properties its selectors name, marked either by a marking definition or with a language.
 message StixGranularMarking {
   // The marking_ref property specifies the ID of the marking-definition object that describes the marking.
   StixMarkingDefinition marking_ref = 1;

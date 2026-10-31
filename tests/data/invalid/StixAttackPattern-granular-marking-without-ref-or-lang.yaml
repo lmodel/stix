@@ -1,5 +1,5 @@
 # Fails at: /granular_markings/0
-# Invalid: A granular marking names its marking.
+# Invalid: A granular marking names a marking definition or a language.
 type: attack-pattern
 spec_version: '2.1'
 id: attack-pattern--af06ed64-740e-4adf-88fe-b73b8d8fb651

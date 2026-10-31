@@ -2526,7 +2526,25 @@
         },
         "StixGranularMarking": {
             "additionalProperties": false,
-            "description": "The granular-marking type defines how the list of marking-definition objects referenced by the marking_refs property to apply to a set of content identified by the list of selectors in the selectors property.",
+            "description": "A marking of parts of an object: the properties its selectors name, marked either by a marking definition or with a language.",
+            "oneOf": [
+                {
+                    "properties": {
+                        "marking_ref": {}
+                    },
+                    "required": [
+                        "marking_ref"
+                    ]
+                },
+                {
+                    "properties": {
+                        "lang": {}
+                    },
+                    "required": [
+                        "lang"
+                    ]
+                }
+            ],
             "properties": {
                 "lang": {
                     "description": "The language of the text content, as an RFC 5646 language code.",
@@ -2538,7 +2556,10 @@
                 "marking_ref": {
                     "description": "The marking_ref property specifies the ID of the marking-definition object that describes the marking.",
                     "pattern": "^marking-definition--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$",
-                    "type": "string"
+                    "type": [
+                        "string",
+                        "null"
+                    ]
                 },
                 "selectors": {
                     "description": "A list of selectors for content contained within the STIX object in which this property appears.",
@@ -2551,7 +2572,6 @@
                 }
             },
             "required": [
-                "marking_ref",
                 "selectors"
             ],
             "title": "StixGranularMarking",

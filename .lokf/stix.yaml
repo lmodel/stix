@@ -260,18 +260,25 @@ classes:
       phase_name:
         required: true
   StixGranularMarking:
-    description: The granular-marking type defines how the list of marking-definition objects referenced
-      by the marking_refs property to apply to a set of content identified by the list of selectors in
-      the selectors property.
+    description: 'A marking of parts of an object: the properties its selectors name, marked either by
+      a marking definition or with a language.'
+    comments:
+    - STIX 2.1 requires exactly one of marking_ref and lang. OASIS's JSON schema requires marking_ref,
+      which rejects a language marking; the schema follows the standard.
     slots:
     - marking_ref
     - selectors
     - lang
     slot_usage:
-      marking_ref:
-        required: true
       selectors:
         required: true
+    exactly_one_of:
+    - slot_conditions:
+        marking_ref:
+          required: true
+    - slot_conditions:
+        lang:
+          required: true
     close_mappings:
     - uco-marking:GranularMarking
   StixStatementMarking:

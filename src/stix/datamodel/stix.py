@@ -850,8 +850,8 @@ class StixKillChainPhase(YAMLRoot):
 @dataclass(repr=False)
 class StixGranularMarking(YAMLRoot):
     """
-    The granular-marking type defines how the list of marking-definition objects referenced by the marking_refs
-    property to apply to a set of content identified by the list of selectors in the selectors property.
+    A marking of parts of an object: the properties its selectors name, marked either by a marking definition or with
+    a language.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
@@ -860,21 +860,19 @@ class StixGranularMarking(YAMLRoot):
     class_name: ClassVar[str] = "StixGranularMarking"
     class_model_uri: ClassVar[URIRef] = STIX.StixGranularMarking
 
-    marking_ref: Union[str, StixMarkingDefinitionId] = None
     selectors: Union[str, list[str]] = None
+    marking_ref: Optional[Union[str, StixMarkingDefinitionId]] = None
     lang: Optional[str] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.marking_ref):
-            self.MissingRequiredField("marking_ref")
-        if not isinstance(self.marking_ref, StixMarkingDefinitionId):
-            self.marking_ref = StixMarkingDefinitionId(self.marking_ref)
-
         if self._is_empty(self.selectors):
             self.MissingRequiredField("selectors")
         if not isinstance(self.selectors, list):
             self.selectors = [self.selectors] if self.selectors is not None else []
         self.selectors = [v if isinstance(v, str) else str(v) for v in self.selectors]
+
+        if self.marking_ref is not None and not isinstance(self.marking_ref, StixMarkingDefinitionId):
+            self.marking_ref = StixMarkingDefinitionId(self.marking_ref)
 
         if self.lang is not None and not isinstance(self.lang, str):
             self.lang = str(self.lang)
@@ -6414,10 +6412,6 @@ slots.StixKillChainPhase_kill_chain_name = Slot(uri=STIX.kill_chain_name, name="
 
 slots.StixKillChainPhase_phase_name = Slot(uri=STIX.phase_name, name="StixKillChainPhase_phase_name", curie=STIX.curie('phase_name'),
                    model_uri=STIX.StixKillChainPhase_phase_name, domain=StixKillChainPhase, range=str)
-
-slots.StixGranularMarking_marking_ref = Slot(uri=STIX.marking_ref, name="StixGranularMarking_marking_ref", curie=STIX.curie('marking_ref'),
-                   model_uri=STIX.StixGranularMarking_marking_ref, domain=StixGranularMarking, range=Union[str, StixMarkingDefinitionId],
-                   pattern=re.compile(r'^marking-definition--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$'))
 
 slots.StixGranularMarking_selectors = Slot(uri=STIX.selectors, name="StixGranularMarking_selectors", curie=STIX.curie('selectors'),
                    model_uri=STIX.StixGranularMarking_selectors, domain=StixGranularMarking, range=Union[str, list[str]],

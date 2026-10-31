@@ -10,7 +10,7 @@ import java.util.List;
 import lombok.*;
 
 /**
-  The granular-marking type defines how the list of marking-definition objects referenced by the marking_refs property to apply to a set of content identified by the list of selectors in the selectors property.
+  A marking of parts of an object: the properties its selectors name, marked either by a marking definition or with a language.
 **/
 @Data
 @EqualsAndHashCode(callSuper=false)

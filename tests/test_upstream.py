@@ -238,7 +238,12 @@ def object_schemas():
 
 # Each element on one side only, with the reason.
 PROPERTY_DEPARTURES: dict[tuple[str, str], str] = {}
-REQUIRED_DEPARTURES: dict[tuple[str, str], str] = {}
+REQUIRED_DEPARTURES: dict[tuple[str, str], str] = {
+    (
+        "StixGranularMarking",
+        "marking_ref",
+    ): "STIX 2.1 requires exactly one of marking_ref and lang (section 7.2.3)",
+}
 
 
 def slot_names(cls):

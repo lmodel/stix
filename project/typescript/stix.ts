@@ -765,11 +765,11 @@ export interface StixKillChainPhase {
 
 
 /**
- * The granular-marking type defines how the list of marking-definition objects referenced by the marking_refs property to apply to a set of content identified by the list of selectors in the selectors property.
+ * A marking of parts of an object: the properties its selectors name, marked either by a marking definition or with a language.
  */
 export interface StixGranularMarking {
     /** The marking_ref property specifies the ID of the marking-definition object that describes the marking. */
-    marking_ref: StixMarkingDefinitionId,
+    marking_ref?: StixMarkingDefinitionId,
     /** A list of selectors for content contained within the STIX object in which this property appears. */
     selectors: string[],
     /** The language of the text content, as an RFC 5646 language code. */

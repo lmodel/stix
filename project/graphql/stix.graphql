@@ -796,7 +796,7 @@ type StixFileExtensions
 
 type StixGranularMarking
   {
-    markingRef: StixMarkingDefinition!
+    markingRef: StixMarkingDefinition
     selectors: [String]!
     lang: String
   }

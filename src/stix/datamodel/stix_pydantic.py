@@ -1641,14 +1641,20 @@ class StixKillChainPhase(ConfiguredBaseModel):
 
 class StixGranularMarking(ConfiguredBaseModel):
     """
-    The granular-marking type defines how the list of marking-definition objects referenced by the marking_refs property to apply to a set of content identified by the list of selectors in the selectors property.
+    A marking of parts of an object: the properties its selectors name, marked either by a marking definition or with a language.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'close_mappings': ['uco-marking:GranularMarking'],
+         'comments': ["STIX 2.1 requires exactly one of marking_ref and lang. OASIS's "
+                      'JSON schema requires marking_ref, which rejects a language '
+                      'marking; the schema follows the standard.'],
+         'exactly_one_of': [{'slot_conditions': {'marking_ref': {'name': 'marking_ref',
+                                                                 'required': True}}},
+                            {'slot_conditions': {'lang': {'name': 'lang',
+                                                          'required': True}}}],
          'from_schema': 'https://w3id.org/lmodel/stix/stix_core',
-         'slot_usage': {'marking_ref': {'name': 'marking_ref', 'required': True},
-                        'selectors': {'name': 'selectors', 'required': True}}})
+         'slot_usage': {'selectors': {'name': 'selectors', 'required': True}}})
 
-    marking_ref: str = Field(default=..., description="""The marking_ref property specifies the ID of the marking-definition object that describes the marking.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-marking:marking'],
+    marking_ref: Optional[str] = Field(default=None, description="""The marking_ref property specifies the ID of the marking-definition object that describes the marking.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-marking:marking'],
          'domain_of': ['StixGranularMarking'],
          'slot_uri': 'stix:marking_ref'} })
     selectors: list[str] = Field(default=..., description="""A list of selectors for content contained within the STIX object in which this property appears.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-marking:contentSelectors'],
