@@ -1,0 +1,14 @@
+# Fails at: /parent_ref
+# Invalid: Parent_ref points at a process.
+type: process
+spec_version: '2.1'
+id: process--d915238f-7a67-4b62-9114-b8721de3825a
+pid: 4242
+command_line: rundll32.exe loader.dll,Start
+created_time: '2026-01-15T09:00:00Z'
+image_ref: file--8ffeace3-03a4-4483-b38d-8d8cf1cdec08
+parent_ref: file--0f1e2d3c-4b5a-4968-8776-655443322110
+opened_connection_refs:
+  - network-traffic--06920ed8-2311-4d28-9711-b9daa7ab4836
+environment_variables:
+  TEMP: C:\Users\Public\Temp

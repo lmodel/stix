@@ -1,0 +1,22 @@
+# Fails at: /extensions/ntfs-ext
+# Invalid: An NTFS extension has a sid or alternate data streams.
+type: file
+spec_version: '2.1'
+id: file--f5bf52c8-e8dc-4bbe-990e-e1e32c8779af
+name: report.pdf
+hashes:
+  SHA-256: 4bac27393bdd9777ce02453256c5577cd02275510b2227f473d03f533924f877
+extensions:
+  ntfs-ext: {}
+  pdf-ext:
+    version: '1.7'
+    is_optimized: false
+    document_info_dict:
+      Title: Q4 report
+  raster-image-ext:
+    image_height: 768
+    image_width: 1024
+    bits_per_pixel: 24
+    exif_tags:
+      Make: Example
+      XResolution: 72

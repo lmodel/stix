@@ -1,0 +1,7 @@
+# Fails at: /
+# Invalid: An email address has a value.
+type: email-addr
+spec_version: '2.1'
+id: email-addr--cd454ec8-faef-404d-aed3-a963d2521e80
+display_name: Billing
+belongs_to_ref: user-account--26ef003c-6f9a-4406-9d34-2d897dcb465c

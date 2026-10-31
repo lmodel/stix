@@ -1,0 +1,8 @@
+# Fails at: /resolves_to_refs/0
+# Invalid: A domain name resolves to addresses or domain names.
+type: domain-name
+spec_version: '2.1'
+id: domain-name--dcb03049-9e29-48d8-b76f-a7a2d3192d5e
+value: glass.example
+resolves_to_refs:
+  - url--0f1e2d3c-4b5a-4968-8776-655443322110

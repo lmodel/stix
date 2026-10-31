@@ -1,0 +1,11 @@
+# Fails at: /extensions/windows-pebinary-ext/optional_header
+# Invalid: A PE optional header holds at least one of its properties.
+type: file
+spec_version: '2.1'
+id: file--51fee18b-6496-40d3-afee-668df02be30c
+name: loader.dll
+extensions:
+  windows-pebinary-ext:
+    pe_type: dll
+    machine_hex: 014c
+    optional_header: {}

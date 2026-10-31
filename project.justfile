@@ -4,36 +4,26 @@
 # name in this file is not possible until a known issue in just is fixed,
 # https://github.com/casey/just/issues/2540
 
-# Run parser.py tests to validate parse/validate behavior and expected errors when ANTLR artifacts are missing or incompatible.
-[group('model development')]
-gen-stix-pattern-parser:
-	-mkdir -p src/stix/pattern/antlr
-	@if [ -z "${ANTLR4_JAR:-}" ]; then \
-		echo "Set ANTLR4_JAR to a local antlr-4.x-complete.jar path before running this recipe."; \
-		exit 1; \
-	fi
-	@echo "Note: keep ANTLR jar version compatible with antlr4-python3-runtime (<4.10 due LinkML dependency constraints)."
-	@TMP_DIR="$(mktemp -d /tmp/stixpattern.XXXXXX)"; \
-	TMP_G4="$TMP_DIR/STIXPattern.g4"; \
-	trap 'rm -rf "$TMP_DIR"' EXIT; \
-	curl -fsSL https://raw.githubusercontent.com/oasis-open/cti-stix2-json-schemas/master/pattern_grammar/STIXPattern.g4 -o "$TMP_G4"; \
-	uv run java -jar "$ANTLR4_JAR" \
-		-Xexact-output-dir \
-		-Dlanguage=Python3 \
-		-visitor \
-		-no-listener \
-		-o src/stix/pattern/antlr \
-		"$TMP_G4"
+# ============ Knowledge bundle: the adapted domain schema ============
 
-# Runs the standardized Python test flow from justfile (_test-python).
-[group('model development')]
-test-custom:
-	# Use this entrypoint for project-level test automation hooks.
-	just _test-python
+# `.lokf/stix.yaml` is the copy `lokf adapt` writes from the schema so that it
+# can sit beside `.lokf/lokf.yaml` (`lokf adapt --help` lists the moves). The
+# roots are the classes re-rooted on LOKF's Concept: StixObject, so that every
+# STIX object type is a concept type, and StixBundle. lokf 0.9.0 drops the
+# schema's identifier, id, for LOKF's own and refuses any class that carries
+# it without descending from Concept, so rooting the domain objects alone
+# fails. The recipes run the `lokf` the sidecar's floor pins (0.9.0 or
+# later); LOKF_CMD runs another, such as a checkout:
+# LOKF_CMD="uv run --project ../lokf lokf" just lokf-adapt
+lokf_cmd := env_var_or_default("LOKF_CMD", "uv run --project .lokf lokf")
+lokf_adapt_roots := "--root StixObject --root StixBundle"
 
+# Rewrite .lokf/stix.yaml from the schema (run after every schema change)
+[group('knowledge bundle')]
+lokf-adapt:
+  {{lokf_cmd}} adapt {{source_schema_path}} {{lokf_adapt_roots}} --lokf .lokf/lokf.yaml -o .lokf/stix.yaml
 
-# Runs only the upstream example-focused tests for quick targeted checks.
-[group('model development')]
-test-upstream-examples:
-	uv run python -m pytest -q tests/data/test_upstream_examples.py
-
+# Fail when .lokf/stix.yaml is stale against the schema or .lokf/lokf.yaml
+[group('knowledge bundle')]
+lokf-adapt-check:
+  {{lokf_cmd}} adapt {{source_schema_path}} {{lokf_adapt_roots}} --lokf .lokf/lokf.yaml -o .lokf/stix.yaml --check

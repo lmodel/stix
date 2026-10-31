@@ -1,0 +1,611 @@
+---
+id: https://w3id.org/lmodel/stix/stix_core
+name: stix_core
+title: STIX core
+description: >-
+  The common types, slots and object bases of STIX 2.1: identifiers, timestamps, hashes, external
+  references, kill chain phases, markings, extensions and language content, the identity that
+  every object's creator refers to, and the abstract bases of the domain, relationship and
+  cyber-observable objects.
+license: Apache-2.0
+see_also:
+  - https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html
+default_prefix: stix
+default_range: string
+prefixes:
+  linkml: https://w3id.org/linkml/
+  stix: https://w3id.org/lmodel/stix/
+  uco-core: https://ontology.unifiedcyberontology.org/uco/core/
+  uco-identity: https://ontology.unifiedcyberontology.org/uco/identity/
+  uco-marking: https://ontology.unifiedcyberontology.org/uco/marking/
+  xsd: http://www.w3.org/2001/XMLSchema#
+imports:
+  - linkml:types
+  - ./stix_vocabularies
+types:
+  stix_identifier:
+    typeof: string
+    base: str
+    uri: xsd:string
+    description: >-
+      A STIX identifier: an object's type name, two hyphens and a UUID, such as indicator--8e2e2d2b-17d4-4cbf-938f-98ee46b3cd3f.
+    pattern: ^[a-z][a-z0-9-]+[a-z0-9]--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+  stix_timestamp:
+    typeof: string
+    base: str
+    uri: xsd:dateTime
+    description: >-
+      An RFC 3339 timestamp in UTC, ending in Z, with any precision of fractional seconds.
+    pattern: ^[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60)(\.[0-9]+)?Z$
+  stix_timestamp_millis:
+    typeof: string
+    base: str
+    uri: xsd:dateTime
+    description: >-
+      A timestamp precise to the millisecond or finer: at least three digits of fractional
+      seconds, as STIX requires of created and modified.
+    pattern: ^[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60)\.[0-9]{3,}Z$
+  stix_timestamp_seconds:
+    typeof: string
+    base: str
+    uri: xsd:dateTime
+    description: A timestamp precise to the second, with no fractional seconds.
+    pattern: ^[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60)Z$
+  stix_hex:
+    typeof: string
+    base: str
+    uri: xsd:hexBinary
+    description: Octets encoded as an even number of hexadecimal digits.
+    pattern: ^([a-fA-F0-9]{2})+$
+  stix_binary:
+    typeof: string
+    base: str
+    uri: xsd:base64Binary
+    description: Bytes encoded in base64, as RFC 4648 specifies.
+    pattern: ^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$
+slots:
+  id:
+    identifier: true
+    range: stix_identifier
+    description: >-
+      The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows
+      the type.
+    slot_uri: stix:id
+  type:
+    range: string
+    required: true
+    pattern: ^([a-z][a-z0-9]*)+(-[a-z0-9]+)*\-?$
+    description: >-
+      The STIX type name of the object, such as attack-pattern. Each class pins its own.
+    slot_uri: stix:type
+  spec_version:
+    description: The version of the STIX specification used to represent the object.
+    range: StixSpecVersion
+    slot_uri: stix:spec_version
+  object_marking_refs:
+    description: References to the marking definitions that apply to the object.
+    range: StixMarkingDefinition
+    pattern: ^marking-definition--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:object_marking_refs
+    close_mappings:
+      - uco-core:objectMarking
+  granular_markings:
+    description: The granular markings that apply to parts of the object.
+    range: StixGranularMarking
+    multivalued: true
+    minimum_cardinality: 1
+    inlined_as_list: true
+    slot_uri: stix:granular_markings
+  extensions:
+    description: The object's extensions, as a dictionary keyed by extension name.
+    range: StixExtensions
+    inlined: true
+    slot_uri: stix:extensions
+  created_by_ref:
+    description: A reference to the identity of the object's creator.
+    range: StixIdentity
+    pattern: ^identity--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    slot_uri: stix:created_by_ref
+    close_mappings:
+      - uco-core:createdBy
+  created:
+    description: The time at which the object, or its first version, was created.
+    range: stix_timestamp_millis
+    slot_uri: stix:created
+    close_mappings:
+      - uco-core:objectCreatedTime
+  modified:
+    description: >-
+      The time at which this version of the object was modified.
+    range: stix_timestamp_millis
+    slot_uri: stix:modified
+    close_mappings:
+      - uco-core:modifiedTime
+  revoked:
+    description: The revoked property indicates whether the object has been revoked.
+    range: boolean
+    slot_uri: stix:revoked
+  labels:
+    description: >-
+      The labels property specifies a set of terms used to describe this object.
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:labels
+    close_mappings:
+      - uco-core:tag
+  confidence:
+    description: >-
+      Identifies the confidence that the creator has in the correctness of their data.
+    range: integer
+    minimum_value: 0
+    maximum_value: 100
+    slot_uri: stix:confidence
+    close_mappings:
+      - uco-core:confidence
+  lang:
+    description: The language of the text content, as an RFC 5646 language code.
+    slot_uri: stix:lang
+  external_references:
+    description: References to non-STIX information about the object.
+    range: StixExternalReference
+    multivalued: true
+    minimum_cardinality: 1
+    inlined_as_list: true
+    slot_uri: stix:external_references
+    close_mappings:
+      - uco-core:externalReference
+  defanged:
+    description: >-
+      Defines whether or not the data contained within the object has been defanged.
+    range: boolean
+    slot_uri: stix:defanged
+  roles:
+    description: The roles that the identity or threat actor plays.
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:roles
+  name:
+    description: A name that identifies the object.
+    slot_uri: stix:name
+    close_mappings:
+      - uco-core:name
+  description:
+    description: A description of the object, which may be long.
+    slot_uri: stix:description
+    close_mappings:
+      - uco-core:description
+  identity_class:
+    description: >-
+      The kind of entity the identity describes, such as an individual or an organization.
+    any_of:
+      - range: StixIdentityClass
+      - range: string
+    slot_uri: stix:identity_class
+  sectors:
+    description: >-
+      The industry sectors that the identity belongs to.
+    any_of:
+      - range: StixIndustrySector
+      - range: string
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:sectors
+  contact_information:
+    description: >-
+      The contact information (e-mail, phone number, etc.) for this Identity.
+    slot_uri: stix:contact_information
+  definition_type:
+    description: The type of the marking definition, such as statement or tlp.
+    any_of:
+      - range: StixMarkingDefinitionType
+      - range: string
+    slot_uri: stix:definition_type
+    close_mappings:
+      - uco-marking:definitionType
+  definition:
+    description: >-
+      The marking itself: a statement, or a Traffic Light Protocol (TLP) level.
+    inlined: true
+    slot_uri: stix:definition
+    any_of:
+      - range: StixStatementMarking
+      - range: StixTlpMarking
+    close_mappings:
+      - uco-marking:definition
+  object_ref:
+    description: Identifies the object that this Language Content applies to.
+    range: StixObject
+    pattern: ^(?!(bundle|language-content)--)[a-z][a-z0-9-]+[a-z0-9]--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    slot_uri: stix:object_ref
+  object_modified:
+    description: >-
+      Identifies the modified time of the object that this Language Content applies to.
+    range: stix_timestamp
+    slot_uri: stix:object_modified
+  contents:
+    description: Contains the actual Language Content (translation).
+    range: StixLanguageContents
+    inlined: true
+    slot_uri: stix:contents
+  schema:
+    description: >-
+      The normative definition of the extension, either as a URL or as plain text explaining
+      the definition.
+    slot_uri: stix:schema
+  version:
+    description: A version, as a string; each class says of what.
+    slot_uri: stix:version
+  extension_types:
+    description: Which extension types are contained within this extension.
+    range: StixExtensionType
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:extension_types
+  extension_properties:
+    description: >-
+      The list of new property names that are added to an object by this extension.
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:extension_properties
+  source_name:
+    description: >-
+      The source, such as a system, registry or organization, that defines the reference.
+    slot_uri: stix:source_name
+  url:
+    description: A URL.
+    range: uri
+    slot_uri: stix:url
+  hashes:
+    description: A dictionary of hashes of the content, keyed by hash algorithm.
+    range: StixHashes
+    inlined: true
+    slot_uri: stix:hashes
+  external_id:
+    description: >-
+      An identifier of the external content in its source, such as CVE-2016-1234.
+    slot_uri: stix:external_id
+    close_mappings:
+      - uco-core:externalIdentifier
+  kill_chain_name:
+    description: The name of the kill chain.
+    slot_uri: stix:kill_chain_name
+  phase_name:
+    description: The name of the phase in the kill chain.
+    slot_uri: stix:phase_name
+  marking_ref:
+    description: >-
+      The marking_ref property specifies the ID of the marking-definition object that describes
+      the marking.
+    range: StixMarkingDefinition
+    pattern: ^marking-definition--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    slot_uri: stix:marking_ref
+    close_mappings:
+      - uco-marking:marking
+  selectors:
+    description: >-
+      A list of selectors for content contained within the STIX object in which this property
+      appears.
+    pattern: ^([a-z0-9_-]{3,249}(\.(\[\d+\]|[a-z0-9_-]{1,250}))*|id)$
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:selectors
+    close_mappings:
+      - uco-marking:contentSelectors
+  statement:
+    description: >-
+      A statement, such as a copyright or terms of use, that applies to the marked content.
+    slot_uri: stix:statement
+    close_mappings:
+      - uco-marking:statement
+  tlp:
+    range: StixTlpLevel
+    description: The Traffic Light Protocol level.
+    slot_uri: stix:tlp
+  extension_type:
+    description: The kind of extension, as the extension's definition declares it.
+    range: StixExtensionType
+    slot_uri: stix:extension_type
+  objects:
+    description: >-
+      Objects that this object holds: a list in a bundle, a dictionary in observed data.
+    slot_uri: stix:objects
+classes:
+  StixObject:
+    description: >-
+      Any STIX object: the base of the domain, relationship and cyber-observable objects and
+      of the meta objects.
+    abstract: true
+    slots:
+      - id
+      - type
+      - spec_version
+      - object_marking_refs
+      - granular_markings
+      - extensions
+  StixCommonObject:
+    description: >-
+      The base of the objects that carry STIX's common properties: the domain and relationship
+      objects, language content and extension definitions.
+    abstract: true
+    is_a: StixObject
+    slots:
+      - created_by_ref
+      - created
+      - modified
+      - revoked
+      - labels
+      - confidence
+      - lang
+      - external_references
+    slot_usage:
+      spec_version:
+        required: true
+      created:
+        required: true
+      modified:
+        required: true
+  StixDomainObject:
+    description: >-
+      A STIX Domain Object (SDO): a higher-level concept of cyber threat intelligence, such
+      as an attack pattern, a malware family or a threat actor.
+    abstract: true
+    is_a: StixCommonObject
+  StixRelationshipObject:
+    description: >-
+      A STIX Relationship Object (SRO): a relationship or a sighting that links other objects.
+    abstract: true
+    is_a: StixCommonObject
+  StixCyberObservableObject:
+    description: >-
+      A STIX Cyber-observable Object (SCO): a fact observed on a network or host, such as
+      a file, an address or a process.
+    abstract: true
+    is_a: StixObject
+    slots:
+      - defanged
+  StixIdentity:
+    description: >-
+      An individual, organization or group, such as ACME, Inc., or a class of them.
+    is_a: StixDomainObject
+    slots:
+      - roles
+      - name
+      - description
+      - identity_class
+      - sectors
+      - contact_information
+    slot_usage:
+      id:
+        pattern: ^identity--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: identity
+      name:
+        required: true
+    annotations:
+      stix_type: identity
+    close_mappings:
+      - uco-identity:Identity
+  StixMarkingDefinition:
+    description: >-
+      A marking definition: a statement, a Traffic Light Protocol (TLP) level or another marking
+      that applies to the objects that reference it.
+    is_a: StixObject
+    slots:
+      - created_by_ref
+      - created
+      - external_references
+      - name
+      - definition_type
+      - definition
+    slot_usage:
+      id:
+        pattern: ^marking-definition--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: marking-definition
+      spec_version:
+        required: true
+      created:
+        required: true
+    comments:
+      - >-
+        created keeps the millisecond precision STIX 2.1 gives every object's created. OASIS's
+        JSON schema asks a marking definition for a timestamp of any precision.
+    rules:
+      - description: >-
+          Without extensions, a marking definition states its definition and definition type.
+        preconditions:
+          slot_conditions:
+            extensions:
+              value_presence: ABSENT
+        postconditions:
+          slot_conditions:
+            definition:
+              required: true
+            definition_type:
+              required: true
+    annotations:
+      stix_type: marking-definition
+    close_mappings:
+      - uco-marking:MarkingDefinition
+  StixLanguageContent:
+    description: >-
+      The language-content object represents text content for STIX Objects represented in
+      languages other than that of the original object.
+    is_a: StixCommonObject
+    slots:
+      - object_ref
+      - object_modified
+      - contents
+    slot_usage:
+      id:
+        pattern: ^language-content--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: language-content
+      object_ref:
+        required: true
+      contents:
+        required: true
+    annotations:
+      stix_type: language-content
+  StixExtensionDefinition:
+    description: >-
+      The STIX Extension Definition object allows producers of threat intelligence to extend
+      existing STIX objects or to create entirely new STIX objects in a standardized way.
+    is_a: StixCommonObject
+    slots:
+      - name
+      - description
+      - schema
+      - version
+      - extension_types
+      - extension_properties
+    slot_usage:
+      id:
+        pattern: ^extension-definition--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: extension-definition
+      name:
+        required: true
+      schema:
+        required: true
+      version:
+        required: true
+      extension_types:
+        required: true
+    annotations:
+      stix_type: extension-definition
+  StixExternalReference:
+    description: >-
+      External references are used to describe pointers to information represented outside
+      of STIX.
+    slots:
+      - source_name
+      - description
+      - url
+      - hashes
+      - external_id
+    slot_usage:
+      source_name:
+        required: true
+    any_of:
+      - slot_conditions:
+          external_id:
+            required: true
+      - slot_conditions:
+          description:
+            required: true
+      - slot_conditions:
+          url:
+            required: true
+    rules:
+      - description: A reference to the CVE list names a CVE identifier.
+        preconditions:
+          slot_conditions:
+            source_name:
+              equals_string: cve
+        postconditions:
+          slot_conditions:
+            external_id:
+              required: true
+              pattern: ^CVE-\d{4}-(0\d{3}|[1-9]\d{3,})$
+      - description: A reference to CAPEC names a CAPEC identifier.
+        preconditions:
+          slot_conditions:
+            source_name:
+              equals_string: capec
+        postconditions:
+          slot_conditions:
+            external_id:
+              required: true
+              pattern: ^CAPEC-\d+$
+    close_mappings:
+      - uco-core:ExternalReference
+  StixKillChainPhase:
+    description: A phase in a kill chain, named by the chain and the phase.
+    slots:
+      - kill_chain_name
+      - phase_name
+    slot_usage:
+      kill_chain_name:
+        required: true
+      phase_name:
+        required: true
+  StixGranularMarking:
+    description: >-
+      A marking of parts of an object: the properties its selectors name, marked either by
+      a marking definition or with a language.
+    comments:
+      - >-
+        STIX 2.1 requires exactly one of marking_ref and lang. OASIS's JSON schema requires
+        marking_ref, which rejects a language marking. The schema follows the standard.
+    slots:
+      - marking_ref
+      - selectors
+      - lang
+    slot_usage:
+      selectors:
+        required: true
+    exactly_one_of:
+      - slot_conditions:
+          marking_ref:
+            required: true
+      - slot_conditions:
+          lang:
+            required: true
+    close_mappings:
+      - uco-marking:GranularMarking
+  StixStatementMarking:
+    description: >-
+      The definition of a statement marking: a statement, such as a copyright or terms of
+      use.
+    slots:
+      - statement
+    slot_usage:
+      statement:
+        required: true
+    close_mappings:
+      - uco-marking:StatementMarking
+  StixTlpMarking:
+    description: 'The definition of a Traffic Light Protocol (TLP) marking: its level.'
+    slots:
+      - tlp
+    slot_usage:
+      tlp:
+        required: true
+  StixExtension:
+    description: >-
+      An extension of an object that an extension definition defines. Besides its extension
+      type it carries the properties that its definition's schema states.
+    slots:
+      - extension_type
+    slot_usage:
+      extension_type:
+        required: true
+    extra_slots:
+      allowed: true
+  StixHashes:
+    description: >-
+      A dictionary of hashes. Each key names a hash algorithm, from the hash-algorithm-ov
+      vocabulary (StixHashAlgorithm) or a custom one, and each value is the hash as a string.
+    extra_slots:
+      range_expression:
+        range: string
+  StixExtensions:
+    description: >-
+      A dictionary of extensions, keyed by an extension definition's identifier.
+    extra_slots:
+      range_expression:
+        range: StixExtension
+  StixDictionary:
+    description: A dictionary of key and value pairs that STIX leaves open.
+    extra_slots:
+      allowed: true
+  StixLanguageContents:
+    description: >-
+      The translations of a language content object, keyed by language code. Each value maps
+      the translated properties to their translations.
+    extra_slots:
+      range_expression:
+        range: StixDictionary

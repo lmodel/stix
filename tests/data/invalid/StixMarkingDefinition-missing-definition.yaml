@@ -1,0 +1,9 @@
+# Fails at: /
+# Invalid: Without extensions, a marking definition states its definition.
+type: marking-definition
+spec_version: '2.1'
+id: marking-definition--df2ed701-2080-4fb1-810a-557d6faade13
+created: '2026-01-15T09:30:00.000Z'
+created_by_ref: identity--c38abf55-9fec-4815-a139-67f11dc878a7
+name: ACME copyright
+definition_type: statement

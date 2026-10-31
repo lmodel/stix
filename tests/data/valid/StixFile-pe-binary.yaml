@@ -1,0 +1,20 @@
+type: file
+spec_version: '2.1'
+id: file--51fee18b-6496-40d3-afee-668df02be30c
+name: loader.dll
+extensions:
+  windows-pebinary-ext:
+    pe_type: dll
+    machine_hex: 014c
+    number_of_sections: 2
+    time_date_stamp: '2025-09-30T08:00:00Z'
+    optional_header:
+      magic_hex: 010b
+      size_of_code: 4096
+      address_of_entry_point: 4096
+    sections:
+      - name: .text
+        size: 4096
+        entropy: 6.2
+      - name: .data
+        size: 512

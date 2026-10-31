@@ -1,0 +1,7 @@
+type: directory
+spec_version: '2.1'
+id: directory--d8b3c8fd-85ab-4b59-8b69-f27a2c988445
+path: C:\Users\Public\Temp
+ctime: '2026-01-15T09:00:00Z'
+contains_refs:
+  - file--8ffeace3-03a4-4483-b38d-8d8cf1cdec08

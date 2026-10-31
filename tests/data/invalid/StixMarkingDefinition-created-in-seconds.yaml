@@ -1,0 +1,10 @@
+# Fails at: /created
+# Invalid: Created is precise to the millisecond.
+type: marking-definition
+spec_version: '2.1'
+id: marking-definition--0f1e2d3c-4b5a-4968-8776-655443322110
+created: '2026-01-15T09:30:00Z'
+name: Copyright Acme
+definition_type: statement
+definition:
+  statement: Copyright 2026 Acme, Inc.

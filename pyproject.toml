@@ -3,32 +3,30 @@ requires = ["hatchling", "uv-dynamic-versioning"]
 build-backend = "hatchling.build"
 
 [project]
-name = "stix"
-description = "Structured Threat Information Expression (STIX): LinkML Schema"
+# Named like lmodel/slsa's slsa-linkml, because PyPI's "stix" is another
+# project; the import package stays stix. PyPI publishing is off.
+name = "stix-linkml"
+description = "Structured Threat Information Expression (STIX) 2.1 (LinkML)"
 authors = [
   {name = "Noel McLoughlin", email = "noel.mcloughlin@gmail.com"},
 ]
 license = "Apache-2.0"
-license-files = ["LICENSE"]
+license-files = ["LICENSE", "NOTICE"]
 readme = "README.md"
-requires-python = ">=3.9,<4.0"
+requires-python = ">=3.10"
 dynamic = ["version"]
 
 dependencies = [
-  "antlr4-python3-runtime>=4.9.3",
   "linkml-runtime >=1.9.4",
 ]
 
 [dependency-groups]
 dev = [
     "linkml>=1.9.3",
-    "mkdocs-material>=8.2.8",
-    "mkdocs-mermaid2-plugin>=1.1.1",
-    "mkdocs-pymdownx-material-extras>=2.5.6",
-    "jupyter>=1.0.0",
-    "mknotebooks>= 0.8.0",
-    "antlr4-tools>=0.2.2",
 ]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/stix"]
 
 # See https://hatch.pypa.io/latest/config/build/#file-selection for how to
 # explicitly include files other than default into the build distributions.
@@ -46,6 +44,14 @@ fallback-version = "0.0.0"
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 
+# https://docs.astral.sh/ruff/configuration/
+[tool.ruff]
+exclude = [
+    "src/stix/_version.py",
+]
+# Set oldest supported Python version
+target-version = "py310"
+
 # Ref.: https://github.com/codespell-project/codespell
 [tool.codespell]
 skip = [
@@ -55,6 +61,13 @@ skip = [
   "project/*",
   "src/stix/datamodel/stix_pydantic.py",
   "src/stix/datamodel/stix.py",
+  # OASIS's JSON schemas and examples and the neighbours' adapt copies,
+  # copied as published, and files copied in by the KTL sidecar sync or
+  # written by npm, not by hand.
+  "upstream/*",
+  "tests/neighbours/*",
+  ".lokf/scripts/*",
+  "website/package-lock.json",
 ]
 
 # Reminder: words have to be lowercased for the ignore-words-list
@@ -64,6 +77,7 @@ quiet-level = 3
 # Ref.: https://github.com/crate-ci/typos (spell checker)
 [tool.typos.default.extend-words]
 linke = "linke"
+
 [tool.typos.files]
 extend-exclude = [
   "LICENSE",
@@ -72,4 +86,8 @@ extend-exclude = [
   "project/*",
   "src/stix/datamodel/stix_pydantic.py",
   "src/stix/datamodel/stix.py",
+  "upstream/*",
+  "tests/neighbours/*",
+  ".lokf/scripts/*",
+  "website/package-lock.json",
 ]

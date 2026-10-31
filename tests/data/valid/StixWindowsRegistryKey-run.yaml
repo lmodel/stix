@@ -1,0 +1,10 @@
+type: windows-registry-key
+spec_version: '2.1'
+id: windows-registry-key--98efabb9-9e38-4a6e-9a48-47e94cc29d09
+key: HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run
+values:
+  - name: GlassLoader
+    data: C:\Users\Public\Temp\invoice.exe
+    data_type: REG_SZ
+modified_time: '2026-01-15T09:00:00Z'
+number_of_subkeys: 0

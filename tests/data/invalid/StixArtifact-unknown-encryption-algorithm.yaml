@@ -1,0 +1,10 @@
+# Fails at: /encryption_algorithm
+# Invalid: Encryption_algorithm is one of three.
+type: artifact
+spec_version: '2.1'
+id: artifact--57b52a06-a805-448c-9b79-2aa6d8979be2
+url: https://files.acme.example/samples/invoice.zip
+hashes:
+  SHA-256: 4bac27393bdd9777ce02453256c5577cd02275510b2227f473d03f533924f877
+encryption_algorithm: ROT13
+decryption_key: infected

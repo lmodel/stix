@@ -1,0 +1,8 @@
+# Fails at: /
+# Invalid: An artifact given by url carries its hashes.
+type: artifact
+spec_version: '2.1'
+id: artifact--57b52a06-a805-448c-9b79-2aa6d8979be2
+url: https://files.acme.example/samples/invoice.zip
+encryption_algorithm: mime-type-indicated
+decryption_key: infected

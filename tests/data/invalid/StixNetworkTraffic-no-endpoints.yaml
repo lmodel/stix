@@ -1,0 +1,15 @@
+# Fails at: /
+# Invalid: Network traffic has a src_ref or a dst_ref.
+type: network-traffic
+spec_version: '2.1'
+id: network-traffic--06920ed8-2311-4d28-9711-b9daa7ab4836
+dst_port: 443
+protocols:
+  - ipv4
+  - tcp
+  - tls
+start: '2026-01-15T09:00:00Z'
+end: '2026-01-15T09:00:05Z'
+is_active: false
+src_byte_count: 1200
+dst_byte_count: 5300

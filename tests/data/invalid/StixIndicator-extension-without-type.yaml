@@ -1,0 +1,15 @@
+# Fails at: /extensions/extension-definition--0f1e2d3c-4b5a-4968-8776-655443322110
+# Invalid: An extension states its extension_type.
+type: indicator
+spec_version: '2.1'
+id: indicator--1b74bc21-a403-4290-a6c0-bd53378e1980
+created_by_ref: identity--c38abf55-9fec-4815-a139-67f11dc878a7
+created: '2026-01-15T09:30:00.000Z'
+modified: '2026-02-01T12:00:00.000Z'
+pattern: 'rule glass { condition: true }'
+pattern_type: yara
+valid_from: '2026-01-15T09:30:00Z'
+valid_until: '2026-12-31T00:00:00Z'
+extensions:
+  extension-definition--0f1e2d3c-4b5a-4968-8776-655443322110:
+    risk_score: 7

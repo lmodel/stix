@@ -1,0 +1,1207 @@
+# metamodel_version: 1.12.0
+# version: 2.1
+BASE <https://w3id.org/lmodel/stix/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX linkml: <https://w3id.org/linkml/>
+
+
+linkml:String xsd:string
+
+linkml:Integer xsd:integer
+
+linkml:Boolean xsd:boolean
+
+linkml:Float xsd:float
+
+linkml:Double xsd:double
+
+linkml:Decimal xsd:decimal
+
+linkml:Time xsd:time
+
+linkml:Date xsd:date
+
+linkml:Datetime xsd:dateTime
+
+linkml:DateOrDatetime linkml:DateOrDatetime
+
+linkml:Uriorcurie IRI
+
+linkml:Curie xsd:string
+
+linkml:Uri IRI
+
+linkml:Ncname xsd:string
+
+linkml:Objectidentifier IRI
+
+linkml:Nodeidentifier NONLITERAL
+
+linkml:Jsonpointer xsd:string
+
+linkml:Jsonpath xsd:string
+
+linkml:Sparqlpath xsd:string
+
+<StixIdentifier> xsd:string
+
+<StixTimestamp> xsd:dateTime
+
+<StixTimestampMillis> xsd:dateTime
+
+<StixTimestampSeconds> xsd:dateTime
+
+<StixHex> xsd:hexBinary
+
+<StixBinary> xsd:base64Binary
+
+<StixAlternateDataStream> CLOSED {
+    (  $<StixAlternateDataStream_tes> (  <name> @linkml:String ;
+          <hashes> @<StixHashes> ? ;
+          <size> @linkml:Integer ?
+       ) ;
+       rdf:type [ <StixAlternateDataStream> ] ?
+    )
+}
+
+<StixArchiveExtension> CLOSED {
+    (  $<StixArchiveExtension_tes> (  <contains_refs> @<StixCyberObservableObject> + ;
+          <comment> @linkml:String ?
+       ) ;
+       rdf:type [ <StixArchiveExtension> ] ?
+    )
+}
+
+<StixArtifact> CLOSED {
+    (  $<StixArtifact_tes> (  &<StixCyberObservableObject_tes> ;
+          rdf:type [ <StixCyberObservableObject> ] ? ;
+          <mime_type> @linkml:String ? ;
+          <payload_bin> @<StixBinary> ? ;
+          <url> @linkml:Uri ? ;
+          <hashes> @<StixHashes> ? ;
+          <encryption_algorithm> [ <https://w3id.org/lmodel/stix/StixEncryptionAlgorithm#AES-256-GCM>
+             <https://w3id.org/lmodel/stix/StixEncryptionAlgorithm#ChaCha20-Poly1305>
+             <https://w3id.org/lmodel/stix/StixEncryptionAlgorithm#mime-type-indicated> ] ? ;
+          <decryption_key> @linkml:String ? ;
+          <type> @linkml:String
+       ) ;
+       rdf:type [ <StixArtifact> ]
+    )
+}
+
+<StixAttackPattern> CLOSED {
+    (  $<StixAttackPattern_tes> (  &<StixDomainObject_tes> ;
+          rdf:type [ <StixDomainObject> ] ? ;
+          <aliases> @linkml:String * ;
+          <name> @linkml:String ;
+          <description> @linkml:String ? ;
+          <kill_chain_phases> @<StixKillChainPhase> * ;
+          <type> @linkml:String
+       ) ;
+       rdf:type [ <StixAttackPattern> ]
+    )
+}
+
+<StixAutonomousSystem> CLOSED {
+    (  $<StixAutonomousSystem_tes> (  &<StixCyberObservableObject_tes> ;
+          rdf:type [ <StixCyberObservableObject> ] ? ;
+          <number> @linkml:Integer ;
+          <name> @linkml:String ? ;
+          <rir> @linkml:String ? ;
+          <type> @linkml:String
+       ) ;
+       rdf:type [ <StixAutonomousSystem> ]
+    )
+}
+
+<StixBundle> CLOSED {
+    (  $<StixBundle_tes> (  <type> @linkml:String ;
+          <objects> @<StixObject> *
+       ) ;
+       rdf:type [ <StixBundle> ]
+    )
+}
+
+<StixCampaign> CLOSED {
+    (  $<StixCampaign_tes> (  &<StixDomainObject_tes> ;
+          rdf:type [ <StixDomainObject> ] ? ;
+          <name> @linkml:String ;
+          <description> @linkml:String ? ;
+          <aliases> @linkml:String * ;
+          <first_seen> @<StixTimestamp> ? ;
+          <last_seen> @<StixTimestamp> ? ;
+          <objective> @linkml:String ? ;
+          <type> @linkml:String
+       ) ;
+       rdf:type [ <StixCampaign> ]
+    )
+}
+
+<StixCommonObject>  (
+    @<StixDomainObject> OR @<StixExtensionDefinition> OR @<StixLanguageContent> OR @<StixRelationshipObject>
+)
+
+<StixCommonObject_struct> {
+    (  $<StixCommonObject_tes> (  &<StixObject_tes> ;
+          rdf:type [ <StixObject> ] ? ;
+          <created_by_ref> @<StixIdentity> ? ;
+          <created> @<StixTimestampMillis> ;
+          <modified> @<StixTimestampMillis> ;
+          <revoked> @linkml:Boolean ? ;
+          <labels> @linkml:String * ;
+          <confidence> @linkml:Integer ? ;
+          <lang> @linkml:String ? ;
+          <external_references> @<StixExternalReference> * ;
+          <spec_version> [ <https://w3id.org/lmodel/stix/StixSpecVersion#2.0> <https://w3id.org/lmodel/stix/StixSpecVersion#2.1> ]
+       ) ;
+       rdf:type [ <StixCommonObject> ]
+    )
+}
+
+<StixCourseOfAction> CLOSED {
+    (  $<StixCourseOfAction_tes> (  &<StixDomainObject_tes> ;
+          rdf:type [ <StixDomainObject> ] ? ;
+          <name> @linkml:String ;
+          <description> @linkml:String ? ;
+          <type> @linkml:String
+       ) ;
+       rdf:type [ <StixCourseOfAction> ]
+    )
+}
+
+<StixCyberObservableObject>  (
+    @<StixArtifact> OR @<StixAutonomousSystem> OR @<StixDirectory> OR @<StixDomainName> OR @<StixEmailAddress> OR
+    @<StixEmailMessage> OR @<StixFile> OR @<StixIpv4Address> OR @<StixIpv6Address> OR @<StixMacAddress> OR @<StixMutex> OR
+    @<StixNetworkTraffic> OR @<StixProcess> OR @<StixSoftware> OR @<StixUrl> OR @<StixUserAccount> OR @<StixWindowsRegistryKey> OR
+    @<StixX509Certificate>
+)
+
+<StixCyberObservableObject_struct> {
+    (  $<StixCyberObservableObject_tes> (  &<StixObject_tes> ;
+          rdf:type [ <StixObject> ] ? ;
+          <defanged> @linkml:Boolean ?
+       ) ;
+       rdf:type [ <StixCyberObservableObject> ]
+    )
+}
+
+<StixDictionary> CLOSED {
+    (  $<StixDictionary_tes> rdf:type . * ;
+       rdf:type [ <StixDictionary> ] ?
+    )
+}
+
+<StixDirectory> CLOSED {
+    (  $<StixDirectory_tes> (  &<StixCyberObservableObject_tes> ;
+          rdf:type [ <StixCyberObservableObject> ] ? ;
+          <path> @linkml:String ;
+          <path_enc> @linkml:String ? ;
+          <ctime> @<StixTimestamp> ? ;
+          <mtime> @<StixTimestamp> ? ;
+          <atime> @<StixTimestamp> ? ;
+          <contains_refs> @<StixCyberObservableObject> * ;
+          <type> @linkml:String
+       ) ;
+       rdf:type [ <StixDirectory> ]
+    )
+}
+
+<StixDomainName> CLOSED {
+    (  $<StixDomainName_tes> (  &<StixCyberObservableObject_tes> ;
+          rdf:type [ <StixCyberObservableObject> ] ? ;
+          <value> @linkml:String ;
+          <resolves_to_refs> @<StixCyberObservableObject> * ;
+          <type> @linkml:String
+       ) ;
+       rdf:type [ <StixDomainName> ]
+    )
+}
+
+<StixDomainObject>  (
+    @<StixAttackPattern> OR @<StixCampaign> OR @<StixCourseOfAction> OR @<StixGrouping> OR @<StixIdentity> OR @<StixIncident> OR
+    @<StixIndicator> OR @<StixInfrastructure> OR @<StixIntrusionSet> OR @<StixLocation> OR @<StixMalware> OR @<StixMalwareAnalysis>
+    OR @<StixNote> OR @<StixObservedData> OR @<StixOpinion> OR @<StixReport> OR @<StixThreatActor> OR @<StixTool> OR
+    @<StixVulnerability>
+)
+
+<StixDomainObject_struct> {
+    (  $<StixDomainObject_tes> (  &<StixCommonObject_tes> ;
+          rdf:type [ <StixCommonObject> ] ?
+       ) ;
+       rdf:type [ <StixDomainObject> ]
+    )
+}
+
+<StixEmailAddress> CLOSED {
+    (  $<StixEmailAddress_tes> (  &<StixCyberObservableObject_tes> ;
+          rdf:type [ <StixCyberObservableObject> ] ? ;
+          <value> @linkml:String ;
+          <display_name> @linkml:String ? ;
+          <belongs_to_ref> @<StixUserAccount> ? ;
+          <type> @linkml:String
+       ) ;
+       rdf:type [ <StixEmailAddress> ]
+    )
+}
+
+<StixEmailMessage> CLOSED {
+    (  $<StixEmailMessage_tes> (  &<StixCyberObservableObject_tes> ;
+          rdf:type [ <StixCyberObservableObject> ] ? ;
+          <date> @<StixTimestamp> ? ;
+          <content_type> @linkml:String ? ;
+          <from_ref> @<StixEmailAddress> ? ;
+          <sender_ref> @<StixEmailAddress> ? ;
+          <to_refs> @<StixEmailAddress> * ;
+          <cc_refs> @<StixEmailAddress> * ;
+          <bcc_refs> @<StixEmailAddress> * ;
+          <message_id> @linkml:String ? ;
+          <subject> @linkml:String ? ;
+          <received_lines> @linkml:String * ;
+          <additional_header_fields> @<StixDictionary> ? ;
+          <raw_email_ref> @<StixArtifact> ? ;
+          <is_multipart> @linkml:Boolean ;
+          <body> @linkml:String ? ;
+          <body_multipart> @<StixMimePart> * ;
+          <type> @linkml:String
+       ) ;
+       rdf:type [ <StixEmailMessage> ]
+    )
+}
+
+<StixExifTags> CLOSED {
+    (  $<StixExifTags_tes> rdf:type . * ;
+       rdf:type [ <StixExifTags> ] ?
+    )
+}
+
+<StixExtension> CLOSED {
+    (  $<StixExtension_tes> <extension_type> [ <https://w3id.org/lmodel/stix/StixExtensionType#new-sdo>
+          <https://w3id.org/lmodel/stix/StixExtensionType#new-sco> <https://w3id.org/lmodel/stix/StixExtensionType#new-sro>
+          <https://w3id.org/lmodel/stix/StixExtensionType#property-extension>
+          <https://w3id.org/lmodel/stix/StixExtensionType#toplevel-property-extension> ] ;
+       rdf:type [ <StixExtension> ] ?
+    )
+}
+
+<StixExtensionDefinition> CLOSED {
+    (  $<StixExtensionDefinition_tes> (  &<StixCommonObject_tes> ;
+          rdf:type [ <StixCommonObject> ] ? ;
+          <name> @linkml:String ;
+          <description> @linkml:String ? ;
+          <schema> @linkml:String ;
+          <version> @linkml:String ;
+          <extension_types> [ <https://w3id.org/lmodel/stix/StixExtensionType#new-sdo>
+             <https://w3id.org/lmodel/stix/StixExtensionType#new-sco> <https://w3id.org/lmodel/stix/StixExtensionType#new-sro>
+             <https://w3id.org/lmodel/stix/StixExtensionType#property-extension>
+             <https://w3id.org/lmodel/stix/StixExtensionType#toplevel-property-extension> ] + ;
+          <extension_properties> @linkml:String * ;
+          <type> @linkml:String
+       ) ;
+       rdf:type [ <StixExtensionDefinition> ]
+    )
+}
+
+<StixExtensions> CLOSED {
+    (  $<StixExtensions_tes> rdf:type . * ;
+       rdf:type [ <StixExtensions> ] ?
+    )
+}
+
+<StixExternalReference> CLOSED {
+    (  $<StixExternalReference_tes> (  <source_name> @linkml:String ;
+          <description> @linkml:String ? ;
+          <url> @linkml:Uri ? ;
+          <hashes> @<StixHashes> ? ;
+          <external_id> @linkml:String ?
+       ) ;
+       rdf:type [ <StixExternalReference> ] ?
+    )
+}
+
+<StixFile> CLOSED {
+    (  $<StixFile_tes> (  &<StixCyberObservableObject_tes> ;
+          rdf:type [ <StixCyberObservableObject> ] ? ;
+          <hashes> @<StixHashes> ? ;
+          <size> @linkml:Integer ? ;
+          <name> @linkml:String ? ;
+          <name_enc> @linkml:String ? ;
+          <magic_number_hex> @<StixHex> ? ;
+          <mime_type> @linkml:String ? ;
+          <ctime> @<StixTimestamp> ? ;
+          <mtime> @<StixTimestamp> ? ;
+          <atime> @<StixTimestamp> ? ;
+          <parent_directory_ref> @<StixDirectory> ? ;
+          <contains_refs> @<StixCyberObservableObject> * ;
+          <content_ref> @<StixArtifact> ? ;
+          <type> @linkml:String ;
+          <extensions> @<StixFileExtensions> ?
+       ) ;
+       rdf:type [ <StixFile> ]
+    )
+}
+
+<StixFileExtensions> CLOSED {
+    (  $<StixFileExtensions_tes> rdf:type . * ;
+       rdf:type [ <StixFileExtensions> ] ?
+    )
+}
+
+<StixGranularMarking> CLOSED {
+    (  $<StixGranularMarking_tes> (  <marking_ref> @<StixMarkingDefinition> ? ;
+          <selectors> @linkml:String + ;
+          <lang> @linkml:String ?
+       ) ;
+       rdf:type [ <StixGranularMarking> ] ?
+    )
+}
+
+<StixGrouping> CLOSED {
+    (  $<StixGrouping_tes> (  &<StixDomainObject_tes> ;
+          rdf:type [ <StixDomainObject> ] ? ;
+          <name> @linkml:String ? ;
+          <description> @linkml:String ? ;
+          <context> @linkml:String ;
+          <object_refs> @<StixObject> + ;
+          <type> @linkml:String
+       ) ;
+       rdf:type [ <StixGrouping> ]
+    )
+}
+
+<StixHashes> CLOSED {
+    (  $<StixHashes_tes> rdf:type . * ;
+       rdf:type [ <StixHashes> ] ?
+    )
+}
+
+<StixHttpRequestExtension> CLOSED {
+    (  $<StixHttpRequestExtension_tes> (  <request_method> @linkml:String ;
+          <request_value> @linkml:String ;
+          <request_version> @linkml:String ? ;
+          <request_header> @<StixDictionary> ? ;
+          <message_body_length> @linkml:Integer ? ;
+          <message_body_data_ref> @<StixArtifact> ?
+       ) ;
+       rdf:type [ <StixHttpRequestExtension> ] ?
+    )
+}
+
+<StixIcmpExtension> CLOSED {
+    (  $<StixIcmpExtension_tes> (  <icmp_type_hex> @<StixHex> ;
+          <icmp_code_hex> @<StixHex>
+       ) ;
+       rdf:type [ <StixIcmpExtension> ] ?
+    )
+}
+
+<StixIdentity> CLOSED {
+    (  $<StixIdentity_tes> (  &<StixDomainObject_tes> ;
+          rdf:type [ <StixDomainObject> ] ? ;
+          <roles> @linkml:String * ;
+          <name> @linkml:String ;
+          <description> @linkml:String ? ;
+          <identity_class> @linkml:String ? ;
+          <sectors> @linkml:String * ;
+          <contact_information> @linkml:String ? ;
+          <type> @linkml:String
+       ) ;
+       rdf:type [ <StixIdentity> ]
+    )
+}
+
+<StixIncident> CLOSED {
+    (  $<StixIncident_tes> (  &<StixDomainObject_tes> ;
+          rdf:type [ <StixDomainObject> ] ? ;
+          <name> @linkml:String ;
+          <description> @linkml:String ? ;
+          <type> @linkml:String
+       ) ;
+       rdf:type [ <StixIncident> ]
+    )
+}
+
+<StixIndicator> CLOSED {
+    (  $<StixIndicator_tes> (  &<StixDomainObject_tes> ;
+          rdf:type [ <StixDomainObject> ] ? ;
+          <indicator_types> @linkml:String * ;
+          <name> @linkml:String ? ;
+          <description> @linkml:String ? ;
+          <pattern> @linkml:String ;
+          <pattern_type> @linkml:String ;
+          <pattern_version> @linkml:String ? ;
+          <valid_from> @<StixTimestamp> ;
+          <valid_until> @<StixTimestamp> ? ;
+          <kill_chain_phases> @<StixKillChainPhase> * ;
+          <type> @linkml:String
+       ) ;
+       rdf:type [ <StixIndicator> ]
+    )
+}
+
+<StixInfrastructure> CLOSED {
+    (  $<StixInfrastructure_tes> (  &<StixDomainObject_tes> ;
+          rdf:type [ <StixDomainObject> ] ? ;
+          <name> @linkml:String ;
+          <description> @linkml:String ? ;
+          <infrastructure_types> @linkml:String * ;
+          <aliases> @linkml:String * ;
+          <kill_chain_phases> @<StixKillChainPhase> * ;
+          <first_seen> @<StixTimestamp> ? ;
+          <last_seen> @<StixTimestamp> ? ;
+          <type> @linkml:String
+       ) ;
+       rdf:type [ <StixInfrastructure> ]
+    )
+}
+
+<StixIntrusionSet> CLOSED {
+    (  $<StixIntrusionSet_tes> (  &<StixDomainObject_tes> ;
+          rdf:type [ <StixDomainObject> ] ? ;
+          <name> @linkml:String ;
+          <description> @linkml:String ? ;
+          <aliases> @linkml:String * ;
+          <first_seen> @<StixTimestamp> ? ;
+          <last_seen> @<StixTimestamp> ? ;
+          <goals> @linkml:String * ;
+          <resource_level> @linkml:String ? ;
+          <primary_motivation> @linkml:String ? ;
+          <secondary_motivations> @linkml:String * ;
+          <type> @linkml:String
+       ) ;
+       rdf:type [ <StixIntrusionSet> ]
+    )
+}
+
+<StixIpv4Address> CLOSED {
+    (  $<StixIpv4Address_tes> (  &<StixCyberObservableObject_tes> ;
+          rdf:type [ <StixCyberObservableObject> ] ? ;
+          <value> @linkml:String ;
+          <resolves_to_refs> @<StixMacAddress> * ;
+          <belongs_to_refs> @<StixAutonomousSystem> * ;
+          <type> @linkml:String
+       ) ;
+       rdf:type [ <StixIpv4Address> ]
+    )
+}
+
+<StixIpv6Address> CLOSED {
+    (  $<StixIpv6Address_tes> (  &<StixCyberObservableObject_tes> ;
+          rdf:type [ <StixCyberObservableObject> ] ? ;
+          <value> @linkml:String ;
+          <resolves_to_refs> @<StixMacAddress> * ;
+          <belongs_to_refs> @<StixAutonomousSystem> * ;
+          <type> @linkml:String
+       ) ;
+       rdf:type [ <StixIpv6Address> ]
+    )
+}
+
+<StixKillChainPhase> CLOSED {
+    (  $<StixKillChainPhase_tes> (  <kill_chain_name> @linkml:String ;
+          <phase_name> @linkml:String
+       ) ;
+       rdf:type [ <StixKillChainPhase> ] ?
+    )
+}
+
+<StixLanguageContent> CLOSED {
+    (  $<StixLanguageContent_tes> (  &<StixCommonObject_tes> ;
+          rdf:type [ <StixCommonObject> ] ? ;
+          <object_ref> @<StixObject> ;
+          <object_modified> @<StixTimestamp> ? ;
+          <contents> @<StixLanguageContents> ;
+          <type> @linkml:String
+       ) ;
+       rdf:type [ <StixLanguageContent> ]
+    )
+}
+
+<StixLanguageContents> CLOSED {
+    (  $<StixLanguageContents_tes> rdf:type . * ;
+       rdf:type [ <StixLanguageContents> ] ?
+    )
+}
+
+<StixLocation> CLOSED {
+    (  $<StixLocation_tes> (  &<StixDomainObject_tes> ;
+          rdf:type [ <StixDomainObject> ] ? ;
+          <description> @linkml:String ? ;
+          <name> @linkml:String ? ;
+          <latitude> @linkml:Float ? ;
+          <longitude> @linkml:Float ? ;
+          <precision> @linkml:Float ? ;
+          <region> @linkml:String ? ;
+          <country> @linkml:String ? ;
+          <administrative_area> @linkml:String ? ;
+          <city> @linkml:String ? ;
+          <street_address> @linkml:String ? ;
+          <postal_code> @linkml:String ? ;
+          <type> @linkml:String
+       ) ;
+       rdf:type [ <StixLocation> ]
+    )
+}
+
+<StixMacAddress> CLOSED {
+    (  $<StixMacAddress_tes> (  &<StixCyberObservableObject_tes> ;
+          rdf:type [ <StixCyberObservableObject> ] ? ;
+          <value> @linkml:String ;
+          <type> @linkml:String
+       ) ;
+       rdf:type [ <StixMacAddress> ]
+    )
+}
+
+<StixMalware> CLOSED {
+    (  $<StixMalware_tes> (  &<StixDomainObject_tes> ;
+          rdf:type [ <StixDomainObject> ] ? ;
+          <aliases> @linkml:String * ;
+          <first_seen> @<StixTimestamp> ? ;
+          <last_seen> @<StixTimestamp> ? ;
+          <operating_system_refs> @<StixSoftware> * ;
+          <architecture_execution_envs> @linkml:String * ;
+          <implementation_languages> @linkml:String * ;
+          <capabilities> @linkml:String * ;
+          <sample_refs> @<StixCyberObservableObject> * ;
+          <malware_types> @linkml:String * ;
+          <name> @linkml:String ? ;
+          <description> @linkml:String ? ;
+          <kill_chain_phases> @<StixKillChainPhase> * ;
+          <is_family> @linkml:Boolean ;
+          <type> @linkml:String
+       ) ;
+       rdf:type [ <StixMalware> ]
+    )
+}
+
+<StixMalwareAnalysis> CLOSED {
+    (  $<StixMalwareAnalysis_tes> (  &<StixDomainObject_tes> ;
+          rdf:type [ <StixDomainObject> ] ? ;
+          <product> @linkml:String ;
+          <version> @linkml:String ? ;
+          <configuration_version> @linkml:String ? ;
+          <modules> @linkml:String * ;
+          <analysis_engine_version> @linkml:String ? ;
+          <analysis_definition_version> @linkml:String ? ;
+          <submitted> @<StixTimestamp> ? ;
+          <analysis_started> @<StixTimestamp> ? ;
+          <analysis_ended> @<StixTimestamp> ? ;
+          <result_name> @linkml:String ? ;
+          <result> @linkml:String ? ;
+          <host_vm_ref> @<StixSoftware> ? ;
+          <operating_system_ref> @<StixSoftware> ? ;
+          <installed_software_refs> @<StixSoftware> * ;
+          <analysis_sco_refs> @<StixCyberObservableObject> * ;
+          <sample_ref> @<StixCyberObservableObject> ? ;
+          <type> @linkml:String
+       ) ;
+       rdf:type [ <StixMalwareAnalysis> ]
+    )
+}
+
+<StixMarkingDefinition> CLOSED {
+    (  $<StixMarkingDefinition_tes> (  &<StixObject_tes> ;
+          rdf:type [ <StixObject> ] ? ;
+          <created_by_ref> @<StixIdentity> ? ;
+          <created> @<StixTimestampMillis> ;
+          <external_references> @<StixExternalReference> * ;
+          <name> @linkml:String ? ;
+          <definition_type> @linkml:String ? ;
+          <definition> @linkml:String ? ;
+          <type> @linkml:String ;
+          <spec_version> [ <https://w3id.org/lmodel/stix/StixSpecVersion#2.0> <https://w3id.org/lmodel/stix/StixSpecVersion#2.1> ]
+       ) ;
+       rdf:type [ <StixMarkingDefinition> ]
+    )
+}
+
+<StixMimePart> CLOSED {
+    (  $<StixMimePart_tes> (  <body> @linkml:String ? ;
+          <body_raw_ref> @<StixCyberObservableObject> ? ;
+          <content_type> @linkml:String ? ;
+          <content_disposition> @linkml:String ?
+       ) ;
+       rdf:type [ <StixMimePart> ] ?
+    )
+}
+
+<StixMutex> CLOSED {
+    (  $<StixMutex_tes> (  &<StixCyberObservableObject_tes> ;
+          rdf:type [ <StixCyberObservableObject> ] ? ;
+          <name> @linkml:String ;
+          <type> @linkml:String
+       ) ;
+       rdf:type [ <StixMutex> ]
+    )
+}
+
+<StixNetworkTraffic> CLOSED {
+    (  $<StixNetworkTraffic_tes> (  &<StixCyberObservableObject_tes> ;
+          rdf:type [ <StixCyberObservableObject> ] ? ;
+          <start> @<StixTimestamp> ? ;
+          <end> @<StixTimestamp> ? ;
+          <src_ref> @<StixCyberObservableObject> ? ;
+          <dst_ref> @<StixCyberObservableObject> ? ;
+          <src_port> @linkml:Integer ? ;
+          <dst_port> @linkml:Integer ? ;
+          <protocols> @linkml:String + ;
+          <src_byte_count> @linkml:Integer ? ;
+          <dst_byte_count> @linkml:Integer ? ;
+          <src_packets> @linkml:Integer ? ;
+          <dst_packets> @linkml:Integer ? ;
+          <ipfix> @<StixDictionary> ? ;
+          <src_payload_ref> @<StixArtifact> ? ;
+          <dst_payload_ref> @<StixArtifact> ? ;
+          <encapsulates_refs> @<StixNetworkTraffic> * ;
+          <encapsulated_by_ref> @<StixNetworkTraffic> ? ;
+          <is_active> @linkml:Boolean ? ;
+          <type> @linkml:String ;
+          <extensions> @<StixNetworkTrafficExtensions> ?
+       ) ;
+       rdf:type [ <StixNetworkTraffic> ]
+    )
+}
+
+<StixNetworkTrafficExtensions> CLOSED {
+    (  $<StixNetworkTrafficExtensions_tes> rdf:type . * ;
+       rdf:type [ <StixNetworkTrafficExtensions> ] ?
+    )
+}
+
+<StixNote> CLOSED {
+    (  $<StixNote_tes> (  &<StixDomainObject_tes> ;
+          rdf:type [ <StixDomainObject> ] ? ;
+          <abstract> @linkml:String ? ;
+          <content> @linkml:String ;
+          <authors> @linkml:String * ;
+          <object_refs> @<StixObject> + ;
+          <type> @linkml:String
+       ) ;
+       rdf:type [ <StixNote> ]
+    )
+}
+
+<StixNtfsExtension> CLOSED {
+    (  $<StixNtfsExtension_tes> (  <sid> @linkml:String ? ;
+          <alternate_data_streams> @<StixAlternateDataStream> *
+       ) ;
+       rdf:type [ <StixNtfsExtension> ] ?
+    )
+}
+
+<StixObject>  (
+    @<StixCommonObject> OR @<StixCyberObservableObject> OR @<StixMarkingDefinition>
+)
+
+<StixObject_struct> {
+    (  $<StixObject_tes> (  <type> @linkml:String ;
+          <spec_version> [ <https://w3id.org/lmodel/stix/StixSpecVersion#2.0> <https://w3id.org/lmodel/stix/StixSpecVersion#2.1> ]
+          ? ;
+          <object_marking_refs> @<StixMarkingDefinition> * ;
+          <granular_markings> @<StixGranularMarking> * ;
+          <extensions> @<StixExtensions> ?
+       ) ;
+       rdf:type [ <StixObject> ]
+    )
+}
+
+<StixObservedData> CLOSED {
+    (  $<StixObservedData_tes> (  &<StixDomainObject_tes> ;
+          rdf:type [ <StixDomainObject> ] ? ;
+          <first_observed> @<StixTimestamp> ;
+          <last_observed> @<StixTimestamp> ;
+          <number_observed> @linkml:Integer ;
+          <objects> @<StixObservedObjects> ? ;
+          <object_refs> @<StixObject> * ;
+          <type> @linkml:String
+       ) ;
+       rdf:type [ <StixObservedData> ]
+    )
+}
+
+<StixObservedObjects> CLOSED {
+    (  $<StixObservedObjects_tes> rdf:type . * ;
+       rdf:type [ <StixObservedObjects> ] ?
+    )
+}
+
+<StixOpinion> CLOSED {
+    (  $<StixOpinion_tes> (  &<StixDomainObject_tes> ;
+          rdf:type [ <StixDomainObject> ] ? ;
+          <explanation> @linkml:String ? ;
+          <authors> @linkml:String * ;
+          <object_refs> @<StixObject> + ;
+          <opinion> [ <https://w3id.org/lmodel/stix/StixAgreement#strongly-disagree>
+             <https://w3id.org/lmodel/stix/StixAgreement#disagree> <https://w3id.org/lmodel/stix/StixAgreement#neutral>
+             <https://w3id.org/lmodel/stix/StixAgreement#agree> <https://w3id.org/lmodel/stix/StixAgreement#strongly-agree> ] ;
+          <type> @linkml:String
+       ) ;
+       rdf:type [ <StixOpinion> ]
+    )
+}
+
+<StixPdfDocumentInfo> CLOSED {
+    (  $<StixPdfDocumentInfo_tes> rdf:type . * ;
+       rdf:type [ <StixPdfDocumentInfo> ] ?
+    )
+}
+
+<StixPdfExtension> CLOSED {
+    (  $<StixPdfExtension_tes> (  <version> @linkml:String ? ;
+          <is_optimized> @linkml:Boolean ? ;
+          <document_info_dict> @<StixPdfDocumentInfo> ? ;
+          <pdfid0> @linkml:String ? ;
+          <pdfid1> @linkml:String ?
+       ) ;
+       rdf:type [ <StixPdfExtension> ] ?
+    )
+}
+
+<StixProcess> CLOSED {
+    (  $<StixProcess_tes> (  &<StixCyberObservableObject_tes> ;
+          rdf:type [ <StixCyberObservableObject> ] ? ;
+          <is_hidden> @linkml:Boolean ? ;
+          <pid> @linkml:Integer ? ;
+          <created_time> @<StixTimestamp> ? ;
+          <cwd> @linkml:String ? ;
+          <command_line> @linkml:String ? ;
+          <environment_variables> @<StixDictionary> ? ;
+          <opened_connection_refs> @<StixNetworkTraffic> * ;
+          <creator_user_ref> @<StixUserAccount> ? ;
+          <image_ref> @<StixFile> ? ;
+          <parent_ref> @<StixProcess> ? ;
+          <child_refs> @<StixProcess> * ;
+          <type> @linkml:String ;
+          <extensions> @<StixProcessExtensions> ?
+       ) ;
+       rdf:type [ <StixProcess> ]
+    )
+}
+
+<StixProcessExtensions> CLOSED {
+    (  $<StixProcessExtensions_tes> rdf:type . * ;
+       rdf:type [ <StixProcessExtensions> ] ?
+    )
+}
+
+<StixRasterImageExtension> CLOSED {
+    (  $<StixRasterImageExtension_tes> (  <image_height> @linkml:Integer ? ;
+          <image_width> @linkml:Integer ? ;
+          <bits_per_pixel> @linkml:Integer ? ;
+          <exif_tags> @<StixExifTags> ?
+       ) ;
+       rdf:type [ <StixRasterImageExtension> ] ?
+    )
+}
+
+<StixRelationship> CLOSED {
+    (  $<StixRelationship_tes> (  &<StixRelationshipObject_tes> ;
+          rdf:type [ <StixRelationshipObject> ] ? ;
+          <relationship_type> @linkml:String ;
+          <description> @linkml:String ? ;
+          <source_ref> @<StixObject> ;
+          <target_ref> @<StixObject> ;
+          <start_time> @<StixTimestamp> ? ;
+          <stop_time> @<StixTimestamp> ? ;
+          <type> @linkml:String
+       ) ;
+       rdf:type [ <StixRelationship> ]
+    )
+}
+
+<StixRelationshipObject>  (
+    @<StixRelationship> OR @<StixSighting>
+)
+
+<StixRelationshipObject_struct> {
+    (  $<StixRelationshipObject_tes> (  &<StixCommonObject_tes> ;
+          rdf:type [ <StixCommonObject> ] ?
+       ) ;
+       rdf:type [ <StixRelationshipObject> ]
+    )
+}
+
+<StixReport> CLOSED {
+    (  $<StixReport_tes> (  &<StixDomainObject_tes> ;
+          rdf:type [ <StixDomainObject> ] ? ;
+          <report_types> @linkml:String * ;
+          <name> @linkml:String ;
+          <description> @linkml:String ? ;
+          <published> @<StixTimestamp> ;
+          <object_refs> @<StixObject> + ;
+          <type> @linkml:String
+       ) ;
+       rdf:type [ <StixReport> ]
+    )
+}
+
+<StixSighting> CLOSED {
+    (  $<StixSighting_tes> (  &<StixRelationshipObject_tes> ;
+          rdf:type [ <StixRelationshipObject> ] ? ;
+          <description> @linkml:String ? ;
+          <first_seen> @<StixTimestamp> ? ;
+          <last_seen> @<StixTimestamp> ? ;
+          <count> @linkml:Integer ? ;
+          <sighting_of_ref> @<StixDomainObject> ;
+          <observed_data_refs> @<StixObservedData> * ;
+          <where_sighted_refs> @<StixDomainObject> * ;
+          <summary> @linkml:Boolean ? ;
+          <type> @linkml:String
+       ) ;
+       rdf:type [ <StixSighting> ]
+    )
+}
+
+<StixSocketExtension> CLOSED {
+    (  $<StixSocketExtension_tes> (  <address_family> [ <https://w3id.org/lmodel/stix/StixNetworkSocketAddressFamily#AF_UNSPEC>
+             <https://w3id.org/lmodel/stix/StixNetworkSocketAddressFamily#AF_INET>
+             <https://w3id.org/lmodel/stix/StixNetworkSocketAddressFamily#AF_IPX>
+             <https://w3id.org/lmodel/stix/StixNetworkSocketAddressFamily#AF_APPLETALK>
+             <https://w3id.org/lmodel/stix/StixNetworkSocketAddressFamily#AF_NETBIOS>
+             <https://w3id.org/lmodel/stix/StixNetworkSocketAddressFamily#AF_INET6>
+             <https://w3id.org/lmodel/stix/StixNetworkSocketAddressFamily#AF_IRDA>
+             <https://w3id.org/lmodel/stix/StixNetworkSocketAddressFamily#AF_BTH> ] ;
+          <is_blocking> @linkml:Boolean ? ;
+          <is_listening> @linkml:Boolean ? ;
+          <options> @<StixSocketOptions> ? ;
+          <socket_type> [ <https://w3id.org/lmodel/stix/StixNetworkSocketType#SOCK_STREAM>
+             <https://w3id.org/lmodel/stix/StixNetworkSocketType#SOCK_DGRAM>
+             <https://w3id.org/lmodel/stix/StixNetworkSocketType#SOCK_RAW>
+             <https://w3id.org/lmodel/stix/StixNetworkSocketType#SOCK_RDM>
+             <https://w3id.org/lmodel/stix/StixNetworkSocketType#SOCK_SEQPACKET> ] ? ;
+          <socket_descriptor> @linkml:Integer ? ;
+          <socket_handle> @linkml:Integer ?
+       ) ;
+       rdf:type [ <StixSocketExtension> ] ?
+    )
+}
+
+<StixSocketOptions> CLOSED {
+    (  $<StixSocketOptions_tes> rdf:type . * ;
+       rdf:type [ <StixSocketOptions> ] ?
+    )
+}
+
+<StixSoftware> CLOSED {
+    (  $<StixSoftware_tes> (  &<StixCyberObservableObject_tes> ;
+          rdf:type [ <StixCyberObservableObject> ] ? ;
+          <name> @linkml:String ;
+          <cpe> @linkml:String ? ;
+          <swid> @linkml:String ? ;
+          <languages> @linkml:String * ;
+          <vendor> @linkml:String ? ;
+          <version> @linkml:String ? ;
+          <type> @linkml:String
+       ) ;
+       rdf:type [ <StixSoftware> ]
+    )
+}
+
+<StixStatementMarking> CLOSED {
+    (  $<StixStatementMarking_tes> <statement> @linkml:String ;
+       rdf:type [ <StixStatementMarking> ] ?
+    )
+}
+
+<StixTcpExtension> CLOSED {
+    (  $<StixTcpExtension_tes> (  <src_flags_hex> @<StixHex> ? ;
+          <dst_flags_hex> @<StixHex> ?
+       ) ;
+       rdf:type [ <StixTcpExtension> ] ?
+    )
+}
+
+<StixThreatActor> CLOSED {
+    (  $<StixThreatActor_tes> (  &<StixDomainObject_tes> ;
+          rdf:type [ <StixDomainObject> ] ? ;
+          <threat_actor_types> @linkml:String * ;
+          <name> @linkml:String ;
+          <description> @linkml:String ? ;
+          <aliases> @linkml:String * ;
+          <roles> @linkml:String * ;
+          <goals> @linkml:String * ;
+          <first_seen> @<StixTimestamp> ? ;
+          <last_seen> @<StixTimestamp> ? ;
+          <sophistication> @linkml:String ? ;
+          <resource_level> @linkml:String ? ;
+          <primary_motivation> @linkml:String ? ;
+          <secondary_motivations> @linkml:String * ;
+          <personal_motivations> @linkml:String * ;
+          <type> @linkml:String
+       ) ;
+       rdf:type [ <StixThreatActor> ]
+    )
+}
+
+<StixTlpMarking> CLOSED {
+    (  $<StixTlpMarking_tes> <tlp> [ <https://w3id.org/lmodel/stix/StixTlpLevel#white>
+          <https://w3id.org/lmodel/stix/StixTlpLevel#green> <https://w3id.org/lmodel/stix/StixTlpLevel#amber>
+          <https://w3id.org/lmodel/stix/StixTlpLevel#red> ] ;
+       rdf:type [ <StixTlpMarking> ] ?
+    )
+}
+
+<StixTool> CLOSED {
+    (  $<StixTool_tes> (  &<StixDomainObject_tes> ;
+          rdf:type [ <StixDomainObject> ] ? ;
+          <aliases> @linkml:String * ;
+          <tool_types> @linkml:String * ;
+          <name> @linkml:String ;
+          <description> @linkml:String ? ;
+          <tool_version> @linkml:String ? ;
+          <kill_chain_phases> @<StixKillChainPhase> * ;
+          <type> @linkml:String
+       ) ;
+       rdf:type [ <StixTool> ]
+    )
+}
+
+<StixUnixAccountExtension> CLOSED {
+    (  $<StixUnixAccountExtension_tes> (  <gid> @linkml:Float ? ;
+          <groups> @linkml:String * ;
+          <home_dir> @linkml:String ? ;
+          <shell> @linkml:String ?
+       ) ;
+       rdf:type [ <StixUnixAccountExtension> ] ?
+    )
+}
+
+<StixUrl> CLOSED {
+    (  $<StixUrl_tes> (  &<StixCyberObservableObject_tes> ;
+          rdf:type [ <StixCyberObservableObject> ] ? ;
+          <value> @linkml:Uri ;
+          <type> @linkml:String
+       ) ;
+       rdf:type [ <StixUrl> ]
+    )
+}
+
+<StixUserAccount> CLOSED {
+    (  $<StixUserAccount_tes> (  &<StixCyberObservableObject_tes> ;
+          rdf:type [ <StixCyberObservableObject> ] ? ;
+          <user_id> @linkml:String ? ;
+          <credential> @linkml:String ? ;
+          <account_login> @linkml:String ? ;
+          <account_type> @linkml:String ? ;
+          <display_name> @linkml:String ? ;
+          <is_service_account> @linkml:Boolean ? ;
+          <is_privileged> @linkml:Boolean ? ;
+          <can_escalate_privs> @linkml:Boolean ? ;
+          <is_disabled> @linkml:Boolean ? ;
+          <account_created> @<StixTimestamp> ? ;
+          <account_expires> @<StixTimestamp> ? ;
+          <credential_last_changed> @<StixTimestamp> ? ;
+          <account_first_login> @<StixTimestamp> ? ;
+          <account_last_login> @<StixTimestamp> ? ;
+          <type> @linkml:String ;
+          <extensions> @<StixUserAccountExtensions> ?
+       ) ;
+       rdf:type [ <StixUserAccount> ]
+    )
+}
+
+<StixUserAccountExtensions> CLOSED {
+    (  $<StixUserAccountExtensions_tes> rdf:type . * ;
+       rdf:type [ <StixUserAccountExtensions> ] ?
+    )
+}
+
+<StixVulnerability> CLOSED {
+    (  $<StixVulnerability_tes> (  &<StixDomainObject_tes> ;
+          rdf:type [ <StixDomainObject> ] ? ;
+          <name> @linkml:String ;
+          <description> @linkml:String ? ;
+          <type> @linkml:String
+       ) ;
+       rdf:type [ <StixVulnerability> ]
+    )
+}
+
+<StixWindowsPeBinaryExtension> CLOSED {
+    (  $<StixWindowsPeBinaryExtension_tes> (  <pe_type> @linkml:String ;
+          <imphash> @linkml:String ? ;
+          <machine_hex> @<StixHex> ? ;
+          <number_of_sections> @linkml:Integer ? ;
+          <time_date_stamp> @<StixTimestampSeconds> ? ;
+          <pointer_to_symbol_table_hex> @<StixHex> ? ;
+          <number_of_symbols> @linkml:Integer ? ;
+          <size_of_optional_header> @linkml:Integer ? ;
+          <characteristics_hex> @<StixHex> ? ;
+          <file_header_hashes> @<StixHashes> ? ;
+          <optional_header> @<StixWindowsPeOptionalHeader> ? ;
+          <sections> @<StixWindowsPeSection> *
+       ) ;
+       rdf:type [ <StixWindowsPeBinaryExtension> ] ?
+    )
+}
+
+<StixWindowsPeOptionalHeader> CLOSED {
+    (  $<StixWindowsPeOptionalHeader_tes> (  <magic_hex> @<StixHex> ? ;
+          <major_linker_version> @linkml:Integer ? ;
+          <minor_linker_version> @linkml:Integer ? ;
+          <size_of_code> @linkml:Integer ? ;
+          <size_of_initialized_data> @linkml:Integer ? ;
+          <size_of_uninitialized_data> @linkml:Integer ? ;
+          <address_of_entry_point> @linkml:Integer ? ;
+          <base_of_code> @linkml:Integer ? ;
+          <base_of_data> @linkml:Integer ? ;
+          <image_base> @linkml:Integer ? ;
+          <section_alignment> @linkml:Integer ? ;
+          <file_alignment> @linkml:Integer ? ;
+          <major_os_version> @linkml:Integer ? ;
+          <minor_os_version> @linkml:Integer ? ;
+          <major_image_version> @linkml:Integer ? ;
+          <minor_image_version> @linkml:Integer ? ;
+          <major_subsystem_version> @linkml:Integer ? ;
+          <minor_subsystem_version> @linkml:Integer ? ;
+          <win32_version_value_hex> @<StixHex> ? ;
+          <size_of_image> @linkml:Integer ? ;
+          <size_of_headers> @linkml:Integer ? ;
+          <checksum_hex> @<StixHex> ? ;
+          <subsystem_hex> @<StixHex> ? ;
+          <dll_characteristics_hex> @<StixHex> ? ;
+          <size_of_stack_reserve> @linkml:Integer ? ;
+          <size_of_stack_commit> @linkml:Integer ? ;
+          <size_of_heap_reserve> @linkml:Integer ? ;
+          <size_of_heap_commit> @linkml:Integer ? ;
+          <loader_flags_hex> @<StixHex> ? ;
+          <number_of_rva_and_sizes> @linkml:Integer ? ;
+          <hashes> @<StixHashes> ?
+       ) ;
+       rdf:type [ <StixWindowsPeOptionalHeader> ] ?
+    )
+}
+
+<StixWindowsPeSection> CLOSED {
+    (  $<StixWindowsPeSection_tes> (  <name> @linkml:String ;
+          <size> @linkml:Integer ? ;
+          <entropy> @linkml:Float ? ;
+          <hashes> @<StixHashes> ?
+       ) ;
+       rdf:type [ <StixWindowsPeSection> ] ?
+    )
+}
+
+<StixWindowsProcessExtension> CLOSED {
+    (  $<StixWindowsProcessExtension_tes> (  <aslr_enabled> @linkml:Boolean ? ;
+          <dep_enabled> @linkml:Boolean ? ;
+          <priority> @linkml:String ? ;
+          <owner_sid> @linkml:String ? ;
+          <window_title> @linkml:String ? ;
+          <startup_info> @<StixDictionary> ? ;
+          <integrity_level> [ <https://w3id.org/lmodel/stix/StixWindowsIntegrityLevel#low>
+             <https://w3id.org/lmodel/stix/StixWindowsIntegrityLevel#medium>
+             <https://w3id.org/lmodel/stix/StixWindowsIntegrityLevel#high>
+             <https://w3id.org/lmodel/stix/StixWindowsIntegrityLevel#system> ] ?
+       ) ;
+       rdf:type [ <StixWindowsProcessExtension> ] ?
+    )
+}
+
+<StixWindowsRegistryKey> CLOSED {
+    (  $<StixWindowsRegistryKey_tes> (  &<StixCyberObservableObject_tes> ;
+          rdf:type [ <StixCyberObservableObject> ] ? ;
+          <key> @linkml:String ? ;
+          <values> @<StixWindowsRegistryValue> * ;
+          <modified_time> @<StixTimestamp> ? ;
+          <creator_user_ref> @<StixUserAccount> ? ;
+          <number_of_subkeys> @linkml:Integer ? ;
+          <type> @linkml:String
+       ) ;
+       rdf:type [ <StixWindowsRegistryKey> ]
+    )
+}
+
+<StixWindowsRegistryValue> CLOSED {
+    (  $<StixWindowsRegistryValue_tes> (  <name> @linkml:String ? ;
+          <data> @linkml:String ? ;
+          <data_type> [ <https://w3id.org/lmodel/stix/StixWindowsRegistryDatatype#REG_NONE>
+             <https://w3id.org/lmodel/stix/StixWindowsRegistryDatatype#REG_SZ>
+             <https://w3id.org/lmodel/stix/StixWindowsRegistryDatatype#REG_EXPAND_SZ>
+             <https://w3id.org/lmodel/stix/StixWindowsRegistryDatatype#REG_BINARY>
+             <https://w3id.org/lmodel/stix/StixWindowsRegistryDatatype#REG_DWORD>
+             <https://w3id.org/lmodel/stix/StixWindowsRegistryDatatype#REG_DWORD_BIG_ENDIAN>
+             <https://w3id.org/lmodel/stix/StixWindowsRegistryDatatype#REG_DWORD_LITTLE_ENDIAN>
+             <https://w3id.org/lmodel/stix/StixWindowsRegistryDatatype#REG_LINK>
+             <https://w3id.org/lmodel/stix/StixWindowsRegistryDatatype#REG_MULTI_SZ>
+             <https://w3id.org/lmodel/stix/StixWindowsRegistryDatatype#REG_RESOURCE_LIST>
+             <https://w3id.org/lmodel/stix/StixWindowsRegistryDatatype#REG_FULL_RESOURCE_DESCRIPTION>
+             <https://w3id.org/lmodel/stix/StixWindowsRegistryDatatype#REG_RESOURCE_REQUIREMENTS_LIST>
+             <https://w3id.org/lmodel/stix/StixWindowsRegistryDatatype#REG_QWORD>
+             <https://w3id.org/lmodel/stix/StixWindowsRegistryDatatype#REG_INVALID_TYPE> ] ?
+       ) ;
+       rdf:type [ <StixWindowsRegistryValue> ] ?
+    )
+}
+
+<StixWindowsServiceExtension> CLOSED {
+    (  $<StixWindowsServiceExtension_tes> (  <service_name> @linkml:String ? ;
+          <descriptions> @linkml:String * ;
+          <display_name> @linkml:String ? ;
+          <group_name> @linkml:String ? ;
+          <start_type> [ <https://w3id.org/lmodel/stix/StixWindowsServiceStartType#SERVICE_AUTO_START>
+             <https://w3id.org/lmodel/stix/StixWindowsServiceStartType#SERVICE_BOOT_START>
+             <https://w3id.org/lmodel/stix/StixWindowsServiceStartType#SERVICE_DEMAND_START>
+             <https://w3id.org/lmodel/stix/StixWindowsServiceStartType#SERVICE_DISABLED>
+             <https://w3id.org/lmodel/stix/StixWindowsServiceStartType#SERVICE_SYSTEM_ALERT> ] ? ;
+          <service_dll_refs> @<StixFile> * ;
+          <service_type> [ <https://w3id.org/lmodel/stix/StixWindowsServiceType#SERVICE_KERNEL_DRIVER>
+             <https://w3id.org/lmodel/stix/StixWindowsServiceType#SERVICE_FILE_SYSTEM_DRIVER>
+             <https://w3id.org/lmodel/stix/StixWindowsServiceType#SERVICE_WIN32_OWN_PROCESS>
+             <https://w3id.org/lmodel/stix/StixWindowsServiceType#SERVICE_WIN32_SHARE_PROCESS> ] ? ;
+          <service_status> [ <https://w3id.org/lmodel/stix/StixWindowsServiceStatus#SERVICE_CONTINUE_PENDING>
+             <https://w3id.org/lmodel/stix/StixWindowsServiceStatus#SERVICE_PAUSE_PENDING>
+             <https://w3id.org/lmodel/stix/StixWindowsServiceStatus#SERVICE_PAUSED>
+             <https://w3id.org/lmodel/stix/StixWindowsServiceStatus#SERVICE_RUNNING>
+             <https://w3id.org/lmodel/stix/StixWindowsServiceStatus#SERVICE_START_PENDING>
+             <https://w3id.org/lmodel/stix/StixWindowsServiceStatus#SERVICE_STOP_PENDING>
+             <https://w3id.org/lmodel/stix/StixWindowsServiceStatus#SERVICE_STOPPED> ] ?
+       ) ;
+       rdf:type [ <StixWindowsServiceExtension> ] ?
+    )
+}
+
+<StixX509Certificate> CLOSED {
+    (  $<StixX509Certificate_tes> (  &<StixCyberObservableObject_tes> ;
+          rdf:type [ <StixCyberObservableObject> ] ? ;
+          <is_self_signed> @linkml:Boolean ? ;
+          <hashes> @<StixHashes> ? ;
+          <version> @linkml:String ? ;
+          <serial_number> @linkml:String ? ;
+          <signature_algorithm> @linkml:String ? ;
+          <issuer> @linkml:String ? ;
+          <validity_not_before> @<StixTimestamp> ? ;
+          <validity_not_after> @<StixTimestamp> ? ;
+          <subject> @linkml:String ? ;
+          <subject_public_key_algorithm> @linkml:String ? ;
+          <subject_public_key_modulus> @linkml:String ? ;
+          <subject_public_key_exponent> @linkml:Integer ? ;
+          <x509_v3_extensions> @<StixX509V3Extensions> ? ;
+          <type> @linkml:String
+       ) ;
+       rdf:type [ <StixX509Certificate> ]
+    )
+}
+
+<StixX509V3Extensions> CLOSED {
+    (  $<StixX509V3Extensions_tes> (  <basic_constraints> @linkml:String ? ;
+          <name_constraints> @linkml:String ? ;
+          <policy_constraints> @linkml:String ? ;
+          <key_usage> @linkml:String ? ;
+          <extended_key_usage> @linkml:String ? ;
+          <subject_key_identifier> @linkml:String ? ;
+          <authority_key_identifier> @linkml:String ? ;
+          <subject_alternative_name> @linkml:String ? ;
+          <issuer_alternative_name> @linkml:String ? ;
+          <subject_directory_attributes> @linkml:String ? ;
+          <crl_distribution_points> @linkml:String ? ;
+          <inhibit_any_policy> @linkml:String ? ;
+          <private_key_usage_period_not_before> @<StixTimestamp> ? ;
+          <private_key_usage_period_not_after> @<StixTimestamp> ? ;
+          <certificate_policies> @linkml:String ? ;
+          <policy_mappings> @linkml:String ?
+       ) ;
+       rdf:type [ <StixX509V3Extensions> ] ?
+    )
+}

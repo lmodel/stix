@@ -1,0 +1,12 @@
+# linkml-lint reads this file from the directory `just lint` runs in.
+# The recommended rules apply, with one exception. Permissible values keep
+# STIX's own spelling, so that STIX JSON validates unchanged: vocabulary
+# entries such as windows-local, c++ and AES-256-GCM, upper-case names such
+# as REG_SZ and SHA-256, and the version numbers 2.0 and 2.1. The naming rule
+# therefore leaves permissible values out; classes, enums, slots and types
+# still follow it.
+extends: recommended
+rules:
+  standard_naming:
+    exclude_type:
+      - permissible_value

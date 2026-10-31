@@ -1,0 +1,13 @@
+# Fails at: /cpe
+# Invalid: Cpe is a CPE 2.3 name.
+type: software
+spec_version: '2.1'
+id: software--68b7e193-a40c-4f67-b7a1-d148682124dc
+name: Windows 11
+vendor: Microsoft
+version: 23H2
+cpe: microsoft windows 11
+languages:
+  - en
+  - de-DE
+  - gle

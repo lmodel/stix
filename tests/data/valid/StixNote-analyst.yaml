@@ -1,0 +1,12 @@
+type: note
+spec_version: '2.1'
+id: note--09007851-2328-458b-886c-d2d6c1159246
+created_by_ref: identity--c38abf55-9fec-4815-a139-67f11dc878a7
+created: '2026-01-15T09:30:00.000Z'
+modified: '2026-02-01T12:00:00.000Z'
+abstract: Likely the same crew
+content: The loader shares code with last year's samples.
+authors:
+  - J. Analyst
+object_refs:
+  - malware--92cdfc85-ab75-4b0c-a18e-5f65378858fc

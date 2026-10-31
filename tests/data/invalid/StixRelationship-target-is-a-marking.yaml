@@ -1,0 +1,12 @@
+# Fails at: /target_ref
+# Invalid: A relationship joins domain and observable objects, not markings.
+type: relationship
+spec_version: '2.1'
+id: relationship--b18ec97a-b71d-47e8-959a-b41f10bf4b75
+created_by_ref: identity--c38abf55-9fec-4815-a139-67f11dc878a7
+created: '2026-01-15T09:30:00.000Z'
+modified: '2026-02-01T12:00:00.000Z'
+relationship_type: uses
+source_ref: threat-actor--c1a3b7a0-d547-4e38-87ce-b752eba24e29
+target_ref: marking-definition--0f1e2d3c-4b5a-4968-8776-655443322110
+start_time: '2025-10-01T00:00:00Z'

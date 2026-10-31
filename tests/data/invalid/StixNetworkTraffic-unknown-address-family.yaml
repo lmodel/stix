@@ -1,0 +1,27 @@
+# Fails at: /extensions/socket-ext/address_family
+# Invalid: Address_family is one of eight.
+type: network-traffic
+spec_version: '2.1'
+id: network-traffic--c85aae9d-8b59-4f0a-a36b-b98e643fa33a
+dst_ref: domain-name--dcb03049-9e29-48d8-b76f-a7a2d3192d5e
+protocols:
+  - ipv4
+  - tcp
+  - http
+is_active: true
+extensions:
+  http-request-ext:
+    request_method: get
+    request_value: /update
+    request_version: http/1.1
+    request_header:
+      Host:
+        - glass.example
+  tcp-ext:
+    src_flags_hex: '02'
+  socket-ext:
+    address_family: AF_PACKET
+    socket_type: SOCK_STREAM
+    is_listening: false
+    options:
+      SO_RCVBUF: 65536

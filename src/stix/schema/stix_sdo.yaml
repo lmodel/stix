@@ -1,0 +1,905 @@
+---
+id: https://w3id.org/lmodel/stix/stix_sdo
+name: stix_sdo
+title: STIX domain objects
+description: >-
+  The STIX Domain Objects (SDOs) of STIX 2.1 (section 4) other than identity, which stix_core
+  holds because every object's creator refers to it.
+license: Apache-2.0
+see_also:
+  - https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html
+default_prefix: stix
+default_range: string
+prefixes:
+  linkml: https://w3id.org/linkml/
+  stix: https://w3id.org/lmodel/stix/
+  uco-core: https://ontology.unifiedcyberontology.org/uco/core/
+  uco-location: https://ontology.unifiedcyberontology.org/uco/location/
+  uco-tool: https://ontology.unifiedcyberontology.org/uco/tool/
+imports:
+  - linkml:types
+  - ./stix_vocabularies
+  - ./stix_core
+  - ./stix_sco
+slots:
+  aliases:
+    description: Other names by which the object is known.
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:aliases
+  kill_chain_phases:
+    description: The kill chain phases to which the object corresponds.
+    range: StixKillChainPhase
+    multivalued: true
+    minimum_cardinality: 1
+    inlined_as_list: true
+    slot_uri: stix:kill_chain_phases
+  first_seen:
+    description: The time at which the object was first seen.
+    range: stix_timestamp
+    slot_uri: stix:first_seen
+  last_seen:
+    description: The time at which the object was last seen.
+    range: stix_timestamp
+    slot_uri: stix:last_seen
+  objective:
+    description: >-
+      The campaign's primary goal, objective, desired outcome or intended effect.
+    slot_uri: stix:objective
+  context:
+    description: >-
+      A short description of the particular context shared by the content referenced by the
+      Grouping.
+    any_of:
+      - range: StixGroupingContext
+      - range: string
+    slot_uri: stix:context
+  object_refs:
+    description: References to the STIX objects that this object is about or holds.
+    range: StixObject
+    pattern: ^[a-z][a-z0-9-]+[a-z0-9]--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:object_refs
+  indicator_types:
+    description: >-
+      The kinds of indicator, such as malicious-activity.
+    any_of:
+      - range: StixIndicatorType
+      - range: string
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:indicator_types
+  pattern:
+    description: The detection pattern for this indicator.
+    slot_uri: stix:pattern
+  pattern_type:
+    description: The type of pattern used in this indicator.
+    any_of:
+      - range: StixPatternType
+      - range: string
+    slot_uri: stix:pattern_type
+  pattern_version:
+    description: The version of the pattern that is used.
+    slot_uri: stix:pattern_version
+  valid_from:
+    description: >-
+      The time from which this indicator should be considered valuable intelligence.
+    range: stix_timestamp
+    slot_uri: stix:valid_from
+  valid_until:
+    description: >-
+      The time at which this indicator should no longer be considered valuable intelligence.
+    range: stix_timestamp
+    slot_uri: stix:valid_until
+  infrastructure_types:
+    description: >-
+      The kinds of infrastructure, such as botnet.
+    any_of:
+      - range: StixInfrastructureType
+      - range: string
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:infrastructure_types
+  goals:
+    description: The high-level goals.
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:goals
+  resource_level:
+    description: The organizational level at which the actor typically works.
+    any_of:
+      - range: StixAttackResourceLevel
+      - range: string
+    slot_uri: stix:resource_level
+  primary_motivation:
+    description: The primary reason, motivation or purpose behind the activity.
+    any_of:
+      - range: StixAttackMotivation
+      - range: string
+    slot_uri: stix:primary_motivation
+  secondary_motivations:
+    description: The secondary reasons, motivations or purposes behind the activity.
+    any_of:
+      - range: StixAttackMotivation
+      - range: string
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:secondary_motivations
+  latitude:
+    description: The latitude of the Location in decimal degrees.
+    range: float
+    minimum_value: -90
+    maximum_value: 90
+    slot_uri: stix:latitude
+  longitude:
+    description: The longitude of the Location in decimal degrees.
+    range: float
+    minimum_value: -180
+    maximum_value: 180
+    slot_uri: stix:longitude
+  precision:
+    description: >-
+      Defines the precision of the coordinates specified by the latitude and longitude properties,
+      measured in meters.
+    range: float
+    slot_uri: stix:precision
+  region:
+    description: The region that this Location describes.
+    any_of:
+      - range: StixRegion
+      - range: string
+    slot_uri: stix:region
+  country:
+    description: The country that this Location describes.
+    slot_uri: stix:country
+  administrative_area:
+    description: >-
+      The state, province, or other sub-national administrative area that this Location describes.
+    slot_uri: stix:administrative_area
+  city:
+    description: The city that this Location describes.
+    slot_uri: stix:city
+  street_address:
+    description: The street address that this Location describes.
+    slot_uri: stix:street_address
+  postal_code:
+    description: The postal code for this Location.
+    slot_uri: stix:postal_code
+  operating_system_refs:
+    description: >-
+      The operating systems that the malware family or malware instance is executable on.
+    range: StixSoftware
+    pattern: ^software--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:operating_system_refs
+  architecture_execution_envs:
+    description: >-
+      The processor architectures, such as x86 or ARM, that the malware runs on.
+    any_of:
+      - range: StixProcessorArchitecture
+      - range: string
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:architecture_execution_envs
+  implementation_languages:
+    description: >-
+      The programming languages used to write the malware instance or family.
+    any_of:
+      - range: StixImplementationLanguage
+      - range: string
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:implementation_languages
+  capabilities:
+    description: >-
+      The capabilities identified in the malware instance or family.
+    any_of:
+      - range: StixMalwareCapability
+      - range: string
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:capabilities
+  sample_refs:
+    description: >-
+      The sample_refs property specifies a list of identifiers of the SCO file or artifact
+      objects associated with this malware instance(s) or family.
+    range: StixCyberObservableObject
+    any_of:
+      - range: StixFile
+      - range: StixArtifact
+    pattern: ^(file|artifact)--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:sample_refs
+  malware_types:
+    description: >-
+      The kinds of malware, such as ransomware.
+    any_of:
+      - range: StixMalwareType
+      - range: string
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:malware_types
+  is_family:
+    description: >-
+      Whether the object represents a malware family (if true) or a malware instance (if false).
+    range: boolean
+    slot_uri: stix:is_family
+  product:
+    description: >-
+      The name of the analysis engine or product that was used for this analysis.
+    slot_uri: stix:product
+  configuration_version:
+    description: >-
+      The version of the analysis product configuration that was used to perform this analysis.
+    slot_uri: stix:configuration_version
+  modules:
+    description: >-
+      The particular analysis product modules that were used to perform the analysis.
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:modules
+  analysis_engine_version:
+    description: >-
+      The version of the analysis engine or product that was used to perform this analysis.
+    slot_uri: stix:analysis_engine_version
+  analysis_definition_version:
+    description: The version of the analysis definitions used by the analysis tool.
+    slot_uri: stix:analysis_definition_version
+  submitted:
+    description: >-
+      The date and time that this malware was first submitted for scanning or analysis.
+    range: stix_timestamp
+    slot_uri: stix:submitted
+  analysis_started:
+    description: The date and time that the malware analysis was initiated.
+    range: stix_timestamp
+    slot_uri: stix:analysis_started
+  analysis_ended:
+    description: The date and time that the malware analysis ended.
+    range: stix_timestamp
+    slot_uri: stix:analysis_ended
+  result_name:
+    description: >-
+      The classification result or name assigned to the malware instance by the scanner tool.
+    slot_uri: stix:result_name
+  result:
+    description: >-
+      The classification result as determined by the scanner or tool analysis process.
+    any_of:
+      - range: StixMalwareResult
+      - range: string
+    slot_uri: stix:result
+  host_vm_ref:
+    description: >-
+      A description of the virtual machine environment used to host the guest operating system
+      (if applicable) that was used for the dynamic analysis of the malware instance or family.
+    range: StixSoftware
+    pattern: ^software--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    slot_uri: stix:host_vm_ref
+  operating_system_ref:
+    description: The operating system that was used to perform the dynamic analysis.
+    range: StixSoftware
+    pattern: ^software--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    slot_uri: stix:operating_system_ref
+  installed_software_refs:
+    description: >-
+      Any non-standard software installed on the operating system used for the dynamic analysis
+      of the malware instance or family.
+    range: StixSoftware
+    pattern: ^software--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:installed_software_refs
+  analysis_sco_refs:
+    description: >-
+      The cyber-observable objects captured during the analysis.
+    range: StixCyberObservableObject
+    pattern: ^(?!(attack-pattern|campaign|course-of-action|grouping|identity|incident|indicator|infrastructure|intrusion-set|location|malware|malware-analysis|note|observed-data|opinion|report|threat-actor|tool|vulnerability|relationship|sighting|bundle|marking-definition|language-content|extension-definition)--)[a-z][a-z0-9-]+[a-z0-9]--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:analysis_sco_refs
+  sample_ref:
+    description: Refers to the object this analysis was performed against.
+    range: StixCyberObservableObject
+    any_of:
+      - range: StixFile
+      - range: StixNetworkTraffic
+      - range: StixArtifact
+    pattern: ^(file|network-traffic|artifact)--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    slot_uri: stix:sample_ref
+  abstract:
+    description: A brief summary of the note.
+    slot_uri: stix:abstract
+  content:
+    description: The content of the note.
+    slot_uri: stix:content
+  authors:
+    description: >-
+      The names of the note's authors, such as the analysts who wrote it.
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:authors
+  first_observed:
+    description: The beginning of the time window that the data was observed during.
+    range: stix_timestamp
+    slot_uri: stix:first_observed
+  last_observed:
+    description: The end of the time window that the data was observed during.
+    range: stix_timestamp
+    slot_uri: stix:last_observed
+  number_observed:
+    description: >-
+      The number of times the data in objects or object_refs was observed.
+    range: integer
+    minimum_value: 1
+    maximum_value: 999999999
+    slot_uri: stix:number_observed
+  explanation:
+    description: An explanation of why the producer has this Opinion.
+    slot_uri: stix:explanation
+  opinion:
+    description: >-
+      The producer's opinion of the objects that object_refs lists.
+    range: StixAgreement
+    slot_uri: stix:opinion
+  report_types:
+    description: >-
+      The primary subjects of the report, such as threat-actor.
+    any_of:
+      - range: StixReportType
+      - range: string
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:report_types
+  published:
+    description: >-
+      The date that this report object was officially published by the creator of this report.
+    range: stix_timestamp
+    slot_uri: stix:published
+  threat_actor_types:
+    description: >-
+      The kinds of threat actor, such as nation-state.
+    any_of:
+      - range: StixThreatActorType
+      - range: string
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:threat_actor_types
+  sophistication:
+    description: >-
+      The skill, knowledge, training or expertise the threat actor needs to carry out an
+      attack.
+    any_of:
+      - range: StixThreatActorSophistication
+      - range: string
+    slot_uri: stix:sophistication
+  personal_motivations:
+    description: >-
+      The threat actor's personal reasons or motivations, apart from its organization's goals.
+    any_of:
+      - range: StixAttackMotivation
+      - range: string
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:personal_motivations
+  tool_types:
+    description: >-
+      The kinds of tool, such as remote-access.
+    any_of:
+      - range: StixToolType
+      - range: string
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:tool_types
+  tool_version:
+    description: The version identifier associated with the tool.
+    slot_uri: stix:tool_version
+classes:
+  StixAttackPattern:
+    description: >-
+      Attack Patterns are a type of TTP that describe ways that adversaries attempt to compromise
+      targets.
+    is_a: StixDomainObject
+    slots:
+      - aliases
+      - name
+      - description
+      - kill_chain_phases
+    slot_usage:
+      id:
+        pattern: ^attack-pattern--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: attack-pattern
+      name:
+        required: true
+    annotations:
+      stix_type: attack-pattern
+  StixCampaign:
+    description: >-
+      A Campaign is a grouping of adversary behavior that describes a set of malicious activities
+      or attacks that occur over a period of time against a specific set of targets.
+    is_a: StixDomainObject
+    slots:
+      - name
+      - description
+      - aliases
+      - first_seen
+      - last_seen
+      - objective
+    slot_usage:
+      id:
+        pattern: ^campaign--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: campaign
+      name:
+        required: true
+    annotations:
+      stix_type: campaign
+  StixCourseOfAction:
+    description: >-
+      A Course of Action is an action taken either to prevent an attack or to respond to an
+      attack that is in progress.
+    is_a: StixDomainObject
+    slots:
+      - name
+      - description
+    slot_usage:
+      id:
+        pattern: ^course-of-action--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: course-of-action
+      name:
+        required: true
+    annotations:
+      stix_type: course-of-action
+  StixGrouping:
+    description: >-
+      A Grouping object explicitly asserts that the referenced STIX Objects have a shared
+      content.
+    is_a: StixDomainObject
+    slots:
+      - name
+      - description
+      - context
+      - object_refs
+    slot_usage:
+      id:
+        pattern: ^grouping--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: grouping
+      context:
+        required: true
+      object_refs:
+        required: true
+    annotations:
+      stix_type: grouping
+    close_mappings:
+      - uco-core:Grouping
+  StixIncident:
+    description: >-
+      The Incident object in STIX 2.1 is a stub, to be expanded in future STIX 2 releases.
+    is_a: StixDomainObject
+    slots:
+      - name
+      - description
+    slot_usage:
+      id:
+        pattern: ^incident--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: incident
+      name:
+        required: true
+    annotations:
+      stix_type: incident
+  StixIndicator:
+    description: >-
+      Indicators contain a pattern that can be used to detect suspicious or malicious cyber
+      activity.
+    is_a: StixDomainObject
+    slots:
+      - indicator_types
+      - name
+      - description
+      - pattern
+      - pattern_type
+      - pattern_version
+      - valid_from
+      - valid_until
+      - kill_chain_phases
+    slot_usage:
+      id:
+        pattern: ^indicator--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: indicator
+      pattern:
+        required: true
+      pattern_type:
+        required: true
+      valid_from:
+        required: true
+    annotations:
+      stix_type: indicator
+  StixInfrastructure:
+    description: >-
+      Infrastructure objects describe systems, software services, and associated physical
+      or virtual resources.
+    is_a: StixDomainObject
+    slots:
+      - name
+      - description
+      - infrastructure_types
+      - aliases
+      - kill_chain_phases
+      - first_seen
+      - last_seen
+    slot_usage:
+      id:
+        pattern: ^infrastructure--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: infrastructure
+      name:
+        required: true
+    annotations:
+      stix_type: infrastructure
+  StixIntrusionSet:
+    description: >-
+      An Intrusion Set is a grouped set of adversary behavior and resources with common properties
+      that is believed to be orchestrated by a single organization.
+    is_a: StixDomainObject
+    slots:
+      - name
+      - description
+      - aliases
+      - first_seen
+      - last_seen
+      - goals
+      - resource_level
+      - primary_motivation
+      - secondary_motivations
+    slot_usage:
+      id:
+        pattern: ^intrusion-set--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: intrusion-set
+      name:
+        required: true
+    annotations:
+      stix_type: intrusion-set
+  StixLocation:
+    description: >-
+      A geographic location, given as a region, a civic address, a latitude and longitude, or
+      any mix of them.
+    is_a: StixDomainObject
+    slots:
+      - description
+      - name
+      - latitude
+      - longitude
+      - precision
+      - region
+      - country
+      - administrative_area
+      - city
+      - street_address
+      - postal_code
+    slot_usage:
+      id:
+        pattern: ^location--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: location
+    any_of:
+      - slot_conditions:
+          region:
+            required: true
+      - slot_conditions:
+          country:
+            required: true
+      - slot_conditions:
+          latitude:
+            required: true
+          longitude:
+            required: true
+    rules:
+      - description: A latitude needs a longitude.
+        preconditions:
+          slot_conditions:
+            latitude:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            longitude:
+              required: true
+      - description: A longitude needs a latitude.
+        preconditions:
+          slot_conditions:
+            longitude:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            latitude:
+              required: true
+      - description: A precision needs a latitude and a longitude.
+        preconditions:
+          slot_conditions:
+            precision:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            latitude:
+              required: true
+            longitude:
+              required: true
+    annotations:
+      stix_type: location
+    close_mappings:
+      - uco-location:Location
+  StixMalware:
+    description: >-
+      Malicious code: a program inserted into a system, usually covertly, to compromise its
+      data, applications or operating system, or to disrupt its owner.
+    is_a: StixDomainObject
+    slots:
+      - aliases
+      - first_seen
+      - last_seen
+      - operating_system_refs
+      - architecture_execution_envs
+      - implementation_languages
+      - capabilities
+      - sample_refs
+      - malware_types
+      - name
+      - description
+      - kill_chain_phases
+      - is_family
+    slot_usage:
+      id:
+        pattern: ^malware--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: malware
+      is_family:
+        required: true
+    annotations:
+      stix_type: malware
+  StixMalwareAnalysis:
+    description: >-
+      Malware Analysis captures the metadata and results of a particular analysis performed
+      (static or dynamic) on the malware instance or family.
+    is_a: StixDomainObject
+    slots:
+      - product
+      - version
+      - configuration_version
+      - modules
+      - analysis_engine_version
+      - analysis_definition_version
+      - submitted
+      - analysis_started
+      - analysis_ended
+      - result_name
+      - result
+      - host_vm_ref
+      - operating_system_ref
+      - installed_software_refs
+      - analysis_sco_refs
+      - sample_ref
+    slot_usage:
+      id:
+        pattern: ^malware-analysis--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: malware-analysis
+      product:
+        required: true
+    any_of:
+      - slot_conditions:
+          result:
+            required: true
+      - slot_conditions:
+          analysis_sco_refs:
+            required: true
+    annotations:
+      stix_type: malware-analysis
+  StixNote:
+    description: >-
+      A Note is a comment or note containing informative text to help explain the context
+      of one or more STIX Objects (SDOs or SROs) or to provide additional analysis that is
+      not contained in the original object.
+    is_a: StixDomainObject
+    slots:
+      - abstract
+      - content
+      - authors
+      - object_refs
+    slot_usage:
+      id:
+        pattern: ^note--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: note
+      content:
+        required: true
+      object_refs:
+        required: true
+    annotations:
+      stix_type: note
+  StixObservedData:
+    description: >-
+      Observed data conveys information that was observed on systems and networks, such as
+      log data or network traffic, using the Cyber Observable specification.
+    is_a: StixDomainObject
+    slots:
+      - first_observed
+      - last_observed
+      - number_observed
+      - objects
+      - object_refs
+    slot_usage:
+      id:
+        pattern: ^observed-data--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: observed-data
+      first_observed:
+        required: true
+      last_observed:
+        required: true
+      number_observed:
+        required: true
+      object_refs:
+        range: StixObject
+        any_of:
+          - range: StixCyberObservableObject
+          - range: StixRelationshipObject
+        pattern: ^(?!(attack-pattern|campaign|course-of-action|grouping|identity|incident|indicator|infrastructure|intrusion-set|location|malware|malware-analysis|note|observed-data|opinion|report|threat-actor|tool|vulnerability)--)[a-z][a-z0-9-]+[a-z0-9]--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      objects:
+        range: StixObservedObjects
+        inlined: true
+        description: >-
+          The observed cyber-observable objects, as a dictionary keyed by index. Deprecated
+          in STIX 2.1; use object_refs.
+    any_of:
+      - slot_conditions:
+          objects:
+            required: true
+      - slot_conditions:
+          object_refs:
+            required: true
+    rules:
+      - description: objects and object_refs exclude each other.
+        preconditions:
+          slot_conditions:
+            objects:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            object_refs:
+              value_presence: ABSENT
+    annotations:
+      stix_type: observed-data
+  StixOpinion:
+    description: >-
+      An Opinion is an assessment of the correctness of the information in a STIX Object produced
+      by a different entity and captures the level of agreement or disagreement using a fixed
+      scale.
+    is_a: StixDomainObject
+    slots:
+      - explanation
+      - authors
+      - object_refs
+      - opinion
+    slot_usage:
+      id:
+        pattern: ^opinion--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: opinion
+      object_refs:
+        required: true
+      opinion:
+        required: true
+    annotations:
+      stix_type: opinion
+  StixReport:
+    description: >-
+      Reports are collections of threat intelligence focused on one or more topics, such as
+      a description of a threat actor, malware, or attack technique, including context and
+      related details.
+    is_a: StixDomainObject
+    slots:
+      - report_types
+      - name
+      - description
+      - published
+      - object_refs
+    slot_usage:
+      id:
+        pattern: ^report--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: report
+      name:
+        required: true
+      object_refs:
+        required: true
+      published:
+        required: true
+    annotations:
+      stix_type: report
+  StixThreatActor:
+    description: >-
+      Threat Actors are actual individuals, groups, or organizations believed to be operating
+      with malicious intent.
+    is_a: StixDomainObject
+    slots:
+      - threat_actor_types
+      - name
+      - description
+      - aliases
+      - roles
+      - goals
+      - first_seen
+      - last_seen
+      - sophistication
+      - resource_level
+      - primary_motivation
+      - secondary_motivations
+      - personal_motivations
+    slot_usage:
+      id:
+        pattern: ^threat-actor--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: threat-actor
+      name:
+        required: true
+      roles:
+        any_of:
+          - range: StixThreatActorRole
+          - range: string
+    annotations:
+      stix_type: threat-actor
+  StixTool:
+    description: >-
+      Tools are legitimate software that can be used by threat actors to perform attacks.
+    is_a: StixDomainObject
+    slots:
+      - aliases
+      - tool_types
+      - name
+      - description
+      - tool_version
+      - kill_chain_phases
+    slot_usage:
+      id:
+        pattern: ^tool--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: tool
+      name:
+        required: true
+    annotations:
+      stix_type: tool
+    broad_mappings:
+      - uco-tool:Tool
+  StixVulnerability:
+    description: >-
+      A Vulnerability is a mistake in software that can be directly used by a hacker to gain
+      access to a system or network.
+    is_a: StixDomainObject
+    slots:
+      - name
+      - description
+    slot_usage:
+      id:
+        pattern: ^vulnerability--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: vulnerability
+      name:
+        required: true
+    annotations:
+      stix_type: vulnerability
+  StixObservedObjects:
+    description: >-
+      The cyber-observable objects of an observed data object, keyed by an index such as "0".
+      STIX 2.1 deprecates this form in favour of object_refs.
+    extra_slots:
+      range_expression:
+        range: StixCyberObservableObject
+        inlined: true

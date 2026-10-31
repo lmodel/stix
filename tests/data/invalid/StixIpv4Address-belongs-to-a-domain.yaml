@@ -1,0 +1,8 @@
+# Fails at: /belongs_to_refs/0
+# Invalid: An address belongs to autonomous systems.
+type: ipv4-addr
+spec_version: '2.1'
+id: ipv4-addr--59b19870-2b1a-4bb7-a4b0-c102fd14e331
+value: 198.51.100.7
+belongs_to_refs:
+  - domain-name--0f1e2d3c-4b5a-4968-8776-655443322110

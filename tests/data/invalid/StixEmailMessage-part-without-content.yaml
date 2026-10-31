@@ -1,0 +1,13 @@
+# Fails at: /body_multipart/0
+# Invalid: A MIME part has a body or a body_raw_ref.
+type: email-message
+spec_version: '2.1'
+id: email-message--5863f634-698a-46f5-b773-602891230d1a
+is_multipart: true
+content_type: multipart/mixed
+body_multipart:
+  - content_type: text/plain
+  - content_type: application/zip
+    content_disposition: attachment; filename=invoice.zip
+    body_raw_ref: artifact--23ac277a-01ee-4b71-9ffe-4abc49cbe635
+raw_email_ref: artifact--847c1fa6-501c-4897-8285-0eb5299b542e

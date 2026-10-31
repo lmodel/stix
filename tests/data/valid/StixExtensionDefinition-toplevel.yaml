@@ -1,0 +1,13 @@
+type: extension-definition
+spec_version: '2.1'
+id: extension-definition--edc07e93-0f02-42a9-b3a9-5863c38661c0
+created_by_ref: identity--c38abf55-9fec-4815-a139-67f11dc878a7
+created: '2026-01-15T09:30:00.000Z'
+modified: '2026-02-01T12:00:00.000Z'
+name: ACME labels
+schema: https://acme.example/stix/extensions/labels.json
+version: 2.1.0
+extension_types:
+  - toplevel-property-extension
+extension_properties:
+  - x_acme_team

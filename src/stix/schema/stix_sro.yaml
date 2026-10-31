@@ -1,0 +1,160 @@
+---
+id: https://w3id.org/lmodel/stix/stix_sro
+name: stix_sro
+title: STIX relationship objects
+description: >-
+  The two STIX Relationship Objects (SROs) of STIX 2.1 (section 5): relationship and sighting.
+license: Apache-2.0
+see_also:
+  - https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html
+default_prefix: stix
+default_range: string
+prefixes:
+  linkml: https://w3id.org/linkml/
+  stix: https://w3id.org/lmodel/stix/
+  uco-core: https://ontology.unifiedcyberontology.org/uco/core/
+imports:
+  - linkml:types
+  - ./stix_core
+  - ./stix_sdo
+slots:
+  relationship_type:
+    description: The name used to identify the type of relationship.
+    pattern: ^[a-z0-9\-]+$
+    slot_uri: stix:relationship_type
+    close_mappings:
+      - uco-core:kindOfRelationship
+  source_ref:
+    description: The ID of the source (from) object.
+    range: StixObject
+    any_of:
+      - range: StixDomainObject
+      - range: StixCyberObservableObject
+    pattern: ^(?!(relationship|sighting|bundle|marking-definition|language-content)--)[a-z][a-z0-9-]+[a-z0-9]--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    slot_uri: stix:source_ref
+    close_mappings:
+      - uco-core:source
+  target_ref:
+    description: The ID of the target (to) object.
+    range: StixObject
+    any_of:
+      - range: StixDomainObject
+      - range: StixCyberObservableObject
+    pattern: ^(?!(relationship|sighting|bundle|marking-definition|language-content)--)[a-z][a-z0-9-]+[a-z0-9]--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    slot_uri: stix:target_ref
+    close_mappings:
+      - uco-core:target
+  start_time:
+    description: >-
+      This optional timestamp represents the earliest time at which the Relationship between
+      the objects exists. If this property is a future timestamp, at the time the updated
+      property is defined, then this represents an estimate by the producer of the intelligence
+      of the earliest time at which relationship will be asserted to be true.
+    range: stix_timestamp
+    slot_uri: stix:start_time
+    close_mappings:
+      - uco-core:startTime
+  stop_time:
+    description: >-
+      The latest time at which the Relationship between the objects exists. If this property
+      is a future timestamp, at the time the updated property is defined, then this represents
+      an estimate by the producer of the intelligence of the latest time at which relationship
+      will be asserted to be true.
+    range: stix_timestamp
+    slot_uri: stix:stop_time
+    close_mappings:
+      - uco-core:endTime
+  count:
+    description: >-
+      This is an integer between 0 and 999,999,999 inclusive and represents the number of
+      times the object was sighted.
+    range: integer
+    minimum_value: 0
+    maximum_value: 999999999
+    slot_uri: stix:count
+  sighting_of_ref:
+    description: A reference to the domain object that was sighted.
+    comments:
+      - >-
+        The pattern refuses an observable, a relationship and a meta object, as STIX 2.1
+        does. OASIS's JSON schema refuses only some of them.
+    range: StixDomainObject
+    pattern: ^(?!(artifact|autonomous-system|directory|domain-name|email-addr|email-message|file|ipv4-addr|ipv6-addr|mac-addr|mutex|network-traffic|process|software|url|user-account|windows-registry-key|x509-certificate|relationship|sighting|bundle|marking-definition|language-content|extension-definition)--)[a-z][a-z0-9-]+[a-z0-9]--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    slot_uri: stix:sighting_of_ref
+  observed_data_refs:
+    description: >-
+      A list of ID references to the Observed Data objects that contain the raw cyber data
+      for this Sighting.
+    range: StixObservedData
+    pattern: ^observed-data--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:observed_data_refs
+  where_sighted_refs:
+    description: >-
+      A list of ID references to the Identity or Location objects describing the entities
+      or types of entities that saw the sighting.
+    range: StixDomainObject
+    any_of:
+      - range: StixIdentity
+      - range: StixLocation
+    pattern: ^(identity|location)--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:where_sighted_refs
+  summary:
+    description: >-
+      The summary property indicates whether the Sighting should be considered summary data.
+    range: boolean
+    slot_uri: stix:summary
+classes:
+  StixRelationship:
+    description: >-
+      The Relationship object is used to link together two SDOs in order to describe how they
+      are related to each other.
+    is_a: StixRelationshipObject
+    slots:
+      - relationship_type
+      - description
+      - source_ref
+      - target_ref
+      - start_time
+      - stop_time
+    slot_usage:
+      id:
+        pattern: ^relationship--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: relationship
+      relationship_type:
+        required: true
+      source_ref:
+        required: true
+      target_ref:
+        required: true
+    annotations:
+      stix_type: relationship
+    close_mappings:
+      - uco-core:Relationship
+  StixSighting:
+    description: >-
+      The belief that something in cyber threat intelligence, such as an indicator, malware or
+      a threat actor, was seen.
+    is_a: StixRelationshipObject
+    slots:
+      - description
+      - first_seen
+      - last_seen
+      - count
+      - sighting_of_ref
+      - observed_data_refs
+      - where_sighted_refs
+      - summary
+    slot_usage:
+      id:
+        pattern: ^sighting--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: sighting
+      sighting_of_ref:
+        required: true
+    annotations:
+      stix_type: sighting

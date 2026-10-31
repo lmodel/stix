@@ -1,0 +1,12 @@
+# Fails at: /
+# Invalid: A marking definition cannot be versioned.
+type: marking-definition
+spec_version: '2.1'
+id: marking-definition--df2ed701-2080-4fb1-810a-557d6faade13
+created: '2026-01-15T09:30:00.000Z'
+created_by_ref: identity--c38abf55-9fec-4815-a139-67f11dc878a7
+name: ACME copyright
+definition_type: statement
+definition:
+  statement: Copyright 2026, ACME Inc.
+modified: '2026-01-16T00:00:00.000Z'

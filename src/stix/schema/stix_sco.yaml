@@ -1,0 +1,2348 @@
+---
+id: https://w3id.org/lmodel/stix/stix_sco
+name: stix_sco
+title: STIX cyber-observable objects
+description: >-
+  The eighteen STIX Cyber-observable Objects (SCOs) of STIX 2.1 (section 6), with their predefined
+  extensions and the types they embed.
+license: Apache-2.0
+see_also:
+  - https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html
+default_prefix: stix
+default_range: string
+prefixes:
+  linkml: https://w3id.org/linkml/
+  stix: https://w3id.org/lmodel/stix/
+  uco-observable: https://ontology.unifiedcyberontology.org/uco/observable/
+imports:
+  - linkml:types
+  - ./stix_vocabularies
+  - ./stix_core
+slots:
+  mime_type:
+    description: >-
+      The MIME type of the content, as the IANA Media Types registry names it.
+    slot_uri: stix:mime_type
+  payload_bin:
+    description: >-
+      Specifies the binary data contained in the artifact as a base64-encoded string.
+    range: stix_binary
+    slot_uri: stix:payload_bin
+  encryption_algorithm:
+    description: >-
+      If the artifact is encrypted, specifies the type of encryption algorithm the binary
+      data (either via payload_bin or url) is encoded in.
+    range: StixEncryptionAlgorithm
+    slot_uri: stix:encryption_algorithm
+  decryption_key:
+    description: >-
+      Specifies the decryption key for the encrypted binary data (either via payload_bin or
+      url).
+    slot_uri: stix:decryption_key
+  number:
+    description: >-
+      Specifies the number assigned to the AS. Such assignments are typically performed by
+      a Regional Internet Registries (RIR).
+    range: integer
+    slot_uri: stix:number
+  rir:
+    description: >-
+      Specifies the name of the Regional Internet Registry (RIR) that assigned the number
+      to the AS.
+    slot_uri: stix:rir
+  path:
+    description: A path, as it was observed.
+    slot_uri: stix:path
+  path_enc:
+    description: Specifies the observed encoding for the path.
+    pattern: ^[a-zA-Z0-9/\.+_:-]{2,250}$
+    slot_uri: stix:path_enc
+  ctime:
+    description: The time at which the object was created.
+    range: stix_timestamp
+    slot_uri: stix:ctime
+  mtime:
+    description: The time at which the object was last written to.
+    range: stix_timestamp
+    slot_uri: stix:mtime
+  atime:
+    description: The time at which the object was last accessed.
+    range: stix_timestamp
+    slot_uri: stix:atime
+  contains_refs:
+    description: References to other cyber-observable objects that this one contains.
+    range: StixCyberObservableObject
+    pattern: ^(?!(attack-pattern|campaign|course-of-action|grouping|identity|incident|indicator|infrastructure|intrusion-set|location|malware|malware-analysis|note|observed-data|opinion|report|threat-actor|tool|vulnerability|relationship|sighting|bundle|marking-definition|language-content|extension-definition)--)[a-z][a-z0-9-]+[a-z0-9]--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:contains_refs
+  value:
+    description: The value of the observable, in the form each class states.
+    slot_uri: stix:value
+  resolves_to_refs:
+    description: References to the cyber-observable objects that this one resolves to.
+    range: StixCyberObservableObject
+    pattern: ^[a-z][a-z0-9-]+[a-z0-9]--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:resolves_to_refs
+  display_name:
+    description: A name for display.
+    slot_uri: stix:display_name
+  belongs_to_ref:
+    description: >-
+      Specifies the user account that the email address belongs to, as a reference to a User
+      Account Object.
+    range: StixUserAccount
+    pattern: ^user-account--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    slot_uri: stix:belongs_to_ref
+  email_date:
+    alias: date
+    description: Specifies the date/time that the email message was sent.
+    range: stix_timestamp
+    slot_uri: stix:date
+  content_type:
+    description: The value of a Content-Type header field.
+    slot_uri: stix:content_type
+  from_ref:
+    description: Specifies the value of the 'From:' header of the email message.
+    range: StixEmailAddress
+    pattern: ^email-addr--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    slot_uri: stix:from_ref
+  sender_ref:
+    description: Specifies the value of the 'From' field of the email message.
+    range: StixEmailAddress
+    pattern: ^email-addr--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    slot_uri: stix:sender_ref
+  to_refs:
+    description: >-
+      Specifies the mailboxes that are 'To:' recipients of the email message.
+    range: StixEmailAddress
+    pattern: ^email-addr--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:to_refs
+  cc_refs:
+    description: >-
+      Specifies the mailboxes that are 'CC:' recipients of the email message.
+    range: StixEmailAddress
+    pattern: ^email-addr--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:cc_refs
+  bcc_refs:
+    description: >-
+      Specifies the mailboxes that are 'BCC:' recipients of the email message.
+    range: StixEmailAddress
+    pattern: ^email-addr--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:bcc_refs
+  message_id:
+    description: Specifies the Message-ID field of the email message.
+    slot_uri: stix:message_id
+  subject:
+    description: A subject, as a string; each class says of what.
+    slot_uri: stix:subject
+  received_lines:
+    description: >-
+      Specifies one or more Received header fields that may be included in the email headers.
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:received_lines
+  additional_header_fields:
+    description: >-
+      Specifies any other header fields found in the email message, as a dictionary.
+    range: StixDictionary
+    inlined: true
+    slot_uri: stix:additional_header_fields
+  raw_email_ref:
+    description: >-
+      Specifies the raw binary contents of the email message, including both the headers and
+      body, as a reference to an Artifact Object.
+    range: StixArtifact
+    pattern: ^artifact--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    slot_uri: stix:raw_email_ref
+  is_multipart:
+    description: Indicates whether the email body contains multiple MIME parts.
+    range: boolean
+    slot_uri: stix:is_multipart
+  body:
+    description: A body of text.
+    slot_uri: stix:body
+  body_multipart:
+    description: >-
+      The MIME parts that make up a multipart email body.
+    comments:
+      - >-
+        Present only when is_multipart is true.
+    range: StixMimePart
+    multivalued: true
+    minimum_cardinality: 1
+    inlined_as_list: true
+    slot_uri: stix:body_multipart
+  size:
+    description: A size in bytes, as a non-negative integer.
+    range: integer
+    minimum_value: 0
+    slot_uri: stix:size
+  name_enc:
+    description: Specifies the observed encoding for the name of the file.
+    pattern: ^[a-zA-Z0-9/\.+_:-]{2,250}$
+    slot_uri: stix:name_enc
+  magic_number_hex:
+    description: >-
+      Specifies the hexadecimal constant ('magic number') associated with a specific file
+      format that corresponds to the file, if applicable.
+    range: stix_hex
+    slot_uri: stix:magic_number_hex
+  parent_directory_ref:
+    description: >-
+      Specifies the parent directory of the file, as a reference to a Directory Object.
+    range: StixDirectory
+    pattern: ^directory--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    slot_uri: stix:parent_directory_ref
+  content_ref:
+    description: Specifies the content of the file, represented as an Artifact Object.
+    range: StixArtifact
+    pattern: ^artifact--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    slot_uri: stix:content_ref
+  belongs_to_refs:
+    description: References to the autonomous systems that this address belongs to.
+    range: StixAutonomousSystem
+    pattern: ^autonomous-system--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:belongs_to_refs
+  start:
+    description: Specifies the date/time the network traffic was initiated, if known.
+    range: stix_timestamp
+    slot_uri: stix:start
+  end:
+    description: Specifies the date/time the network traffic ended, if known.
+    range: stix_timestamp
+    slot_uri: stix:end
+  src_ref:
+    description: >-
+      Specifies the source of the network traffic, as a reference to an Observable Object.
+    range: StixCyberObservableObject
+    any_of:
+      - range: StixIpv4Address
+      - range: StixIpv6Address
+      - range: StixMacAddress
+      - range: StixDomainName
+    pattern: ^(ipv4-addr|ipv6-addr|mac-addr|domain-name)--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    slot_uri: stix:src_ref
+  dst_ref:
+    description: >-
+      Specifies the destination of the network traffic, as a reference to an Observable Object.
+    range: StixCyberObservableObject
+    any_of:
+      - range: StixIpv4Address
+      - range: StixIpv6Address
+      - range: StixMacAddress
+      - range: StixDomainName
+    pattern: ^(ipv4-addr|ipv6-addr|mac-addr|domain-name)--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    slot_uri: stix:dst_ref
+  src_port:
+    description: >-
+      The source port of the traffic.
+    range: integer
+    minimum_value: 0
+    maximum_value: 65535
+    slot_uri: stix:src_port
+  dst_port:
+    description: >-
+      The destination port of the traffic.
+    range: integer
+    minimum_value: 0
+    maximum_value: 65535
+    slot_uri: stix:dst_port
+  protocols:
+    description: >-
+      Specifies the protocols observed in the network traffic, along with their corresponding
+      state.
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:protocols
+  src_byte_count:
+    description: Specifies the number of bytes sent from the source to the destination.
+    range: integer
+    slot_uri: stix:src_byte_count
+  dst_byte_count:
+    description: Specifies the number of bytes sent from the destination to the source.
+    range: integer
+    slot_uri: stix:dst_byte_count
+  src_packets:
+    description: >-
+      Specifies the number of packets sent from the source to the destination.
+    range: integer
+    slot_uri: stix:src_packets
+  dst_packets:
+    description: Specifies the number of packets sent destination to the source.
+    range: integer
+    slot_uri: stix:dst_packets
+  ipfix:
+    description: Specifies any IP Flow Information Export (IPFIX) data for the traffic.
+    range: StixDictionary
+    inlined: true
+    slot_uri: stix:ipfix
+  src_payload_ref:
+    description: Specifies the bytes sent from the source to the destination.
+    range: StixArtifact
+    pattern: ^artifact--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    slot_uri: stix:src_payload_ref
+  dst_payload_ref:
+    description: Specifies the bytes sent from the source to the destination.
+    range: StixArtifact
+    pattern: ^artifact--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    slot_uri: stix:dst_payload_ref
+  encapsulates_refs:
+    description: >-
+      Links to other network-traffic objects encapsulated by a network-traffic.
+    range: StixNetworkTraffic
+    pattern: ^network-traffic--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:encapsulates_refs
+  encapsulated_by_ref:
+    description: >-
+      Links to another network-traffic object which encapsulates this object.
+    range: StixNetworkTraffic
+    pattern: ^network-traffic--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    slot_uri: stix:encapsulated_by_ref
+  is_active:
+    description: Indicates whether the network traffic is still ongoing.
+    range: boolean
+    slot_uri: stix:is_active
+  is_hidden:
+    description: Specifies whether the process is hidden.
+    range: boolean
+    slot_uri: stix:is_hidden
+  pid:
+    description: Specifies the Process ID, or PID, of the process.
+    range: integer
+    slot_uri: stix:pid
+  created_time:
+    description: Specifies the date/time at which the process was created.
+    range: stix_timestamp
+    slot_uri: stix:created_time
+  cwd:
+    description: Specifies the current working directory of the process.
+    slot_uri: stix:cwd
+  command_line:
+    description: >-
+      Specifies the full command line used in executing the process, including the process
+      name (which may be specified individually via the binary_ref.name property) and any
+      arguments.
+    slot_uri: stix:command_line
+  environment_variables:
+    description: >-
+      Specifies the list of environment variables associated with the process as a dictionary.
+    range: StixDictionary
+    inlined: true
+    slot_uri: stix:environment_variables
+  opened_connection_refs:
+    description: >-
+      Specifies the list of network connections opened by the process, as a reference to one
+      or more Network Traffic Objects.
+    range: StixNetworkTraffic
+    pattern: ^network-traffic--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:opened_connection_refs
+  creator_user_ref:
+    description: A reference to the user account that created the object.
+    range: StixUserAccount
+    pattern: ^user-account--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    slot_uri: stix:creator_user_ref
+  image_ref:
+    description: >-
+      Specifies the executable binary that was executed as the process image, as a reference
+      to a File Object.
+    range: StixFile
+    pattern: ^file--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    slot_uri: stix:image_ref
+  parent_ref:
+    description: >-
+      Specifies the other process that spawned (i.e. is the parent of) this one, as represented
+      by a Process Object.
+    range: StixProcess
+    pattern: ^process--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    slot_uri: stix:parent_ref
+  child_refs:
+    description: >-
+      Specifies the other processes that were spawned by (i.e. children of) this process,
+      as a reference to one or more other Process Objects.
+    range: StixProcess
+    pattern: ^process--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:child_refs
+  cpe:
+    description: >-
+      The Common Platform Enumeration (CPE) 2.3 name of the software, if it has one.
+    comments:
+      - >-
+        STIX asks for an entry of the NVD CPE Dictionary.
+    pattern: cpe:2\.3:[aho\*\-](:(((\?*|\*?)([a-zA-Z0-9\-\._]|(\\[\\\*\?!\x22#$$%&\x27\(\)\+,/:;<=>@\[\]\^`\{\|}~]))+(\?*|\*?))|[\*\-])){5}(:(([a-zA-Z]{2,3}(-([a-zA-Z]{2}|[0-9]{3}))?)|[\*\-]))(:(((\?*|\*?)([a-zA-Z0-9\-\._]|(\\[\\\*\?!\x22#$$%&\x27\(\)\+,/:;<=>@\[\]\^`\{\|}~]))+(\?*|\*?))|[\*\-])){4}
+    slot_uri: stix:cpe
+  swid:
+    description: >-
+      Specifies the Software Identification (SWID) Tags entry for the software, if available.
+    slot_uri: stix:swid
+  languages:
+    description: >-
+      The languages the software supports, as RFC 5646 language codes.
+    comments:
+      - >-
+        ISO 639-2 codes are accepted too, for backward compatibility.
+    pattern: ^([a-z]{2}(-[A-Z]{2})?(-[a-z]{4})?(-[A-Z]{2}|[0-9]{3})?(-[a-z0-9]{5,8}|[0-9][a-z0-9]{3})*(-[a-z0-9]{1,8})*|[a-z]{3})$
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:languages
+  vendor:
+    description: Specifies the name of the vendor of the software.
+    slot_uri: stix:vendor
+  user_id:
+    description: Specifies the identifier of the account.
+    slot_uri: stix:user_id
+  credential:
+    description: >-
+      A cleartext credential, such as a hard-coded password that malware tries for lateral
+      movement.
+    comments:
+      - >-
+        Meant for metadata from malware analysis, not for sharing personal information.
+    slot_uri: stix:credential
+  account_login:
+    description: >-
+      Specifies the account login string, used in cases where the user_id property specifies
+      something other than what a user would type when they login.
+    slot_uri: stix:account_login
+  account_type:
+    description: >-
+      The type of the account, such as unix or ldap.
+    any_of:
+      - range: StixAccountType
+      - range: string
+    slot_uri: stix:account_type
+  is_service_account:
+    description: >-
+      Indicates that the account is associated with a network service or system process (daemon),
+      not a specific individual.
+    range: boolean
+    slot_uri: stix:is_service_account
+  is_privileged:
+    description: >-
+      Specifies that the account has elevated privileges (i.e., in the case of root on Unix
+      or the Windows Administrator account).
+    range: boolean
+    slot_uri: stix:is_privileged
+  can_escalate_privs:
+    description: >-
+      Specifies that the account has the ability to escalate privileges (i.e., in the case
+      of sudo on Unix or a Windows Domain Admin account).
+    range: boolean
+    slot_uri: stix:can_escalate_privs
+  is_disabled:
+    description: Specifies if the account is disabled.
+    range: boolean
+    slot_uri: stix:is_disabled
+  account_created:
+    description: Specifies when the account was created.
+    range: stix_timestamp
+    slot_uri: stix:account_created
+  account_expires:
+    description: Specifies the expiration date of the account.
+    range: stix_timestamp
+    slot_uri: stix:account_expires
+  credential_last_changed:
+    description: Specifies when the account credential was last changed.
+    range: stix_timestamp
+    slot_uri: stix:credential_last_changed
+  account_first_login:
+    description: Specifies when the account was first accessed.
+    range: stix_timestamp
+    slot_uri: stix:account_first_login
+  account_last_login:
+    description: Specifies when the account was last accessed.
+    range: stix_timestamp
+    slot_uri: stix:account_last_login
+  key:
+    description: Specifies the full registry key including the hive.
+    slot_uri: stix:key
+  values:
+    description: Specifies the values found under the registry key.
+    range: StixWindowsRegistryValue
+    multivalued: true
+    minimum_cardinality: 1
+    inlined_as_list: true
+    slot_uri: stix:values
+  modified_time:
+    description: Specifies the last date/time that the registry key was modified.
+    range: stix_timestamp
+    slot_uri: stix:modified_time
+  number_of_subkeys:
+    description: Specifies the number of subkeys contained under the registry key.
+    range: integer
+    slot_uri: stix:number_of_subkeys
+  is_self_signed:
+    description: >-
+      Specifies whether the certificate is self-signed, i.e., whether it is signed by the
+      same entity whose identity it certifies.
+    range: boolean
+    slot_uri: stix:is_self_signed
+  serial_number:
+    description: >-
+      Specifies the unique identifier for the certificate, as issued by a specific Certificate
+      Authority.
+    slot_uri: stix:serial_number
+  signature_algorithm:
+    description: Specifies the name of the algorithm used to sign the certificate.
+    slot_uri: stix:signature_algorithm
+  issuer:
+    description: >-
+      Specifies the name of the Certificate Authority that issued the certificate.
+    slot_uri: stix:issuer
+  validity_not_before:
+    description: Specifies the date on which the certificate validity period begins.
+    range: stix_timestamp
+    slot_uri: stix:validity_not_before
+  validity_not_after:
+    description: Specifies the date on which the certificate validity period ends.
+    range: stix_timestamp
+    slot_uri: stix:validity_not_after
+  subject_public_key_algorithm:
+    description: >-
+      Specifies the name of the algorithm with which to encrypt data being sent to the subject.
+    slot_uri: stix:subject_public_key_algorithm
+  subject_public_key_modulus:
+    description: Specifies the modulus portion of the subject's public RSA key.
+    slot_uri: stix:subject_public_key_modulus
+  subject_public_key_exponent:
+    description: >-
+      Specifies the exponent portion of the subject's public RSA key, as an integer.
+    range: integer
+    slot_uri: stix:subject_public_key_exponent
+  x509_v3_extensions:
+    description: >-
+      Specifies any standard X.509 v3 extensions that may be used in the certificate.
+    range: StixX509V3Extensions
+    inlined: true
+    slot_uri: stix:x509_v3_extensions
+  sid:
+    description: Specifies the security ID (SID) value assigned to the file.
+    slot_uri: stix:sid
+  alternate_data_streams:
+    description: >-
+      Specifies a list of NTFS alternate data streams that exist for the file.
+    range: StixAlternateDataStream
+    multivalued: true
+    minimum_cardinality: 1
+    inlined_as_list: true
+    slot_uri: stix:alternate_data_streams
+  image_height:
+    description: Specifies the height of the image in the image file, in pixels.
+    range: integer
+    slot_uri: stix:image_height
+  image_width:
+    description: Specifies the width of the image in the image file, in pixels.
+    range: integer
+    slot_uri: stix:image_width
+  bits_per_pixel:
+    description: >-
+      Specifies the sum of bits used for each color channel in the image in the image file,
+      and thus the total number of pixels used for expressing the color depth of the image.
+    range: integer
+    slot_uri: stix:bits_per_pixel
+  exif_tags:
+    description: >-
+      Specifies the set of EXIF tags found in the image file, as a dictionary. Each key/value
+      pair in the dictionary represents the name/value of a single EXIF tag.
+    range: StixExifTags
+    inlined: true
+    slot_uri: stix:exif_tags
+  is_optimized:
+    description: Specifies whether the PDF file has been optimized.
+    range: boolean
+    slot_uri: stix:is_optimized
+  document_info_dict:
+    description: >-
+      Specifies details of the PDF document information dictionary (DID), which includes properties
+      like the document creation data and producer, as a dictionary.
+    range: StixPdfDocumentInfo
+    inlined: true
+    slot_uri: stix:document_info_dict
+  pdfid0:
+    description: Specifies the first file identifier found for the PDF file.
+    slot_uri: stix:pdfid0
+  pdfid1:
+    description: Specifies the second file identifier found for the PDF file.
+    slot_uri: stix:pdfid1
+  comment:
+    description: Specifies a comment included as part of the archive file.
+    slot_uri: stix:comment
+  pe_type:
+    description: >-
+      The type of the PE binary, such as exe or dll.
+    any_of:
+      - range: StixWindowsPeBinaryType
+      - range: string
+    slot_uri: stix:pe_type
+  imphash:
+    description: >-
+      Specifies the special import hash, or 'imphash', calculated for the PE Binary based
+      on its imported libraries and functions.
+    slot_uri: stix:imphash
+  machine_hex:
+    description: Specifies the type of target machine.
+    range: stix_hex
+    slot_uri: stix:machine_hex
+  number_of_sections:
+    description: >-
+      Specifies the number of sections in the PE binary, as a non-negative integer.
+    range: integer
+    minimum_value: 0
+    slot_uri: stix:number_of_sections
+  time_date_stamp:
+    description: >-
+      The time at which the PE binary was created.
+    range: stix_timestamp_seconds
+    slot_uri: stix:time_date_stamp
+  pointer_to_symbol_table_hex:
+    description: Specifies the file offset of the COFF symbol table.
+    range: stix_hex
+    slot_uri: stix:pointer_to_symbol_table_hex
+  number_of_symbols:
+    description: >-
+      Specifies the number of entries in the symbol table of the PE binary, as a non-negative
+      integer.
+    range: integer
+    minimum_value: 0
+    slot_uri: stix:number_of_symbols
+  size_of_optional_header:
+    description: Specifies the size of the optional header of the PE binary.
+    range: integer
+    minimum_value: 0
+    slot_uri: stix:size_of_optional_header
+  characteristics_hex:
+    description: Specifies the flags that indicate the file's characteristics.
+    range: stix_hex
+    slot_uri: stix:characteristics_hex
+  file_header_hashes:
+    description: Specifies any hashes that were computed for the file header.
+    range: StixHashes
+    inlined: true
+    slot_uri: stix:file_header_hashes
+  optional_header:
+    description: Specifies the PE optional header of the PE binary.
+    range: StixWindowsPeOptionalHeader
+    inlined: true
+    slot_uri: stix:optional_header
+  sections:
+    description: Specifies metadata about the sections in the PE file.
+    range: StixWindowsPeSection
+    multivalued: true
+    minimum_cardinality: 1
+    inlined_as_list: true
+    slot_uri: stix:sections
+  request_method:
+    description: >-
+      Specifies the HTTP method portion of the HTTP request line, as a lowercase string.
+    slot_uri: stix:request_method
+  request_value:
+    description: >-
+      Specifies the value (typically a resource path) portion of the HTTP request line.
+    slot_uri: stix:request_value
+  request_version:
+    description: >-
+      Specifies the HTTP version portion of the HTTP request line, as a lowercase string.
+    slot_uri: stix:request_version
+  request_header:
+    description: >-
+      Specifies all of the HTTP header fields that may be found in the HTTP client request,
+      as a dictionary.
+    range: StixDictionary
+    inlined: true
+    slot_uri: stix:request_header
+  message_body_length:
+    description: Specifies the length of the HTTP message body, if included, in bytes.
+    range: integer
+    slot_uri: stix:message_body_length
+  message_body_data_ref:
+    description: Specifies the data contained in the HTTP message body, if included.
+    range: StixArtifact
+    pattern: ^artifact--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    slot_uri: stix:message_body_data_ref
+  icmp_type_hex:
+    description: Specifies the ICMP type byte.
+    range: stix_hex
+    slot_uri: stix:icmp_type_hex
+  icmp_code_hex:
+    description: Specifies the ICMP code byte.
+    range: stix_hex
+    slot_uri: stix:icmp_code_hex
+  address_family:
+    description: Specifies the address family (AF_*) that the socket is configured for.
+    range: StixNetworkSocketAddressFamily
+    slot_uri: stix:address_family
+  is_blocking:
+    description: Specifies whether the socket is in blocking mode.
+    range: boolean
+    slot_uri: stix:is_blocking
+  is_listening:
+    description: Specifies whether the socket is in listening mode.
+    range: boolean
+    slot_uri: stix:is_listening
+  options:
+    description: >-
+      Specifies any options (SO_*) that may be used by the socket, as a dictionary.
+    range: StixSocketOptions
+    inlined: true
+    slot_uri: stix:options
+  socket_type:
+    description: Specifies the type of the socket.
+    range: StixNetworkSocketType
+    slot_uri: stix:socket_type
+  socket_descriptor:
+    description: >-
+      Specifies the socket file descriptor value associated with the socket, as a non-negative
+      integer.
+    range: integer
+    minimum_value: 0
+    slot_uri: stix:socket_descriptor
+  socket_handle:
+    description: Specifies the handle or inode value associated with the socket.
+    range: integer
+    slot_uri: stix:socket_handle
+  src_flags_hex:
+    description: >-
+      Specifies the source TCP flags, as the union of all TCP flags observed between the start
+      of the traffic (as defined by the start property) and the end of the traffic (as defined
+      by the end property).
+    range: stix_hex
+    slot_uri: stix:src_flags_hex
+  dst_flags_hex:
+    description: >-
+      Specifies the destination TCP flags, as the union of all TCP flags observed between
+      the start of the traffic (as defined by the start property) and the end of the traffic
+      (as defined by the end property).
+    range: stix_hex
+    slot_uri: stix:dst_flags_hex
+  aslr_enabled:
+    description: >-
+      Specifies whether Address Space Layout Randomization (ASLR) is enabled for the process.
+    range: boolean
+    slot_uri: stix:aslr_enabled
+  dep_enabled:
+    description: >-
+      Specifies whether Data Execution Prevention (DEP) is enabled for the process.
+    range: boolean
+    slot_uri: stix:dep_enabled
+  priority:
+    description: Specifies the current priority class of the process in Windows.
+    slot_uri: stix:priority
+  owner_sid:
+    description: Specifies the Security ID (SID) value of the owner of the process.
+    slot_uri: stix:owner_sid
+  window_title:
+    description: Specifies the title of the main window of the process.
+    slot_uri: stix:window_title
+  startup_info:
+    description: >-
+      Specifies the STARTUP_INFO struct used by the process, as a dictionary.
+    range: StixDictionary
+    inlined: true
+    slot_uri: stix:startup_info
+  integrity_level:
+    description: >-
+      Specifies the Windows integrity level, or trustworthiness, of the process.
+    range: StixWindowsIntegrityLevel
+    slot_uri: stix:integrity_level
+  service_name:
+    description: Specifies the name of the service.
+    slot_uri: stix:service_name
+  descriptions:
+    description: Specifies the descriptions defined for the service.
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:descriptions
+  group_name:
+    description: >-
+      Specifies the name of the load ordering group of which the service is a member.
+    slot_uri: stix:group_name
+  start_type:
+    description: >-
+      Specifies the start options defined for the service. windows-service-start-enum.
+    range: StixWindowsServiceStartType
+    slot_uri: stix:start_type
+  service_dll_refs:
+    description: >-
+      Specifies the DLLs loaded by the service, as a reference to one or more File Objects.
+    range: StixFile
+    pattern: ^file--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:service_dll_refs
+  service_type:
+    description: Specifies the type of the service. windows-service-enum.
+    range: StixWindowsServiceType
+    slot_uri: stix:service_type
+  service_status:
+    description: >-
+      Specifies the current status of the service. windows-service-status-enum.
+    range: StixWindowsServiceStatus
+    slot_uri: stix:service_status
+  gid:
+    description: Specifies the primary group ID of the account.
+    range: float
+    slot_uri: stix:gid
+  groups:
+    description: Specifies a list of names of groups that the account is a member of.
+    multivalued: true
+    minimum_cardinality: 1
+    slot_uri: stix:groups
+  home_dir:
+    description: Specifies the home directory of the account.
+    slot_uri: stix:home_dir
+  shell:
+    description: Specifies the account's command shell.
+    slot_uri: stix:shell
+  entropy:
+    description: >-
+      Specifies the calculated entropy for the section, as calculated using the Shannon algorithm.
+    range: float
+    slot_uri: stix:entropy
+  magic_hex:
+    description: >-
+      Specifies the unsigned integer that indicates the type of the PE binary.
+    range: stix_hex
+    slot_uri: stix:magic_hex
+  major_linker_version:
+    description: Specifies the linker major version number.
+    range: integer
+    slot_uri: stix:major_linker_version
+  minor_linker_version:
+    description: Specifies the linker minor version number.
+    range: integer
+    slot_uri: stix:minor_linker_version
+  size_of_code:
+    description: >-
+      Specifies the size of the code (text) section. If there are multiple such sections,
+      this refers to the sum of the sizes of each section.
+    range: integer
+    minimum_value: 0
+    slot_uri: stix:size_of_code
+  size_of_initialized_data:
+    description: >-
+      Specifies the size of the initialized data section. If there are multiple such sections,
+      this refers to the sum of the sizes of each section.
+    range: integer
+    minimum_value: 0
+    slot_uri: stix:size_of_initialized_data
+  size_of_uninitialized_data:
+    description: >-
+      Specifies the size of the uninitialized data section. If there are multiple such sections,
+      this refers to the sum of the sizes of each section.
+    range: integer
+    minimum_value: 0
+    slot_uri: stix:size_of_uninitialized_data
+  address_of_entry_point:
+    description: >-
+      Specifies the address of the entry point relative to the image base when the executable
+      is loaded into memory.
+    range: integer
+    slot_uri: stix:address_of_entry_point
+  base_of_code:
+    description: >-
+      Specifies the address that is relative to the image base of the beginning-of-code section
+      when it is loaded into memory.
+    range: integer
+    slot_uri: stix:base_of_code
+  base_of_data:
+    description: >-
+      Specifies the address that is relative to the image base of the beginning-of-data section
+      when it is loaded into memory.
+    range: integer
+    slot_uri: stix:base_of_data
+  image_base:
+    description: >-
+      Specifies the preferred address of the first byte of the image when loaded into memory.
+    range: integer
+    slot_uri: stix:image_base
+  section_alignment:
+    description: >-
+      Specifies the alignment (in bytes) of PE sections when they are loaded into memory.
+    range: integer
+    slot_uri: stix:section_alignment
+  file_alignment:
+    description: >-
+      Specifies the factor (in bytes) that is used to align the raw data of sections in the
+      image file.
+    range: integer
+    slot_uri: stix:file_alignment
+  major_os_version:
+    description: Specifies the major version number of the required operating system.
+    range: integer
+    slot_uri: stix:major_os_version
+  minor_os_version:
+    description: Specifies the minor version number of the required operating system.
+    range: integer
+    slot_uri: stix:minor_os_version
+  major_image_version:
+    description: Specifies the major version number of the image.
+    range: integer
+    slot_uri: stix:major_image_version
+  minor_image_version:
+    description: Specifies the minor version number of the image.
+    range: integer
+    slot_uri: stix:minor_image_version
+  major_subsystem_version:
+    description: Specifies the major version number of the subsystem.
+    range: integer
+    slot_uri: stix:major_subsystem_version
+  minor_subsystem_version:
+    description: Specifies the minor version number of the subsystem.
+    range: integer
+    slot_uri: stix:minor_subsystem_version
+  win32_version_value_hex:
+    description: Specifies the reserved win32 version value.
+    range: stix_hex
+    slot_uri: stix:win32_version_value_hex
+  size_of_image:
+    description: >-
+      Specifies the size, in bytes, of the image, including all headers, as the image is loaded
+      in memory.
+    range: integer
+    minimum_value: 0
+    slot_uri: stix:size_of_image
+  size_of_headers:
+    description: >-
+      Specifies the combined size of the MS-DOS, PE header, and section headers, rounded up
+      a multiple of the value specified in the file_alignment header.
+    range: integer
+    minimum_value: 0
+    slot_uri: stix:size_of_headers
+  checksum_hex:
+    description: Specifies the checksum of the PE binary.
+    range: stix_hex
+    slot_uri: stix:checksum_hex
+  subsystem_hex:
+    description: >-
+      The subsystem, such as a GUI or a device driver, needed to run the image.
+    range: stix_hex
+    slot_uri: stix:subsystem_hex
+  dll_characteristics_hex:
+    description: Specifies the flags that characterize the PE binary.
+    range: stix_hex
+    slot_uri: stix:dll_characteristics_hex
+  size_of_stack_reserve:
+    description: Specifies the size of the stack to reserve.
+    range: integer
+    minimum_value: 0
+    slot_uri: stix:size_of_stack_reserve
+  size_of_stack_commit:
+    description: Specifies the size of the stack to commit.
+    range: integer
+    minimum_value: 0
+    slot_uri: stix:size_of_stack_commit
+  size_of_heap_reserve:
+    description: Specifies the size of the local heap space to reserve.
+    range: integer
+    minimum_value: 0
+    slot_uri: stix:size_of_heap_reserve
+  size_of_heap_commit:
+    description: Specifies the size of the local heap space to commit.
+    range: integer
+    minimum_value: 0
+    slot_uri: stix:size_of_heap_commit
+  loader_flags_hex:
+    description: Specifies the reserved loader flags.
+    range: stix_hex
+    slot_uri: stix:loader_flags_hex
+  number_of_rva_and_sizes:
+    description: >-
+      Specifies the number of data-directory entries in the remainder of the optional header.
+    range: integer
+    slot_uri: stix:number_of_rva_and_sizes
+  body_raw_ref:
+    description: >-
+      Specifies the contents of non-textual MIME parts, that is those whose content_type does
+      not start with text/, as a reference to an Artifact Object or File Object.
+    range: StixCyberObservableObject
+    any_of:
+      - range: StixArtifact
+      - range: StixFile
+    pattern: ^(artifact|file)--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    slot_uri: stix:body_raw_ref
+  content_disposition:
+    description: >-
+      Specifies the value of the 'Content-Disposition' header field of the MIME part.
+    slot_uri: stix:content_disposition
+  data:
+    description: Specifies the data contained in the registry value.
+    slot_uri: stix:data
+  data_type:
+    description: Specifies the registry (REG_*) data type used in the registry value.
+    range: StixWindowsRegistryDatatype
+    slot_uri: stix:data_type
+  basic_constraints:
+    description: >-
+      Specifies a multi-valued extension which indicates whether a certificate is a CA certificate.
+    slot_uri: stix:basic_constraints
+  name_constraints:
+    description: >-
+      Specifies a namespace within which all subject names in subsequent certificates in a
+      certification path MUST be located.
+    slot_uri: stix:name_constraints
+  policy_constraints:
+    description: >-
+      Specifies any constraints on path validation for certificates issued to CAs.
+    slot_uri: stix:policy_constraints
+  key_usage:
+    description: >-
+      Specifies a multi-valued extension consisting of a list of names of the permitted key
+      usages.
+    slot_uri: stix:key_usage
+  extended_key_usage:
+    description: >-
+      Specifies a list of usages indicating purposes for which the certificate public key
+      can be used for.
+    slot_uri: stix:extended_key_usage
+  subject_key_identifier:
+    description: >-
+      Specifies the identifier that provides a means of identifying certificates that contain
+      a particular public key.
+    slot_uri: stix:subject_key_identifier
+  authority_key_identifier:
+    description: >-
+      Specifies the identifier that provides a means of identifying the public key corresponding
+      to the private key used to sign a certificate.
+    slot_uri: stix:authority_key_identifier
+  subject_alternative_name:
+    description: >-
+      Specifies the additional identities to be bound to the subject of the certificate.
+    slot_uri: stix:subject_alternative_name
+  issuer_alternative_name:
+    description: >-
+      Specifies the additional identities to be bound to the issuer of the certificate.
+    slot_uri: stix:issuer_alternative_name
+  subject_directory_attributes:
+    description: >-
+      The identification attributes of the subject, such as nationality.
+    slot_uri: stix:subject_directory_attributes
+  crl_distribution_points:
+    description: Specifies how CRL information is obtained.
+    slot_uri: stix:crl_distribution_points
+  inhibit_any_policy:
+    description: >-
+      Specifies the number of additional certificates that may appear in the path before anyPolicy
+      is no longer permitted.
+    slot_uri: stix:inhibit_any_policy
+  private_key_usage_period_not_before:
+    description: >-
+      Specifies the date on which the validity period begins for the private key, if it is
+      different from the validity period of the certificate.
+    range: stix_timestamp
+    slot_uri: stix:private_key_usage_period_not_before
+  private_key_usage_period_not_after:
+    description: >-
+      Specifies the date on which the validity period ends for the private key, if it is different
+      from the validity period of the certificate.
+    range: stix_timestamp
+    slot_uri: stix:private_key_usage_period_not_after
+  certificate_policies:
+    description: >-
+      Specifies a sequence of one or more policy information terms, each of which consists
+      of an object identifier (OID) and optional qualifiers.
+    slot_uri: stix:certificate_policies
+  policy_mappings:
+    description: >-
+      Specifies one or more pairs of OIDs; each pair includes an issuerDomainPolicy and a
+      subjectDomainPolicy.
+    slot_uri: stix:policy_mappings
+classes:
+  StixArtifact:
+    description: >-
+      An array of bytes, carried as base64 in payload_bin, or a link to a file-like payload.
+    is_a: StixCyberObservableObject
+    slots:
+      - mime_type
+      - payload_bin
+      - url
+      - hashes
+      - encryption_algorithm
+      - decryption_key
+    slot_usage:
+      id:
+        pattern: ^artifact--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: artifact
+      mime_type:
+        pattern: ^(application|audio|font|image|message|model|multipart|text|video)/[a-zA-Z0-9.+_-]+
+    any_of:
+      - slot_conditions:
+          payload_bin:
+            required: true
+      - slot_conditions:
+          url:
+            required: true
+    rules:
+      - description: payload_bin and url exclude each other.
+        preconditions:
+          slot_conditions:
+            payload_bin:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            url:
+              value_presence: ABSENT
+      - description: An artifact given by url carries its hashes.
+        preconditions:
+          slot_conditions:
+            url:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            hashes:
+              required: true
+      - description: A decryption key needs an encryption algorithm.
+        preconditions:
+          slot_conditions:
+            decryption_key:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            encryption_algorithm:
+              required: true
+    annotations:
+      stix_type: artifact
+  StixAutonomousSystem:
+    description: The AS object represents the properties of an Autonomous Systems (AS).
+    is_a: StixCyberObservableObject
+    slots:
+      - number
+      - name
+      - rir
+    slot_usage:
+      id:
+        pattern: ^autonomous-system--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: autonomous-system
+      number:
+        required: true
+    annotations:
+      stix_type: autonomous-system
+    close_mappings:
+      - uco-observable:AutonomousSystem
+  StixDirectory:
+    description: >-
+      The Directory Object represents the properties common to a file system directory.
+    is_a: StixCyberObservableObject
+    slots:
+      - path
+      - path_enc
+      - ctime
+      - mtime
+      - atime
+      - contains_refs
+    slot_usage:
+      id:
+        pattern: ^directory--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: directory
+      path:
+        required: true
+      contains_refs:
+        range: StixCyberObservableObject
+        any_of:
+          - range: StixFile
+          - range: StixDirectory
+        pattern: ^(file|directory)--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    annotations:
+      stix_type: directory
+    close_mappings:
+      - uco-observable:Directory
+  StixDomainName:
+    description: The Domain Name represents the properties of a network domain name.
+    is_a: StixCyberObservableObject
+    slots:
+      - value
+      - resolves_to_refs
+    slot_usage:
+      id:
+        pattern: ^domain-name--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: domain-name
+      value:
+        required: true
+      resolves_to_refs:
+        range: StixCyberObservableObject
+        any_of:
+          - range: StixIpv4Address
+          - range: StixIpv6Address
+          - range: StixDomainName
+        pattern: ^(ipv4-addr|ipv6-addr|domain-name)--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    annotations:
+      stix_type: domain-name
+    close_mappings:
+      - uco-observable:DomainName
+  StixEmailAddress:
+    description: The Email Address Object represents a single email address.
+    is_a: StixCyberObservableObject
+    slots:
+      - value
+      - display_name
+      - belongs_to_ref
+    slot_usage:
+      id:
+        pattern: ^email-addr--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: email-addr
+      value:
+        required: true
+    annotations:
+      stix_type: email-addr
+    close_mappings:
+      - uco-observable:EmailAddress
+  StixEmailMessage:
+    description: The Email Message Object represents an instance of an email message.
+    is_a: StixCyberObservableObject
+    slots:
+      - email_date
+      - content_type
+      - from_ref
+      - sender_ref
+      - to_refs
+      - cc_refs
+      - bcc_refs
+      - message_id
+      - subject
+      - received_lines
+      - additional_header_fields
+      - raw_email_ref
+      - is_multipart
+      - body
+      - body_multipart
+    slot_usage:
+      id:
+        pattern: ^email-message--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: email-message
+      is_multipart:
+        required: true
+    rules:
+      - description: body and body_multipart exclude each other.
+        preconditions:
+          slot_conditions:
+            body:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            body_multipart:
+              value_presence: ABSENT
+    annotations:
+      stix_type: email-message
+    close_mappings:
+      - uco-observable:EmailMessage
+  StixFile:
+    description: The File Object represents the properties of a file.
+    is_a: StixCyberObservableObject
+    slots:
+      - hashes
+      - size
+      - name
+      - name_enc
+      - magic_number_hex
+      - mime_type
+      - ctime
+      - mtime
+      - atime
+      - parent_directory_ref
+      - contains_refs
+      - content_ref
+    slot_usage:
+      id:
+        pattern: ^file--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: file
+      extensions:
+        range: StixFileExtensions
+    any_of:
+      - slot_conditions:
+          hashes:
+            required: true
+      - slot_conditions:
+          name:
+            required: true
+    annotations:
+      stix_type: file
+    close_mappings:
+      - uco-observable:File
+  StixIpv4Address:
+    description: >-
+      The IPv4 Address Object represents one or more IPv4 addresses expressed using CIDR notation.
+    is_a: StixCyberObservableObject
+    slots:
+      - value
+      - resolves_to_refs
+      - belongs_to_refs
+    slot_usage:
+      id:
+        pattern: ^ipv4-addr--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: ipv4-addr
+      value:
+        required: true
+        pattern: ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/(3[0-2]|[1-2][0-9]|[0-9]))?$
+      resolves_to_refs:
+        range: StixMacAddress
+        pattern: ^mac-addr--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    annotations:
+      stix_type: ipv4-addr
+    close_mappings:
+      - uco-observable:IPv4Address
+  StixIpv6Address:
+    description: >-
+      The IPv6 Address Object represents one or more IPv6 addresses expressed using CIDR notation.
+    is_a: StixCyberObservableObject
+    slots:
+      - value
+      - resolves_to_refs
+      - belongs_to_refs
+    slot_usage:
+      id:
+        pattern: ^ipv6-addr--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: ipv6-addr
+      value:
+        required: true
+        pattern: ^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*(\/(12[0-8]|1[0-1][0-9]|[1-9][0-9]|[0-9]))?$
+      resolves_to_refs:
+        range: StixMacAddress
+        pattern: ^mac-addr--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    annotations:
+      stix_type: ipv6-addr
+    close_mappings:
+      - uco-observable:IPv6Address
+  StixMacAddress:
+    description: >-
+      The MAC Address Object represents a single Media Access Control (MAC) address.
+    is_a: StixCyberObservableObject
+    slots:
+      - value
+    slot_usage:
+      id:
+        pattern: ^mac-addr--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: mac-addr
+      value:
+        required: true
+        pattern: ^([0-9a-f]{2}[:]){5}([0-9a-f]{2})$
+    annotations:
+      stix_type: mac-addr
+    close_mappings:
+      - uco-observable:MACAddress
+  StixMutex:
+    description: >-
+      The Mutex Object represents the properties of a mutual exclusion (mutex) object.
+    is_a: StixCyberObservableObject
+    slots:
+      - name
+    slot_usage:
+      id:
+        pattern: ^mutex--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: mutex
+      name:
+        required: true
+    annotations:
+      stix_type: mutex
+    close_mappings:
+      - uco-observable:Mutex
+  StixNetworkTraffic:
+    description: >-
+      The Network Traffic Object represents arbitrary network traffic that originates from
+      a source and is addressed to a destination.
+    is_a: StixCyberObservableObject
+    slots:
+      - start
+      - end
+      - src_ref
+      - dst_ref
+      - src_port
+      - dst_port
+      - protocols
+      - src_byte_count
+      - dst_byte_count
+      - src_packets
+      - dst_packets
+      - ipfix
+      - src_payload_ref
+      - dst_payload_ref
+      - encapsulates_refs
+      - encapsulated_by_ref
+      - is_active
+    slot_usage:
+      id:
+        pattern: ^network-traffic--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: network-traffic
+      protocols:
+        required: true
+      extensions:
+        range: StixNetworkTrafficExtensions
+    any_of:
+      - slot_conditions:
+          src_ref:
+            required: true
+      - slot_conditions:
+          dst_ref:
+            required: true
+    annotations:
+      stix_type: network-traffic
+  StixProcess:
+    description: >-
+      The Process Object represents common properties of an instance of a computer program
+      as executed on an operating system.
+    is_a: StixCyberObservableObject
+    slots:
+      - is_hidden
+      - pid
+      - created_time
+      - cwd
+      - command_line
+      - environment_variables
+      - opened_connection_refs
+      - creator_user_ref
+      - image_ref
+      - parent_ref
+      - child_refs
+    slot_usage:
+      id:
+        pattern: ^process--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: process
+      extensions:
+        range: StixProcessExtensions
+    any_of:
+      - slot_conditions:
+          extensions:
+            required: true
+      - slot_conditions:
+          is_hidden:
+            required: true
+      - slot_conditions:
+          pid:
+            required: true
+      - slot_conditions:
+          created_time:
+            required: true
+      - slot_conditions:
+          cwd:
+            required: true
+      - slot_conditions:
+          command_line:
+            required: true
+      - slot_conditions:
+          environment_variables:
+            required: true
+      - slot_conditions:
+          opened_connection_refs:
+            required: true
+      - slot_conditions:
+          creator_user_ref:
+            required: true
+      - slot_conditions:
+          image_ref:
+            required: true
+      - slot_conditions:
+          parent_ref:
+            required: true
+      - slot_conditions:
+          child_refs:
+            required: true
+    annotations:
+      stix_type: process
+    close_mappings:
+      - uco-observable:Process
+  StixSoftware:
+    description: >-
+      The Software Object represents high-level properties associated with software, including
+      software products.
+    is_a: StixCyberObservableObject
+    slots:
+      - name
+      - cpe
+      - swid
+      - languages
+      - vendor
+      - version
+    slot_usage:
+      id:
+        pattern: ^software--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: software
+      name:
+        required: true
+    annotations:
+      stix_type: software
+    close_mappings:
+      - uco-observable:Software
+  StixUrl:
+    description: >-
+      The URL Object represents the properties of a uniform resource locator (URL).
+    is_a: StixCyberObservableObject
+    slots:
+      - value
+    slot_usage:
+      id:
+        pattern: ^url--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: url
+      value:
+        required: true
+        range: uri
+    annotations:
+      stix_type: url
+    close_mappings:
+      - uco-observable:URL
+  StixUserAccount:
+    description: >-
+      The User Account Object represents an instance of any type of user account, including
+      but not limited to operating system, device, messaging service, and social media platform
+      accounts.
+    is_a: StixCyberObservableObject
+    slots:
+      - user_id
+      - credential
+      - account_login
+      - account_type
+      - display_name
+      - is_service_account
+      - is_privileged
+      - can_escalate_privs
+      - is_disabled
+      - account_created
+      - account_expires
+      - credential_last_changed
+      - account_first_login
+      - account_last_login
+    slot_usage:
+      id:
+        pattern: ^user-account--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: user-account
+      extensions:
+        range: StixUserAccountExtensions
+    any_of:
+      - slot_conditions:
+          extensions:
+            required: true
+      - slot_conditions:
+          user_id:
+            required: true
+      - slot_conditions:
+          credential:
+            required: true
+      - slot_conditions:
+          account_login:
+            required: true
+      - slot_conditions:
+          account_type:
+            required: true
+      - slot_conditions:
+          display_name:
+            required: true
+      - slot_conditions:
+          is_service_account:
+            required: true
+      - slot_conditions:
+          is_privileged:
+            required: true
+      - slot_conditions:
+          can_escalate_privs:
+            required: true
+      - slot_conditions:
+          is_disabled:
+            required: true
+      - slot_conditions:
+          account_created:
+            required: true
+      - slot_conditions:
+          account_expires:
+            required: true
+      - slot_conditions:
+          credential_last_changed:
+            required: true
+      - slot_conditions:
+          account_first_login:
+            required: true
+      - slot_conditions:
+          account_last_login:
+            required: true
+    annotations:
+      stix_type: user-account
+    close_mappings:
+      - uco-observable:UserAccount
+  StixWindowsRegistryKey:
+    description: >-
+      The Registry Key Object represents the properties of a Windows registry key.
+    is_a: StixCyberObservableObject
+    slots:
+      - key
+      - values
+      - modified_time
+      - creator_user_ref
+      - number_of_subkeys
+    slot_usage:
+      id:
+        pattern: ^windows-registry-key--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: windows-registry-key
+    any_of:
+      - slot_conditions:
+          key:
+            required: true
+      - slot_conditions:
+          values:
+            required: true
+      - slot_conditions:
+          modified_time:
+            required: true
+      - slot_conditions:
+          creator_user_ref:
+            required: true
+      - slot_conditions:
+          number_of_subkeys:
+            required: true
+    annotations:
+      stix_type: windows-registry-key
+    close_mappings:
+      - uco-observable:WindowsRegistryKey
+  StixX509Certificate:
+    description: >-
+      The X509 Certificate Object represents the properties of an X.509 certificate.
+    is_a: StixCyberObservableObject
+    slots:
+      - is_self_signed
+      - hashes
+      - version
+      - serial_number
+      - signature_algorithm
+      - issuer
+      - validity_not_before
+      - validity_not_after
+      - subject
+      - subject_public_key_algorithm
+      - subject_public_key_modulus
+      - subject_public_key_exponent
+      - x509_v3_extensions
+    slot_usage:
+      id:
+        pattern: ^x509-certificate--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+      type:
+        equals_string: x509-certificate
+    any_of:
+      - slot_conditions:
+          is_self_signed:
+            required: true
+      - slot_conditions:
+          hashes:
+            required: true
+      - slot_conditions:
+          version:
+            required: true
+      - slot_conditions:
+          serial_number:
+            required: true
+      - slot_conditions:
+          signature_algorithm:
+            required: true
+      - slot_conditions:
+          issuer:
+            required: true
+      - slot_conditions:
+          validity_not_before:
+            required: true
+      - slot_conditions:
+          validity_not_after:
+            required: true
+      - slot_conditions:
+          subject:
+            required: true
+      - slot_conditions:
+          subject_public_key_algorithm:
+            required: true
+      - slot_conditions:
+          subject_public_key_modulus:
+            required: true
+      - slot_conditions:
+          subject_public_key_exponent:
+            required: true
+      - slot_conditions:
+          x509_v3_extensions:
+            required: true
+    annotations:
+      stix_type: x509-certificate
+    close_mappings:
+      - uco-observable:X509Certificate
+  StixNtfsExtension:
+    description: >-
+      The NTFS file extension specifies a default extension for capturing properties specific
+      to the storage of the file on the NTFS file system.
+    slots:
+      - sid
+      - alternate_data_streams
+    any_of:
+      - slot_conditions:
+          sid:
+            required: true
+      - slot_conditions:
+          alternate_data_streams:
+            required: true
+    annotations:
+      stix_extension_name: ntfs-ext
+    close_mappings:
+      - uco-observable:NTFSFileFacet
+  StixRasterImageExtension:
+    description: >-
+      The Raster Image file extension specifies a default extension for capturing properties
+      specific to image files.
+    slots:
+      - image_height
+      - image_width
+      - bits_per_pixel
+      - exif_tags
+    any_of:
+      - slot_conditions:
+          image_height:
+            required: true
+      - slot_conditions:
+          image_width:
+            required: true
+      - slot_conditions:
+          bits_per_pixel:
+            required: true
+      - slot_conditions:
+          exif_tags:
+            required: true
+    annotations:
+      stix_extension_name: raster-image-ext
+    close_mappings:
+      - uco-observable:RasterPictureFacet
+  StixPdfExtension:
+    description: >-
+      The PDF file extension specifies a default extension for capturing properties specific
+      to PDF files.
+    slots:
+      - version
+      - is_optimized
+      - document_info_dict
+      - pdfid0
+      - pdfid1
+    any_of:
+      - slot_conditions:
+          version:
+            required: true
+      - slot_conditions:
+          is_optimized:
+            required: true
+      - slot_conditions:
+          document_info_dict:
+            required: true
+      - slot_conditions:
+          pdfid0:
+            required: true
+      - slot_conditions:
+          pdfid1:
+            required: true
+    annotations:
+      stix_extension_name: pdf-ext
+    close_mappings:
+      - uco-observable:PDFFileFacet
+  StixArchiveExtension:
+    description: >-
+      The Archive File extension specifies a default extension for capturing properties specific
+      to archive files.
+    slots:
+      - contains_refs
+      - comment
+    slot_usage:
+      contains_refs:
+        required: true
+        range: StixCyberObservableObject
+        any_of:
+          - range: StixFile
+          - range: StixDirectory
+        pattern: ^(file|directory)--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    annotations:
+      stix_extension_name: archive-ext
+    close_mappings:
+      - uco-observable:ArchiveFileFacet
+  StixWindowsPeBinaryExtension:
+    description: >-
+      The Windows PE Binary File extension specifies a default extension for capturing properties
+      specific to Windows portable executable (PE) files.
+    slots:
+      - pe_type
+      - imphash
+      - machine_hex
+      - number_of_sections
+      - time_date_stamp
+      - pointer_to_symbol_table_hex
+      - number_of_symbols
+      - size_of_optional_header
+      - characteristics_hex
+      - file_header_hashes
+      - optional_header
+      - sections
+    slot_usage:
+      pe_type:
+        required: true
+    any_of:
+      - slot_conditions:
+          imphash:
+            required: true
+      - slot_conditions:
+          machine_hex:
+            required: true
+      - slot_conditions:
+          number_of_sections:
+            required: true
+      - slot_conditions:
+          time_date_stamp:
+            required: true
+      - slot_conditions:
+          pointer_to_symbol_table_hex:
+            required: true
+      - slot_conditions:
+          number_of_symbols:
+            required: true
+      - slot_conditions:
+          size_of_optional_header:
+            required: true
+      - slot_conditions:
+          characteristics_hex:
+            required: true
+      - slot_conditions:
+          file_header_hashes:
+            required: true
+      - slot_conditions:
+          optional_header:
+            required: true
+      - slot_conditions:
+          sections:
+            required: true
+    annotations:
+      stix_extension_name: windows-pebinary-ext
+    close_mappings:
+      - uco-observable:WindowsPEBinaryFileFacet
+  StixHttpRequestExtension:
+    description: >-
+      The HTTP request extension specifies a default extension for capturing network traffic
+      properties specific to HTTP requests.
+    slots:
+      - request_method
+      - request_value
+      - request_version
+      - request_header
+      - message_body_length
+      - message_body_data_ref
+    slot_usage:
+      request_method:
+        required: true
+      request_value:
+        required: true
+    annotations:
+      stix_extension_name: http-request-ext
+  StixIcmpExtension:
+    description: >-
+      The ICMP extension specifies a default extension for capturing network traffic properties
+      specific to ICMP.
+    slots:
+      - icmp_type_hex
+      - icmp_code_hex
+    slot_usage:
+      icmp_type_hex:
+        required: true
+      icmp_code_hex:
+        required: true
+    annotations:
+      stix_extension_name: icmp-ext
+    close_mappings:
+      - uco-observable:ICMPConnectionFacet
+  StixSocketExtension:
+    description: >-
+      The Network Socket extension specifies a default extension for capturing network traffic
+      properties associated with network sockets.
+    slots:
+      - address_family
+      - is_blocking
+      - is_listening
+      - options
+      - socket_type
+      - socket_descriptor
+      - socket_handle
+    slot_usage:
+      address_family:
+        required: true
+    annotations:
+      stix_extension_name: socket-ext
+  StixTcpExtension:
+    description: >-
+      The TCP extension specifies a default extension for capturing network traffic properties
+      specific to TCP.
+    slots:
+      - src_flags_hex
+      - dst_flags_hex
+    any_of:
+      - slot_conditions:
+          src_flags_hex:
+            required: true
+      - slot_conditions:
+          dst_flags_hex:
+            required: true
+    annotations:
+      stix_extension_name: tcp-ext
+    close_mappings:
+      - uco-observable:TCPConnectionFacet
+  StixWindowsProcessExtension:
+    description: >-
+      The Windows Process extension specifies a default extension for capturing properties
+      specific to Windows processes.
+    slots:
+      - aslr_enabled
+      - dep_enabled
+      - priority
+      - owner_sid
+      - window_title
+      - startup_info
+      - integrity_level
+    any_of:
+      - slot_conditions:
+          aslr_enabled:
+            required: true
+      - slot_conditions:
+          dep_enabled:
+            required: true
+      - slot_conditions:
+          priority:
+            required: true
+      - slot_conditions:
+          owner_sid:
+            required: true
+      - slot_conditions:
+          window_title:
+            required: true
+      - slot_conditions:
+          startup_info:
+            required: true
+      - slot_conditions:
+          integrity_level:
+            required: true
+    annotations:
+      stix_extension_name: windows-process-ext
+    close_mappings:
+      - uco-observable:WindowsProcessFacet
+  StixWindowsServiceExtension:
+    description: >-
+      The Windows Service extension specifies a default extension for capturing properties
+      specific to Windows services.
+    slots:
+      - service_name
+      - descriptions
+      - display_name
+      - group_name
+      - start_type
+      - service_dll_refs
+      - service_type
+      - service_status
+    any_of:
+      - slot_conditions:
+          service_name:
+            required: true
+      - slot_conditions:
+          descriptions:
+            required: true
+      - slot_conditions:
+          display_name:
+            required: true
+      - slot_conditions:
+          group_name:
+            required: true
+      - slot_conditions:
+          start_type:
+            required: true
+      - slot_conditions:
+          service_dll_refs:
+            required: true
+      - slot_conditions:
+          service_type:
+            required: true
+      - slot_conditions:
+          service_status:
+            required: true
+    annotations:
+      stix_extension_name: windows-service-ext
+    close_mappings:
+      - uco-observable:WindowsServiceFacet
+  StixUnixAccountExtension:
+    description: >-
+      The UNIX account extension of a user account: its group, its other groups, its home
+      directory and its shell.
+    slots:
+      - gid
+      - groups
+      - home_dir
+      - shell
+    any_of:
+      - slot_conditions:
+          gid:
+            required: true
+      - slot_conditions:
+          groups:
+            required: true
+      - slot_conditions:
+          home_dir:
+            required: true
+      - slot_conditions:
+          shell:
+            required: true
+    annotations:
+      stix_extension_name: unix-account-ext
+    close_mappings:
+      - uco-observable:UNIXAccountFacet
+  StixAlternateDataStream:
+    description: An NTFS alternate data stream of a file.
+    slots:
+      - name
+      - hashes
+      - size
+    slot_usage:
+      name:
+        required: true
+    close_mappings:
+      - uco-observable:AlternateDataStream
+  StixWindowsPeSection:
+    description: A section of a Windows PE binary.
+    slots:
+      - name
+      - size
+      - entropy
+      - hashes
+    slot_usage:
+      name:
+        required: true
+    close_mappings:
+      - uco-observable:WindowsPESection
+  StixWindowsPeOptionalHeader:
+    description: The optional header of a Windows PE binary.
+    slots:
+      - magic_hex
+      - major_linker_version
+      - minor_linker_version
+      - size_of_code
+      - size_of_initialized_data
+      - size_of_uninitialized_data
+      - address_of_entry_point
+      - base_of_code
+      - base_of_data
+      - image_base
+      - section_alignment
+      - file_alignment
+      - major_os_version
+      - minor_os_version
+      - major_image_version
+      - minor_image_version
+      - major_subsystem_version
+      - minor_subsystem_version
+      - win32_version_value_hex
+      - size_of_image
+      - size_of_headers
+      - checksum_hex
+      - subsystem_hex
+      - dll_characteristics_hex
+      - size_of_stack_reserve
+      - size_of_stack_commit
+      - size_of_heap_reserve
+      - size_of_heap_commit
+      - loader_flags_hex
+      - number_of_rva_and_sizes
+      - hashes
+    any_of:
+      - slot_conditions:
+          magic_hex:
+            required: true
+      - slot_conditions:
+          major_linker_version:
+            required: true
+      - slot_conditions:
+          minor_linker_version:
+            required: true
+      - slot_conditions:
+          size_of_code:
+            required: true
+      - slot_conditions:
+          size_of_initialized_data:
+            required: true
+      - slot_conditions:
+          size_of_uninitialized_data:
+            required: true
+      - slot_conditions:
+          address_of_entry_point:
+            required: true
+      - slot_conditions:
+          base_of_code:
+            required: true
+      - slot_conditions:
+          base_of_data:
+            required: true
+      - slot_conditions:
+          image_base:
+            required: true
+      - slot_conditions:
+          section_alignment:
+            required: true
+      - slot_conditions:
+          file_alignment:
+            required: true
+      - slot_conditions:
+          major_os_version:
+            required: true
+      - slot_conditions:
+          minor_os_version:
+            required: true
+      - slot_conditions:
+          major_image_version:
+            required: true
+      - slot_conditions:
+          minor_image_version:
+            required: true
+      - slot_conditions:
+          major_subsystem_version:
+            required: true
+      - slot_conditions:
+          minor_subsystem_version:
+            required: true
+      - slot_conditions:
+          win32_version_value_hex:
+            required: true
+      - slot_conditions:
+          size_of_image:
+            required: true
+      - slot_conditions:
+          size_of_headers:
+            required: true
+      - slot_conditions:
+          checksum_hex:
+            required: true
+      - slot_conditions:
+          subsystem_hex:
+            required: true
+      - slot_conditions:
+          dll_characteristics_hex:
+            required: true
+      - slot_conditions:
+          size_of_stack_reserve:
+            required: true
+      - slot_conditions:
+          size_of_stack_commit:
+            required: true
+      - slot_conditions:
+          size_of_heap_reserve:
+            required: true
+      - slot_conditions:
+          size_of_heap_commit:
+            required: true
+      - slot_conditions:
+          loader_flags_hex:
+            required: true
+      - slot_conditions:
+          number_of_rva_and_sizes:
+            required: true
+      - slot_conditions:
+          hashes:
+            required: true
+    close_mappings:
+      - uco-observable:WindowsPEOptionalHeader
+  StixMimePart:
+    description: One MIME part of a multipart email body.
+    slots:
+      - body
+      - body_raw_ref
+      - content_type
+      - content_disposition
+    any_of:
+      - slot_conditions:
+          body:
+            required: true
+      - slot_conditions:
+          body_raw_ref:
+            required: true
+    rules:
+      - description: body and body_raw_ref exclude each other.
+        preconditions:
+          slot_conditions:
+            body:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            body_raw_ref:
+              value_presence: ABSENT
+    close_mappings:
+      - uco-observable:MimePartType
+  StixWindowsRegistryValue:
+    description: A value found under a Windows registry key.
+    slots:
+      - name
+      - data
+      - data_type
+    any_of:
+      - slot_conditions:
+          name:
+            required: true
+      - slot_conditions:
+          data:
+            required: true
+      - slot_conditions:
+          data_type:
+            required: true
+    close_mappings:
+      - uco-observable:WindowsRegistryValue
+  StixX509V3Extensions:
+    description: The standard X.509 v3 extensions of a certificate.
+    slots:
+      - basic_constraints
+      - name_constraints
+      - policy_constraints
+      - key_usage
+      - extended_key_usage
+      - subject_key_identifier
+      - authority_key_identifier
+      - subject_alternative_name
+      - issuer_alternative_name
+      - subject_directory_attributes
+      - crl_distribution_points
+      - inhibit_any_policy
+      - private_key_usage_period_not_before
+      - private_key_usage_period_not_after
+      - certificate_policies
+      - policy_mappings
+    any_of:
+      - slot_conditions:
+          basic_constraints:
+            required: true
+      - slot_conditions:
+          name_constraints:
+            required: true
+      - slot_conditions:
+          policy_constraints:
+            required: true
+      - slot_conditions:
+          key_usage:
+            required: true
+      - slot_conditions:
+          extended_key_usage:
+            required: true
+      - slot_conditions:
+          subject_key_identifier:
+            required: true
+      - slot_conditions:
+          authority_key_identifier:
+            required: true
+      - slot_conditions:
+          subject_alternative_name:
+            required: true
+      - slot_conditions:
+          issuer_alternative_name:
+            required: true
+      - slot_conditions:
+          subject_directory_attributes:
+            required: true
+      - slot_conditions:
+          crl_distribution_points:
+            required: true
+      - slot_conditions:
+          inhibit_any_policy:
+            required: true
+      - slot_conditions:
+          private_key_usage_period_not_before:
+            required: true
+      - slot_conditions:
+          private_key_usage_period_not_after:
+            required: true
+      - slot_conditions:
+          certificate_policies:
+            required: true
+      - slot_conditions:
+          policy_mappings:
+            required: true
+    close_mappings:
+      - uco-observable:X509V3ExtensionsFacet
+  StixFileExtensions:
+    description: >-
+      The extensions of a file: the predefined ntfs-ext, raster-image-ext, pdf-ext, archive-ext
+      and windows-pebinary-ext, and extensions that an extension definition defines.
+    extra_slots:
+      range_expression:
+        any_of:
+          - range: StixNtfsExtension
+          - range: StixRasterImageExtension
+          - range: StixPdfExtension
+          - range: StixArchiveExtension
+          - range: StixWindowsPeBinaryExtension
+          - range: StixExtension
+  StixNetworkTrafficExtensions:
+    description: >-
+      The extensions of network traffic: the predefined http-request-ext, icmp-ext, socket-ext
+      and tcp-ext, and extensions that an extension definition defines.
+    extra_slots:
+      range_expression:
+        any_of:
+          - range: StixHttpRequestExtension
+          - range: StixIcmpExtension
+          - range: StixSocketExtension
+          - range: StixTcpExtension
+          - range: StixExtension
+  StixProcessExtensions:
+    description: >-
+      The extensions of a process: the predefined windows-process-ext and windows-service-ext,
+      and extensions that an extension definition defines.
+    extra_slots:
+      range_expression:
+        any_of:
+          - range: StixWindowsProcessExtension
+          - range: StixWindowsServiceExtension
+          - range: StixExtension
+  StixUserAccountExtensions:
+    description: >-
+      The extensions of a user account: the predefined unix-account-ext, and extensions that
+      an extension definition defines.
+    extra_slots:
+      range_expression:
+        any_of:
+          - range: StixUnixAccountExtension
+          - range: StixExtension
+  StixSocketOptions:
+    description: >-
+      The options of a network socket, as a dictionary of option names, such as SO_RCVBUF,
+      to integer values.
+    extra_slots:
+      range_expression:
+        range: integer
+  StixExifTags:
+    description: >-
+      The EXIF tags of an image file, as a dictionary of tag names to string or integer values.
+    extra_slots:
+      range_expression:
+        any_of:
+          - range: string
+          - range: integer
+  StixPdfDocumentInfo:
+    description: >-
+      The document information dictionary of a PDF file, as a dictionary of string values.
+    extra_slots:
+      range_expression:
+        range: string
