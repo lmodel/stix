@@ -242,11 +242,12 @@ REQUIRED_DEPARTURES: dict[tuple[str, str], str] = {}
 
 
 def slot_names(cls):
-    return {s.name for s in view().class_induced_slots(cls)}
+    """The JSON keys of a class: each slot's alias, or its name."""
+    return {s.alias or s.name for s in view().class_induced_slots(cls)}
 
 
 def required_names(cls):
-    return {s.name for s in view().class_induced_slots(cls) if s.required}
+    return {s.alias or s.name for s in view().class_induced_slots(cls) if s.required}
 
 
 @pytest.mark.parametrize("item", object_schemas(), ids=lambda i: i[0])

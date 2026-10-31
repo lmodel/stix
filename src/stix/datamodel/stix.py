@@ -5497,8 +5497,8 @@ slots.belongs_to_ref = Slot(uri=STIX.belongs_to_ref, name="belongs_to_ref", curi
                    model_uri=STIX.belongs_to_ref, domain=None, range=Optional[Union[str, StixUserAccountId]],
                    pattern=re.compile(r'^user-account--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$'))
 
-slots.date = Slot(uri=STIX.date, name="date", curie=STIX.curie('date'),
-                   model_uri=STIX.date, domain=None, range=Optional[Union[str, StixTimestamp]])
+slots.email_date = Slot(uri=STIX.date, name="email_date", curie=STIX.curie('date'),
+                   model_uri=STIX.email_date, domain=None, range=Optional[Union[str, StixTimestamp]])
 
 slots.content_type = Slot(uri=STIX.content_type, name="content_type", curie=STIX.curie('content_type'),
                    model_uri=STIX.content_type, domain=None, range=Optional[str])

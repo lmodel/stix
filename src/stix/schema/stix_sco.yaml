@@ -97,7 +97,8 @@ slots:
     range: StixUserAccount
     pattern: ^user-account--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
     slot_uri: stix:belongs_to_ref
-  date:
+  email_date:
+    alias: date
     description: Specifies the date/time that the email message was sent.
     range: stix_timestamp
     slot_uri: stix:date
@@ -1208,7 +1209,7 @@ classes:
     description: The Email Message Object represents an instance of an email message.
     is_a: StixCyberObservableObject
     slots:
-      - date
+      - email_date
       - content_type
       - from_ref
       - sender_ref
