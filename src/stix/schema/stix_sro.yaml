@@ -77,7 +77,7 @@ slots:
     comments:
       - >-
         The pattern refuses an observable, a relationship and a meta object, as STIX 2.1
-        does; OASIS's JSON schema refuses only some of them.
+        does. OASIS's JSON schema refuses only some of them.
     range: StixDomainObject
     pattern: ^(?!(artifact|autonomous-system|directory|domain-name|email-addr|email-message|file|ipv4-addr|ipv6-addr|mac-addr|mutex|network-traffic|process|software|url|user-account|windows-registry-key|x509-certificate|relationship|sighting|bundle|marking-definition|language-content|extension-definition)--)[a-z][a-z0-9-]+[a-z0-9]--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
     slot_uri: stix:sighting_of_ref

@@ -1647,7 +1647,7 @@ class StixGranularMarking(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'close_mappings': ['uco-marking:GranularMarking'],
          'comments': ["STIX 2.1 requires exactly one of marking_ref and lang. OASIS's "
                       'JSON schema requires marking_ref, which rejects a language '
-                      'marking; the schema follows the standard.'],
+                      'marking. The schema follows the standard.'],
          'exactly_one_of': [{'slot_conditions': {'marking_ref': {'name': 'marking_ref',
                                                                  'required': True}}},
                             {'slot_conditions': {'lang': {'name': 'lang',
@@ -7829,7 +7829,7 @@ class StixSighting(StixRelationshipObject):
          'slot_uri': 'stix:last_seen'} })
     count: Optional[int] = Field(default=None, description="""This is an integer between 0 and 999,999,999 inclusive and represents the number of times the object was sighted.""", ge=0, le=999999999, json_schema_extra = { "linkml_meta": {'domain_of': ['StixSighting'], 'slot_uri': 'stix:count'} })
     sighting_of_ref: str = Field(default=..., description="""A reference to the domain object that was sighted.""", json_schema_extra = { "linkml_meta": {'comments': ['The pattern refuses an observable, a relationship and a meta '
-                      "object, as STIX 2.1 does; OASIS's JSON schema refuses only some "
+                      "object, as STIX 2.1 does. OASIS's JSON schema refuses only some "
                       'of them.'],
          'domain_of': ['StixSighting'],
          'slot_uri': 'stix:sighting_of_ref'} })

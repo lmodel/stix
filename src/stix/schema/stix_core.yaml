@@ -539,7 +539,7 @@ classes:
     comments:
       - >-
         STIX 2.1 requires exactly one of marking_ref and lang. OASIS's JSON schema requires
-        marking_ref, which rejects a language marking; the schema follows the standard.
+        marking_ref, which rejects a language marking. The schema follows the standard.
     slots:
       - marking_ref
       - selectors

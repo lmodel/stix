@@ -7885,7 +7885,7 @@
       "definition_uri": "https://w3id.org/lmodel/stix/sighting_of_ref",
       "description": "A reference to the domain object that was sighted.",
       "comments": [
-        "The pattern refuses an observable, a relationship and a meta object, as STIX 2.1 does; OASIS's JSON schema refuses only some of them."
+        "The pattern refuses an observable, a relationship and a meta object, as STIX 2.1 does. OASIS's JSON schema refuses only some of them."
       ],
       "from_schema": "https://w3id.org/lmodel/stix/stix_sro",
       "mappings": [
@@ -12065,7 +12065,7 @@
       "definition_uri": "https://w3id.org/lmodel/stix/sighting_of_ref",
       "description": "A reference to the domain object that was sighted.",
       "comments": [
-        "The pattern refuses an observable, a relationship and a meta object, as STIX 2.1 does; OASIS's JSON schema refuses only some of them."
+        "The pattern refuses an observable, a relationship and a meta object, as STIX 2.1 does. OASIS's JSON schema refuses only some of them."
       ],
       "from_schema": "https://w3id.org/lmodel/stix/stix_sro",
       "mappings": [
@@ -12538,7 +12538,7 @@
       "definition_uri": "https://w3id.org/lmodel/stix/StixGranularMarking",
       "description": "A marking of parts of an object: the properties its selectors name, marked either by a marking definition or with a language.",
       "comments": [
-        "STIX 2.1 requires exactly one of marking_ref and lang. OASIS's JSON schema requires marking_ref, which rejects a language marking; the schema follows the standard."
+        "STIX 2.1 requires exactly one of marking_ref and lang. OASIS's JSON schema requires marking_ref, which rejects a language marking. The schema follows the standard."
       ],
       "from_schema": "https://w3id.org/lmodel/stix/stix_core",
       "close_mappings": [

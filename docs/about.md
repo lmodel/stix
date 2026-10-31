@@ -43,10 +43,10 @@ otherwise:
 - The IPv6 address pattern restores the backslashes the JSON schema lost,
   so it accepts an IPv4-mapped address such as `::ffff:192.0.2.128`.
 - The "at least one property" rules name every property the object has,
-  and only those: the JSON schemas also name `name`, `created` and
+  and only those. The JSON schemas also name `name`, `created` and
   `arguments` for a process, `modified` for a Windows registry key and
   `image_compression_algorithm` for a raster image, none of which STIX 2.1
-  defines there, and leave out a process's `created_time` and the Windows
+  defines there. They leave out a process's `created_time` and the Windows
   process extension's `integrity_level`.
 - A granular marking names exactly one of `marking_ref` and `lang`. The
   JSON schema requires `marking_ref`, which rejects a language marking.

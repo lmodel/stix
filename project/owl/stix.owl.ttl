@@ -337,7 +337,7 @@ stix:StixGranularMarking a owl:Class ;
 	skos:closeMatch <https://ontology.unifiedcyberontology.org/uco/marking/GranularMarking> ;
 	skos:definition "A marking of parts of an object: the properties its selectors name, marked either by a marking definition or with a language." ;
 	skos:inScheme stix:stix_core ;
-	skos:note "STIX 2.1 requires exactly one of marking_ref and lang. OASIS's JSON schema requires marking_ref, which rejects a language marking; the schema follows the standard." .
+	skos:note "STIX 2.1 requires exactly one of marking_ref and lang. OASIS's JSON schema requires marking_ref, which rejects a language marking. The schema follows the standard." .
 stix:StixGrouping a owl:Class ;
 	rdfs:label "StixGrouping" ;
 	rdfs:subClassOf stix:StixDomainObject , _:c14n1041 , _:c14n1043 , _:c14n1248 , _:c14n1391 , _:c14n1420 , _:c14n1442 , _:c14n147 , _:c14n1705 , _:c14n196 , _:c14n1988 , _:c14n2098 , _:c14n2118 , _:c14n357 , _:c14n412 , _:c14n444 , _:c14n645 , _:c14n763 ;
@@ -3064,7 +3064,7 @@ stix:sighting_of_ref a owl:ObjectProperty ;
 	rdfs:range _:c14n30 ;
 	skos:definition "A reference to the domain object that was sighted." ;
 	skos:inScheme stix:stix_sro ;
-	skos:note "The pattern refuses an observable, a relationship and a meta object, as STIX 2.1 does; OASIS's JSON schema refuses only some of them." .
+	skos:note "The pattern refuses an observable, a relationship and a meta object, as STIX 2.1 does. OASIS's JSON schema refuses only some of them." .
 stix:signature_algorithm a owl:DatatypeProperty ;
 	rdfs:label "signature_algorithm" ;
 	skos:definition "Specifies the name of the algorithm used to sign the certificate." ;

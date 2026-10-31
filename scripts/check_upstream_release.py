@@ -336,10 +336,10 @@ def main(argv: list[str] | None = None) -> int:
     for label, check in CHECKS:
         try:
             found, needs = check()
-        # OSError covers a refused or failed fetch and a timeout,
-        # HTTPException a connection cut off mid-answer, ValueError an answer
-        # that is not JSON or UTF-8 or is too large, and LookupError and
-        # TypeError an answer of another shape than the API documents.
+        # OSError covers a refused or failed fetch and a timeout, and
+        # HTTPException a connection cut off mid-answer. ValueError covers an
+        # answer that is not JSON or UTF-8 or is too large, and LookupError and
+        # TypeError one of another shape than the API documents.
         except (
             OSError,
             http.client.HTTPException,

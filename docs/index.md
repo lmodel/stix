@@ -48,9 +48,9 @@ generators carry:
 - active network traffic has no end (`is_active: true` excludes `end`);
 - a later timestamp is not before the earlier one of its pair: `modified`
   and `created`, `last_seen` and `first_seen`, `last_observed` and
-  `first_observed`, and a network traffic's `end` and `start`; an
-  indicator's `valid_until` and a relationship's `stop_time` come strictly
-  after `valid_from` and `start_time`;
+  `first_observed`, and a network traffic's `end` and `start`;
+- an indicator's `valid_until` comes strictly after its `valid_from`, and a
+  relationship's `stop_time` after its `start_time`;
 - observed data's `object_refs` name at least one observable;
 - an extension definition lists `extension_properties` only when its types
   include `toplevel-property-extension`;
