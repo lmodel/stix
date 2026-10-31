@@ -6,12 +6,12 @@ build-backend = "hatchling.build"
 # Named like lmodel/slsa's slsa-linkml, because PyPI's "stix" is another
 # project; the import package stays stix. PyPI publishing is off.
 name = "stix-linkml"
-description = "Structured Threat Information Expression (STIX): LinkML Schema"
+description = "Structured Threat Information Expression (STIX) 2.1 (LinkML)"
 authors = [
   {name = "Noel McLoughlin", email = "noel.mcloughlin@gmail.com"},
 ]
 license = "Apache-2.0"
-license-files = ["LICENSE"]
+license-files = ["LICENSE", "NOTICE"]
 readme = "README.md"
 requires-python = ">=3.10"
 dynamic = ["version"]
@@ -68,6 +68,13 @@ skip = [
   "project/*",
   "src/stix/datamodel/stix_pydantic.py",
   "src/stix/datamodel/stix.py",
+  # OASIS's JSON schemas and examples and the neighbours' adapt copies,
+  # copied as published, and files copied in by the KTL sidecar sync or
+  # written by npm, not by hand.
+  "upstream/*",
+  "tests/neighbours/*",
+  ".lokf/scripts/*",
+  "website/package-lock.json",
 ]
 
 # Reminder: words have to be lowercased for the ignore-words-list
@@ -86,4 +93,8 @@ extend-exclude = [
   "project/*",
   "src/stix/datamodel/stix_pydantic.py",
   "src/stix/datamodel/stix.py",
+  "upstream/*",
+  "tests/neighbours/*",
+  ".lokf/scripts/*",
+  "website/package-lock.json",
 ]
