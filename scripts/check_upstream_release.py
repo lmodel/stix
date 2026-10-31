@@ -42,10 +42,10 @@ from __future__ import annotations
 import argparse
 import hashlib
 import html.parser
+import http.client
 import json
 import os
 import sys
-import urllib.error
 import urllib.request
 from pathlib import Path
 
@@ -54,6 +54,9 @@ COPY = ROOT / "upstream"
 API = "https://api.github.com/repos/oasis-open/cti-stix2-json-schemas"
 DOCS = "https://docs.oasis-open.org/cti/stix/"
 USER_AGENT = "lmodel-stix-upstream-check"
+# The most one answer may hold. master's tree listing and the folder
+# listings are a few tens of kilobytes; a larger answer is refused.
+MAX_BYTES = 5 * 1024 * 1024
 
 # The edition the schema renders. The schema header's version and source
 # carry the same values, and tests/test_upstream.py holds them equal.
@@ -172,7 +175,16 @@ def _get(url: str) -> bytes:
             # an unredirected one and reaches api.github.com alone.
             req.add_unredirected_header("Authorization", f"Bearer {token}")
     with urllib.request.urlopen(req, timeout=60) as resp:
-        return resp.read()
+        data = resp.read(MAX_BYTES + 1)
+    if len(data) > MAX_BYTES:
+        raise ValueError(f"the answer from {url} is over {MAX_BYTES} bytes")
+    return data
+
+
+def _code(text: object) -> str:
+    """Text a server chose, such as a file name or an error message, as a code
+    span, so it cannot mention a person or add a link in the issue."""
+    return "`" + str(text).replace("`", "'") + "`"
 
 
 def blob_sha(path: Path) -> str:
@@ -226,7 +238,9 @@ def check_copy() -> tuple[list[str], bool]:
     for local in sorted(p for p in COPY.rglob("*") if p.is_file()):
         path = local.relative_to(COPY).as_posix()
         if path not in PINNED_BLOBS:
-            problems.append(f"`upstream/{path}` is in the copy but not pinned")
+            problems.append(
+                f"{_code('upstream/' + path)} is in the copy but not pinned"
+            )
     report = [
         f"- {matching} of {len(PINNED_BLOBS)} copied files match their pins byte for byte."
     ]
@@ -242,7 +256,7 @@ def check_master() -> tuple[list[str], bool]:
     head = json.loads(_get(f"{API}/commits/{BRANCH}"))["sha"]
     report = [
         f"- Pinned commit: `{PINNED_COMMIT[:12]}` of oasis-open/cti-stix2-json-schemas; "
-        f"{BRANCH} is at `{head[:12]}`."
+        f"{BRANCH} is at {_code(head[:12])}."
     ]
     if head == PINNED_COMMIT:
         report.append(f"- {BRANCH} has not moved.")
@@ -262,7 +276,7 @@ def check_master() -> tuple[list[str], bool]:
         if paths:
             report.append(
                 f"- **{BRANCH} {label} {len(paths)} file(s):** "
-                + ", ".join(f"`{p}`" for p in paths)
+                + ", ".join(_code(p) for p in paths)
                 + "."
             )
     if licence:
@@ -293,7 +307,7 @@ def check_edition() -> tuple[list[str], bool]:
         (f"{DOCS}v2.1/errata01/", KNOWN_ERRATA_STAGES, "Errata 01 stage"),
     ):
         for name in sorted(_folders(url) - known):
-            found.append(f"a new {what}, `{url}{name}/`")
+            found.append(f"a new {what}, {_code(url + name + '/')}")
     if found:
         report.append(
             "- **OASIS publishes "
@@ -322,14 +336,19 @@ def main(argv: list[str] | None = None) -> int:
     for label, check in CHECKS:
         try:
             found, needs = check()
+        # OSError covers a refused or failed fetch and a timeout,
+        # HTTPException a connection cut off mid-answer, ValueError an answer
+        # that is not JSON or UTF-8 or is too large, and LookupError and
+        # TypeError an answer of another shape than the API documents.
         except (
-            urllib.error.URLError,
-            TimeoutError,
             OSError,
+            http.client.HTTPException,
             ValueError,
-            KeyError,
+            LookupError,
+            TypeError,
         ) as err:
-            found, needs = [f"- **The {label} check could not finish: {err}.**"], True
+            found = [f"- **The {label} check could not finish: {_code(err)}.**"]
+            needs = True
         lines += found
         attention = attention or needs
     text = "\n".join(lines) + "\n"

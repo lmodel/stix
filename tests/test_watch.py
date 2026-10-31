@@ -8,6 +8,7 @@ changes, adds or drops a file, the licence changes, OASIS publishes another
 edition or approves the errata, the copy drifts, or the network fails.
 """
 
+import http.client
 import importlib.util
 import json
 import shutil
@@ -165,10 +166,69 @@ def test_a_network_failure_still_writes_a_report(watch, tmp_path):
     code, text = _run(watch, tmp_path)
     assert code == 1
     assert (
-        "**The edition check could not finish: <urlopen error Connection refused>.**"
+        "**The edition check could not finish: `<urlopen error Connection refused>`.**"
         in text
     )
     assert "master has not moved." in text
+
+
+def test_a_cut_or_misshapen_answer_could_not_finish(watch, tmp_path):
+    """A connection cut off mid-answer, and an answer of another shape than
+    the API documents, are checks that could not finish, and the other checks
+    still run."""
+    answers = _answers(watch, HEAD)
+    answers[f"{watch.API}/commits/{watch.BRANCH}"] = ["not", "an", "object"]
+    answers[watch.DOCS] = http.client.IncompleteRead(b"<html>")
+    _stub(watch, answers)
+    code, text = _run(watch, tmp_path)
+    assert code == 1
+    assert "**The master check could not finish: `list indices" in text
+    assert "**The edition check could not finish: `IncompleteRead" in text
+    assert "copied files match their pins" in text
+
+    answers = _answers(watch, HEAD)
+    answers[f"{watch.API}/git/trees/{HEAD}?recursive=1"] = {"tree": [{"path": "x"}]}
+    _stub(watch, answers)
+    code, text = _run(watch, tmp_path)
+    assert code == 1
+    assert "**The master check could not finish: `'type'`.**" in text
+
+
+def test_text_the_server_chose_is_quoted(watch, tmp_path):
+    """A file name and a folder name the servers chose are quoted as code, so
+    they cannot mention a person in the issue, and a backtick in one cannot
+    end the quotation."""
+    answers = _answers(watch, HEAD)
+    _tree(answers, watch).append(
+        {"path": "schemas/@someone`x.json", "type": "blob", "sha": "8" * 40}
+    )
+    answers[watch.DOCS] = listing(watch.KNOWN_EDITIONS | {"@someone`y"})
+    _stub(watch, answers)
+    text = _run(watch, tmp_path)[1]
+    assert "**master adds 1 file(s):** `schemas/@someone'x.json`." in text
+    assert f"a new edition folder, `{watch.DOCS}@someone'y/`" in text
+
+
+def test_an_answer_over_the_cap_is_refused(watch, monkeypatch):
+    """_get reads one byte past the cap at most, and refuses an answer that
+    reaches it."""
+    asked = []
+
+    class Answer:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            return False
+
+        def read(self, size=-1):
+            asked.append(size)
+            return b"x" * (watch.MAX_BYTES + 1)
+
+    monkeypatch.setattr(watch.urllib.request, "urlopen", lambda req, timeout: Answer())
+    with pytest.raises(ValueError, match="over"):
+        watch._get(watch.DOCS)
+    assert asked == [watch.MAX_BYTES + 1]
 
 
 def test_the_token_never_follows_a_redirect(watch, monkeypatch):
@@ -183,7 +243,7 @@ def test_the_token_never_follows_a_redirect(watch, monkeypatch):
         def __exit__(self, *args):
             return False
 
-        def read(self):
+        def read(self, size=-1):
             return b"{}"
 
     def urlopen(req, timeout):
