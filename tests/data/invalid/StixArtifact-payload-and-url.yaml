@@ -1,0 +1,10 @@
+# Fails at: /
+# Invalid: Payload_bin and url exclude each other.
+type: artifact
+spec_version: '2.1'
+id: artifact--23ac277a-01ee-4b71-9ffe-4abc49cbe635
+mime_type: application/zip
+payload_bin: UEsDBBQAAAAIAA==
+url: https://files.acme.example/a.zip
+hashes:
+  MD5: 3773a88f65a5e780c8dff9cdc3a056f3

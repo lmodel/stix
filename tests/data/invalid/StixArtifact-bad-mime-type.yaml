@@ -1,0 +1,7 @@
+# Fails at: /mime_type
+# Invalid: Mime_type is a media type.
+type: artifact
+spec_version: '2.1'
+id: artifact--23ac277a-01ee-4b71-9ffe-4abc49cbe635
+mime_type: zip
+payload_bin: UEsDBBQAAAAIAA==

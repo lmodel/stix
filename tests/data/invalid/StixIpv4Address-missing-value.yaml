@@ -1,0 +1,7 @@
+# Fails at: /
+# Invalid: An IPv4 address has a value.
+type: ipv4-addr
+spec_version: '2.1'
+id: ipv4-addr--59b19870-2b1a-4bb7-a4b0-c102fd14e331
+belongs_to_refs:
+  - autonomous-system--14b4283c-e15d-47c1-b1ec-bd832789cdca

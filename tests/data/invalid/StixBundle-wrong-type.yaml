@@ -1,0 +1,61 @@
+# Fails at: /type
+# Invalid: A bundle's type is bundle.
+type: collection
+id: bundle--c0314db0-5861-4ee4-b5b9-d95fbb81bfb9
+objects:
+  - type: identity
+    spec_version: '2.1'
+    id: identity--c38abf55-9fec-4815-a139-67f11dc878a7
+    created: '2026-01-15T09:30:00.000Z'
+    modified: '2026-01-15T09:30:00.000Z'
+    name: ACME Computer Emergency Response Team
+    identity_class: organization
+    sectors:
+      - technology
+      - telecommunications
+    roles:
+      - incident responder
+    contact_information: cert@acme.example
+  - type: indicator
+    spec_version: '2.1'
+    id: indicator--603e7bfa-4bd3-4432-baab-3cc4ad9aa0f3
+    created_by_ref: identity--c38abf55-9fec-4815-a139-67f11dc878a7
+    created: '2026-01-15T09:30:00.000Z'
+    modified: '2026-02-01T12:00:00.000Z'
+    name: Command and control address
+    indicator_types:
+      - malicious-activity
+    pattern: '[ipv4-addr:value = ''198.51.100.7'']'
+    pattern_type: stix
+    pattern_version: '2.1'
+    valid_from: '2026-01-15T09:30:00Z'
+    kill_chain_phases:
+      - kill_chain_name: lockheed-martin-cyber-kill-chain
+        phase_name: delivery
+    confidence: 85
+    labels:
+      - c2
+    lang: en
+  - type: ipv4-addr
+    spec_version: '2.1'
+    id: ipv4-addr--59b19870-2b1a-4bb7-a4b0-c102fd14e331
+    value: 198.51.100.7
+    belongs_to_refs:
+      - autonomous-system--14b4283c-e15d-47c1-b1ec-bd832789cdca
+  - type: relationship
+    spec_version: '2.1'
+    id: relationship--36067728-a6c9-42d5-9c24-f12c282a7314
+    created_by_ref: identity--c38abf55-9fec-4815-a139-67f11dc878a7
+    created: '2026-01-15T09:30:00.000Z'
+    modified: '2026-02-01T12:00:00.000Z'
+    relationship_type: related-to
+    source_ref: indicator--603e7bfa-4bd3-4432-baab-3cc4ad9aa0f3
+    target_ref: ipv4-addr--59b19870-2b1a-4bb7-a4b0-c102fd14e331
+  - type: marking-definition
+    spec_version: '2.1'
+    id: marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da
+    created: '2017-01-20T00:00:00.000Z'
+    name: TLP:GREEN
+    definition_type: tlp
+    definition:
+      tlp: green

@@ -1,0 +1,9 @@
+type: file
+spec_version: '2.1'
+id: file--36457fdd-6c56-41e1-bbab-0f44e5762b80
+name: invoice.zip
+extensions:
+  archive-ext:
+    contains_refs:
+      - file--8ffeace3-03a4-4483-b38d-8d8cf1cdec08
+    comment: 'password: infected'

@@ -1,0 +1,20 @@
+# Fails at: /
+# Invalid: Name is required.
+type: threat-actor
+spec_version: '2.1'
+id: threat-actor--c1a3b7a0-d547-4e38-87ce-b752eba24e29
+created_by_ref: identity--c38abf55-9fec-4815-a139-67f11dc878a7
+created: '2026-01-15T09:30:00.000Z'
+modified: '2026-02-01T12:00:00.000Z'
+threat_actor_types:
+  - crime-syndicate
+roles:
+  - agent
+  - malware-author
+sophistication: intermediate
+resource_level: organization
+primary_motivation: personal-gain
+personal_motivations:
+  - revenge
+aliases:
+  - GC

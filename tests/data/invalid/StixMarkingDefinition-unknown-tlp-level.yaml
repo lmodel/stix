@@ -1,0 +1,10 @@
+# Fails at: /definition
+# Invalid: A definition is a statement or one of the four TLP levels.
+type: marking-definition
+spec_version: '2.1'
+id: marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da
+created: '2017-01-20T00:00:00.000Z'
+name: TLP:GREEN
+definition_type: tlp
+definition:
+  tlp: orange

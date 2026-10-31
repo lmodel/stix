@@ -1,0 +1,6 @@
+# Fails at: /value
+# Invalid: A MAC address is lower-case hexadecimal pairs.
+type: mac-addr
+spec_version: '2.1'
+id: mac-addr--ffca014f-348c-48aa-8ea8-df5f43c9787f
+value: D2:FB:49:24:37:18

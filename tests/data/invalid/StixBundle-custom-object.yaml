@@ -1,0 +1,10 @@
+# Fails at: /objects/0
+# Invalid: A custom object needs a schema that declares its class.
+type: bundle
+id: bundle--c0314db0-5861-4ee4-b5b9-d95fbb81bfb9
+objects:
+  - type: x-acme-widget
+    spec_version: '2.1'
+    id: x-acme-widget--0f1e2d3c-4b5a-4968-8776-655443322110
+    created: '2026-01-15T09:30:00.000Z'
+    modified: '2026-01-15T09:30:00.000Z'

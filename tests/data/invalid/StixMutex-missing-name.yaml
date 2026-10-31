@@ -1,0 +1,5 @@
+# Fails at: /
+# Invalid: A mutex has a name.
+type: mutex
+spec_version: '2.1'
+id: mutex--dbf5600d-8447-4649-9e9e-75ca4c218fb4

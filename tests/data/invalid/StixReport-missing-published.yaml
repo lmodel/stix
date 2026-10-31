@@ -1,0 +1,15 @@
+# Fails at: /
+# Invalid: Published is required.
+type: report
+spec_version: '2.1'
+id: report--070be8fd-d3b1-4bae-87fd-bdf4f0de1b0c
+created_by_ref: identity--c38abf55-9fec-4815-a139-67f11dc878a7
+created: '2026-01-15T09:30:00.000Z'
+modified: '2026-02-01T12:00:00.000Z'
+name: Operation Glass
+report_types:
+  - threat-report
+  - campaign
+object_refs:
+  - campaign--dff6f092-93b4-4a2c-8d99-7b91b82ee7a2
+  - indicator--603e7bfa-4bd3-4432-baab-3cc4ad9aa0f3

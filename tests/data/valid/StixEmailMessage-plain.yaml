@@ -1,0 +1,15 @@
+type: email-message
+spec_version: '2.1'
+id: email-message--7d18dc62-fe7e-4b08-975b-d33c7283965b
+is_multipart: false
+date: '2026-01-15T08:59:00Z'
+from_ref: email-addr--cd454ec8-faef-404d-aed3-a963d2521e80
+to_refs:
+  - email-addr--2d8ae012-f5ec-491d-9c2b-8b2f9d974df4
+subject: Your invoice
+body: Please see the attached invoice.
+additional_header_fields:
+  X-Mailer: ExampleMail 1.0
+  Received:
+    - from a
+    - from b

@@ -1,0 +1,5 @@
+# Fails at: /
+# Invalid: A process has at least one property of its own.
+type: process
+spec_version: '2.1'
+id: process--d915238f-7a67-4b62-9114-b8721de3825a

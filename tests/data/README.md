@@ -1,14 +1,14 @@
 # Example data for stix
 
-This folder contains example data for testing and demonstrating the datamodel`
-sorted in subfolders:
+- `valid/` holds data that conforms to the schema: an example for each class
+  a knowledge concept may name as its type, and more for the extensions and
+  the embedded types. `tests/test_data.py` checks that each one validates.
+- `invalid/` holds a counter-example for each constraint. Its first line,
+  `# Fails at: <JSON pointer>`, names where the validator reports it, and the
+  second says why it is invalid; `tests/test_data.py` checks both.
+- `problem/` holds data the schema does not yet handle correctly, split into
+  `valid/` and `invalid/`.
 
-- `valid` for data conforming to the datamodel. Used to verify the datamodel.
-- `invalid` for data not conforming to the datamodel. Used to verify the validation.
-- `problem` for data which are not yet handled correctly in the current schema version,
-   again separated into valid/invalid.
-
-The filenames of all example data must conform to the scheme `classname-###.yaml`
-where classname must be a the name of a class from the schema. "###" can be a number
-or one or more other characters allowed in filenames. The classname is derived by
-splitting at the first "-" and taking the part before the "-".
+Name each file `ClassName-what-it-shows.yaml`: the part before the first `-`
+is the class the file is validated against. OASIS's own examples sit in
+`upstream/examples/`, and `tests/test_upstream.py` validates them unchanged.

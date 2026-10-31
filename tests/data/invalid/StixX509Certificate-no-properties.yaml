@@ -1,0 +1,5 @@
+# Fails at: /
+# Invalid: A certificate has at least one property of its own.
+type: x509-certificate
+spec_version: '2.1'
+id: x509-certificate--60493621-3d02-48e8-862f-c14cb3ab82b1

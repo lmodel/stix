@@ -1,0 +1,8 @@
+# Fails at: /belongs_to_ref
+# Invalid: An address belongs to a user account.
+type: email-addr
+spec_version: '2.1'
+id: email-addr--cd454ec8-faef-404d-aed3-a963d2521e80
+value: billing@glass.example
+display_name: Billing
+belongs_to_ref: file--0f1e2d3c-4b5a-4968-8776-655443322110

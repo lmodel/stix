@@ -1,0 +1,9 @@
+type: relationship
+spec_version: '2.1'
+id: relationship--36067728-a6c9-42d5-9c24-f12c282a7314
+created_by_ref: identity--c38abf55-9fec-4815-a139-67f11dc878a7
+created: '2026-01-15T09:30:00.000Z'
+modified: '2026-02-01T12:00:00.000Z'
+relationship_type: related-to
+source_ref: indicator--603e7bfa-4bd3-4432-baab-3cc4ad9aa0f3
+target_ref: ipv4-addr--59b19870-2b1a-4bb7-a4b0-c102fd14e331

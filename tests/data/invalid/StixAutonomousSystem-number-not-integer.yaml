@@ -1,0 +1,8 @@
+# Fails at: /number
+# Invalid: An AS number is an integer.
+type: autonomous-system
+spec_version: '2.1'
+id: autonomous-system--14b4283c-e15d-47c1-b1ec-bd832789cdca
+number: AS64500
+name: Example AS
+rir: RIPE

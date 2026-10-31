@@ -1,0 +1,18 @@
+type: process
+spec_version: '2.1'
+id: process--dcaf32a9-c536-40c9-96c6-c737f0c9542b
+extensions:
+  windows-process-ext:
+    aslr_enabled: true
+    dep_enabled: true
+    integrity_level: system
+    startup_info:
+      lpDesktop: winsta0\default
+      dwFlags: 1
+  windows-service-ext:
+    service_name: GlassSvc
+    start_type: SERVICE_AUTO_START
+    service_type: SERVICE_WIN32_OWN_PROCESS
+    service_status: SERVICE_RUNNING
+    service_dll_refs:
+      - file--51fee18b-6496-40d3-afee-668df02be30c

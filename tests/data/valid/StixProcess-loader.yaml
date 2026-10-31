@@ -1,0 +1,12 @@
+type: process
+spec_version: '2.1'
+id: process--d915238f-7a67-4b62-9114-b8721de3825a
+pid: 4242
+command_line: rundll32.exe loader.dll,Start
+created_time: '2026-01-15T09:00:00Z'
+image_ref: file--8ffeace3-03a4-4483-b38d-8d8cf1cdec08
+parent_ref: process--9b8500b1-ec34-4cf6-8535-39588c6b5b61
+opened_connection_refs:
+  - network-traffic--06920ed8-2311-4d28-9711-b9daa7ab4836
+environment_variables:
+  TEMP: C:\Users\Public\Temp

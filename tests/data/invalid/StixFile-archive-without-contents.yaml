@@ -1,0 +1,9 @@
+# Fails at: /extensions
+# Invalid: An archive extension lists what it contains.
+type: file
+spec_version: '2.1'
+id: file--36457fdd-6c56-41e1-bbab-0f44e5762b80
+name: invoice.zip
+extensions:
+  archive-ext:
+    comment: 'password: infected'

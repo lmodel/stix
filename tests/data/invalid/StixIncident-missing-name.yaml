@@ -1,0 +1,8 @@
+# Fails at: /
+# Invalid: Name is required.
+type: incident
+spec_version: '2.1'
+id: incident--d82a0d13-a61f-4c0a-95f4-d6d9a224a05b
+created_by_ref: identity--c38abf55-9fec-4815-a139-67f11dc878a7
+created: '2026-01-15T09:30:00.000Z'
+modified: '2026-02-01T12:00:00.000Z'

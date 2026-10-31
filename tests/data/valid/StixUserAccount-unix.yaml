@@ -1,0 +1,15 @@
+type: user-account
+spec_version: '2.1'
+id: user-account--26ef003c-6f9a-4406-9d34-2d897dcb465c
+user_id: '1001'
+account_login: billing
+account_type: unix
+is_privileged: false
+account_created: '2025-01-01T00:00:00Z'
+extensions:
+  unix-account-ext:
+    gid: 1001
+    groups:
+      - finance
+    home_dir: /home/billing
+    shell: /bin/bash

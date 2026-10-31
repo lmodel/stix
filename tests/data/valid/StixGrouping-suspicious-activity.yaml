@@ -1,0 +1,11 @@
+type: grouping
+spec_version: '2.1'
+id: grouping--4a0143b0-a370-4b68-b09d-a7a20e1e9127
+created_by_ref: identity--c38abf55-9fec-4815-a139-67f11dc878a7
+created: '2026-01-15T09:30:00.000Z'
+modified: '2026-02-01T12:00:00.000Z'
+name: Unexplained logins
+context: suspicious-activity
+object_refs:
+  - indicator--603e7bfa-4bd3-4432-baab-3cc4ad9aa0f3
+  - ipv4-addr--59b19870-2b1a-4bb7-a4b0-c102fd14e331

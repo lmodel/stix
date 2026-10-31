@@ -1,0 +1,12 @@
+# Fails at: /extensions
+# Invalid: An ICMP extension has a code.
+type: network-traffic
+spec_version: '2.1'
+id: network-traffic--53589a46-2b7c-4290-8a9a-511ef1411c58
+src_ref: ipv4-addr--8df7e77c-0f35-4375-b00e-7dc76a48cc12
+protocols:
+  - ipv4
+  - icmp
+extensions:
+  icmp-ext:
+    icmp_type_hex: 08

@@ -1,0 +1,5 @@
+# Fails at: /
+# Invalid: A user account has at least one property of its own.
+type: user-account
+spec_version: '2.1'
+id: user-account--26ef003c-6f9a-4406-9d34-2d897dcb465c

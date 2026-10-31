@@ -1,0 +1,6 @@
+type: domain-name
+spec_version: '2.1'
+id: domain-name--dcb03049-9e29-48d8-b76f-a7a2d3192d5e
+value: glass.example
+resolves_to_refs:
+  - ipv4-addr--59b19870-2b1a-4bb7-a4b0-c102fd14e331

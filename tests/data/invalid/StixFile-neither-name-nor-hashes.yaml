@@ -1,0 +1,9 @@
+# Fails at: /
+# Invalid: A file has hashes or a name.
+type: file
+spec_version: '2.1'
+id: file--8ffeace3-03a4-4483-b38d-8d8cf1cdec08
+size: 25536
+mime_type: application/vnd.microsoft.portable-executable
+magic_number_hex: 4D5A
+parent_directory_ref: directory--d8b3c8fd-85ab-4b59-8b69-f27a2c988445

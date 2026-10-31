@@ -1,0 +1,15 @@
+type: network-traffic
+spec_version: '2.1'
+id: network-traffic--06920ed8-2311-4d28-9711-b9daa7ab4836
+src_ref: ipv4-addr--8df7e77c-0f35-4375-b00e-7dc76a48cc12
+dst_ref: ipv4-addr--59b19870-2b1a-4bb7-a4b0-c102fd14e331
+dst_port: 443
+protocols:
+  - ipv4
+  - tcp
+  - tls
+start: '2026-01-15T09:00:00Z'
+end: '2026-01-15T09:00:05Z'
+is_active: false
+src_byte_count: 1200
+dst_byte_count: 5300

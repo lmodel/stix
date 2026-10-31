@@ -1,0 +1,5 @@
+# Fails at: /objects
+# Invalid: A list holds at least one value.
+type: bundle
+id: bundle--c0314db0-5861-4ee4-b5b9-d95fbb81bfb9
+objects: []
