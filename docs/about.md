@@ -57,7 +57,8 @@ otherwise:
   observables. The JSON schemas take a wider set of identifiers.
 - The vocabularies follow the standard's tables (see above).
 
-`tests/test_upstream.py` lists each difference, so a new one fails.
+`tests/test_upstream.py` lists each difference in the properties, the
+required lists and the "at least one property" rules, so a new one fails.
 
 ## What the schema leaves out
 
