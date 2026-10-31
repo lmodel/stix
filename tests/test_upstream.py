@@ -385,7 +385,8 @@ AT_LEAST_ONE_DEPARTURES = {
 
 
 def json_at_least_one(node):
-    """The names of a JSON schema's anyOf whose branches each require one name."""
+    """The names of a JSON schema's anyOf whose branches each require one name,
+    or, for a schema that states minProperties alone, all its properties."""
     names = set()
     for part in [node] + [p for p in node.get("allOf", []) if "$ref" not in p]:
         branches = part.get("anyOf", [])
@@ -393,6 +394,8 @@ def json_at_least_one(node):
             set(b) == {"required"} and len(b["required"]) == 1 for b in branches
         ):
             names |= {b["required"][0] for b in branches}
+        elif part.get("minProperties") and not branches:
+            names |= set(part.get("properties", {}))
     return names
 
 

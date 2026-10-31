@@ -2070,6 +2070,100 @@ classes:
       - loader_flags_hex
       - number_of_rva_and_sizes
       - hashes
+    any_of:
+      - slot_conditions:
+          magic_hex:
+            required: true
+      - slot_conditions:
+          major_linker_version:
+            required: true
+      - slot_conditions:
+          minor_linker_version:
+            required: true
+      - slot_conditions:
+          size_of_code:
+            required: true
+      - slot_conditions:
+          size_of_initialized_data:
+            required: true
+      - slot_conditions:
+          size_of_uninitialized_data:
+            required: true
+      - slot_conditions:
+          address_of_entry_point:
+            required: true
+      - slot_conditions:
+          base_of_code:
+            required: true
+      - slot_conditions:
+          base_of_data:
+            required: true
+      - slot_conditions:
+          image_base:
+            required: true
+      - slot_conditions:
+          section_alignment:
+            required: true
+      - slot_conditions:
+          file_alignment:
+            required: true
+      - slot_conditions:
+          major_os_version:
+            required: true
+      - slot_conditions:
+          minor_os_version:
+            required: true
+      - slot_conditions:
+          major_image_version:
+            required: true
+      - slot_conditions:
+          minor_image_version:
+            required: true
+      - slot_conditions:
+          major_subsystem_version:
+            required: true
+      - slot_conditions:
+          minor_subsystem_version:
+            required: true
+      - slot_conditions:
+          win32_version_value_hex:
+            required: true
+      - slot_conditions:
+          size_of_image:
+            required: true
+      - slot_conditions:
+          size_of_headers:
+            required: true
+      - slot_conditions:
+          checksum_hex:
+            required: true
+      - slot_conditions:
+          subsystem_hex:
+            required: true
+      - slot_conditions:
+          dll_characteristics_hex:
+            required: true
+      - slot_conditions:
+          size_of_stack_reserve:
+            required: true
+      - slot_conditions:
+          size_of_stack_commit:
+            required: true
+      - slot_conditions:
+          size_of_heap_reserve:
+            required: true
+      - slot_conditions:
+          size_of_heap_commit:
+            required: true
+      - slot_conditions:
+          loader_flags_hex:
+            required: true
+      - slot_conditions:
+          number_of_rva_and_sizes:
+            required: true
+      - slot_conditions:
+          hashes:
+            required: true
     close_mappings:
       - uco-observable:WindowsPEOptionalHeader
   StixMimePart:

@@ -14751,6 +14751,318 @@
       ],
       "slot_usage": {},
       "class_uri": "https://w3id.org/lmodel/stix/StixWindowsPeOptionalHeader",
+      "any_of": [
+        {
+          "slot_conditions": [
+            {
+              "name": "magic_hex",
+              "required": true,
+              "@type": "SlotDefinition"
+            }
+          ],
+          "@type": "AnonymousClassExpression"
+        },
+        {
+          "slot_conditions": [
+            {
+              "name": "major_linker_version",
+              "required": true,
+              "@type": "SlotDefinition"
+            }
+          ],
+          "@type": "AnonymousClassExpression"
+        },
+        {
+          "slot_conditions": [
+            {
+              "name": "minor_linker_version",
+              "required": true,
+              "@type": "SlotDefinition"
+            }
+          ],
+          "@type": "AnonymousClassExpression"
+        },
+        {
+          "slot_conditions": [
+            {
+              "name": "size_of_code",
+              "required": true,
+              "@type": "SlotDefinition"
+            }
+          ],
+          "@type": "AnonymousClassExpression"
+        },
+        {
+          "slot_conditions": [
+            {
+              "name": "size_of_initialized_data",
+              "required": true,
+              "@type": "SlotDefinition"
+            }
+          ],
+          "@type": "AnonymousClassExpression"
+        },
+        {
+          "slot_conditions": [
+            {
+              "name": "size_of_uninitialized_data",
+              "required": true,
+              "@type": "SlotDefinition"
+            }
+          ],
+          "@type": "AnonymousClassExpression"
+        },
+        {
+          "slot_conditions": [
+            {
+              "name": "address_of_entry_point",
+              "required": true,
+              "@type": "SlotDefinition"
+            }
+          ],
+          "@type": "AnonymousClassExpression"
+        },
+        {
+          "slot_conditions": [
+            {
+              "name": "base_of_code",
+              "required": true,
+              "@type": "SlotDefinition"
+            }
+          ],
+          "@type": "AnonymousClassExpression"
+        },
+        {
+          "slot_conditions": [
+            {
+              "name": "base_of_data",
+              "required": true,
+              "@type": "SlotDefinition"
+            }
+          ],
+          "@type": "AnonymousClassExpression"
+        },
+        {
+          "slot_conditions": [
+            {
+              "name": "image_base",
+              "required": true,
+              "@type": "SlotDefinition"
+            }
+          ],
+          "@type": "AnonymousClassExpression"
+        },
+        {
+          "slot_conditions": [
+            {
+              "name": "section_alignment",
+              "required": true,
+              "@type": "SlotDefinition"
+            }
+          ],
+          "@type": "AnonymousClassExpression"
+        },
+        {
+          "slot_conditions": [
+            {
+              "name": "file_alignment",
+              "required": true,
+              "@type": "SlotDefinition"
+            }
+          ],
+          "@type": "AnonymousClassExpression"
+        },
+        {
+          "slot_conditions": [
+            {
+              "name": "major_os_version",
+              "required": true,
+              "@type": "SlotDefinition"
+            }
+          ],
+          "@type": "AnonymousClassExpression"
+        },
+        {
+          "slot_conditions": [
+            {
+              "name": "minor_os_version",
+              "required": true,
+              "@type": "SlotDefinition"
+            }
+          ],
+          "@type": "AnonymousClassExpression"
+        },
+        {
+          "slot_conditions": [
+            {
+              "name": "major_image_version",
+              "required": true,
+              "@type": "SlotDefinition"
+            }
+          ],
+          "@type": "AnonymousClassExpression"
+        },
+        {
+          "slot_conditions": [
+            {
+              "name": "minor_image_version",
+              "required": true,
+              "@type": "SlotDefinition"
+            }
+          ],
+          "@type": "AnonymousClassExpression"
+        },
+        {
+          "slot_conditions": [
+            {
+              "name": "major_subsystem_version",
+              "required": true,
+              "@type": "SlotDefinition"
+            }
+          ],
+          "@type": "AnonymousClassExpression"
+        },
+        {
+          "slot_conditions": [
+            {
+              "name": "minor_subsystem_version",
+              "required": true,
+              "@type": "SlotDefinition"
+            }
+          ],
+          "@type": "AnonymousClassExpression"
+        },
+        {
+          "slot_conditions": [
+            {
+              "name": "win32_version_value_hex",
+              "required": true,
+              "@type": "SlotDefinition"
+            }
+          ],
+          "@type": "AnonymousClassExpression"
+        },
+        {
+          "slot_conditions": [
+            {
+              "name": "size_of_image",
+              "required": true,
+              "@type": "SlotDefinition"
+            }
+          ],
+          "@type": "AnonymousClassExpression"
+        },
+        {
+          "slot_conditions": [
+            {
+              "name": "size_of_headers",
+              "required": true,
+              "@type": "SlotDefinition"
+            }
+          ],
+          "@type": "AnonymousClassExpression"
+        },
+        {
+          "slot_conditions": [
+            {
+              "name": "checksum_hex",
+              "required": true,
+              "@type": "SlotDefinition"
+            }
+          ],
+          "@type": "AnonymousClassExpression"
+        },
+        {
+          "slot_conditions": [
+            {
+              "name": "subsystem_hex",
+              "required": true,
+              "@type": "SlotDefinition"
+            }
+          ],
+          "@type": "AnonymousClassExpression"
+        },
+        {
+          "slot_conditions": [
+            {
+              "name": "dll_characteristics_hex",
+              "required": true,
+              "@type": "SlotDefinition"
+            }
+          ],
+          "@type": "AnonymousClassExpression"
+        },
+        {
+          "slot_conditions": [
+            {
+              "name": "size_of_stack_reserve",
+              "required": true,
+              "@type": "SlotDefinition"
+            }
+          ],
+          "@type": "AnonymousClassExpression"
+        },
+        {
+          "slot_conditions": [
+            {
+              "name": "size_of_stack_commit",
+              "required": true,
+              "@type": "SlotDefinition"
+            }
+          ],
+          "@type": "AnonymousClassExpression"
+        },
+        {
+          "slot_conditions": [
+            {
+              "name": "size_of_heap_reserve",
+              "required": true,
+              "@type": "SlotDefinition"
+            }
+          ],
+          "@type": "AnonymousClassExpression"
+        },
+        {
+          "slot_conditions": [
+            {
+              "name": "size_of_heap_commit",
+              "required": true,
+              "@type": "SlotDefinition"
+            }
+          ],
+          "@type": "AnonymousClassExpression"
+        },
+        {
+          "slot_conditions": [
+            {
+              "name": "loader_flags_hex",
+              "required": true,
+              "@type": "SlotDefinition"
+            }
+          ],
+          "@type": "AnonymousClassExpression"
+        },
+        {
+          "slot_conditions": [
+            {
+              "name": "number_of_rva_and_sizes",
+              "required": true,
+              "@type": "SlotDefinition"
+            }
+          ],
+          "@type": "AnonymousClassExpression"
+        },
+        {
+          "slot_conditions": [
+            {
+              "name": "hashes",
+              "required": true,
+              "@type": "SlotDefinition"
+            }
+          ],
+          "@type": "AnonymousClassExpression"
+        }
+      ],
       "@type": "ClassDefinition"
     },
     {

@@ -9592,6 +9592,256 @@
         },
         "StixWindowsPeOptionalHeader": {
             "additionalProperties": false,
+            "anyOf": [
+                {
+                    "properties": {
+                        "magic_hex": {}
+                    },
+                    "required": [
+                        "magic_hex"
+                    ]
+                },
+                {
+                    "properties": {
+                        "major_linker_version": {}
+                    },
+                    "required": [
+                        "major_linker_version"
+                    ]
+                },
+                {
+                    "properties": {
+                        "minor_linker_version": {}
+                    },
+                    "required": [
+                        "minor_linker_version"
+                    ]
+                },
+                {
+                    "properties": {
+                        "size_of_code": {}
+                    },
+                    "required": [
+                        "size_of_code"
+                    ]
+                },
+                {
+                    "properties": {
+                        "size_of_initialized_data": {}
+                    },
+                    "required": [
+                        "size_of_initialized_data"
+                    ]
+                },
+                {
+                    "properties": {
+                        "size_of_uninitialized_data": {}
+                    },
+                    "required": [
+                        "size_of_uninitialized_data"
+                    ]
+                },
+                {
+                    "properties": {
+                        "address_of_entry_point": {}
+                    },
+                    "required": [
+                        "address_of_entry_point"
+                    ]
+                },
+                {
+                    "properties": {
+                        "base_of_code": {}
+                    },
+                    "required": [
+                        "base_of_code"
+                    ]
+                },
+                {
+                    "properties": {
+                        "base_of_data": {}
+                    },
+                    "required": [
+                        "base_of_data"
+                    ]
+                },
+                {
+                    "properties": {
+                        "image_base": {}
+                    },
+                    "required": [
+                        "image_base"
+                    ]
+                },
+                {
+                    "properties": {
+                        "section_alignment": {}
+                    },
+                    "required": [
+                        "section_alignment"
+                    ]
+                },
+                {
+                    "properties": {
+                        "file_alignment": {}
+                    },
+                    "required": [
+                        "file_alignment"
+                    ]
+                },
+                {
+                    "properties": {
+                        "major_os_version": {}
+                    },
+                    "required": [
+                        "major_os_version"
+                    ]
+                },
+                {
+                    "properties": {
+                        "minor_os_version": {}
+                    },
+                    "required": [
+                        "minor_os_version"
+                    ]
+                },
+                {
+                    "properties": {
+                        "major_image_version": {}
+                    },
+                    "required": [
+                        "major_image_version"
+                    ]
+                },
+                {
+                    "properties": {
+                        "minor_image_version": {}
+                    },
+                    "required": [
+                        "minor_image_version"
+                    ]
+                },
+                {
+                    "properties": {
+                        "major_subsystem_version": {}
+                    },
+                    "required": [
+                        "major_subsystem_version"
+                    ]
+                },
+                {
+                    "properties": {
+                        "minor_subsystem_version": {}
+                    },
+                    "required": [
+                        "minor_subsystem_version"
+                    ]
+                },
+                {
+                    "properties": {
+                        "win32_version_value_hex": {}
+                    },
+                    "required": [
+                        "win32_version_value_hex"
+                    ]
+                },
+                {
+                    "properties": {
+                        "size_of_image": {}
+                    },
+                    "required": [
+                        "size_of_image"
+                    ]
+                },
+                {
+                    "properties": {
+                        "size_of_headers": {}
+                    },
+                    "required": [
+                        "size_of_headers"
+                    ]
+                },
+                {
+                    "properties": {
+                        "checksum_hex": {}
+                    },
+                    "required": [
+                        "checksum_hex"
+                    ]
+                },
+                {
+                    "properties": {
+                        "subsystem_hex": {}
+                    },
+                    "required": [
+                        "subsystem_hex"
+                    ]
+                },
+                {
+                    "properties": {
+                        "dll_characteristics_hex": {}
+                    },
+                    "required": [
+                        "dll_characteristics_hex"
+                    ]
+                },
+                {
+                    "properties": {
+                        "size_of_stack_reserve": {}
+                    },
+                    "required": [
+                        "size_of_stack_reserve"
+                    ]
+                },
+                {
+                    "properties": {
+                        "size_of_stack_commit": {}
+                    },
+                    "required": [
+                        "size_of_stack_commit"
+                    ]
+                },
+                {
+                    "properties": {
+                        "size_of_heap_reserve": {}
+                    },
+                    "required": [
+                        "size_of_heap_reserve"
+                    ]
+                },
+                {
+                    "properties": {
+                        "size_of_heap_commit": {}
+                    },
+                    "required": [
+                        "size_of_heap_commit"
+                    ]
+                },
+                {
+                    "properties": {
+                        "loader_flags_hex": {}
+                    },
+                    "required": [
+                        "loader_flags_hex"
+                    ]
+                },
+                {
+                    "properties": {
+                        "number_of_rva_and_sizes": {}
+                    },
+                    "required": [
+                        "number_of_rva_and_sizes"
+                    ]
+                },
+                {
+                    "properties": {
+                        "hashes": {}
+                    },
+                    "required": [
+                        "hashes"
+                    ]
+                }
+            ],
             "description": "The optional header of a Windows PE binary.",
             "properties": {
                 "address_of_entry_point": {
