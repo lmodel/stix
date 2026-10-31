@@ -2962,7 +2962,7 @@ slots:
   contains_refs:
     description: References to other cyber-observable objects that this one contains.
     range: StixCyberObservableObject
-    pattern: ^[a-z][a-z0-9-]+[a-z0-9]--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    pattern: ^(?!(attack-pattern|campaign|course-of-action|grouping|identity|incident|indicator|infrastructure|intrusion-set|location|malware|malware-analysis|note|observed-data|opinion|report|threat-actor|tool|vulnerability|relationship|sighting|bundle|marking-definition|language-content|extension-definition)--)[a-z][a-z0-9-]+[a-z0-9]--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
     multivalued: true
     minimum_cardinality: 1
     slot_uri: stix:contains_refs
@@ -4108,9 +4108,9 @@ slots:
     minimum_cardinality: 1
     slot_uri: stix:installed_software_refs
   analysis_sco_refs:
-    description: The list of STIX objects that were captured during the analysis process.
+    description: The cyber-observable objects captured during the analysis.
     range: StixCyberObservableObject
-    pattern: ^[a-z][a-z0-9-]+[a-z0-9]--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    pattern: ^(?!(attack-pattern|campaign|course-of-action|grouping|identity|incident|indicator|infrastructure|intrusion-set|location|malware|malware-analysis|note|observed-data|opinion|report|threat-actor|tool|vulnerability|relationship|sighting|bundle|marking-definition|language-content|extension-definition)--)[a-z][a-z0-9-]+[a-z0-9]--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
     multivalued: true
     minimum_cardinality: 1
     slot_uri: stix:analysis_sco_refs
@@ -4257,9 +4257,12 @@ slots:
     maximum_value: 999999999
     slot_uri: stix:count
   sighting_of_ref:
-    description: An ID reference to the object that has been sighted.
+    description: A reference to the domain object that was sighted.
+    comments:
+    - The pattern refuses an observable, a relationship and a meta object, as STIX 2.1 does; OASIS's JSON
+      schema refuses only some of them.
     range: StixDomainObject
-    pattern: ^(?!(relationship|sighting|bundle|marking-definition|language-content)--)[a-z][a-z0-9-]+[a-z0-9]--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    pattern: ^(?!(artifact|autonomous-system|directory|domain-name|email-addr|email-message|file|ipv4-addr|ipv6-addr|mac-addr|mutex|network-traffic|process|software|url|user-account|windows-registry-key|x509-certificate|relationship|sighting|bundle|marking-definition|language-content|extension-definition)--)[a-z][a-z0-9-]+[a-z0-9]--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
     slot_uri: stix:sighting_of_ref
   observed_data_refs:
     description: A list of ID references to the Observed Data objects that contain the raw cyber data

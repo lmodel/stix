@@ -2519,7 +2519,7 @@ class StixFile(StixCyberObservableObject):
 
     @field_validator('contains_refs')
     def pattern_contains_refs(cls, v):
-        pattern=re.compile(r"^[a-z][a-z0-9-]+[a-z0-9]--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$")
+        pattern=re.compile(r"^(?!(attack-pattern|campaign|course-of-action|grouping|identity|incident|indicator|infrastructure|intrusion-set|location|malware|malware-analysis|note|observed-data|opinion|report|threat-actor|tool|vulnerability|relationship|sighting|bundle|marking-definition|language-content|extension-definition)--)[a-z][a-z0-9-]+[a-z0-9]--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$")
         if isinstance(v, list):
             for element in v:
                 if isinstance(element, str) and not pattern.search(element):
@@ -6379,7 +6379,7 @@ class StixMalwareAnalysis(StixDomainObject):
     operating_system_ref: Optional[str] = Field(default=None, description="""The operating system that was used to perform the dynamic analysis.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixMalwareAnalysis'], 'slot_uri': 'stix:operating_system_ref'} })
     installed_software_refs: Optional[list[str]] = Field(default=None, description="""Any non-standard software installed on the operating system used for the dynamic analysis of the malware instance or family.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixMalwareAnalysis'],
          'slot_uri': 'stix:installed_software_refs'} })
-    analysis_sco_refs: Optional[list[str]] = Field(default=None, description="""The list of STIX objects that were captured during the analysis process.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixMalwareAnalysis'], 'slot_uri': 'stix:analysis_sco_refs'} })
+    analysis_sco_refs: Optional[list[str]] = Field(default=None, description="""The cyber-observable objects captured during the analysis.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixMalwareAnalysis'], 'slot_uri': 'stix:analysis_sco_refs'} })
     sample_ref: Optional[str] = Field(default=None, description="""Refers to the object this analysis was performed against.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'StixFile'},
                     {'range': 'StixNetworkTraffic'},
                     {'range': 'StixArtifact'}],
@@ -6458,7 +6458,7 @@ class StixMalwareAnalysis(StixDomainObject):
 
     @field_validator('analysis_sco_refs')
     def pattern_analysis_sco_refs(cls, v):
-        pattern=re.compile(r"^[a-z][a-z0-9-]+[a-z0-9]--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$")
+        pattern=re.compile(r"^(?!(attack-pattern|campaign|course-of-action|grouping|identity|incident|indicator|infrastructure|intrusion-set|location|malware|malware-analysis|note|observed-data|opinion|report|threat-actor|tool|vulnerability|relationship|sighting|bundle|marking-definition|language-content|extension-definition)--)[a-z][a-z0-9-]+[a-z0-9]--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$")
         if isinstance(v, list):
             for element in v:
                 if isinstance(element, str) and not pattern.search(element):
@@ -7819,7 +7819,11 @@ class StixSighting(StixRelationshipObject):
                        'StixSighting'],
          'slot_uri': 'stix:last_seen'} })
     count: Optional[int] = Field(default=None, description="""This is an integer between 0 and 999,999,999 inclusive and represents the number of times the object was sighted.""", ge=0, le=999999999, json_schema_extra = { "linkml_meta": {'domain_of': ['StixSighting'], 'slot_uri': 'stix:count'} })
-    sighting_of_ref: str = Field(default=..., description="""An ID reference to the object that has been sighted.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixSighting'], 'slot_uri': 'stix:sighting_of_ref'} })
+    sighting_of_ref: str = Field(default=..., description="""A reference to the domain object that was sighted.""", json_schema_extra = { "linkml_meta": {'comments': ['The pattern refuses an observable, a relationship and a meta '
+                      "object, as STIX 2.1 does; OASIS's JSON schema refuses only some "
+                      'of them.'],
+         'domain_of': ['StixSighting'],
+         'slot_uri': 'stix:sighting_of_ref'} })
     observed_data_refs: Optional[list[str]] = Field(default=None, description="""A list of ID references to the Observed Data objects that contain the raw cyber data for this Sighting.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixSighting'], 'slot_uri': 'stix:observed_data_refs'} })
     where_sighted_refs: Optional[list[str]] = Field(default=None, description="""A list of ID references to the Identity or Location objects describing the entities or types of entities that saw the sighting.""", min_length=1, json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'StixIdentity'}, {'range': 'StixLocation'}],
          'domain_of': ['StixSighting'],
@@ -7859,7 +7863,7 @@ class StixSighting(StixRelationshipObject):
 
     @field_validator('sighting_of_ref')
     def pattern_sighting_of_ref(cls, v):
-        pattern=re.compile(r"^(?!(relationship|sighting|bundle|marking-definition|language-content)--)[a-z][a-z0-9-]+[a-z0-9]--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$")
+        pattern=re.compile(r"^(?!(artifact|autonomous-system|directory|domain-name|email-addr|email-message|file|ipv4-addr|ipv6-addr|mac-addr|mutex|network-traffic|process|software|url|user-account|windows-registry-key|x509-certificate|relationship|sighting|bundle|marking-definition|language-content|extension-definition)--)[a-z][a-z0-9-]+[a-z0-9]--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$")
         if isinstance(v, list):
             for element in v:
                 if isinstance(element, str) and not pattern.search(element):

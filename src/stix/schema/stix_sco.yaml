@@ -73,7 +73,7 @@ slots:
   contains_refs:
     description: References to other cyber-observable objects that this one contains.
     range: StixCyberObservableObject
-    pattern: ^[a-z][a-z0-9-]+[a-z0-9]--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
+    pattern: ^(?!(attack-pattern|campaign|course-of-action|grouping|identity|incident|indicator|infrastructure|intrusion-set|location|malware|malware-analysis|note|observed-data|opinion|report|threat-actor|tool|vulnerability|relationship|sighting|bundle|marking-definition|language-content|extension-definition)--)[a-z][a-z0-9-]+[a-z0-9]--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
     multivalued: true
     minimum_cardinality: 1
     slot_uri: stix:contains_refs

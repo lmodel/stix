@@ -5479,7 +5479,7 @@ slots.atime = Slot(uri=STIX.atime, name="atime", curie=STIX.curie('atime'),
 
 slots.contains_refs = Slot(uri=STIX.contains_refs, name="contains_refs", curie=STIX.curie('contains_refs'),
                    model_uri=STIX.contains_refs, domain=None, range=Optional[Union[Union[str, StixCyberObservableObjectId], list[Union[str, StixCyberObservableObjectId]]]],
-                   pattern=re.compile(r'^[a-z][a-z0-9-]+[a-z0-9]--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$'))
+                   pattern=re.compile(r'^(?!(attack-pattern|campaign|course-of-action|grouping|identity|incident|indicator|infrastructure|intrusion-set|location|malware|malware-analysis|note|observed-data|opinion|report|threat-actor|tool|vulnerability|relationship|sighting|bundle|marking-definition|language-content|extension-definition)--)[a-z][a-z0-9-]+[a-z0-9]--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$'))
 
 slots.value = Slot(uri=STIX.value, name="value", curie=STIX.curie('value'),
                    model_uri=STIX.value, domain=None, range=Optional[str])
@@ -6237,7 +6237,7 @@ slots.installed_software_refs = Slot(uri=STIX.installed_software_refs, name="ins
 
 slots.analysis_sco_refs = Slot(uri=STIX.analysis_sco_refs, name="analysis_sco_refs", curie=STIX.curie('analysis_sco_refs'),
                    model_uri=STIX.analysis_sco_refs, domain=None, range=Optional[Union[Union[str, StixCyberObservableObjectId], list[Union[str, StixCyberObservableObjectId]]]],
-                   pattern=re.compile(r'^[a-z][a-z0-9-]+[a-z0-9]--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$'))
+                   pattern=re.compile(r'^(?!(attack-pattern|campaign|course-of-action|grouping|identity|incident|indicator|infrastructure|intrusion-set|location|malware|malware-analysis|note|observed-data|opinion|report|threat-actor|tool|vulnerability|relationship|sighting|bundle|marking-definition|language-content|extension-definition)--)[a-z][a-z0-9-]+[a-z0-9]--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$'))
 
 slots.sample_ref = Slot(uri=STIX.sample_ref, name="sample_ref", curie=STIX.curie('sample_ref'),
                    model_uri=STIX.sample_ref, domain=None, range=Optional[Union[str, StixFileId, StixNetworkTrafficId, StixArtifactId]],
@@ -6311,7 +6311,7 @@ slots.count = Slot(uri=STIX.count, name="count", curie=STIX.curie('count'),
 
 slots.sighting_of_ref = Slot(uri=STIX.sighting_of_ref, name="sighting_of_ref", curie=STIX.curie('sighting_of_ref'),
                    model_uri=STIX.sighting_of_ref, domain=None, range=Optional[Union[str, StixDomainObjectId]],
-                   pattern=re.compile(r'^(?!(relationship|sighting|bundle|marking-definition|language-content)--)[a-z][a-z0-9-]+[a-z0-9]--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$'))
+                   pattern=re.compile(r'^(?!(artifact|autonomous-system|directory|domain-name|email-addr|email-message|file|ipv4-addr|ipv6-addr|mac-addr|mutex|network-traffic|process|software|url|user-account|windows-registry-key|x509-certificate|relationship|sighting|bundle|marking-definition|language-content|extension-definition)--)[a-z][a-z0-9-]+[a-z0-9]--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$'))
 
 slots.observed_data_refs = Slot(uri=STIX.observed_data_refs, name="observed_data_refs", curie=STIX.curie('observed_data_refs'),
                    model_uri=STIX.observed_data_refs, domain=None, range=Optional[Union[Union[str, StixObservedDataId], list[Union[str, StixObservedDataId]]]],
@@ -6935,4 +6935,4 @@ slots.StixSighting_type = Slot(uri=STIX.type, name="StixSighting_type", curie=ST
 
 slots.StixSighting_sighting_of_ref = Slot(uri=STIX.sighting_of_ref, name="StixSighting_sighting_of_ref", curie=STIX.curie('sighting_of_ref'),
                    model_uri=STIX.StixSighting_sighting_of_ref, domain=StixSighting, range=Union[str, StixDomainObjectId],
-                   pattern=re.compile(r'^(?!(relationship|sighting|bundle|marking-definition|language-content)--)[a-z][a-z0-9-]+[a-z0-9]--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$'))
+                   pattern=re.compile(r'^(?!(artifact|autonomous-system|directory|domain-name|email-addr|email-message|file|ipv4-addr|ipv6-addr|mac-addr|mutex|network-traffic|process|software|url|user-account|windows-registry-key|x509-certificate|relationship|sighting|bundle|marking-definition|language-content|extension-definition)--)[a-z][a-z0-9-]+[a-z0-9]--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$'))

@@ -898,7 +898,7 @@
 --     * Slot: first_seen Description: The time at which the object was first seen.
 --     * Slot: last_seen Description: The time at which the object was last seen.
 --     * Slot: count Description: This is an integer between 0 and 999,999,999 inclusive and represents the number of times the object was sighted.
---     * Slot: sighting_of_ref Description: An ID reference to the object that has been sighted.
+--     * Slot: sighting_of_ref Description: A reference to the domain object that was sighted.
 --     * Slot: summary Description: The summary property indicates whether the Sighting should be considered summary data.
 --     * Slot: created_by_ref Description: A reference to the identity of the object's creator.
 --     * Slot: created Description: The time at which the object, or its first version, was created.
@@ -1200,7 +1200,7 @@
 --     * Slot: installed_software_refs_id Description: Any non-standard software installed on the operating system used for the dynamic analysis of the malware instance or family.
 -- # Class: StixMalwareAnalysis_analysis_sco_refs
 --     * Slot: StixMalwareAnalysis_id Description: Autocreated FK slot
---     * Slot: analysis_sco_refs_id Description: The list of STIX objects that were captured during the analysis process.
+--     * Slot: analysis_sco_refs_id Description: The cyber-observable objects captured during the analysis.
 -- # Class: StixMalwareAnalysis_labels
 --     * Slot: StixMalwareAnalysis_id Description: Autocreated FK slot
 --     * Slot: labels Description: The labels property specifies a set of terms used to describe this object.
@@ -2491,8 +2491,8 @@ CREATE TABLE "StixIdentity_roles" (
 	PRIMARY KEY ("StixIdentity_id", roles),
 	FOREIGN KEY("StixIdentity_id") REFERENCES "StixIdentity" (id)
 );
-CREATE INDEX "ix_StixIdentity_roles_StixIdentity_id" ON "StixIdentity_roles" ("StixIdentity_id");
 CREATE INDEX "ix_StixIdentity_roles_roles" ON "StixIdentity_roles" (roles);
+CREATE INDEX "ix_StixIdentity_roles_StixIdentity_id" ON "StixIdentity_roles" ("StixIdentity_id");
 
 CREATE TABLE "StixIdentity_sectors" (
 	"StixIdentity_id" TEXT,
@@ -2509,8 +2509,8 @@ CREATE TABLE "StixIdentity_labels" (
 	PRIMARY KEY ("StixIdentity_id", labels),
 	FOREIGN KEY("StixIdentity_id") REFERENCES "StixIdentity" (id)
 );
-CREATE INDEX "ix_StixIdentity_labels_StixIdentity_id" ON "StixIdentity_labels" ("StixIdentity_id");
 CREATE INDEX "ix_StixIdentity_labels_labels" ON "StixIdentity_labels" (labels);
+CREATE INDEX "ix_StixIdentity_labels_StixIdentity_id" ON "StixIdentity_labels" ("StixIdentity_id");
 
 CREATE TABLE "StixDirectory_contains_refs" (
 	"StixDirectory_id" TEXT,
@@ -2529,8 +2529,8 @@ CREATE TABLE "StixDomainName_resolves_to_refs" (
 	FOREIGN KEY("StixDomainName_id") REFERENCES "StixDomainName" (id),
 	FOREIGN KEY(resolves_to_refs_id) REFERENCES "StixCyberObservableObject" (id)
 );
-CREATE INDEX "ix_StixDomainName_resolves_to_refs_StixDomainName_id" ON "StixDomainName_resolves_to_refs" ("StixDomainName_id");
 CREATE INDEX "ix_StixDomainName_resolves_to_refs_resolves_to_refs_id" ON "StixDomainName_resolves_to_refs" (resolves_to_refs_id);
+CREATE INDEX "ix_StixDomainName_resolves_to_refs_StixDomainName_id" ON "StixDomainName_resolves_to_refs" ("StixDomainName_id");
 
 CREATE TABLE "StixIpv4Address_resolves_to_refs" (
 	"StixIpv4Address_id" TEXT,
@@ -2549,8 +2549,8 @@ CREATE TABLE "StixIpv4Address_belongs_to_refs" (
 	FOREIGN KEY("StixIpv4Address_id") REFERENCES "StixIpv4Address" (id),
 	FOREIGN KEY(belongs_to_refs_id) REFERENCES "StixAutonomousSystem" (id)
 );
-CREATE INDEX "ix_StixIpv4Address_belongs_to_refs_belongs_to_refs_id" ON "StixIpv4Address_belongs_to_refs" (belongs_to_refs_id);
 CREATE INDEX "ix_StixIpv4Address_belongs_to_refs_StixIpv4Address_id" ON "StixIpv4Address_belongs_to_refs" ("StixIpv4Address_id");
+CREATE INDEX "ix_StixIpv4Address_belongs_to_refs_belongs_to_refs_id" ON "StixIpv4Address_belongs_to_refs" (belongs_to_refs_id);
 
 CREATE TABLE "StixIpv6Address_resolves_to_refs" (
 	"StixIpv6Address_id" TEXT,
@@ -2722,8 +2722,8 @@ CREATE TABLE "StixCommonObject_labels" (
 	PRIMARY KEY ("StixCommonObject_id", labels),
 	FOREIGN KEY("StixCommonObject_id") REFERENCES "StixCommonObject" (id)
 );
-CREATE INDEX "ix_StixCommonObject_labels_labels" ON "StixCommonObject_labels" (labels);
 CREATE INDEX "ix_StixCommonObject_labels_StixCommonObject_id" ON "StixCommonObject_labels" ("StixCommonObject_id");
+CREATE INDEX "ix_StixCommonObject_labels_labels" ON "StixCommonObject_labels" (labels);
 
 CREATE TABLE "StixCommonObject_object_marking_refs" (
 	"StixCommonObject_id" TEXT,
@@ -2741,8 +2741,8 @@ CREATE TABLE "StixDomainObject_labels" (
 	PRIMARY KEY ("StixDomainObject_id", labels),
 	FOREIGN KEY("StixDomainObject_id") REFERENCES "StixDomainObject" (id)
 );
-CREATE INDEX "ix_StixDomainObject_labels_StixDomainObject_id" ON "StixDomainObject_labels" ("StixDomainObject_id");
 CREATE INDEX "ix_StixDomainObject_labels_labels" ON "StixDomainObject_labels" (labels);
+CREATE INDEX "ix_StixDomainObject_labels_StixDomainObject_id" ON "StixDomainObject_labels" ("StixDomainObject_id");
 
 CREATE TABLE "StixDomainObject_object_marking_refs" (
 	"StixDomainObject_id" TEXT,
@@ -2760,8 +2760,8 @@ CREATE TABLE "StixRelationshipObject_labels" (
 	PRIMARY KEY ("StixRelationshipObject_id", labels),
 	FOREIGN KEY("StixRelationshipObject_id") REFERENCES "StixRelationshipObject" (id)
 );
-CREATE INDEX "ix_StixRelationshipObject_labels_StixRelationshipObject_id" ON "StixRelationshipObject_labels" ("StixRelationshipObject_id");
 CREATE INDEX "ix_StixRelationshipObject_labels_labels" ON "StixRelationshipObject_labels" (labels);
+CREATE INDEX "ix_StixRelationshipObject_labels_StixRelationshipObject_id" ON "StixRelationshipObject_labels" ("StixRelationshipObject_id");
 
 CREATE TABLE "StixRelationshipObject_object_marking_refs" (
 	"StixRelationshipObject_id" TEXT,
@@ -2828,8 +2828,8 @@ CREATE TABLE "StixExtensionDefinition_extension_types" (
 	PRIMARY KEY ("StixExtensionDefinition_id", extension_types),
 	FOREIGN KEY("StixExtensionDefinition_id") REFERENCES "StixExtensionDefinition" (id)
 );
-CREATE INDEX "ix_StixExtensionDefinition_extension_types_extension_types" ON "StixExtensionDefinition_extension_types" (extension_types);
 CREATE INDEX "ix_StixExtensionDefinition_extension_types_StixExtensionDefinition_id" ON "StixExtensionDefinition_extension_types" ("StixExtensionDefinition_id");
+CREATE INDEX "ix_StixExtensionDefinition_extension_types_extension_types" ON "StixExtensionDefinition_extension_types" (extension_types);
 
 CREATE TABLE "StixExtensionDefinition_extension_properties" (
 	"StixExtensionDefinition_id" TEXT,
@@ -2837,8 +2837,8 @@ CREATE TABLE "StixExtensionDefinition_extension_properties" (
 	PRIMARY KEY ("StixExtensionDefinition_id", extension_properties),
 	FOREIGN KEY("StixExtensionDefinition_id") REFERENCES "StixExtensionDefinition" (id)
 );
-CREATE INDEX "ix_StixExtensionDefinition_extension_properties_StixExtensionDefinition_id" ON "StixExtensionDefinition_extension_properties" ("StixExtensionDefinition_id");
 CREATE INDEX "ix_StixExtensionDefinition_extension_properties_extension_properties" ON "StixExtensionDefinition_extension_properties" (extension_properties);
+CREATE INDEX "ix_StixExtensionDefinition_extension_properties_StixExtensionDefinition_id" ON "StixExtensionDefinition_extension_properties" ("StixExtensionDefinition_id");
 
 CREATE TABLE "StixExtensionDefinition_labels" (
 	"StixExtensionDefinition_id" TEXT,
@@ -2876,8 +2876,8 @@ CREATE TABLE "StixAutonomousSystem_object_marking_refs" (
 	FOREIGN KEY("StixAutonomousSystem_id") REFERENCES "StixAutonomousSystem" (id),
 	FOREIGN KEY(object_marking_refs_id) REFERENCES "StixMarkingDefinition" (id)
 );
-CREATE INDEX "ix_StixAutonomousSystem_object_marking_refs_StixAutonomousSystem_id" ON "StixAutonomousSystem_object_marking_refs" ("StixAutonomousSystem_id");
 CREATE INDEX "ix_StixAutonomousSystem_object_marking_refs_object_marking_refs_id" ON "StixAutonomousSystem_object_marking_refs" (object_marking_refs_id);
+CREATE INDEX "ix_StixAutonomousSystem_object_marking_refs_StixAutonomousSystem_id" ON "StixAutonomousSystem_object_marking_refs" ("StixAutonomousSystem_id");
 
 CREATE TABLE "StixDirectory_object_marking_refs" (
 	"StixDirectory_id" TEXT,
@@ -2886,8 +2886,8 @@ CREATE TABLE "StixDirectory_object_marking_refs" (
 	FOREIGN KEY("StixDirectory_id") REFERENCES "StixDirectory" (id),
 	FOREIGN KEY(object_marking_refs_id) REFERENCES "StixMarkingDefinition" (id)
 );
-CREATE INDEX "ix_StixDirectory_object_marking_refs_object_marking_refs_id" ON "StixDirectory_object_marking_refs" (object_marking_refs_id);
 CREATE INDEX "ix_StixDirectory_object_marking_refs_StixDirectory_id" ON "StixDirectory_object_marking_refs" ("StixDirectory_id");
+CREATE INDEX "ix_StixDirectory_object_marking_refs_object_marking_refs_id" ON "StixDirectory_object_marking_refs" (object_marking_refs_id);
 
 CREATE TABLE "StixDomainName_object_marking_refs" (
 	"StixDomainName_id" TEXT,
@@ -2896,8 +2896,8 @@ CREATE TABLE "StixDomainName_object_marking_refs" (
 	FOREIGN KEY("StixDomainName_id") REFERENCES "StixDomainName" (id),
 	FOREIGN KEY(object_marking_refs_id) REFERENCES "StixMarkingDefinition" (id)
 );
-CREATE INDEX "ix_StixDomainName_object_marking_refs_object_marking_refs_id" ON "StixDomainName_object_marking_refs" (object_marking_refs_id);
 CREATE INDEX "ix_StixDomainName_object_marking_refs_StixDomainName_id" ON "StixDomainName_object_marking_refs" ("StixDomainName_id");
+CREATE INDEX "ix_StixDomainName_object_marking_refs_object_marking_refs_id" ON "StixDomainName_object_marking_refs" (object_marking_refs_id);
 
 CREATE TABLE "StixEmailAddress_object_marking_refs" (
 	"StixEmailAddress_id" TEXT,
@@ -2916,8 +2916,8 @@ CREATE TABLE "StixFile_contains_refs" (
 	FOREIGN KEY("StixFile_id") REFERENCES "StixFile" (id),
 	FOREIGN KEY(contains_refs_id) REFERENCES "StixCyberObservableObject" (id)
 );
-CREATE INDEX "ix_StixFile_contains_refs_contains_refs_id" ON "StixFile_contains_refs" (contains_refs_id);
 CREATE INDEX "ix_StixFile_contains_refs_StixFile_id" ON "StixFile_contains_refs" ("StixFile_id");
+CREATE INDEX "ix_StixFile_contains_refs_contains_refs_id" ON "StixFile_contains_refs" (contains_refs_id);
 
 CREATE TABLE "StixFile_object_marking_refs" (
 	"StixFile_id" TEXT,
@@ -2926,8 +2926,8 @@ CREATE TABLE "StixFile_object_marking_refs" (
 	FOREIGN KEY("StixFile_id") REFERENCES "StixFile" (id),
 	FOREIGN KEY(object_marking_refs_id) REFERENCES "StixMarkingDefinition" (id)
 );
-CREATE INDEX "ix_StixFile_object_marking_refs_object_marking_refs_id" ON "StixFile_object_marking_refs" (object_marking_refs_id);
 CREATE INDEX "ix_StixFile_object_marking_refs_StixFile_id" ON "StixFile_object_marking_refs" ("StixFile_id");
+CREATE INDEX "ix_StixFile_object_marking_refs_object_marking_refs_id" ON "StixFile_object_marking_refs" (object_marking_refs_id);
 
 CREATE TABLE "StixIpv4Address_object_marking_refs" (
 	"StixIpv4Address_id" TEXT,
@@ -3298,8 +3298,8 @@ CREATE TABLE "StixLocation_labels" (
 	PRIMARY KEY ("StixLocation_id", labels),
 	FOREIGN KEY("StixLocation_id") REFERENCES "StixLocation" (id)
 );
-CREATE INDEX "ix_StixLocation_labels_StixLocation_id" ON "StixLocation_labels" ("StixLocation_id");
 CREATE INDEX "ix_StixLocation_labels_labels" ON "StixLocation_labels" (labels);
+CREATE INDEX "ix_StixLocation_labels_StixLocation_id" ON "StixLocation_labels" ("StixLocation_id");
 
 CREATE TABLE "StixLocation_object_marking_refs" (
 	"StixLocation_id" TEXT,
@@ -3308,8 +3308,8 @@ CREATE TABLE "StixLocation_object_marking_refs" (
 	FOREIGN KEY("StixLocation_id") REFERENCES "StixLocation" (id),
 	FOREIGN KEY(object_marking_refs_id) REFERENCES "StixMarkingDefinition" (id)
 );
-CREATE INDEX "ix_StixLocation_object_marking_refs_object_marking_refs_id" ON "StixLocation_object_marking_refs" (object_marking_refs_id);
 CREATE INDEX "ix_StixLocation_object_marking_refs_StixLocation_id" ON "StixLocation_object_marking_refs" ("StixLocation_id");
+CREATE INDEX "ix_StixLocation_object_marking_refs_object_marking_refs_id" ON "StixLocation_object_marking_refs" (object_marking_refs_id);
 
 CREATE TABLE "StixMalware_aliases" (
 	"StixMalware_id" TEXT,
@@ -3440,8 +3440,8 @@ CREATE TABLE "StixMalwareAnalysis_object_marking_refs" (
 	FOREIGN KEY("StixMalwareAnalysis_id") REFERENCES "StixMalwareAnalysis" (id),
 	FOREIGN KEY(object_marking_refs_id) REFERENCES "StixMarkingDefinition" (id)
 );
-CREATE INDEX "ix_StixMalwareAnalysis_object_marking_refs_object_marking_refs_id" ON "StixMalwareAnalysis_object_marking_refs" (object_marking_refs_id);
 CREATE INDEX "ix_StixMalwareAnalysis_object_marking_refs_StixMalwareAnalysis_id" ON "StixMalwareAnalysis_object_marking_refs" ("StixMalwareAnalysis_id");
+CREATE INDEX "ix_StixMalwareAnalysis_object_marking_refs_object_marking_refs_id" ON "StixMalwareAnalysis_object_marking_refs" (object_marking_refs_id);
 
 CREATE TABLE "StixNote_authors" (
 	"StixNote_id" TEXT,
@@ -3449,8 +3449,8 @@ CREATE TABLE "StixNote_authors" (
 	PRIMARY KEY ("StixNote_id", authors),
 	FOREIGN KEY("StixNote_id") REFERENCES "StixNote" (id)
 );
-CREATE INDEX "ix_StixNote_authors_StixNote_id" ON "StixNote_authors" ("StixNote_id");
 CREATE INDEX "ix_StixNote_authors_authors" ON "StixNote_authors" (authors);
+CREATE INDEX "ix_StixNote_authors_StixNote_id" ON "StixNote_authors" ("StixNote_id");
 
 CREATE TABLE "StixNote_object_refs" (
 	"StixNote_id" TEXT,
@@ -3933,8 +3933,8 @@ CREATE TABLE "StixEmailMessage_cc_refs" (
 	FOREIGN KEY("StixEmailMessage_id") REFERENCES "StixEmailMessage" (id),
 	FOREIGN KEY(cc_refs_id) REFERENCES "StixEmailAddress" (id)
 );
-CREATE INDEX "ix_StixEmailMessage_cc_refs_StixEmailMessage_id" ON "StixEmailMessage_cc_refs" ("StixEmailMessage_id");
 CREATE INDEX "ix_StixEmailMessage_cc_refs_cc_refs_id" ON "StixEmailMessage_cc_refs" (cc_refs_id);
+CREATE INDEX "ix_StixEmailMessage_cc_refs_StixEmailMessage_id" ON "StixEmailMessage_cc_refs" ("StixEmailMessage_id");
 
 CREATE TABLE "StixEmailMessage_bcc_refs" (
 	"StixEmailMessage_id" TEXT,
@@ -3943,8 +3943,8 @@ CREATE TABLE "StixEmailMessage_bcc_refs" (
 	FOREIGN KEY("StixEmailMessage_id") REFERENCES "StixEmailMessage" (id),
 	FOREIGN KEY(bcc_refs_id) REFERENCES "StixEmailAddress" (id)
 );
-CREATE INDEX "ix_StixEmailMessage_bcc_refs_bcc_refs_id" ON "StixEmailMessage_bcc_refs" (bcc_refs_id);
 CREATE INDEX "ix_StixEmailMessage_bcc_refs_StixEmailMessage_id" ON "StixEmailMessage_bcc_refs" ("StixEmailMessage_id");
+CREATE INDEX "ix_StixEmailMessage_bcc_refs_bcc_refs_id" ON "StixEmailMessage_bcc_refs" (bcc_refs_id);
 
 CREATE TABLE "StixEmailMessage_received_lines" (
 	"StixEmailMessage_id" TEXT,
@@ -3952,8 +3952,8 @@ CREATE TABLE "StixEmailMessage_received_lines" (
 	PRIMARY KEY ("StixEmailMessage_id", received_lines),
 	FOREIGN KEY("StixEmailMessage_id") REFERENCES "StixEmailMessage" (id)
 );
-CREATE INDEX "ix_StixEmailMessage_received_lines_received_lines" ON "StixEmailMessage_received_lines" (received_lines);
 CREATE INDEX "ix_StixEmailMessage_received_lines_StixEmailMessage_id" ON "StixEmailMessage_received_lines" ("StixEmailMessage_id");
+CREATE INDEX "ix_StixEmailMessage_received_lines_received_lines" ON "StixEmailMessage_received_lines" (received_lines);
 
 CREATE TABLE "StixEmailMessage_object_marking_refs" (
 	"StixEmailMessage_id" TEXT,
@@ -3962,8 +3962,8 @@ CREATE TABLE "StixEmailMessage_object_marking_refs" (
 	FOREIGN KEY("StixEmailMessage_id") REFERENCES "StixEmailMessage" (id),
 	FOREIGN KEY(object_marking_refs_id) REFERENCES "StixMarkingDefinition" (id)
 );
-CREATE INDEX "ix_StixEmailMessage_object_marking_refs_StixEmailMessage_id" ON "StixEmailMessage_object_marking_refs" ("StixEmailMessage_id");
 CREATE INDEX "ix_StixEmailMessage_object_marking_refs_object_marking_refs_id" ON "StixEmailMessage_object_marking_refs" (object_marking_refs_id);
+CREATE INDEX "ix_StixEmailMessage_object_marking_refs_StixEmailMessage_id" ON "StixEmailMessage_object_marking_refs" ("StixEmailMessage_id");
 
 CREATE TABLE "StixProcess_opened_connection_refs" (
 	"StixProcess_id" TEXT,
@@ -4040,5 +4040,5 @@ CREATE TABLE "StixGranularMarking_selectors" (
 	PRIMARY KEY ("StixGranularMarking_id", selectors),
 	FOREIGN KEY("StixGranularMarking_id") REFERENCES "StixGranularMarking" (id)
 );
-CREATE INDEX "ix_StixGranularMarking_selectors_selectors" ON "StixGranularMarking_selectors" (selectors);
 CREATE INDEX "ix_StixGranularMarking_selectors_StixGranularMarking_id" ON "StixGranularMarking_selectors" ("StixGranularMarking_id");
+CREATE INDEX "ix_StixGranularMarking_selectors_selectors" ON "StixGranularMarking_selectors" (selectors);

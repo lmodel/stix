@@ -1857,7 +1857,7 @@ export interface StixMalwareAnalysis extends StixDomainObject {
     operating_system_ref?: StixSoftwareId,
     /** Any non-standard software installed on the operating system used for the dynamic analysis of the malware instance or family. */
     installed_software_refs?: StixSoftwareId[],
-    /** The list of STIX objects that were captured during the analysis process. */
+    /** The cyber-observable objects captured during the analysis. */
     analysis_sco_refs?: StixCyberObservableObjectId[],
     /** Refers to the object this analysis was performed against. */
     sample_ref?: StixCyberObservableObjectId,
@@ -2029,7 +2029,7 @@ export interface StixSighting extends StixRelationshipObject {
     last_seen?: string,
     /** This is an integer between 0 and 999,999,999 inclusive and represents the number of times the object was sighted. */
     count?: number,
-    /** An ID reference to the object that has been sighted. */
+    /** A reference to the domain object that was sighted. */
     sighting_of_ref: StixDomainObjectId,
     /** A list of ID references to the Observed Data objects that contain the raw cyber data for this Sighting. */
     observed_data_refs?: StixObservedDataId[],
