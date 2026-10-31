@@ -108,7 +108,7 @@ stix:StixArchiveExtension a owl:Class ;
 stix:StixArtifact a owl:Class ;
 	rdfs:label "StixArtifact" ;
 	rdfs:subClassOf stix:StixCyberObservableObject , _:c14n1062 , _:c14n1082 , _:c14n1140 , _:c14n1243 , _:c14n126 , _:c14n1429 , _:c14n1474 , _:c14n1557 , _:c14n1625 , _:c14n1675 , _:c14n1681 , _:c14n1844 , _:c14n185 , _:c14n190 , _:c14n1901 , _:c14n201 , _:c14n2127 , _:c14n2211 , _:c14n2236 , _:c14n480 , _:c14n485 , _:c14n757 , _:c14n836 , _:c14n862 , _:c14n906 ;
-	skos:definition "The Artifact Object permits capturing an array of bytes (8-bits), as a base64-encoded string string, or linking to a file-like payload." ;
+	skos:definition "An array of bytes, carried as base64 in payload_bin, or a link to a file-like payload." ;
 	skos:inScheme stix:stix_sco ;
 	stix:stix_type "artifact" .
 stix:StixAttackMotivation\#accidental a owl:Class ;
@@ -415,7 +415,7 @@ stix:StixIdentity a owl:Class ;
 	rdfs:label "StixIdentity" ;
 	rdfs:subClassOf stix:StixDomainObject , _:c14n1124 , _:c14n117 , _:c14n121 , _:c14n1274 , _:c14n1316 , _:c14n1370 , _:c14n1373 , _:c14n1486 , _:c14n1516 , _:c14n1581 , _:c14n176 , _:c14n1778 , _:c14n1933 , _:c14n1934 , _:c14n204 , _:c14n2078 , _:c14n380 , _:c14n459 , _:c14n599 , _:c14n652 , _:c14n701 , _:c14n962 ;
 	skos:closeMatch <https://ontology.unifiedcyberontology.org/uco/identity/Identity> ;
-	skos:definition "Identities can represent actual individuals, organizations, or groups (e.g., ACME, Inc.) as well as classes of individuals, organizations, or groups." ;
+	skos:definition "An individual, organization or group, such as ACME, Inc., or a class of them." ;
 	skos:inScheme stix:stix_core ;
 	stix:stix_type "identity" .
 stix:StixIdentityClass\#class a owl:Class ;
@@ -764,7 +764,7 @@ stix:StixLocation a owl:Class ;
 	rdfs:label "StixLocation" ;
 	rdfs:subClassOf stix:StixDomainObject , _:c14n0 , _:c14n1006 , _:c14n1032 , _:c14n1208 , _:c14n1238 , _:c14n1252 , _:c14n1288 , _:c14n1385 , _:c14n1505 , _:c14n152 , _:c14n1552 , _:c14n1579 , _:c14n1649 , _:c14n1678 , _:c14n1754 , _:c14n1785 , _:c14n181 , _:c14n1810 , _:c14n1890 , _:c14n2004 , _:c14n2109 , _:c14n229 , _:c14n301 , _:c14n318 , _:c14n420 , _:c14n473 , _:c14n498 , _:c14n516 , _:c14n619 , _:c14n629 , _:c14n638 , _:c14n678 , _:c14n691 , _:c14n704 , _:c14n717 , _:c14n743 , _:c14n801 , _:c14n86 , _:c14n930 , _:c14n992 ;
 	skos:closeMatch <https://ontology.unifiedcyberontology.org/uco/location/Location> ;
-	skos:definition "A Location represents a geographic location. The location may be described as any, some or all of the following: region (e.g., North America), civic address (e.g. New York, US), latitude and longitude." ;
+	skos:definition "A geographic location, given as a region, a civic address, a latitude and longitude, or any mix of them." ;
 	skos:inScheme stix:stix_sdo ;
 	stix:stix_type "location" .
 stix:StixMacAddress a owl:Class ;
@@ -777,7 +777,7 @@ stix:StixMacAddress a owl:Class ;
 stix:StixMalware a owl:Class ;
 	rdfs:label "StixMalware" ;
 	rdfs:subClassOf stix:StixDomainObject , _:c14n1030 , _:c14n1044 , _:c14n1128 , _:c14n1138 , _:c14n1191 , _:c14n1206 , _:c14n1327 , _:c14n1352 , _:c14n1525 , _:c14n1597 , _:c14n1767 , _:c14n1797 , _:c14n186 , _:c14n2090 , _:c14n2096 , _:c14n2110 , _:c14n213 , _:c14n219 , _:c14n289 , _:c14n329 , _:c14n333 , _:c14n351 , _:c14n406 , _:c14n511 , _:c14n530 , _:c14n643 , _:c14n664 , _:c14n680 , _:c14n7 , _:c14n728 , _:c14n742 , _:c14n785 , _:c14n806 , _:c14n819 , _:c14n821 , _:c14n826 , _:c14n987 ;
-	skos:definition "Malware is a type of TTP that is also known as malicious code and malicious software, refers to a program that is inserted into a system, usually covertly, with the intent of compromising the confidentiality, integrity, or availability of the victim's data, applications, or operating system (OS) or of otherwise annoying or disrupting the victim." ;
+	skos:definition "Malicious code: a program inserted into a system, usually covertly, to compromise its data, applications or operating system, or to disrupt its owner." ;
 	skos:inScheme stix:stix_sdo ;
 	stix:stix_type "malware" .
 stix:StixMalwareAnalysis a owl:Class ;
@@ -1376,7 +1376,7 @@ stix:StixReportType a owl:Class ;
 stix:StixSighting a owl:Class ;
 	rdfs:label "StixSighting" ;
 	rdfs:subClassOf stix:StixRelationshipObject , _:c14n1014 , _:c14n1079 , _:c14n1129 , _:c14n1177 , _:c14n1305 , _:c14n1354 , _:c14n1387 , _:c14n1433 , _:c14n1613 , _:c14n1684 , _:c14n1752 , _:c14n1898 , _:c14n1899 , _:c14n1947 , _:c14n1953 , _:c14n2115 , _:c14n248 , _:c14n311 , _:c14n358 , _:c14n360 , _:c14n37 , _:c14n552 , _:c14n571 , _:c14n63 , _:c14n718 , _:c14n832 , _:c14n909 , _:c14n997 ;
-	skos:definition "A Sighting denotes the belief that something in CTI (e.g., an indicator, malware, tool, threat actor, etc.) was seen." ;
+	skos:definition "The belief that something in cyber threat intelligence, such as an indicator, malware or a threat actor, was seen." ;
 	skos:inScheme stix:stix_sro ;
 	stix:stix_type "sighting" .
 stix:StixSocketExtension a owl:Class ;
@@ -1596,7 +1596,7 @@ stix:StixUnixAccountExtension a owl:Class ;
 	rdfs:label "StixUnixAccountExtension" ;
 	rdfs:subClassOf _:c14n1269 , _:c14n1403 , _:c14n170 , _:c14n1786 , _:c14n2032 , _:c14n2237 , _:c14n267 , _:c14n484 , _:c14n692 , _:c14n796 , _:c14n877 , _:c14n903 ;
 	skos:closeMatch <https://ontology.unifiedcyberontology.org/uco/observable/UNIXAccountFacet> ;
-	skos:definition "The User Account Object defines the following extensions. In addition to these, producers MAY create their own." ;
+	skos:definition "The UNIX account extension of a user account: its group, its other groups, its home directory and its shell." ;
 	skos:inScheme stix:stix_sco ;
 	stix:stix_extension_name "unix-account-ext" .
 stix:StixUrl a owl:Class ;
@@ -1872,7 +1872,7 @@ stix:account_login a owl:DatatypeProperty ;
 stix:account_type a owl:DatatypeProperty ;
 	rdfs:label "account_type" ;
 	rdfs:range _:c14n1971 ;
-	skos:definition "Specifies the type of the account. This is an open vocabulary and values SHOULD come from the account-type-ov vocabulary." ;
+	skos:definition "The type of the account, such as unix or ldap." ;
 	skos:inScheme stix:stix_sco .
 stix:additional_header_fields a owl:ObjectProperty ;
 	rdfs:label "additional_header_fields" ;
@@ -1928,7 +1928,7 @@ stix:analysis_started a owl:DatatypeProperty ;
 stix:architecture_execution_envs a owl:DatatypeProperty ;
 	rdfs:label "architecture_execution_envs" ;
 	rdfs:range _:c14n1976 ;
-	skos:definition "The processor architectures (e.g., x86, ARM, etc.) that the malware instance or family is executable on. Open Vocab - processor-architecture-os." ;
+	skos:definition "The processor architectures, such as x86 or ARM, that the malware runs on." ;
 	skos:inScheme stix:stix_sdo .
 stix:aslr_enabled a owl:DatatypeProperty ;
 	rdfs:label "aslr_enabled" ;
@@ -1946,7 +1946,7 @@ stix:authority_key_identifier a owl:DatatypeProperty ;
 	skos:inScheme stix:stix_sco .
 stix:authors a owl:DatatypeProperty ;
 	rdfs:label "authors" ;
-	skos:definition "The name of the author(s) of this note (e.g., the analyst(s) that created it)." ;
+	skos:definition "The names of the note's authors, such as the analysts who wrote it." ;
 	skos:inScheme stix:stix_sdo .
 stix:base_of_code a owl:DatatypeProperty ;
 	rdfs:label "base_of_code" ;
@@ -1989,8 +1989,9 @@ stix:body a owl:DatatypeProperty ;
 stix:body_multipart a owl:ObjectProperty ;
 	rdfs:label "body_multipart" ;
 	rdfs:range stix:StixMimePart ;
-	skos:definition "Specifies a list of the MIME parts that make up the email body. This property MAY only be used if is_multipart is true." ;
-	skos:inScheme stix:stix_sco .
+	skos:definition "The MIME parts that make up a multipart email body." ;
+	skos:inScheme stix:stix_sco ;
+	skos:note "Present only when is_multipart is true." .
 stix:body_raw_ref a owl:ObjectProperty ;
 	rdfs:label "body_raw_ref" ;
 	rdfs:range _:c14n2253 ;
@@ -2004,7 +2005,7 @@ stix:can_escalate_privs a owl:DatatypeProperty ;
 stix:capabilities a owl:DatatypeProperty ;
 	rdfs:label "capabilities" ;
 	rdfs:range _:c14n679 ;
-	skos:definition "Specifies any capabilities identified for the malware instance or family. Open Vocab - malware-capabilities-ov." ;
+	skos:definition "The capabilities identified in the malware instance or family." ;
 	skos:inScheme stix:stix_sdo .
 stix:cc_refs a owl:ObjectProperty ;
 	rdfs:label "cc_refs" ;
@@ -2100,8 +2101,9 @@ stix:country a owl:DatatypeProperty ;
 stix:cpe a owl:DatatypeProperty ;
 	rdfs:label "cpe" ;
 	rdfs:range _:c14n521 ;
-	skos:definition "Specifies the Common Platform Enumeration (CPE) entry for the software, if available. The value for this property MUST be a CPE v2.3 entry from the official NVD CPE Dictionary." ;
-	skos:inScheme stix:stix_sco .
+	skos:definition "The Common Platform Enumeration (CPE) 2.3 name of the software, if it has one." ;
+	skos:inScheme stix:stix_sco ;
+	skos:note "STIX asks for an entry of the NVD CPE Dictionary." .
 stix:created a owl:DatatypeProperty ;
 	rdfs:label "created" ;
 	rdfs:range xsd:dateTime ;
@@ -2126,8 +2128,9 @@ stix:creator_user_ref a owl:ObjectProperty ;
 	skos:inScheme stix:stix_sco .
 stix:credential a owl:DatatypeProperty ;
 	rdfs:label "credential" ;
-	skos:definition "Specifies a cleartext credential. This is only intended to be used in capturing metadata from malware analysis (e.g., a hard-coded domain administrator password that the malware attempts to use for lateral movement) and SHOULD NOT be used for sharing of PII." ;
-	skos:inScheme stix:stix_sco .
+	skos:definition "A cleartext credential, such as a hard-coded password that malware tries for lateral movement." ;
+	skos:inScheme stix:stix_sco ;
+	skos:note "Meant for metadata from malware analysis, not for sharing personal information." .
 stix:credential_last_changed a owl:DatatypeProperty ;
 	rdfs:label "credential_last_changed" ;
 	rdfs:range xsd:dateTime ;
@@ -2227,7 +2230,7 @@ stix:dst_payload_ref a owl:ObjectProperty ;
 stix:dst_port a owl:DatatypeProperty ;
 	rdfs:label "dst_port" ;
 	rdfs:range _:c14n1229 ;
-	skos:definition "Specifies the destination port used in the network traffic, as an integer. The port value MUST be in the range of 0 - 65535." ;
+	skos:definition "The destination port of the traffic." ;
 	skos:inScheme stix:stix_sco .
 stix:dst_ref a owl:ObjectProperty ;
 	rdfs:label "dst_ref" ;
@@ -2392,7 +2395,7 @@ stix:id a owl:DatatypeProperty ;
 stix:identity_class a owl:DatatypeProperty ;
 	rdfs:label "identity_class" ;
 	rdfs:range _:c14n1900 ;
-	skos:definition "The type of entity that this Identity describes, e.g., an individual or organization. Open Vocab - identity-class-ov." ;
+	skos:definition "The kind of entity the identity describes, such as an individual or an organization." ;
 	skos:inScheme stix:stix_core .
 stix:image_base a owl:DatatypeProperty ;
 	rdfs:label "image_base" ;
@@ -2421,17 +2424,17 @@ stix:imphash a owl:DatatypeProperty ;
 stix:implementation_languages a owl:DatatypeProperty ;
 	rdfs:label "implementation_languages" ;
 	rdfs:range _:c14n46 ;
-	skos:definition "The programming language(s) used to implement the malware instance or family. Open Vocab - implementation-language-ov." ;
+	skos:definition "The programming languages used to write the malware instance or family." ;
 	skos:inScheme stix:stix_sdo .
 stix:indicator_types a owl:DatatypeProperty ;
 	rdfs:label "indicator_types" ;
 	rdfs:range _:c14n1113 ;
-	skos:definition "This field is an Open Vocabulary that specifies the type of indicator. Open vocab - indicator-type-ov." ;
+	skos:definition "The kinds of indicator, such as malicious-activity." ;
 	skos:inScheme stix:stix_sdo .
 stix:infrastructure_types a owl:DatatypeProperty ;
 	rdfs:label "infrastructure_types" ;
 	rdfs:range _:c14n431 ;
-	skos:definition "This field is an Open Vocabulary that specifies the type of infrastructure. Open vocab - infrastructure-type-ov." ;
+	skos:definition "The kinds of infrastructure, such as botnet." ;
 	skos:inScheme stix:stix_sdo .
 stix:inhibit_any_policy a owl:DatatypeProperty ;
 	rdfs:label "inhibit_any_policy" ;
@@ -2544,8 +2547,9 @@ stix:lang a owl:DatatypeProperty ;
 stix:languages a owl:DatatypeProperty ;
 	rdfs:label "languages" ;
 	rdfs:range _:c14n1488 ;
-	skos:definition "Specifies the languages supported by the software. The value of each list member MUST be an RFC 5646 language code. ISO 639-2 codes are accepted for backward compatibility." ;
-	skos:inScheme stix:stix_sco .
+	skos:definition "The languages the software supports, as RFC 5646 language codes." ;
+	skos:inScheme stix:stix_sco ;
+	skos:note "ISO 639-2 codes are accepted too, for backward compatibility." .
 stix:last_observed a owl:DatatypeProperty ;
 	rdfs:label "last_observed" ;
 	rdfs:range xsd:dateTime ;
@@ -2609,7 +2613,7 @@ stix:major_subsystem_version a owl:DatatypeProperty ;
 stix:malware_types a owl:DatatypeProperty ;
 	rdfs:label "malware_types" ;
 	rdfs:range _:c14n2157 ;
-	skos:definition "The type of malware being described. Open Vocab - malware-type-ov." ;
+	skos:definition "The kinds of malware, such as ransomware." ;
 	skos:inScheme stix:stix_sdo .
 stix:marking_ref a owl:ObjectProperty ;
 	rdfs:label "marking_ref" ;
@@ -2633,7 +2637,7 @@ stix:message_id a owl:DatatypeProperty ;
 	skos:inScheme stix:stix_sco .
 stix:mime_type a owl:DatatypeProperty ;
 	rdfs:label "mime_type" ;
-	skos:definition "The value of this property MUST be a valid MIME type as specified in the IANA Media Types registry." ;
+	skos:definition "The MIME type of the content, as the IANA Media Types registry names it." ;
 	skos:inScheme stix:stix_sco .
 stix:minor_image_version a owl:DatatypeProperty ;
 	rdfs:label "minor_image_version" ;
@@ -2659,7 +2663,7 @@ stix:modified a owl:DatatypeProperty ;
 	rdfs:label "modified" ;
 	rdfs:range xsd:dateTime ;
 	skos:closeMatch uco-core:modifiedTime ;
-	skos:definition "The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond." ;
+	skos:definition "The time at which this version of the object was modified." ;
 	skos:inScheme stix:stix_core .
 stix:modified_time a owl:DatatypeProperty ;
 	rdfs:label "modified_time" ;
@@ -2697,7 +2701,7 @@ stix:number a owl:DatatypeProperty ;
 stix:number_observed a owl:DatatypeProperty ;
 	rdfs:label "number_observed" ;
 	rdfs:range _:c14n1090 ;
-	skos:definition "The number of times the data represented in the objects property was observed. This MUST be an integer between 1 and 999,999,999 inclusive." ;
+	skos:definition "The number of times the data in objects or object_refs was observed." ;
 	skos:inScheme stix:stix_sdo .
 stix:number_of_rva_and_sizes a owl:DatatypeProperty ;
 	rdfs:label "number_of_rva_and_sizes" ;
@@ -2742,7 +2746,7 @@ stix:object_refs a owl:ObjectProperty ;
 	skos:inScheme stix:stix_sdo .
 stix:objective a owl:DatatypeProperty ;
 	rdfs:label "objective" ;
-	skos:definition "This field defines the Campaign's primary goal, objective, desired outcome, or intended effect." ;
+	skos:definition "The campaign's primary goal, objective, desired outcome or intended effect." ;
 	skos:inScheme stix:stix_sdo .
 stix:objects a owl:DatatypeProperty ;
 	rdfs:label "objects" ;
@@ -2771,7 +2775,7 @@ stix:operating_system_refs a owl:ObjectProperty ;
 stix:opinion a owl:ObjectProperty ;
 	rdfs:label "opinion" ;
 	rdfs:range stix:StixAgreement ;
-	skos:definition "The opinion that the producer has about about all of the STIX Object(s) listed in the object_refs property." ;
+	skos:definition "The producer's opinion of the objects that object_refs lists." ;
 	skos:inScheme stix:stix_sdo .
 stix:optional_header a owl:ObjectProperty ;
 	rdfs:label "optional_header" ;
@@ -2835,12 +2839,12 @@ stix:pdfid1 a owl:DatatypeProperty ;
 stix:pe_type a owl:DatatypeProperty ;
 	rdfs:label "pe_type" ;
 	rdfs:range _:c14n133 ;
-	skos:definition "Specifies the type of the PE binary. Open Vocabulary - windows-pebinary-type-ov." ;
+	skos:definition "The type of the PE binary, such as exe or dll." ;
 	skos:inScheme stix:stix_sco .
 stix:personal_motivations a owl:DatatypeProperty ;
 	rdfs:label "personal_motivations" ;
 	rdfs:range _:c14n1075 ;
-	skos:definition "The personal reasons, motivations, or purposes of the Threat Actor regardless of organizational goals. Open Vocab - attack-motivation-ov." ;
+	skos:definition "The threat actor's personal reasons or motivations, apart from its organization's goals." ;
 	skos:inScheme stix:stix_sdo .
 stix:phase_name a owl:DatatypeProperty ;
 	rdfs:label "phase_name" ;
@@ -2928,7 +2932,7 @@ stix:relationship_type a owl:DatatypeProperty ;
 stix:report_types a owl:DatatypeProperty ;
 	rdfs:label "report_types" ;
 	rdfs:range _:c14n1451 ;
-	skos:definition "This field is an Open Vocabulary that specifies the primary subject of this report. The suggested values for this field are in report-type-ov." ;
+	skos:definition "The primary subjects of the report, such as threat-actor." ;
 	skos:inScheme stix:stix_sdo .
 stix:request_header a owl:ObjectProperty ;
 	rdfs:label "request_header" ;
@@ -3011,7 +3015,7 @@ stix:sections a owl:ObjectProperty ;
 stix:sectors a owl:DatatypeProperty ;
 	rdfs:label "sectors" ;
 	rdfs:range _:c14n673 ;
-	skos:definition "The list of sectors that this Identity belongs to. Open Vocab - industry-sector-ov." ;
+	skos:definition "The industry sectors that the identity belongs to." ;
 	skos:inScheme stix:stix_core .
 stix:selectors a owl:DatatypeProperty ;
 	rdfs:label "selectors" ;
@@ -3138,7 +3142,7 @@ stix:socket_type a owl:ObjectProperty ;
 stix:sophistication a owl:DatatypeProperty ;
 	rdfs:label "sophistication" ;
 	rdfs:range _:c14n60 ;
-	skos:definition "The skill, specific knowledge, special training, or expertise a Threat Actor must have to perform the attack. Open Vocab - threat-actor-sophistication-ov." ;
+	skos:definition "The skill, knowledge, training or expertise the threat actor needs to carry out an attack." ;
 	skos:inScheme stix:stix_sdo .
 stix:source_name a owl:DatatypeProperty ;
 	rdfs:label "source_name" ;
@@ -3178,7 +3182,7 @@ stix:src_payload_ref a owl:ObjectProperty ;
 stix:src_port a owl:DatatypeProperty ;
 	rdfs:label "src_port" ;
 	rdfs:range _:c14n535 ;
-	skos:definition "Specifies the source port used in the network traffic, as an integer. The port value MUST be in the range of 0 - 65535." ;
+	skos:definition "The source port of the traffic." ;
 	skos:inScheme stix:stix_sco .
 stix:src_ref a owl:ObjectProperty ;
 	rdfs:label "src_ref" ;
@@ -3231,7 +3235,7 @@ stix:subject_alternative_name a owl:DatatypeProperty ;
 	skos:inScheme stix:stix_sco .
 stix:subject_directory_attributes a owl:DatatypeProperty ;
 	rdfs:label "subject_directory_attributes" ;
-	skos:definition "Specifies the identification attributes (e.g., nationality) of the subject." ;
+	skos:definition "The identification attributes of the subject, such as nationality." ;
 	skos:inScheme stix:stix_sco .
 stix:subject_key_identifier a owl:DatatypeProperty ;
 	rdfs:label "subject_key_identifier" ;
@@ -3258,7 +3262,7 @@ stix:submitted a owl:DatatypeProperty ;
 stix:subsystem_hex a owl:DatatypeProperty ;
 	rdfs:label "subsystem_hex" ;
 	rdfs:range xsd:hexBinary ;
-	skos:definition "Specifies the subsystem (e.g., GUI, device driver, etc.) that is required to run this image." ;
+	skos:definition "The subsystem, such as a GUI or a device driver, needed to run the image." ;
 	skos:inScheme stix:stix_sco .
 stix:summary a owl:DatatypeProperty ;
 	rdfs:label "summary" ;
@@ -3278,12 +3282,12 @@ stix:target_ref a owl:ObjectProperty ;
 stix:threat_actor_types a owl:DatatypeProperty ;
 	rdfs:label "threat_actor_types" ;
 	rdfs:range _:c14n1423 ;
-	skos:definition "This field specifies the type of threat actor. Open Vocab - threat-actor-type-ov." ;
+	skos:definition "The kinds of threat actor, such as nation-state." ;
 	skos:inScheme stix:stix_sdo .
 stix:time_date_stamp a owl:DatatypeProperty ;
 	rdfs:label "time_date_stamp" ;
 	rdfs:range xsd:dateTime ;
-	skos:definition "Specifies the time when the PE binary was created. The timestamp value MUST BE precise to the second." ;
+	skos:definition "The time at which the PE binary was created." ;
 	skos:inScheme stix:stix_sco .
 stix:tlp a owl:ObjectProperty ;
 	rdfs:label "tlp" ;
@@ -3298,7 +3302,7 @@ stix:to_refs a owl:ObjectProperty ;
 stix:tool_types a owl:DatatypeProperty ;
 	rdfs:label "tool_types" ;
 	rdfs:range _:c14n2179 ;
-	skos:definition "The kind(s) of tool(s) being described. Open Vocab - tool-type-ov." ;
+	skos:definition "The kinds of tool, such as remote-access." ;
 	skos:inScheme stix:stix_sdo .
 stix:tool_version a owl:DatatypeProperty ;
 	rdfs:label "tool_version" ;

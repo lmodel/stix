@@ -10,7 +10,7 @@ import java.util.List;
 import lombok.*;
 
 /**
-  The User Account Object defines the following extensions. In addition to these, producers MAY create their own.
+  The UNIX account extension of a user account: its group, its other groups, its home directory and its shell.
 **/
 @Data
 @EqualsAndHashCode(callSuper=false)

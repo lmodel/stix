@@ -21,8 +21,7 @@ imports:
 slots:
   mime_type:
     description: >-
-      The value of this property MUST be a valid MIME type as specified in the IANA Media
-      Types registry.
+      The MIME type of the content, as the IANA Media Types registry names it.
     slot_uri: stix:mime_type
   payload_bin:
     description: >-
@@ -173,8 +172,10 @@ slots:
     slot_uri: stix:body
   body_multipart:
     description: >-
-      Specifies a list of the MIME parts that make up the email body. This property MAY only
-      be used if is_multipart is true.
+      The MIME parts that make up a multipart email body.
+    comments:
+      - >-
+        Present only when is_multipart is true.
     range: StixMimePart
     multivalued: true
     minimum_cardinality: 1
@@ -245,16 +246,14 @@ slots:
     slot_uri: stix:dst_ref
   src_port:
     description: >-
-      Specifies the source port used in the network traffic, as an integer. The port value
-      MUST be in the range of 0 - 65535.
+      The source port of the traffic.
     range: integer
     minimum_value: 0
     maximum_value: 65535
     slot_uri: stix:src_port
   dst_port:
     description: >-
-      Specifies the destination port used in the network traffic, as an integer. The port
-      value MUST be in the range of 0 - 65535.
+      The destination port of the traffic.
     range: integer
     minimum_value: 0
     maximum_value: 65535
@@ -382,8 +381,10 @@ slots:
     slot_uri: stix:child_refs
   cpe:
     description: >-
-      Specifies the Common Platform Enumeration (CPE) entry for the software, if available.
-      The value for this property MUST be a CPE v2.3 entry from the official NVD CPE Dictionary.
+      The Common Platform Enumeration (CPE) 2.3 name of the software, if it has one.
+    comments:
+      - >-
+        STIX asks for an entry of the NVD CPE Dictionary.
     pattern: cpe:2\.3:[aho\*\-](:(((\?*|\*?)([a-zA-Z0-9\-\._]|(\\[\\\*\?!\x22#$$%&\x27\(\)\+,/:;<=>@\[\]\^`\{\|}~]))+(\?*|\*?))|[\*\-])){5}(:(([a-zA-Z]{2,3}(-([a-zA-Z]{2}|[0-9]{3}))?)|[\*\-]))(:(((\?*|\*?)([a-zA-Z0-9\-\._]|(\\[\\\*\?!\x22#$$%&\x27\(\)\+,/:;<=>@\[\]\^`\{\|}~]))+(\?*|\*?))|[\*\-])){4}
     slot_uri: stix:cpe
   swid:
@@ -392,8 +393,10 @@ slots:
     slot_uri: stix:swid
   languages:
     description: >-
-      Specifies the languages supported by the software. The value of each list member MUST
-      be an RFC 5646 language code. ISO 639-2 codes are accepted for backward compatibility.
+      The languages the software supports, as RFC 5646 language codes.
+    comments:
+      - >-
+        ISO 639-2 codes are accepted too, for backward compatibility.
     pattern: ^([a-z]{2}(-[A-Z]{2})?(-[a-z]{4})?(-[A-Z]{2}|[0-9]{3})?(-[a-z0-9]{5,8}|[0-9][a-z0-9]{3})*(-[a-z0-9]{1,8})*|[a-z]{3})$
     multivalued: true
     minimum_cardinality: 1
@@ -406,9 +409,11 @@ slots:
     slot_uri: stix:user_id
   credential:
     description: >-
-      Specifies a cleartext credential. This is only intended to be used in capturing metadata
-      from malware analysis (e.g., a hard-coded domain administrator password that the malware
-      attempts to use for lateral movement) and SHOULD NOT be used for sharing of PII.
+      A cleartext credential, such as a hard-coded password that malware tries for lateral
+      movement.
+    comments:
+      - >-
+        Meant for metadata from malware analysis, not for sharing personal information.
     slot_uri: stix:credential
   account_login:
     description: >-
@@ -417,8 +422,7 @@ slots:
     slot_uri: stix:account_login
   account_type:
     description: >-
-      Specifies the type of the account. This is an open vocabulary and values SHOULD come
-      from the account-type-ov vocabulary.
+      The type of the account, such as unix or ldap.
     any_of:
       - range: StixAccountType
       - range: string
@@ -581,7 +585,7 @@ slots:
     slot_uri: stix:comment
   pe_type:
     description: >-
-      Specifies the type of the PE binary. Open Vocabulary - windows-pebinary-type-ov.
+      The type of the PE binary, such as exe or dll.
     any_of:
       - range: StixWindowsPeBinaryType
       - range: string
@@ -603,8 +607,7 @@ slots:
     slot_uri: stix:number_of_sections
   time_date_stamp:
     description: >-
-      Specifies the time when the PE binary was created. The timestamp value MUST BE precise
-      to the second.
+      The time at which the PE binary was created.
     range: stix_timestamp_seconds
     slot_uri: stix:time_date_stamp
   pointer_to_symbol_table_hex:
@@ -927,8 +930,7 @@ slots:
     slot_uri: stix:checksum_hex
   subsystem_hex:
     description: >-
-      Specifies the subsystem (e.g., GUI, device driver, etc.) that is required to run this
-      image.
+      The subsystem, such as a GUI or a device driver, needed to run the image.
     range: stix_hex
     slot_uri: stix:subsystem_hex
   dll_characteristics_hex:
@@ -1028,7 +1030,7 @@ slots:
     slot_uri: stix:issuer_alternative_name
   subject_directory_attributes:
     description: >-
-      Specifies the identification attributes (e.g., nationality) of the subject.
+      The identification attributes of the subject, such as nationality.
     slot_uri: stix:subject_directory_attributes
   crl_distribution_points:
     description: Specifies how CRL information is obtained.
@@ -1063,8 +1065,7 @@ slots:
 classes:
   StixArtifact:
     description: >-
-      The Artifact Object permits capturing an array of bytes (8-bits), as a base64-encoded
-      string string, or linking to a file-like payload.
+      An array of bytes, carried as base64 in payload_bin, or a link to a file-like payload.
     is_a: StixCyberObservableObject
     slots:
       - mime_type
@@ -1989,8 +1990,8 @@ classes:
       - uco-observable:WindowsServiceFacet
   StixUnixAccountExtension:
     description: >-
-      The User Account Object defines the following extensions. In addition to these, producers
-      MAY create their own.
+      The UNIX account extension of a user account: its group, its other groups, its home
+      directory and its shell.
     slots:
       - gid
       - groups

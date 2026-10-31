@@ -10,7 +10,7 @@ import java.util.List;
 import lombok.*;
 
 /**
-  A Location represents a geographic location. The location may be described as any, some or all of the following: region (e.g., North America), civic address (e.g. New York, US), latitude and longitude.
+  A geographic location, given as a region, a civic address, a latitude and longitude, or any mix of them.
 **/
 @Data
 @EqualsAndHashCode(callSuper=false)

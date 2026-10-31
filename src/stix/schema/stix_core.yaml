@@ -118,8 +118,7 @@ slots:
       - uco-core:objectCreatedTime
   modified:
     description: >-
-      The modified property represents the time that this particular version of the object
-      was modified. The timestamp value MUST be precise to the nearest millisecond.
+      The time at which this version of the object was modified.
     range: stix_timestamp_millis
     slot_uri: stix:modified
     close_mappings:
@@ -179,15 +178,14 @@ slots:
       - uco-core:description
   identity_class:
     description: >-
-      The type of entity that this Identity describes, e.g., an individual or organization.
-      Open Vocab - identity-class-ov.
+      The kind of entity the identity describes, such as an individual or an organization.
     any_of:
       - range: StixIdentityClass
       - range: string
     slot_uri: stix:identity_class
   sectors:
     description: >-
-      The list of sectors that this Identity belongs to. Open Vocab - industry-sector-ov.
+      The industry sectors that the identity belongs to.
     any_of:
       - range: StixIndustrySector
       - range: string
@@ -369,8 +367,7 @@ classes:
       - defanged
   StixIdentity:
     description: >-
-      Identities can represent actual individuals, organizations, or groups (e.g., ACME, Inc.)
-      as well as classes of individuals, organizations, or groups.
+      An individual, organization or group, such as ACME, Inc., or a class of them.
     is_a: StixDomainObject
     slots:
       - roles

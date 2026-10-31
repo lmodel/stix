@@ -10,7 +10,7 @@
 -- # Abstract Class: StixCommonObject Description: The base of the objects that carry STIX's common properties: the domain and relationship objects, language content and extension definitions.
 --     * Slot: created_by_ref Description: A reference to the identity of the object's creator.
 --     * Slot: created Description: The time at which the object, or its first version, was created.
---     * Slot: modified Description: The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+--     * Slot: modified Description: The time at which this version of the object was modified.
 --     * Slot: revoked Description: The revoked property indicates whether the object has been revoked.
 --     * Slot: confidence Description: Identifies the confidence that the creator has in the correctness of their data.
 --     * Slot: lang Description: The language of the text content, as an RFC 5646 language code.
@@ -21,7 +21,7 @@
 -- # Abstract Class: StixDomainObject Description: A STIX Domain Object (SDO): a higher-level concept of cyber threat intelligence, such as an attack pattern, a malware family or a threat actor.
 --     * Slot: created_by_ref Description: A reference to the identity of the object's creator.
 --     * Slot: created Description: The time at which the object, or its first version, was created.
---     * Slot: modified Description: The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+--     * Slot: modified Description: The time at which this version of the object was modified.
 --     * Slot: revoked Description: The revoked property indicates whether the object has been revoked.
 --     * Slot: confidence Description: Identifies the confidence that the creator has in the correctness of their data.
 --     * Slot: lang Description: The language of the text content, as an RFC 5646 language code.
@@ -32,7 +32,7 @@
 -- # Abstract Class: StixRelationshipObject Description: A STIX Relationship Object (SRO): a relationship or a sighting that links other objects.
 --     * Slot: created_by_ref Description: A reference to the identity of the object's creator.
 --     * Slot: created Description: The time at which the object, or its first version, was created.
---     * Slot: modified Description: The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+--     * Slot: modified Description: The time at which this version of the object was modified.
 --     * Slot: revoked Description: The revoked property indicates whether the object has been revoked.
 --     * Slot: confidence Description: Identifies the confidence that the creator has in the correctness of their data.
 --     * Slot: lang Description: The language of the text content, as an RFC 5646 language code.
@@ -46,14 +46,14 @@
 --     * Slot: type Description: The STIX type name of the object, such as attack-pattern. Each class pins its own.
 --     * Slot: spec_version Description: The version of the STIX specification used to represent the object.
 --     * Slot: extensions_id Description: The object's extensions, as a dictionary keyed by extension name.
--- # Class: StixIdentity Description: Identities can represent actual individuals, organizations, or groups (e.g., ACME, Inc.) as well as classes of individuals, organizations, or groups.
+-- # Class: StixIdentity Description: An individual, organization or group, such as ACME, Inc., or a class of them.
 --     * Slot: name Description: A name that identifies the object.
 --     * Slot: description Description: A description of the object, which may be long.
---     * Slot: identity_class Description: The type of entity that this Identity describes, e.g., an individual or organization. Open Vocab - identity-class-ov.
+--     * Slot: identity_class Description: The kind of entity the identity describes, such as an individual or an organization.
 --     * Slot: contact_information Description: The contact information (e-mail, phone number, etc.) for this Identity.
 --     * Slot: created_by_ref Description: A reference to the identity of the object's creator.
 --     * Slot: created Description: The time at which the object, or its first version, was created.
---     * Slot: modified Description: The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+--     * Slot: modified Description: The time at which this version of the object was modified.
 --     * Slot: revoked Description: The revoked property indicates whether the object has been revoked.
 --     * Slot: confidence Description: Identifies the confidence that the creator has in the correctness of their data.
 --     * Slot: lang Description: The language of the text content, as an RFC 5646 language code.
@@ -76,7 +76,7 @@
 --     * Slot: object_modified Description: Identifies the modified time of the object that this Language Content applies to.
 --     * Slot: created_by_ref Description: A reference to the identity of the object's creator.
 --     * Slot: created Description: The time at which the object, or its first version, was created.
---     * Slot: modified Description: The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+--     * Slot: modified Description: The time at which this version of the object was modified.
 --     * Slot: revoked Description: The revoked property indicates whether the object has been revoked.
 --     * Slot: confidence Description: Identifies the confidence that the creator has in the correctness of their data.
 --     * Slot: lang Description: The language of the text content, as an RFC 5646 language code.
@@ -92,7 +92,7 @@
 --     * Slot: version Description: A version, as a string; each class says of what.
 --     * Slot: created_by_ref Description: A reference to the identity of the object's creator.
 --     * Slot: created Description: The time at which the object, or its first version, was created.
---     * Slot: modified Description: The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+--     * Slot: modified Description: The time at which this version of the object was modified.
 --     * Slot: revoked Description: The revoked property indicates whether the object has been revoked.
 --     * Slot: confidence Description: Identifies the confidence that the creator has in the correctness of their data.
 --     * Slot: lang Description: The language of the text content, as an RFC 5646 language code.
@@ -211,8 +211,8 @@
 --     * Slot: id
 -- # Class: StixLanguageContents Description: The translations of a language content object, keyed by language code. Each value maps the translated properties to their translations.
 --     * Slot: id
--- # Class: StixArtifact Description: The Artifact Object permits capturing an array of bytes (8-bits), as a base64-encoded string string, or linking to a file-like payload.
---     * Slot: mime_type Description: The value of this property MUST be a valid MIME type as specified in the IANA Media Types registry.
+-- # Class: StixArtifact Description: An array of bytes, carried as base64 in payload_bin, or a link to a file-like payload.
+--     * Slot: mime_type Description: The MIME type of the content, as the IANA Media Types registry names it.
 --     * Slot: payload_bin Description: Specifies the binary data contained in the artifact as a base64-encoded string.
 --     * Slot: url Description: A URL.
 --     * Slot: encryption_algorithm Description: If the artifact is encrypted, specifies the type of encryption algorithm the binary data (either via payload_bin or url) is encoded in.
@@ -280,7 +280,7 @@
 --     * Slot: name Description: A name that identifies the object.
 --     * Slot: name_enc Description: Specifies the observed encoding for the name of the file.
 --     * Slot: magic_number_hex Description: Specifies the hexadecimal constant ('magic number') associated with a specific file format that corresponds to the file, if applicable.
---     * Slot: mime_type Description: The value of this property MUST be a valid MIME type as specified in the IANA Media Types registry.
+--     * Slot: mime_type Description: The MIME type of the content, as the IANA Media Types registry names it.
 --     * Slot: ctime Description: The time at which the object was created.
 --     * Slot: mtime Description: The time at which the object was last written to.
 --     * Slot: atime Description: The time at which the object was last accessed.
@@ -325,8 +325,8 @@
 --     * Slot: end Description: Specifies the date/time the network traffic ended, if known.
 --     * Slot: src_ref Description: Specifies the source of the network traffic, as a reference to an Observable Object.
 --     * Slot: dst_ref Description: Specifies the destination of the network traffic, as a reference to an Observable Object.
---     * Slot: src_port Description: Specifies the source port used in the network traffic, as an integer. The port value MUST be in the range of 0 - 65535.
---     * Slot: dst_port Description: Specifies the destination port used in the network traffic, as an integer. The port value MUST be in the range of 0 - 65535.
+--     * Slot: src_port Description: The source port of the traffic.
+--     * Slot: dst_port Description: The destination port of the traffic.
 --     * Slot: src_byte_count Description: Specifies the number of bytes sent from the source to the destination.
 --     * Slot: dst_byte_count Description: Specifies the number of bytes sent from the destination to the source.
 --     * Slot: src_packets Description: Specifies the number of packets sent from the source to the destination.
@@ -358,7 +358,7 @@
 --     * Slot: extensions_id Description: The object's extensions, as a dictionary keyed by extension name.
 -- # Class: StixSoftware Description: The Software Object represents high-level properties associated with software, including software products.
 --     * Slot: name Description: A name that identifies the object.
---     * Slot: cpe Description: Specifies the Common Platform Enumeration (CPE) entry for the software, if available. The value for this property MUST be a CPE v2.3 entry from the official NVD CPE Dictionary.
+--     * Slot: cpe Description: The Common Platform Enumeration (CPE) 2.3 name of the software, if it has one.
 --     * Slot: swid Description: Specifies the Software Identification (SWID) Tags entry for the software, if available.
 --     * Slot: vendor Description: Specifies the name of the vendor of the software.
 --     * Slot: version Description: A version, as a string; each class says of what.
@@ -376,9 +376,9 @@
 --     * Slot: extensions_id Description: The object's extensions, as a dictionary keyed by extension name.
 -- # Class: StixUserAccount Description: The User Account Object represents an instance of any type of user account, including but not limited to operating system, device, messaging service, and social media platform accounts.
 --     * Slot: user_id Description: Specifies the identifier of the account.
---     * Slot: credential Description: Specifies a cleartext credential. This is only intended to be used in capturing metadata from malware analysis (e.g., a hard-coded domain administrator password that the malware attempts to use for lateral movement) and SHOULD NOT be used for sharing of PII.
+--     * Slot: credential Description: A cleartext credential, such as a hard-coded password that malware tries for lateral movement.
 --     * Slot: account_login Description: Specifies the account login string, used in cases where the user_id property specifies something other than what a user would type when they login.
---     * Slot: account_type Description: Specifies the type of the account. This is an open vocabulary and values SHOULD come from the account-type-ov vocabulary.
+--     * Slot: account_type Description: The type of the account, such as unix or ldap.
 --     * Slot: display_name Description: A name for display.
 --     * Slot: is_service_account Description: Indicates that the account is associated with a network service or system process (daemon), not a specific individual.
 --     * Slot: is_privileged Description: Specifies that the account has elevated privileges (i.e., in the case of root on Unix or the Windows Administrator account).
@@ -444,11 +444,11 @@
 --     * Slot: comment Description: Specifies a comment included as part of the archive file.
 -- # Class: StixWindowsPeBinaryExtension Description: The Windows PE Binary File extension specifies a default extension for capturing properties specific to Windows portable executable (PE) files.
 --     * Slot: id
---     * Slot: pe_type Description: Specifies the type of the PE binary. Open Vocabulary - windows-pebinary-type-ov.
+--     * Slot: pe_type Description: The type of the PE binary, such as exe or dll.
 --     * Slot: imphash Description: Specifies the special import hash, or 'imphash', calculated for the PE Binary based on its imported libraries and functions.
 --     * Slot: machine_hex Description: Specifies the type of target machine.
 --     * Slot: number_of_sections Description: Specifies the number of sections in the PE binary, as a non-negative integer.
---     * Slot: time_date_stamp Description: Specifies the time when the PE binary was created. The timestamp value MUST BE precise to the second.
+--     * Slot: time_date_stamp Description: The time at which the PE binary was created.
 --     * Slot: pointer_to_symbol_table_hex Description: Specifies the file offset of the COFF symbol table.
 --     * Slot: number_of_symbols Description: Specifies the number of entries in the symbol table of the PE binary, as a non-negative integer.
 --     * Slot: size_of_optional_header Description: Specifies the size of the optional header of the PE binary.
@@ -497,7 +497,7 @@
 --     * Slot: start_type Description: Specifies the start options defined for the service. windows-service-start-enum.
 --     * Slot: service_type Description: Specifies the type of the service. windows-service-enum.
 --     * Slot: service_status Description: Specifies the current status of the service. windows-service-status-enum.
--- # Class: StixUnixAccountExtension Description: The User Account Object defines the following extensions. In addition to these, producers MAY create their own.
+-- # Class: StixUnixAccountExtension Description: The UNIX account extension of a user account: its group, its other groups, its home directory and its shell.
 --     * Slot: id
 --     * Slot: gid Description: Specifies the primary group ID of the account.
 --     * Slot: home_dir Description: Specifies the home directory of the account.
@@ -539,7 +539,7 @@
 --     * Slot: size_of_image Description: Specifies the size, in bytes, of the image, including all headers, as the image is loaded in memory.
 --     * Slot: size_of_headers Description: Specifies the combined size of the MS-DOS, PE header, and section headers, rounded up a multiple of the value specified in the file_alignment header.
 --     * Slot: checksum_hex Description: Specifies the checksum of the PE binary.
---     * Slot: subsystem_hex Description: Specifies the subsystem (e.g., GUI, device driver, etc.) that is required to run this image.
+--     * Slot: subsystem_hex Description: The subsystem, such as a GUI or a device driver, needed to run the image.
 --     * Slot: dll_characteristics_hex Description: Specifies the flags that characterize the PE binary.
 --     * Slot: size_of_stack_reserve Description: Specifies the size of the stack to reserve.
 --     * Slot: size_of_stack_commit Description: Specifies the size of the stack to commit.
@@ -572,7 +572,7 @@
 --     * Slot: authority_key_identifier Description: Specifies the identifier that provides a means of identifying the public key corresponding to the private key used to sign a certificate.
 --     * Slot: subject_alternative_name Description: Specifies the additional identities to be bound to the subject of the certificate.
 --     * Slot: issuer_alternative_name Description: Specifies the additional identities to be bound to the issuer of the certificate.
---     * Slot: subject_directory_attributes Description: Specifies the identification attributes (e.g., nationality) of the subject.
+--     * Slot: subject_directory_attributes Description: The identification attributes of the subject, such as nationality.
 --     * Slot: crl_distribution_points Description: Specifies how CRL information is obtained.
 --     * Slot: inhibit_any_policy Description: Specifies the number of additional certificates that may appear in the path before anyPolicy is no longer permitted.
 --     * Slot: private_key_usage_period_not_before Description: Specifies the date on which the validity period begins for the private key, if it is different from the validity period of the certificate.
@@ -598,7 +598,7 @@
 --     * Slot: description Description: A description of the object, which may be long.
 --     * Slot: created_by_ref Description: A reference to the identity of the object's creator.
 --     * Slot: created Description: The time at which the object, or its first version, was created.
---     * Slot: modified Description: The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+--     * Slot: modified Description: The time at which this version of the object was modified.
 --     * Slot: revoked Description: The revoked property indicates whether the object has been revoked.
 --     * Slot: confidence Description: Identifies the confidence that the creator has in the correctness of their data.
 --     * Slot: lang Description: The language of the text content, as an RFC 5646 language code.
@@ -611,10 +611,10 @@
 --     * Slot: description Description: A description of the object, which may be long.
 --     * Slot: first_seen Description: The time at which the object was first seen.
 --     * Slot: last_seen Description: The time at which the object was last seen.
---     * Slot: objective Description: This field defines the Campaign's primary goal, objective, desired outcome, or intended effect.
+--     * Slot: objective Description: The campaign's primary goal, objective, desired outcome or intended effect.
 --     * Slot: created_by_ref Description: A reference to the identity of the object's creator.
 --     * Slot: created Description: The time at which the object, or its first version, was created.
---     * Slot: modified Description: The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+--     * Slot: modified Description: The time at which this version of the object was modified.
 --     * Slot: revoked Description: The revoked property indicates whether the object has been revoked.
 --     * Slot: confidence Description: Identifies the confidence that the creator has in the correctness of their data.
 --     * Slot: lang Description: The language of the text content, as an RFC 5646 language code.
@@ -627,7 +627,7 @@
 --     * Slot: description Description: A description of the object, which may be long.
 --     * Slot: created_by_ref Description: A reference to the identity of the object's creator.
 --     * Slot: created Description: The time at which the object, or its first version, was created.
---     * Slot: modified Description: The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+--     * Slot: modified Description: The time at which this version of the object was modified.
 --     * Slot: revoked Description: The revoked property indicates whether the object has been revoked.
 --     * Slot: confidence Description: Identifies the confidence that the creator has in the correctness of their data.
 --     * Slot: lang Description: The language of the text content, as an RFC 5646 language code.
@@ -641,7 +641,7 @@
 --     * Slot: context Description: A short description of the particular context shared by the content referenced by the Grouping.
 --     * Slot: created_by_ref Description: A reference to the identity of the object's creator.
 --     * Slot: created Description: The time at which the object, or its first version, was created.
---     * Slot: modified Description: The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+--     * Slot: modified Description: The time at which this version of the object was modified.
 --     * Slot: revoked Description: The revoked property indicates whether the object has been revoked.
 --     * Slot: confidence Description: Identifies the confidence that the creator has in the correctness of their data.
 --     * Slot: lang Description: The language of the text content, as an RFC 5646 language code.
@@ -654,7 +654,7 @@
 --     * Slot: description Description: A description of the object, which may be long.
 --     * Slot: created_by_ref Description: A reference to the identity of the object's creator.
 --     * Slot: created Description: The time at which the object, or its first version, was created.
---     * Slot: modified Description: The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+--     * Slot: modified Description: The time at which this version of the object was modified.
 --     * Slot: revoked Description: The revoked property indicates whether the object has been revoked.
 --     * Slot: confidence Description: Identifies the confidence that the creator has in the correctness of their data.
 --     * Slot: lang Description: The language of the text content, as an RFC 5646 language code.
@@ -672,7 +672,7 @@
 --     * Slot: valid_until Description: The time at which this indicator should no longer be considered valuable intelligence.
 --     * Slot: created_by_ref Description: A reference to the identity of the object's creator.
 --     * Slot: created Description: The time at which the object, or its first version, was created.
---     * Slot: modified Description: The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+--     * Slot: modified Description: The time at which this version of the object was modified.
 --     * Slot: revoked Description: The revoked property indicates whether the object has been revoked.
 --     * Slot: confidence Description: Identifies the confidence that the creator has in the correctness of their data.
 --     * Slot: lang Description: The language of the text content, as an RFC 5646 language code.
@@ -687,7 +687,7 @@
 --     * Slot: last_seen Description: The time at which the object was last seen.
 --     * Slot: created_by_ref Description: A reference to the identity of the object's creator.
 --     * Slot: created Description: The time at which the object, or its first version, was created.
---     * Slot: modified Description: The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+--     * Slot: modified Description: The time at which this version of the object was modified.
 --     * Slot: revoked Description: The revoked property indicates whether the object has been revoked.
 --     * Slot: confidence Description: Identifies the confidence that the creator has in the correctness of their data.
 --     * Slot: lang Description: The language of the text content, as an RFC 5646 language code.
@@ -704,7 +704,7 @@
 --     * Slot: primary_motivation Description: The primary reason, motivation or purpose behind the activity.
 --     * Slot: created_by_ref Description: A reference to the identity of the object's creator.
 --     * Slot: created Description: The time at which the object, or its first version, was created.
---     * Slot: modified Description: The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+--     * Slot: modified Description: The time at which this version of the object was modified.
 --     * Slot: revoked Description: The revoked property indicates whether the object has been revoked.
 --     * Slot: confidence Description: Identifies the confidence that the creator has in the correctness of their data.
 --     * Slot: lang Description: The language of the text content, as an RFC 5646 language code.
@@ -712,7 +712,7 @@
 --     * Slot: type Description: The STIX type name of the object, such as attack-pattern. Each class pins its own.
 --     * Slot: spec_version Description: The version of the STIX specification used to represent the object.
 --     * Slot: extensions_id Description: The object's extensions, as a dictionary keyed by extension name.
--- # Class: StixLocation Description: A Location represents a geographic location. The location may be described as any, some or all of the following: region (e.g., North America), civic address (e.g. New York, US), latitude and longitude.
+-- # Class: StixLocation Description: A geographic location, given as a region, a civic address, a latitude and longitude, or any mix of them.
 --     * Slot: description Description: A description of the object, which may be long.
 --     * Slot: name Description: A name that identifies the object.
 --     * Slot: latitude Description: The latitude of the Location in decimal degrees.
@@ -726,7 +726,7 @@
 --     * Slot: postal_code Description: The postal code for this Location.
 --     * Slot: created_by_ref Description: A reference to the identity of the object's creator.
 --     * Slot: created Description: The time at which the object, or its first version, was created.
---     * Slot: modified Description: The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+--     * Slot: modified Description: The time at which this version of the object was modified.
 --     * Slot: revoked Description: The revoked property indicates whether the object has been revoked.
 --     * Slot: confidence Description: Identifies the confidence that the creator has in the correctness of their data.
 --     * Slot: lang Description: The language of the text content, as an RFC 5646 language code.
@@ -734,7 +734,7 @@
 --     * Slot: type Description: The STIX type name of the object, such as attack-pattern. Each class pins its own.
 --     * Slot: spec_version Description: The version of the STIX specification used to represent the object.
 --     * Slot: extensions_id Description: The object's extensions, as a dictionary keyed by extension name.
--- # Class: StixMalware Description: Malware is a type of TTP that is also known as malicious code and malicious software, refers to a program that is inserted into a system, usually covertly, with the intent of compromising the confidentiality, integrity, or availability of the victim's data, applications, or operating system (OS) or of otherwise annoying or disrupting the victim.
+-- # Class: StixMalware Description: Malicious code: a program inserted into a system, usually covertly, to compromise its data, applications or operating system, or to disrupt its owner.
 --     * Slot: first_seen Description: The time at which the object was first seen.
 --     * Slot: last_seen Description: The time at which the object was last seen.
 --     * Slot: name Description: A name that identifies the object.
@@ -742,7 +742,7 @@
 --     * Slot: is_family Description: Whether the object represents a malware family (if true) or a malware instance (if false).
 --     * Slot: created_by_ref Description: A reference to the identity of the object's creator.
 --     * Slot: created Description: The time at which the object, or its first version, was created.
---     * Slot: modified Description: The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+--     * Slot: modified Description: The time at which this version of the object was modified.
 --     * Slot: revoked Description: The revoked property indicates whether the object has been revoked.
 --     * Slot: confidence Description: Identifies the confidence that the creator has in the correctness of their data.
 --     * Slot: lang Description: The language of the text content, as an RFC 5646 language code.
@@ -766,7 +766,7 @@
 --     * Slot: sample_ref Description: Refers to the object this analysis was performed against.
 --     * Slot: created_by_ref Description: A reference to the identity of the object's creator.
 --     * Slot: created Description: The time at which the object, or its first version, was created.
---     * Slot: modified Description: The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+--     * Slot: modified Description: The time at which this version of the object was modified.
 --     * Slot: revoked Description: The revoked property indicates whether the object has been revoked.
 --     * Slot: confidence Description: Identifies the confidence that the creator has in the correctness of their data.
 --     * Slot: lang Description: The language of the text content, as an RFC 5646 language code.
@@ -779,7 +779,7 @@
 --     * Slot: content Description: The content of the note.
 --     * Slot: created_by_ref Description: A reference to the identity of the object's creator.
 --     * Slot: created Description: The time at which the object, or its first version, was created.
---     * Slot: modified Description: The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+--     * Slot: modified Description: The time at which this version of the object was modified.
 --     * Slot: revoked Description: The revoked property indicates whether the object has been revoked.
 --     * Slot: confidence Description: Identifies the confidence that the creator has in the correctness of their data.
 --     * Slot: lang Description: The language of the text content, as an RFC 5646 language code.
@@ -790,10 +790,10 @@
 -- # Class: StixObservedData Description: Observed data conveys information that was observed on systems and networks, such as log data or network traffic, using the Cyber Observable specification.
 --     * Slot: first_observed Description: The beginning of the time window that the data was observed during.
 --     * Slot: last_observed Description: The end of the time window that the data was observed during.
---     * Slot: number_observed Description: The number of times the data represented in the objects property was observed. This MUST be an integer between 1 and 999,999,999 inclusive.
+--     * Slot: number_observed Description: The number of times the data in objects or object_refs was observed.
 --     * Slot: created_by_ref Description: A reference to the identity of the object's creator.
 --     * Slot: created Description: The time at which the object, or its first version, was created.
---     * Slot: modified Description: The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+--     * Slot: modified Description: The time at which this version of the object was modified.
 --     * Slot: revoked Description: The revoked property indicates whether the object has been revoked.
 --     * Slot: confidence Description: Identifies the confidence that the creator has in the correctness of their data.
 --     * Slot: lang Description: The language of the text content, as an RFC 5646 language code.
@@ -804,10 +804,10 @@
 --     * Slot: extensions_id Description: The object's extensions, as a dictionary keyed by extension name.
 -- # Class: StixOpinion Description: An Opinion is an assessment of the correctness of the information in a STIX Object produced by a different entity and captures the level of agreement or disagreement using a fixed scale.
 --     * Slot: explanation Description: An explanation of why the producer has this Opinion.
---     * Slot: opinion Description: The opinion that the producer has about about all of the STIX Object(s) listed in the object_refs property.
+--     * Slot: opinion Description: The producer's opinion of the objects that object_refs lists.
 --     * Slot: created_by_ref Description: A reference to the identity of the object's creator.
 --     * Slot: created Description: The time at which the object, or its first version, was created.
---     * Slot: modified Description: The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+--     * Slot: modified Description: The time at which this version of the object was modified.
 --     * Slot: revoked Description: The revoked property indicates whether the object has been revoked.
 --     * Slot: confidence Description: Identifies the confidence that the creator has in the correctness of their data.
 --     * Slot: lang Description: The language of the text content, as an RFC 5646 language code.
@@ -821,7 +821,7 @@
 --     * Slot: published Description: The date that this report object was officially published by the creator of this report.
 --     * Slot: created_by_ref Description: A reference to the identity of the object's creator.
 --     * Slot: created Description: The time at which the object, or its first version, was created.
---     * Slot: modified Description: The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+--     * Slot: modified Description: The time at which this version of the object was modified.
 --     * Slot: revoked Description: The revoked property indicates whether the object has been revoked.
 --     * Slot: confidence Description: Identifies the confidence that the creator has in the correctness of their data.
 --     * Slot: lang Description: The language of the text content, as an RFC 5646 language code.
@@ -834,12 +834,12 @@
 --     * Slot: description Description: A description of the object, which may be long.
 --     * Slot: first_seen Description: The time at which the object was first seen.
 --     * Slot: last_seen Description: The time at which the object was last seen.
---     * Slot: sophistication Description: The skill, specific knowledge, special training, or expertise a Threat Actor must have to perform the attack. Open Vocab - threat-actor-sophistication-ov.
+--     * Slot: sophistication Description: The skill, knowledge, training or expertise the threat actor needs to carry out an attack.
 --     * Slot: resource_level Description: The organizational level at which the actor typically works.
 --     * Slot: primary_motivation Description: The primary reason, motivation or purpose behind the activity.
 --     * Slot: created_by_ref Description: A reference to the identity of the object's creator.
 --     * Slot: created Description: The time at which the object, or its first version, was created.
---     * Slot: modified Description: The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+--     * Slot: modified Description: The time at which this version of the object was modified.
 --     * Slot: revoked Description: The revoked property indicates whether the object has been revoked.
 --     * Slot: confidence Description: Identifies the confidence that the creator has in the correctness of their data.
 --     * Slot: lang Description: The language of the text content, as an RFC 5646 language code.
@@ -853,7 +853,7 @@
 --     * Slot: tool_version Description: The version identifier associated with the tool.
 --     * Slot: created_by_ref Description: A reference to the identity of the object's creator.
 --     * Slot: created Description: The time at which the object, or its first version, was created.
---     * Slot: modified Description: The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+--     * Slot: modified Description: The time at which this version of the object was modified.
 --     * Slot: revoked Description: The revoked property indicates whether the object has been revoked.
 --     * Slot: confidence Description: Identifies the confidence that the creator has in the correctness of their data.
 --     * Slot: lang Description: The language of the text content, as an RFC 5646 language code.
@@ -866,7 +866,7 @@
 --     * Slot: description Description: A description of the object, which may be long.
 --     * Slot: created_by_ref Description: A reference to the identity of the object's creator.
 --     * Slot: created Description: The time at which the object, or its first version, was created.
---     * Slot: modified Description: The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+--     * Slot: modified Description: The time at which this version of the object was modified.
 --     * Slot: revoked Description: The revoked property indicates whether the object has been revoked.
 --     * Slot: confidence Description: Identifies the confidence that the creator has in the correctness of their data.
 --     * Slot: lang Description: The language of the text content, as an RFC 5646 language code.
@@ -885,7 +885,7 @@
 --     * Slot: stop_time Description: The latest time at which the Relationship between the objects exists. If this property is a future timestamp, at the time the updated property is defined, then this represents an estimate by the producer of the intelligence of the latest time at which relationship will be asserted to be true.
 --     * Slot: created_by_ref Description: A reference to the identity of the object's creator.
 --     * Slot: created Description: The time at which the object, or its first version, was created.
---     * Slot: modified Description: The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+--     * Slot: modified Description: The time at which this version of the object was modified.
 --     * Slot: revoked Description: The revoked property indicates whether the object has been revoked.
 --     * Slot: confidence Description: Identifies the confidence that the creator has in the correctness of their data.
 --     * Slot: lang Description: The language of the text content, as an RFC 5646 language code.
@@ -893,7 +893,7 @@
 --     * Slot: type Description: The STIX type name of the object, such as attack-pattern. Each class pins its own.
 --     * Slot: spec_version Description: The version of the STIX specification used to represent the object.
 --     * Slot: extensions_id Description: The object's extensions, as a dictionary keyed by extension name.
--- # Class: StixSighting Description: A Sighting denotes the belief that something in CTI (e.g., an indicator, malware, tool, threat actor, etc.) was seen.
+-- # Class: StixSighting Description: The belief that something in cyber threat intelligence, such as an indicator, malware or a threat actor, was seen.
 --     * Slot: description Description: A description of the object, which may be long.
 --     * Slot: first_seen Description: The time at which the object was first seen.
 --     * Slot: last_seen Description: The time at which the object was last seen.
@@ -902,7 +902,7 @@
 --     * Slot: summary Description: The summary property indicates whether the Sighting should be considered summary data.
 --     * Slot: created_by_ref Description: A reference to the identity of the object's creator.
 --     * Slot: created Description: The time at which the object, or its first version, was created.
---     * Slot: modified Description: The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+--     * Slot: modified Description: The time at which this version of the object was modified.
 --     * Slot: revoked Description: The revoked property indicates whether the object has been revoked.
 --     * Slot: confidence Description: Identifies the confidence that the creator has in the correctness of their data.
 --     * Slot: lang Description: The language of the text content, as an RFC 5646 language code.
@@ -939,7 +939,7 @@
 --     * Slot: roles Description: The roles that the identity or threat actor plays.
 -- # Class: StixIdentity_sectors
 --     * Slot: StixIdentity_id Description: Autocreated FK slot
---     * Slot: sectors Description: The list of sectors that this Identity belongs to. Open Vocab - industry-sector-ov.
+--     * Slot: sectors Description: The industry sectors that the identity belongs to.
 -- # Class: StixIdentity_labels
 --     * Slot: StixIdentity_id Description: Autocreated FK slot
 --     * Slot: labels Description: The labels property specifies a set of terms used to describe this object.
@@ -1056,7 +1056,7 @@
 --     * Slot: object_marking_refs_id Description: References to the marking definitions that apply to the object.
 -- # Class: StixSoftware_languages
 --     * Slot: StixSoftware_id Description: Autocreated FK slot
---     * Slot: languages Description: Specifies the languages supported by the software. The value of each list member MUST be an RFC 5646 language code. ISO 639-2 codes are accepted for backward compatibility.
+--     * Slot: languages Description: The languages the software supports, as RFC 5646 language codes.
 -- # Class: StixSoftware_object_marking_refs
 --     * Slot: StixSoftware_id Description: Autocreated FK slot
 --     * Slot: object_marking_refs_id Description: References to the marking definitions that apply to the object.
@@ -1125,7 +1125,7 @@
 --     * Slot: object_marking_refs_id Description: References to the marking definitions that apply to the object.
 -- # Class: StixIndicator_indicator_types
 --     * Slot: StixIndicator_id Description: Autocreated FK slot
---     * Slot: indicator_types Description: This field is an Open Vocabulary that specifies the type of indicator. Open vocab - indicator-type-ov.
+--     * Slot: indicator_types Description: The kinds of indicator, such as malicious-activity.
 -- # Class: StixIndicator_labels
 --     * Slot: StixIndicator_id Description: Autocreated FK slot
 --     * Slot: labels Description: The labels property specifies a set of terms used to describe this object.
@@ -1134,7 +1134,7 @@
 --     * Slot: object_marking_refs_id Description: References to the marking definitions that apply to the object.
 -- # Class: StixInfrastructure_infrastructure_types
 --     * Slot: StixInfrastructure_id Description: Autocreated FK slot
---     * Slot: infrastructure_types Description: This field is an Open Vocabulary that specifies the type of infrastructure. Open vocab - infrastructure-type-ov.
+--     * Slot: infrastructure_types Description: The kinds of infrastructure, such as botnet.
 -- # Class: StixInfrastructure_aliases
 --     * Slot: StixInfrastructure_id Description: Autocreated FK slot
 --     * Slot: aliases Description: Other names by which the object is known.
@@ -1173,19 +1173,19 @@
 --     * Slot: operating_system_refs_id Description: The operating systems that the malware family or malware instance is executable on.
 -- # Class: StixMalware_architecture_execution_envs
 --     * Slot: StixMalware_id Description: Autocreated FK slot
---     * Slot: architecture_execution_envs Description: The processor architectures (e.g., x86, ARM, etc.) that the malware instance or family is executable on. Open Vocab - processor-architecture-os.
+--     * Slot: architecture_execution_envs Description: The processor architectures, such as x86 or ARM, that the malware runs on.
 -- # Class: StixMalware_implementation_languages
 --     * Slot: StixMalware_id Description: Autocreated FK slot
---     * Slot: implementation_languages Description: The programming language(s) used to implement the malware instance or family. Open Vocab - implementation-language-ov.
+--     * Slot: implementation_languages Description: The programming languages used to write the malware instance or family.
 -- # Class: StixMalware_capabilities
 --     * Slot: StixMalware_id Description: Autocreated FK slot
---     * Slot: capabilities Description: Specifies any capabilities identified for the malware instance or family. Open Vocab - malware-capabilities-ov.
+--     * Slot: capabilities Description: The capabilities identified in the malware instance or family.
 -- # Class: StixMalware_sample_refs
 --     * Slot: StixMalware_id Description: Autocreated FK slot
 --     * Slot: sample_refs_id Description: The sample_refs property specifies a list of identifiers of the SCO file or artifact objects associated with this malware instance(s) or family.
 -- # Class: StixMalware_malware_types
 --     * Slot: StixMalware_id Description: Autocreated FK slot
---     * Slot: malware_types Description: The type of malware being described. Open Vocab - malware-type-ov.
+--     * Slot: malware_types Description: The kinds of malware, such as ransomware.
 -- # Class: StixMalware_labels
 --     * Slot: StixMalware_id Description: Autocreated FK slot
 --     * Slot: labels Description: The labels property specifies a set of terms used to describe this object.
@@ -1209,7 +1209,7 @@
 --     * Slot: object_marking_refs_id Description: References to the marking definitions that apply to the object.
 -- # Class: StixNote_authors
 --     * Slot: StixNote_id Description: Autocreated FK slot
---     * Slot: authors Description: The name of the author(s) of this note (e.g., the analyst(s) that created it).
+--     * Slot: authors Description: The names of the note's authors, such as the analysts who wrote it.
 -- # Class: StixNote_object_refs
 --     * Slot: StixNote_id Description: Autocreated FK slot
 --     * Slot: object_refs_id Description: References to the STIX objects that this object is about or holds.
@@ -1230,7 +1230,7 @@
 --     * Slot: object_marking_refs_id Description: References to the marking definitions that apply to the object.
 -- # Class: StixOpinion_authors
 --     * Slot: StixOpinion_id Description: Autocreated FK slot
---     * Slot: authors Description: The name of the author(s) of this note (e.g., the analyst(s) that created it).
+--     * Slot: authors Description: The names of the note's authors, such as the analysts who wrote it.
 -- # Class: StixOpinion_object_refs
 --     * Slot: StixOpinion_id Description: Autocreated FK slot
 --     * Slot: object_refs_id Description: References to the STIX objects that this object is about or holds.
@@ -1242,7 +1242,7 @@
 --     * Slot: object_marking_refs_id Description: References to the marking definitions that apply to the object.
 -- # Class: StixReport_report_types
 --     * Slot: StixReport_id Description: Autocreated FK slot
---     * Slot: report_types Description: This field is an Open Vocabulary that specifies the primary subject of this report. The suggested values for this field are in report-type-ov.
+--     * Slot: report_types Description: The primary subjects of the report, such as threat-actor.
 -- # Class: StixReport_object_refs
 --     * Slot: StixReport_id Description: Autocreated FK slot
 --     * Slot: object_refs_id Description: References to the STIX objects that this object is about or holds.
@@ -1254,7 +1254,7 @@
 --     * Slot: object_marking_refs_id Description: References to the marking definitions that apply to the object.
 -- # Class: StixThreatActor_threat_actor_types
 --     * Slot: StixThreatActor_id Description: Autocreated FK slot
---     * Slot: threat_actor_types Description: This field specifies the type of threat actor. Open Vocab - threat-actor-type-ov.
+--     * Slot: threat_actor_types Description: The kinds of threat actor, such as nation-state.
 -- # Class: StixThreatActor_aliases
 --     * Slot: StixThreatActor_id Description: Autocreated FK slot
 --     * Slot: aliases Description: Other names by which the object is known.
@@ -1269,7 +1269,7 @@
 --     * Slot: secondary_motivations Description: The secondary reasons, motivations or purposes behind the activity.
 -- # Class: StixThreatActor_personal_motivations
 --     * Slot: StixThreatActor_id Description: Autocreated FK slot
---     * Slot: personal_motivations Description: The personal reasons, motivations, or purposes of the Threat Actor regardless of organizational goals. Open Vocab - attack-motivation-ov.
+--     * Slot: personal_motivations Description: The threat actor's personal reasons or motivations, apart from its organization's goals.
 -- # Class: StixThreatActor_labels
 --     * Slot: StixThreatActor_id Description: Autocreated FK slot
 --     * Slot: labels Description: The labels property specifies a set of terms used to describe this object.
@@ -1281,7 +1281,7 @@
 --     * Slot: aliases Description: Other names by which the object is known.
 -- # Class: StixTool_tool_types
 --     * Slot: StixTool_id Description: Autocreated FK slot
---     * Slot: tool_types Description: The kind(s) of tool(s) being described. Open Vocab - tool-type-ov.
+--     * Slot: tool_types Description: The kinds of tool, such as remote-access.
 -- # Class: StixTool_labels
 --     * Slot: StixTool_id Description: Autocreated FK slot
 --     * Slot: labels Description: The labels property specifies a set of terms used to describe this object.
@@ -1824,8 +1824,8 @@ CREATE TABLE "StixWindowsServiceExtension_descriptions" (
 	PRIMARY KEY ("StixWindowsServiceExtension_id", descriptions),
 	FOREIGN KEY("StixWindowsServiceExtension_id") REFERENCES "StixWindowsServiceExtension" (id)
 );
-CREATE INDEX "ix_StixWindowsServiceExtension_descriptions_descriptions" ON "StixWindowsServiceExtension_descriptions" (descriptions);
 CREATE INDEX "ix_StixWindowsServiceExtension_descriptions_StixWindowsServiceExtension_id" ON "StixWindowsServiceExtension_descriptions" ("StixWindowsServiceExtension_id");
+CREATE INDEX "ix_StixWindowsServiceExtension_descriptions_descriptions" ON "StixWindowsServiceExtension_descriptions" (descriptions);
 
 CREATE TABLE "StixUnixAccountExtension_groups" (
 	"StixUnixAccountExtension_id" INTEGER,
@@ -2491,8 +2491,8 @@ CREATE TABLE "StixIdentity_roles" (
 	PRIMARY KEY ("StixIdentity_id", roles),
 	FOREIGN KEY("StixIdentity_id") REFERENCES "StixIdentity" (id)
 );
-CREATE INDEX "ix_StixIdentity_roles_roles" ON "StixIdentity_roles" (roles);
 CREATE INDEX "ix_StixIdentity_roles_StixIdentity_id" ON "StixIdentity_roles" ("StixIdentity_id");
+CREATE INDEX "ix_StixIdentity_roles_roles" ON "StixIdentity_roles" (roles);
 
 CREATE TABLE "StixIdentity_sectors" (
 	"StixIdentity_id" TEXT,
@@ -2509,8 +2509,8 @@ CREATE TABLE "StixIdentity_labels" (
 	PRIMARY KEY ("StixIdentity_id", labels),
 	FOREIGN KEY("StixIdentity_id") REFERENCES "StixIdentity" (id)
 );
-CREATE INDEX "ix_StixIdentity_labels_labels" ON "StixIdentity_labels" (labels);
 CREATE INDEX "ix_StixIdentity_labels_StixIdentity_id" ON "StixIdentity_labels" ("StixIdentity_id");
+CREATE INDEX "ix_StixIdentity_labels_labels" ON "StixIdentity_labels" (labels);
 
 CREATE TABLE "StixDirectory_contains_refs" (
 	"StixDirectory_id" TEXT,
@@ -2549,8 +2549,8 @@ CREATE TABLE "StixIpv4Address_belongs_to_refs" (
 	FOREIGN KEY("StixIpv4Address_id") REFERENCES "StixIpv4Address" (id),
 	FOREIGN KEY(belongs_to_refs_id) REFERENCES "StixAutonomousSystem" (id)
 );
-CREATE INDEX "ix_StixIpv4Address_belongs_to_refs_StixIpv4Address_id" ON "StixIpv4Address_belongs_to_refs" ("StixIpv4Address_id");
 CREATE INDEX "ix_StixIpv4Address_belongs_to_refs_belongs_to_refs_id" ON "StixIpv4Address_belongs_to_refs" (belongs_to_refs_id);
+CREATE INDEX "ix_StixIpv4Address_belongs_to_refs_StixIpv4Address_id" ON "StixIpv4Address_belongs_to_refs" ("StixIpv4Address_id");
 
 CREATE TABLE "StixIpv6Address_resolves_to_refs" (
 	"StixIpv6Address_id" TEXT,
@@ -2569,8 +2569,8 @@ CREATE TABLE "StixIpv6Address_belongs_to_refs" (
 	FOREIGN KEY("StixIpv6Address_id") REFERENCES "StixIpv6Address" (id),
 	FOREIGN KEY(belongs_to_refs_id) REFERENCES "StixAutonomousSystem" (id)
 );
-CREATE INDEX "ix_StixIpv6Address_belongs_to_refs_belongs_to_refs_id" ON "StixIpv6Address_belongs_to_refs" (belongs_to_refs_id);
 CREATE INDEX "ix_StixIpv6Address_belongs_to_refs_StixIpv6Address_id" ON "StixIpv6Address_belongs_to_refs" ("StixIpv6Address_id");
+CREATE INDEX "ix_StixIpv6Address_belongs_to_refs_belongs_to_refs_id" ON "StixIpv6Address_belongs_to_refs" (belongs_to_refs_id);
 
 CREATE TABLE "StixSoftware_languages" (
 	"StixSoftware_id" TEXT,
@@ -2578,8 +2578,8 @@ CREATE TABLE "StixSoftware_languages" (
 	PRIMARY KEY ("StixSoftware_id", languages),
 	FOREIGN KEY("StixSoftware_id") REFERENCES "StixSoftware" (id)
 );
-CREATE INDEX "ix_StixSoftware_languages_languages" ON "StixSoftware_languages" (languages);
 CREATE INDEX "ix_StixSoftware_languages_StixSoftware_id" ON "StixSoftware_languages" ("StixSoftware_id");
+CREATE INDEX "ix_StixSoftware_languages_languages" ON "StixSoftware_languages" (languages);
 
 CREATE TABLE "StixArchiveExtension_contains_refs" (
 	"StixArchiveExtension_id" INTEGER,
@@ -2588,8 +2588,8 @@ CREATE TABLE "StixArchiveExtension_contains_refs" (
 	FOREIGN KEY("StixArchiveExtension_id") REFERENCES "StixArchiveExtension" (id),
 	FOREIGN KEY(contains_refs_id) REFERENCES "StixCyberObservableObject" (id)
 );
-CREATE INDEX "ix_StixArchiveExtension_contains_refs_contains_refs_id" ON "StixArchiveExtension_contains_refs" (contains_refs_id);
 CREATE INDEX "ix_StixArchiveExtension_contains_refs_StixArchiveExtension_id" ON "StixArchiveExtension_contains_refs" ("StixArchiveExtension_id");
+CREATE INDEX "ix_StixArchiveExtension_contains_refs_contains_refs_id" ON "StixArchiveExtension_contains_refs" (contains_refs_id);
 
 CREATE TABLE "StixKillChainPhase" (
 	id INTEGER NOT NULL,
@@ -2713,8 +2713,8 @@ CREATE TABLE "StixObject_object_marking_refs" (
 	FOREIGN KEY("StixObject_id") REFERENCES "StixObject" (id),
 	FOREIGN KEY(object_marking_refs_id) REFERENCES "StixMarkingDefinition" (id)
 );
-CREATE INDEX "ix_StixObject_object_marking_refs_StixObject_id" ON "StixObject_object_marking_refs" ("StixObject_id");
 CREATE INDEX "ix_StixObject_object_marking_refs_object_marking_refs_id" ON "StixObject_object_marking_refs" (object_marking_refs_id);
+CREATE INDEX "ix_StixObject_object_marking_refs_StixObject_id" ON "StixObject_object_marking_refs" ("StixObject_id");
 
 CREATE TABLE "StixCommonObject_labels" (
 	"StixCommonObject_id" TEXT,
@@ -2732,8 +2732,8 @@ CREATE TABLE "StixCommonObject_object_marking_refs" (
 	FOREIGN KEY("StixCommonObject_id") REFERENCES "StixCommonObject" (id),
 	FOREIGN KEY(object_marking_refs_id) REFERENCES "StixMarkingDefinition" (id)
 );
-CREATE INDEX "ix_StixCommonObject_object_marking_refs_StixCommonObject_id" ON "StixCommonObject_object_marking_refs" ("StixCommonObject_id");
 CREATE INDEX "ix_StixCommonObject_object_marking_refs_object_marking_refs_id" ON "StixCommonObject_object_marking_refs" (object_marking_refs_id);
+CREATE INDEX "ix_StixCommonObject_object_marking_refs_StixCommonObject_id" ON "StixCommonObject_object_marking_refs" ("StixCommonObject_id");
 
 CREATE TABLE "StixDomainObject_labels" (
 	"StixDomainObject_id" TEXT,
@@ -2770,8 +2770,8 @@ CREATE TABLE "StixRelationshipObject_object_marking_refs" (
 	FOREIGN KEY("StixRelationshipObject_id") REFERENCES "StixRelationshipObject" (id),
 	FOREIGN KEY(object_marking_refs_id) REFERENCES "StixMarkingDefinition" (id)
 );
-CREATE INDEX "ix_StixRelationshipObject_object_marking_refs_StixRelationshipObject_id" ON "StixRelationshipObject_object_marking_refs" ("StixRelationshipObject_id");
 CREATE INDEX "ix_StixRelationshipObject_object_marking_refs_object_marking_refs_id" ON "StixRelationshipObject_object_marking_refs" (object_marking_refs_id);
+CREATE INDEX "ix_StixRelationshipObject_object_marking_refs_StixRelationshipObject_id" ON "StixRelationshipObject_object_marking_refs" ("StixRelationshipObject_id");
 
 CREATE TABLE "StixCyberObservableObject_object_marking_refs" (
 	"StixCyberObservableObject_id" TEXT,
@@ -2790,8 +2790,8 @@ CREATE TABLE "StixIdentity_object_marking_refs" (
 	FOREIGN KEY("StixIdentity_id") REFERENCES "StixIdentity" (id),
 	FOREIGN KEY(object_marking_refs_id) REFERENCES "StixMarkingDefinition" (id)
 );
-CREATE INDEX "ix_StixIdentity_object_marking_refs_object_marking_refs_id" ON "StixIdentity_object_marking_refs" (object_marking_refs_id);
 CREATE INDEX "ix_StixIdentity_object_marking_refs_StixIdentity_id" ON "StixIdentity_object_marking_refs" ("StixIdentity_id");
+CREATE INDEX "ix_StixIdentity_object_marking_refs_object_marking_refs_id" ON "StixIdentity_object_marking_refs" (object_marking_refs_id);
 
 CREATE TABLE "StixMarkingDefinition_object_marking_refs" (
 	"StixMarkingDefinition_id" TEXT,
@@ -2800,8 +2800,8 @@ CREATE TABLE "StixMarkingDefinition_object_marking_refs" (
 	FOREIGN KEY("StixMarkingDefinition_id") REFERENCES "StixMarkingDefinition" (id),
 	FOREIGN KEY(object_marking_refs_id) REFERENCES "StixMarkingDefinition" (id)
 );
-CREATE INDEX "ix_StixMarkingDefinition_object_marking_refs_object_marking_refs_id" ON "StixMarkingDefinition_object_marking_refs" (object_marking_refs_id);
 CREATE INDEX "ix_StixMarkingDefinition_object_marking_refs_StixMarkingDefinition_id" ON "StixMarkingDefinition_object_marking_refs" ("StixMarkingDefinition_id");
+CREATE INDEX "ix_StixMarkingDefinition_object_marking_refs_object_marking_refs_id" ON "StixMarkingDefinition_object_marking_refs" (object_marking_refs_id);
 
 CREATE TABLE "StixLanguageContent_labels" (
 	"StixLanguageContent_id" TEXT,
@@ -2809,8 +2809,8 @@ CREATE TABLE "StixLanguageContent_labels" (
 	PRIMARY KEY ("StixLanguageContent_id", labels),
 	FOREIGN KEY("StixLanguageContent_id") REFERENCES "StixLanguageContent" (id)
 );
-CREATE INDEX "ix_StixLanguageContent_labels_labels" ON "StixLanguageContent_labels" (labels);
 CREATE INDEX "ix_StixLanguageContent_labels_StixLanguageContent_id" ON "StixLanguageContent_labels" ("StixLanguageContent_id");
+CREATE INDEX "ix_StixLanguageContent_labels_labels" ON "StixLanguageContent_labels" (labels);
 
 CREATE TABLE "StixLanguageContent_object_marking_refs" (
 	"StixLanguageContent_id" TEXT,
@@ -2819,8 +2819,8 @@ CREATE TABLE "StixLanguageContent_object_marking_refs" (
 	FOREIGN KEY("StixLanguageContent_id") REFERENCES "StixLanguageContent" (id),
 	FOREIGN KEY(object_marking_refs_id) REFERENCES "StixMarkingDefinition" (id)
 );
-CREATE INDEX "ix_StixLanguageContent_object_marking_refs_StixLanguageContent_id" ON "StixLanguageContent_object_marking_refs" ("StixLanguageContent_id");
 CREATE INDEX "ix_StixLanguageContent_object_marking_refs_object_marking_refs_id" ON "StixLanguageContent_object_marking_refs" (object_marking_refs_id);
+CREATE INDEX "ix_StixLanguageContent_object_marking_refs_StixLanguageContent_id" ON "StixLanguageContent_object_marking_refs" ("StixLanguageContent_id");
 
 CREATE TABLE "StixExtensionDefinition_extension_types" (
 	"StixExtensionDefinition_id" TEXT,
@@ -2846,8 +2846,8 @@ CREATE TABLE "StixExtensionDefinition_labels" (
 	PRIMARY KEY ("StixExtensionDefinition_id", labels),
 	FOREIGN KEY("StixExtensionDefinition_id") REFERENCES "StixExtensionDefinition" (id)
 );
-CREATE INDEX "ix_StixExtensionDefinition_labels_labels" ON "StixExtensionDefinition_labels" (labels);
 CREATE INDEX "ix_StixExtensionDefinition_labels_StixExtensionDefinition_id" ON "StixExtensionDefinition_labels" ("StixExtensionDefinition_id");
+CREATE INDEX "ix_StixExtensionDefinition_labels_labels" ON "StixExtensionDefinition_labels" (labels);
 
 CREATE TABLE "StixExtensionDefinition_object_marking_refs" (
 	"StixExtensionDefinition_id" TEXT,
@@ -2886,8 +2886,8 @@ CREATE TABLE "StixDirectory_object_marking_refs" (
 	FOREIGN KEY("StixDirectory_id") REFERENCES "StixDirectory" (id),
 	FOREIGN KEY(object_marking_refs_id) REFERENCES "StixMarkingDefinition" (id)
 );
-CREATE INDEX "ix_StixDirectory_object_marking_refs_StixDirectory_id" ON "StixDirectory_object_marking_refs" ("StixDirectory_id");
 CREATE INDEX "ix_StixDirectory_object_marking_refs_object_marking_refs_id" ON "StixDirectory_object_marking_refs" (object_marking_refs_id);
+CREATE INDEX "ix_StixDirectory_object_marking_refs_StixDirectory_id" ON "StixDirectory_object_marking_refs" ("StixDirectory_id");
 
 CREATE TABLE "StixDomainName_object_marking_refs" (
 	"StixDomainName_id" TEXT,
@@ -2916,8 +2916,8 @@ CREATE TABLE "StixFile_contains_refs" (
 	FOREIGN KEY("StixFile_id") REFERENCES "StixFile" (id),
 	FOREIGN KEY(contains_refs_id) REFERENCES "StixCyberObservableObject" (id)
 );
-CREATE INDEX "ix_StixFile_contains_refs_StixFile_id" ON "StixFile_contains_refs" ("StixFile_id");
 CREATE INDEX "ix_StixFile_contains_refs_contains_refs_id" ON "StixFile_contains_refs" (contains_refs_id);
+CREATE INDEX "ix_StixFile_contains_refs_StixFile_id" ON "StixFile_contains_refs" ("StixFile_id");
 
 CREATE TABLE "StixFile_object_marking_refs" (
 	"StixFile_id" TEXT,
@@ -2946,8 +2946,8 @@ CREATE TABLE "StixIpv6Address_object_marking_refs" (
 	FOREIGN KEY("StixIpv6Address_id") REFERENCES "StixIpv6Address" (id),
 	FOREIGN KEY(object_marking_refs_id) REFERENCES "StixMarkingDefinition" (id)
 );
-CREATE INDEX "ix_StixIpv6Address_object_marking_refs_StixIpv6Address_id" ON "StixIpv6Address_object_marking_refs" ("StixIpv6Address_id");
 CREATE INDEX "ix_StixIpv6Address_object_marking_refs_object_marking_refs_id" ON "StixIpv6Address_object_marking_refs" (object_marking_refs_id);
+CREATE INDEX "ix_StixIpv6Address_object_marking_refs_StixIpv6Address_id" ON "StixIpv6Address_object_marking_refs" ("StixIpv6Address_id");
 
 CREATE TABLE "StixMacAddress_object_marking_refs" (
 	"StixMacAddress_id" TEXT,
@@ -2956,8 +2956,8 @@ CREATE TABLE "StixMacAddress_object_marking_refs" (
 	FOREIGN KEY("StixMacAddress_id") REFERENCES "StixMacAddress" (id),
 	FOREIGN KEY(object_marking_refs_id) REFERENCES "StixMarkingDefinition" (id)
 );
-CREATE INDEX "ix_StixMacAddress_object_marking_refs_StixMacAddress_id" ON "StixMacAddress_object_marking_refs" ("StixMacAddress_id");
 CREATE INDEX "ix_StixMacAddress_object_marking_refs_object_marking_refs_id" ON "StixMacAddress_object_marking_refs" (object_marking_refs_id);
+CREATE INDEX "ix_StixMacAddress_object_marking_refs_StixMacAddress_id" ON "StixMacAddress_object_marking_refs" ("StixMacAddress_id");
 
 CREATE TABLE "StixMutex_object_marking_refs" (
 	"StixMutex_id" TEXT,
@@ -2975,8 +2975,8 @@ CREATE TABLE "StixNetworkTraffic_protocols" (
 	PRIMARY KEY ("StixNetworkTraffic_id", protocols),
 	FOREIGN KEY("StixNetworkTraffic_id") REFERENCES "StixNetworkTraffic" (id)
 );
-CREATE INDEX "ix_StixNetworkTraffic_protocols_protocols" ON "StixNetworkTraffic_protocols" (protocols);
 CREATE INDEX "ix_StixNetworkTraffic_protocols_StixNetworkTraffic_id" ON "StixNetworkTraffic_protocols" ("StixNetworkTraffic_id");
+CREATE INDEX "ix_StixNetworkTraffic_protocols_protocols" ON "StixNetworkTraffic_protocols" (protocols);
 
 CREATE TABLE "StixNetworkTraffic_encapsulates_refs" (
 	"StixNetworkTraffic_id" TEXT,
@@ -2985,8 +2985,8 @@ CREATE TABLE "StixNetworkTraffic_encapsulates_refs" (
 	FOREIGN KEY("StixNetworkTraffic_id") REFERENCES "StixNetworkTraffic" (id),
 	FOREIGN KEY(encapsulates_refs_id) REFERENCES "StixNetworkTraffic" (id)
 );
-CREATE INDEX "ix_StixNetworkTraffic_encapsulates_refs_encapsulates_refs_id" ON "StixNetworkTraffic_encapsulates_refs" (encapsulates_refs_id);
 CREATE INDEX "ix_StixNetworkTraffic_encapsulates_refs_StixNetworkTraffic_id" ON "StixNetworkTraffic_encapsulates_refs" ("StixNetworkTraffic_id");
+CREATE INDEX "ix_StixNetworkTraffic_encapsulates_refs_encapsulates_refs_id" ON "StixNetworkTraffic_encapsulates_refs" (encapsulates_refs_id);
 
 CREATE TABLE "StixNetworkTraffic_object_marking_refs" (
 	"StixNetworkTraffic_id" TEXT,
@@ -2995,8 +2995,8 @@ CREATE TABLE "StixNetworkTraffic_object_marking_refs" (
 	FOREIGN KEY("StixNetworkTraffic_id") REFERENCES "StixNetworkTraffic" (id),
 	FOREIGN KEY(object_marking_refs_id) REFERENCES "StixMarkingDefinition" (id)
 );
-CREATE INDEX "ix_StixNetworkTraffic_object_marking_refs_object_marking_refs_id" ON "StixNetworkTraffic_object_marking_refs" (object_marking_refs_id);
 CREATE INDEX "ix_StixNetworkTraffic_object_marking_refs_StixNetworkTraffic_id" ON "StixNetworkTraffic_object_marking_refs" ("StixNetworkTraffic_id");
+CREATE INDEX "ix_StixNetworkTraffic_object_marking_refs_object_marking_refs_id" ON "StixNetworkTraffic_object_marking_refs" (object_marking_refs_id);
 
 CREATE TABLE "StixSoftware_object_marking_refs" (
 	"StixSoftware_id" TEXT,
@@ -3015,8 +3015,8 @@ CREATE TABLE "StixUrl_object_marking_refs" (
 	FOREIGN KEY("StixUrl_id") REFERENCES "StixUrl" (id),
 	FOREIGN KEY(object_marking_refs_id) REFERENCES "StixMarkingDefinition" (id)
 );
-CREATE INDEX "ix_StixUrl_object_marking_refs_object_marking_refs_id" ON "StixUrl_object_marking_refs" (object_marking_refs_id);
 CREATE INDEX "ix_StixUrl_object_marking_refs_StixUrl_id" ON "StixUrl_object_marking_refs" ("StixUrl_id");
+CREATE INDEX "ix_StixUrl_object_marking_refs_object_marking_refs_id" ON "StixUrl_object_marking_refs" (object_marking_refs_id);
 
 CREATE TABLE "StixUserAccount_object_marking_refs" (
 	"StixUserAccount_id" TEXT,
@@ -3025,8 +3025,8 @@ CREATE TABLE "StixUserAccount_object_marking_refs" (
 	FOREIGN KEY("StixUserAccount_id") REFERENCES "StixUserAccount" (id),
 	FOREIGN KEY(object_marking_refs_id) REFERENCES "StixMarkingDefinition" (id)
 );
-CREATE INDEX "ix_StixUserAccount_object_marking_refs_StixUserAccount_id" ON "StixUserAccount_object_marking_refs" ("StixUserAccount_id");
 CREATE INDEX "ix_StixUserAccount_object_marking_refs_object_marking_refs_id" ON "StixUserAccount_object_marking_refs" (object_marking_refs_id);
+CREATE INDEX "ix_StixUserAccount_object_marking_refs_StixUserAccount_id" ON "StixUserAccount_object_marking_refs" ("StixUserAccount_id");
 
 CREATE TABLE "StixWindowsRegistryKey_object_marking_refs" (
 	"StixWindowsRegistryKey_id" TEXT,
@@ -3035,8 +3035,8 @@ CREATE TABLE "StixWindowsRegistryKey_object_marking_refs" (
 	FOREIGN KEY("StixWindowsRegistryKey_id") REFERENCES "StixWindowsRegistryKey" (id),
 	FOREIGN KEY(object_marking_refs_id) REFERENCES "StixMarkingDefinition" (id)
 );
-CREATE INDEX "ix_StixWindowsRegistryKey_object_marking_refs_StixWindowsRegistryKey_id" ON "StixWindowsRegistryKey_object_marking_refs" ("StixWindowsRegistryKey_id");
 CREATE INDEX "ix_StixWindowsRegistryKey_object_marking_refs_object_marking_refs_id" ON "StixWindowsRegistryKey_object_marking_refs" (object_marking_refs_id);
+CREATE INDEX "ix_StixWindowsRegistryKey_object_marking_refs_StixWindowsRegistryKey_id" ON "StixWindowsRegistryKey_object_marking_refs" ("StixWindowsRegistryKey_id");
 
 CREATE TABLE "StixX509Certificate_object_marking_refs" (
 	"StixX509Certificate_id" TEXT,
@@ -3055,8 +3055,8 @@ CREATE TABLE "StixWindowsServiceExtension_service_dll_refs" (
 	FOREIGN KEY("StixWindowsServiceExtension_id") REFERENCES "StixWindowsServiceExtension" (id),
 	FOREIGN KEY(service_dll_refs_id) REFERENCES "StixFile" (id)
 );
-CREATE INDEX "ix_StixWindowsServiceExtension_service_dll_refs_service_dll_refs_id" ON "StixWindowsServiceExtension_service_dll_refs" (service_dll_refs_id);
 CREATE INDEX "ix_StixWindowsServiceExtension_service_dll_refs_StixWindowsServiceExtension_id" ON "StixWindowsServiceExtension_service_dll_refs" ("StixWindowsServiceExtension_id");
+CREATE INDEX "ix_StixWindowsServiceExtension_service_dll_refs_service_dll_refs_id" ON "StixWindowsServiceExtension_service_dll_refs" (service_dll_refs_id);
 
 CREATE TABLE "StixAttackPattern_aliases" (
 	"StixAttackPattern_id" TEXT,
@@ -3073,8 +3073,8 @@ CREATE TABLE "StixAttackPattern_labels" (
 	PRIMARY KEY ("StixAttackPattern_id", labels),
 	FOREIGN KEY("StixAttackPattern_id") REFERENCES "StixAttackPattern" (id)
 );
-CREATE INDEX "ix_StixAttackPattern_labels_labels" ON "StixAttackPattern_labels" (labels);
 CREATE INDEX "ix_StixAttackPattern_labels_StixAttackPattern_id" ON "StixAttackPattern_labels" ("StixAttackPattern_id");
+CREATE INDEX "ix_StixAttackPattern_labels_labels" ON "StixAttackPattern_labels" (labels);
 
 CREATE TABLE "StixAttackPattern_object_marking_refs" (
 	"StixAttackPattern_id" TEXT,
@@ -3083,8 +3083,8 @@ CREATE TABLE "StixAttackPattern_object_marking_refs" (
 	FOREIGN KEY("StixAttackPattern_id") REFERENCES "StixAttackPattern" (id),
 	FOREIGN KEY(object_marking_refs_id) REFERENCES "StixMarkingDefinition" (id)
 );
-CREATE INDEX "ix_StixAttackPattern_object_marking_refs_object_marking_refs_id" ON "StixAttackPattern_object_marking_refs" (object_marking_refs_id);
 CREATE INDEX "ix_StixAttackPattern_object_marking_refs_StixAttackPattern_id" ON "StixAttackPattern_object_marking_refs" ("StixAttackPattern_id");
+CREATE INDEX "ix_StixAttackPattern_object_marking_refs_object_marking_refs_id" ON "StixAttackPattern_object_marking_refs" (object_marking_refs_id);
 
 CREATE TABLE "StixCampaign_aliases" (
 	"StixCampaign_id" TEXT,
@@ -3092,8 +3092,8 @@ CREATE TABLE "StixCampaign_aliases" (
 	PRIMARY KEY ("StixCampaign_id", aliases),
 	FOREIGN KEY("StixCampaign_id") REFERENCES "StixCampaign" (id)
 );
-CREATE INDEX "ix_StixCampaign_aliases_aliases" ON "StixCampaign_aliases" (aliases);
 CREATE INDEX "ix_StixCampaign_aliases_StixCampaign_id" ON "StixCampaign_aliases" ("StixCampaign_id");
+CREATE INDEX "ix_StixCampaign_aliases_aliases" ON "StixCampaign_aliases" (aliases);
 
 CREATE TABLE "StixCampaign_labels" (
 	"StixCampaign_id" TEXT,
@@ -3101,8 +3101,8 @@ CREATE TABLE "StixCampaign_labels" (
 	PRIMARY KEY ("StixCampaign_id", labels),
 	FOREIGN KEY("StixCampaign_id") REFERENCES "StixCampaign" (id)
 );
-CREATE INDEX "ix_StixCampaign_labels_StixCampaign_id" ON "StixCampaign_labels" ("StixCampaign_id");
 CREATE INDEX "ix_StixCampaign_labels_labels" ON "StixCampaign_labels" (labels);
+CREATE INDEX "ix_StixCampaign_labels_StixCampaign_id" ON "StixCampaign_labels" ("StixCampaign_id");
 
 CREATE TABLE "StixCampaign_object_marking_refs" (
 	"StixCampaign_id" TEXT,
@@ -3120,8 +3120,8 @@ CREATE TABLE "StixCourseOfAction_labels" (
 	PRIMARY KEY ("StixCourseOfAction_id", labels),
 	FOREIGN KEY("StixCourseOfAction_id") REFERENCES "StixCourseOfAction" (id)
 );
-CREATE INDEX "ix_StixCourseOfAction_labels_labels" ON "StixCourseOfAction_labels" (labels);
 CREATE INDEX "ix_StixCourseOfAction_labels_StixCourseOfAction_id" ON "StixCourseOfAction_labels" ("StixCourseOfAction_id");
+CREATE INDEX "ix_StixCourseOfAction_labels_labels" ON "StixCourseOfAction_labels" (labels);
 
 CREATE TABLE "StixCourseOfAction_object_marking_refs" (
 	"StixCourseOfAction_id" TEXT,
@@ -3178,8 +3178,8 @@ CREATE TABLE "StixIncident_object_marking_refs" (
 	FOREIGN KEY("StixIncident_id") REFERENCES "StixIncident" (id),
 	FOREIGN KEY(object_marking_refs_id) REFERENCES "StixMarkingDefinition" (id)
 );
-CREATE INDEX "ix_StixIncident_object_marking_refs_StixIncident_id" ON "StixIncident_object_marking_refs" ("StixIncident_id");
 CREATE INDEX "ix_StixIncident_object_marking_refs_object_marking_refs_id" ON "StixIncident_object_marking_refs" (object_marking_refs_id);
+CREATE INDEX "ix_StixIncident_object_marking_refs_StixIncident_id" ON "StixIncident_object_marking_refs" ("StixIncident_id");
 
 CREATE TABLE "StixIndicator_indicator_types" (
 	"StixIndicator_id" TEXT,
@@ -3196,8 +3196,8 @@ CREATE TABLE "StixIndicator_labels" (
 	PRIMARY KEY ("StixIndicator_id", labels),
 	FOREIGN KEY("StixIndicator_id") REFERENCES "StixIndicator" (id)
 );
-CREATE INDEX "ix_StixIndicator_labels_labels" ON "StixIndicator_labels" (labels);
 CREATE INDEX "ix_StixIndicator_labels_StixIndicator_id" ON "StixIndicator_labels" ("StixIndicator_id");
+CREATE INDEX "ix_StixIndicator_labels_labels" ON "StixIndicator_labels" (labels);
 
 CREATE TABLE "StixIndicator_object_marking_refs" (
 	"StixIndicator_id" TEXT,
@@ -3233,8 +3233,8 @@ CREATE TABLE "StixInfrastructure_labels" (
 	PRIMARY KEY ("StixInfrastructure_id", labels),
 	FOREIGN KEY("StixInfrastructure_id") REFERENCES "StixInfrastructure" (id)
 );
-CREATE INDEX "ix_StixInfrastructure_labels_labels" ON "StixInfrastructure_labels" (labels);
 CREATE INDEX "ix_StixInfrastructure_labels_StixInfrastructure_id" ON "StixInfrastructure_labels" ("StixInfrastructure_id");
+CREATE INDEX "ix_StixInfrastructure_labels_labels" ON "StixInfrastructure_labels" (labels);
 
 CREATE TABLE "StixInfrastructure_object_marking_refs" (
 	"StixInfrastructure_id" TEXT,
@@ -3270,8 +3270,8 @@ CREATE TABLE "StixIntrusionSet_secondary_motivations" (
 	PRIMARY KEY ("StixIntrusionSet_id", secondary_motivations),
 	FOREIGN KEY("StixIntrusionSet_id") REFERENCES "StixIntrusionSet" (id)
 );
-CREATE INDEX "ix_StixIntrusionSet_secondary_motivations_secondary_motivations" ON "StixIntrusionSet_secondary_motivations" (secondary_motivations);
 CREATE INDEX "ix_StixIntrusionSet_secondary_motivations_StixIntrusionSet_id" ON "StixIntrusionSet_secondary_motivations" ("StixIntrusionSet_id");
+CREATE INDEX "ix_StixIntrusionSet_secondary_motivations_secondary_motivations" ON "StixIntrusionSet_secondary_motivations" (secondary_motivations);
 
 CREATE TABLE "StixIntrusionSet_labels" (
 	"StixIntrusionSet_id" TEXT,
@@ -3327,8 +3327,8 @@ CREATE TABLE "StixMalware_operating_system_refs" (
 	FOREIGN KEY("StixMalware_id") REFERENCES "StixMalware" (id),
 	FOREIGN KEY(operating_system_refs_id) REFERENCES "StixSoftware" (id)
 );
-CREATE INDEX "ix_StixMalware_operating_system_refs_StixMalware_id" ON "StixMalware_operating_system_refs" ("StixMalware_id");
 CREATE INDEX "ix_StixMalware_operating_system_refs_operating_system_refs_id" ON "StixMalware_operating_system_refs" (operating_system_refs_id);
+CREATE INDEX "ix_StixMalware_operating_system_refs_StixMalware_id" ON "StixMalware_operating_system_refs" ("StixMalware_id");
 
 CREATE TABLE "StixMalware_architecture_execution_envs" (
 	"StixMalware_id" TEXT,
@@ -3336,8 +3336,8 @@ CREATE TABLE "StixMalware_architecture_execution_envs" (
 	PRIMARY KEY ("StixMalware_id", architecture_execution_envs),
 	FOREIGN KEY("StixMalware_id") REFERENCES "StixMalware" (id)
 );
-CREATE INDEX "ix_StixMalware_architecture_execution_envs_architecture_execution_envs" ON "StixMalware_architecture_execution_envs" (architecture_execution_envs);
 CREATE INDEX "ix_StixMalware_architecture_execution_envs_StixMalware_id" ON "StixMalware_architecture_execution_envs" ("StixMalware_id");
+CREATE INDEX "ix_StixMalware_architecture_execution_envs_architecture_execution_envs" ON "StixMalware_architecture_execution_envs" (architecture_execution_envs);
 
 CREATE TABLE "StixMalware_implementation_languages" (
 	"StixMalware_id" TEXT,
@@ -3345,8 +3345,8 @@ CREATE TABLE "StixMalware_implementation_languages" (
 	PRIMARY KEY ("StixMalware_id", implementation_languages),
 	FOREIGN KEY("StixMalware_id") REFERENCES "StixMalware" (id)
 );
-CREATE INDEX "ix_StixMalware_implementation_languages_StixMalware_id" ON "StixMalware_implementation_languages" ("StixMalware_id");
 CREATE INDEX "ix_StixMalware_implementation_languages_implementation_languages" ON "StixMalware_implementation_languages" (implementation_languages);
+CREATE INDEX "ix_StixMalware_implementation_languages_StixMalware_id" ON "StixMalware_implementation_languages" ("StixMalware_id");
 
 CREATE TABLE "StixMalware_capabilities" (
 	"StixMalware_id" TEXT,
@@ -3354,8 +3354,8 @@ CREATE TABLE "StixMalware_capabilities" (
 	PRIMARY KEY ("StixMalware_id", capabilities),
 	FOREIGN KEY("StixMalware_id") REFERENCES "StixMalware" (id)
 );
-CREATE INDEX "ix_StixMalware_capabilities_StixMalware_id" ON "StixMalware_capabilities" ("StixMalware_id");
 CREATE INDEX "ix_StixMalware_capabilities_capabilities" ON "StixMalware_capabilities" (capabilities);
+CREATE INDEX "ix_StixMalware_capabilities_StixMalware_id" ON "StixMalware_capabilities" ("StixMalware_id");
 
 CREATE TABLE "StixMalware_sample_refs" (
 	"StixMalware_id" TEXT,
@@ -3364,8 +3364,8 @@ CREATE TABLE "StixMalware_sample_refs" (
 	FOREIGN KEY("StixMalware_id") REFERENCES "StixMalware" (id),
 	FOREIGN KEY(sample_refs_id) REFERENCES "StixCyberObservableObject" (id)
 );
-CREATE INDEX "ix_StixMalware_sample_refs_StixMalware_id" ON "StixMalware_sample_refs" ("StixMalware_id");
 CREATE INDEX "ix_StixMalware_sample_refs_sample_refs_id" ON "StixMalware_sample_refs" (sample_refs_id);
+CREATE INDEX "ix_StixMalware_sample_refs_StixMalware_id" ON "StixMalware_sample_refs" ("StixMalware_id");
 
 CREATE TABLE "StixMalware_malware_types" (
 	"StixMalware_id" TEXT,
@@ -3373,8 +3373,8 @@ CREATE TABLE "StixMalware_malware_types" (
 	PRIMARY KEY ("StixMalware_id", malware_types),
 	FOREIGN KEY("StixMalware_id") REFERENCES "StixMalware" (id)
 );
-CREATE INDEX "ix_StixMalware_malware_types_malware_types" ON "StixMalware_malware_types" (malware_types);
 CREATE INDEX "ix_StixMalware_malware_types_StixMalware_id" ON "StixMalware_malware_types" ("StixMalware_id");
+CREATE INDEX "ix_StixMalware_malware_types_malware_types" ON "StixMalware_malware_types" (malware_types);
 
 CREATE TABLE "StixMalware_labels" (
 	"StixMalware_id" TEXT,
@@ -3392,8 +3392,8 @@ CREATE TABLE "StixMalware_object_marking_refs" (
 	FOREIGN KEY("StixMalware_id") REFERENCES "StixMalware" (id),
 	FOREIGN KEY(object_marking_refs_id) REFERENCES "StixMarkingDefinition" (id)
 );
-CREATE INDEX "ix_StixMalware_object_marking_refs_StixMalware_id" ON "StixMalware_object_marking_refs" ("StixMalware_id");
 CREATE INDEX "ix_StixMalware_object_marking_refs_object_marking_refs_id" ON "StixMalware_object_marking_refs" (object_marking_refs_id);
+CREATE INDEX "ix_StixMalware_object_marking_refs_StixMalware_id" ON "StixMalware_object_marking_refs" ("StixMalware_id");
 
 CREATE TABLE "StixMalwareAnalysis_modules" (
 	"StixMalwareAnalysis_id" TEXT,
@@ -3440,8 +3440,8 @@ CREATE TABLE "StixMalwareAnalysis_object_marking_refs" (
 	FOREIGN KEY("StixMalwareAnalysis_id") REFERENCES "StixMalwareAnalysis" (id),
 	FOREIGN KEY(object_marking_refs_id) REFERENCES "StixMarkingDefinition" (id)
 );
-CREATE INDEX "ix_StixMalwareAnalysis_object_marking_refs_StixMalwareAnalysis_id" ON "StixMalwareAnalysis_object_marking_refs" ("StixMalwareAnalysis_id");
 CREATE INDEX "ix_StixMalwareAnalysis_object_marking_refs_object_marking_refs_id" ON "StixMalwareAnalysis_object_marking_refs" (object_marking_refs_id);
+CREATE INDEX "ix_StixMalwareAnalysis_object_marking_refs_StixMalwareAnalysis_id" ON "StixMalwareAnalysis_object_marking_refs" ("StixMalwareAnalysis_id");
 
 CREATE TABLE "StixNote_authors" (
 	"StixNote_id" TEXT,
@@ -3478,8 +3478,8 @@ CREATE TABLE "StixNote_object_marking_refs" (
 	FOREIGN KEY("StixNote_id") REFERENCES "StixNote" (id),
 	FOREIGN KEY(object_marking_refs_id) REFERENCES "StixMarkingDefinition" (id)
 );
-CREATE INDEX "ix_StixNote_object_marking_refs_StixNote_id" ON "StixNote_object_marking_refs" ("StixNote_id");
 CREATE INDEX "ix_StixNote_object_marking_refs_object_marking_refs_id" ON "StixNote_object_marking_refs" (object_marking_refs_id);
+CREATE INDEX "ix_StixNote_object_marking_refs_StixNote_id" ON "StixNote_object_marking_refs" ("StixNote_id");
 
 CREATE TABLE "StixObservedData_object_refs" (
 	"StixObservedData_id" TEXT,
@@ -3497,8 +3497,8 @@ CREATE TABLE "StixObservedData_labels" (
 	PRIMARY KEY ("StixObservedData_id", labels),
 	FOREIGN KEY("StixObservedData_id") REFERENCES "StixObservedData" (id)
 );
-CREATE INDEX "ix_StixObservedData_labels_labels" ON "StixObservedData_labels" (labels);
 CREATE INDEX "ix_StixObservedData_labels_StixObservedData_id" ON "StixObservedData_labels" ("StixObservedData_id");
+CREATE INDEX "ix_StixObservedData_labels_labels" ON "StixObservedData_labels" (labels);
 
 CREATE TABLE "StixObservedData_object_marking_refs" (
 	"StixObservedData_id" TEXT,
@@ -3535,8 +3535,8 @@ CREATE TABLE "StixOpinion_labels" (
 	PRIMARY KEY ("StixOpinion_id", labels),
 	FOREIGN KEY("StixOpinion_id") REFERENCES "StixOpinion" (id)
 );
-CREATE INDEX "ix_StixOpinion_labels_labels" ON "StixOpinion_labels" (labels);
 CREATE INDEX "ix_StixOpinion_labels_StixOpinion_id" ON "StixOpinion_labels" ("StixOpinion_id");
+CREATE INDEX "ix_StixOpinion_labels_labels" ON "StixOpinion_labels" (labels);
 
 CREATE TABLE "StixOpinion_object_marking_refs" (
 	"StixOpinion_id" TEXT,
@@ -3554,8 +3554,8 @@ CREATE TABLE "StixReport_report_types" (
 	PRIMARY KEY ("StixReport_id", report_types),
 	FOREIGN KEY("StixReport_id") REFERENCES "StixReport" (id)
 );
-CREATE INDEX "ix_StixReport_report_types_report_types" ON "StixReport_report_types" (report_types);
 CREATE INDEX "ix_StixReport_report_types_StixReport_id" ON "StixReport_report_types" ("StixReport_id");
+CREATE INDEX "ix_StixReport_report_types_report_types" ON "StixReport_report_types" (report_types);
 
 CREATE TABLE "StixReport_object_refs" (
 	"StixReport_id" TEXT,
@@ -3601,8 +3601,8 @@ CREATE TABLE "StixThreatActor_aliases" (
 	PRIMARY KEY ("StixThreatActor_id", aliases),
 	FOREIGN KEY("StixThreatActor_id") REFERENCES "StixThreatActor" (id)
 );
-CREATE INDEX "ix_StixThreatActor_aliases_aliases" ON "StixThreatActor_aliases" (aliases);
 CREATE INDEX "ix_StixThreatActor_aliases_StixThreatActor_id" ON "StixThreatActor_aliases" ("StixThreatActor_id");
+CREATE INDEX "ix_StixThreatActor_aliases_aliases" ON "StixThreatActor_aliases" (aliases);
 
 CREATE TABLE "StixThreatActor_roles" (
 	"StixThreatActor_id" TEXT,
@@ -3619,8 +3619,8 @@ CREATE TABLE "StixThreatActor_goals" (
 	PRIMARY KEY ("StixThreatActor_id", goals),
 	FOREIGN KEY("StixThreatActor_id") REFERENCES "StixThreatActor" (id)
 );
-CREATE INDEX "ix_StixThreatActor_goals_goals" ON "StixThreatActor_goals" (goals);
 CREATE INDEX "ix_StixThreatActor_goals_StixThreatActor_id" ON "StixThreatActor_goals" ("StixThreatActor_id");
+CREATE INDEX "ix_StixThreatActor_goals_goals" ON "StixThreatActor_goals" (goals);
 
 CREATE TABLE "StixThreatActor_secondary_motivations" (
 	"StixThreatActor_id" TEXT,
@@ -3628,8 +3628,8 @@ CREATE TABLE "StixThreatActor_secondary_motivations" (
 	PRIMARY KEY ("StixThreatActor_id", secondary_motivations),
 	FOREIGN KEY("StixThreatActor_id") REFERENCES "StixThreatActor" (id)
 );
-CREATE INDEX "ix_StixThreatActor_secondary_motivations_secondary_motivations" ON "StixThreatActor_secondary_motivations" (secondary_motivations);
 CREATE INDEX "ix_StixThreatActor_secondary_motivations_StixThreatActor_id" ON "StixThreatActor_secondary_motivations" ("StixThreatActor_id");
+CREATE INDEX "ix_StixThreatActor_secondary_motivations_secondary_motivations" ON "StixThreatActor_secondary_motivations" (secondary_motivations);
 
 CREATE TABLE "StixThreatActor_personal_motivations" (
 	"StixThreatActor_id" TEXT,
@@ -3665,8 +3665,8 @@ CREATE TABLE "StixTool_aliases" (
 	PRIMARY KEY ("StixTool_id", aliases),
 	FOREIGN KEY("StixTool_id") REFERENCES "StixTool" (id)
 );
-CREATE INDEX "ix_StixTool_aliases_aliases" ON "StixTool_aliases" (aliases);
 CREATE INDEX "ix_StixTool_aliases_StixTool_id" ON "StixTool_aliases" ("StixTool_id");
+CREATE INDEX "ix_StixTool_aliases_aliases" ON "StixTool_aliases" (aliases);
 
 CREATE TABLE "StixTool_tool_types" (
 	"StixTool_id" TEXT,
@@ -3702,8 +3702,8 @@ CREATE TABLE "StixVulnerability_labels" (
 	PRIMARY KEY ("StixVulnerability_id", labels),
 	FOREIGN KEY("StixVulnerability_id") REFERENCES "StixVulnerability" (id)
 );
-CREATE INDEX "ix_StixVulnerability_labels_labels" ON "StixVulnerability_labels" (labels);
 CREATE INDEX "ix_StixVulnerability_labels_StixVulnerability_id" ON "StixVulnerability_labels" ("StixVulnerability_id");
+CREATE INDEX "ix_StixVulnerability_labels_labels" ON "StixVulnerability_labels" (labels);
 
 CREATE TABLE "StixVulnerability_object_marking_refs" (
 	"StixVulnerability_id" TEXT,
@@ -3721,8 +3721,8 @@ CREATE TABLE "StixRelationship_labels" (
 	PRIMARY KEY ("StixRelationship_id", labels),
 	FOREIGN KEY("StixRelationship_id") REFERENCES "StixRelationship" (id)
 );
-CREATE INDEX "ix_StixRelationship_labels_StixRelationship_id" ON "StixRelationship_labels" ("StixRelationship_id");
 CREATE INDEX "ix_StixRelationship_labels_labels" ON "StixRelationship_labels" (labels);
+CREATE INDEX "ix_StixRelationship_labels_StixRelationship_id" ON "StixRelationship_labels" ("StixRelationship_id");
 
 CREATE TABLE "StixRelationship_object_marking_refs" (
 	"StixRelationship_id" TEXT,
@@ -3923,8 +3923,8 @@ CREATE TABLE "StixEmailMessage_to_refs" (
 	FOREIGN KEY("StixEmailMessage_id") REFERENCES "StixEmailMessage" (id),
 	FOREIGN KEY(to_refs_id) REFERENCES "StixEmailAddress" (id)
 );
-CREATE INDEX "ix_StixEmailMessage_to_refs_StixEmailMessage_id" ON "StixEmailMessage_to_refs" ("StixEmailMessage_id");
 CREATE INDEX "ix_StixEmailMessage_to_refs_to_refs_id" ON "StixEmailMessage_to_refs" (to_refs_id);
+CREATE INDEX "ix_StixEmailMessage_to_refs_StixEmailMessage_id" ON "StixEmailMessage_to_refs" ("StixEmailMessage_id");
 
 CREATE TABLE "StixEmailMessage_cc_refs" (
 	"StixEmailMessage_id" TEXT,
@@ -3982,8 +3982,8 @@ CREATE TABLE "StixProcess_child_refs" (
 	FOREIGN KEY("StixProcess_id") REFERENCES "StixProcess" (id),
 	FOREIGN KEY(child_refs_id) REFERENCES "StixProcess" (id)
 );
-CREATE INDEX "ix_StixProcess_child_refs_child_refs_id" ON "StixProcess_child_refs" (child_refs_id);
 CREATE INDEX "ix_StixProcess_child_refs_StixProcess_id" ON "StixProcess_child_refs" ("StixProcess_id");
+CREATE INDEX "ix_StixProcess_child_refs_child_refs_id" ON "StixProcess_child_refs" (child_refs_id);
 
 CREATE TABLE "StixProcess_object_marking_refs" (
 	"StixProcess_id" TEXT,
@@ -3992,8 +3992,8 @@ CREATE TABLE "StixProcess_object_marking_refs" (
 	FOREIGN KEY("StixProcess_id") REFERENCES "StixProcess" (id),
 	FOREIGN KEY(object_marking_refs_id) REFERENCES "StixMarkingDefinition" (id)
 );
-CREATE INDEX "ix_StixProcess_object_marking_refs_StixProcess_id" ON "StixProcess_object_marking_refs" ("StixProcess_id");
 CREATE INDEX "ix_StixProcess_object_marking_refs_object_marking_refs_id" ON "StixProcess_object_marking_refs" (object_marking_refs_id);
+CREATE INDEX "ix_StixProcess_object_marking_refs_StixProcess_id" ON "StixProcess_object_marking_refs" ("StixProcess_id");
 
 CREATE TABLE "StixSighting_observed_data_refs" (
 	"StixSighting_id" TEXT,
@@ -4002,8 +4002,8 @@ CREATE TABLE "StixSighting_observed_data_refs" (
 	FOREIGN KEY("StixSighting_id") REFERENCES "StixSighting" (id),
 	FOREIGN KEY(observed_data_refs_id) REFERENCES "StixObservedData" (id)
 );
-CREATE INDEX "ix_StixSighting_observed_data_refs_observed_data_refs_id" ON "StixSighting_observed_data_refs" (observed_data_refs_id);
 CREATE INDEX "ix_StixSighting_observed_data_refs_StixSighting_id" ON "StixSighting_observed_data_refs" ("StixSighting_id");
+CREATE INDEX "ix_StixSighting_observed_data_refs_observed_data_refs_id" ON "StixSighting_observed_data_refs" (observed_data_refs_id);
 
 CREATE TABLE "StixSighting_where_sighted_refs" (
 	"StixSighting_id" TEXT,
@@ -4012,8 +4012,8 @@ CREATE TABLE "StixSighting_where_sighted_refs" (
 	FOREIGN KEY("StixSighting_id") REFERENCES "StixSighting" (id),
 	FOREIGN KEY(where_sighted_refs_id) REFERENCES "StixDomainObject" (id)
 );
-CREATE INDEX "ix_StixSighting_where_sighted_refs_where_sighted_refs_id" ON "StixSighting_where_sighted_refs" (where_sighted_refs_id);
 CREATE INDEX "ix_StixSighting_where_sighted_refs_StixSighting_id" ON "StixSighting_where_sighted_refs" ("StixSighting_id");
+CREATE INDEX "ix_StixSighting_where_sighted_refs_where_sighted_refs_id" ON "StixSighting_where_sighted_refs" (where_sighted_refs_id);
 
 CREATE TABLE "StixSighting_labels" (
 	"StixSighting_id" TEXT,
@@ -4021,8 +4021,8 @@ CREATE TABLE "StixSighting_labels" (
 	PRIMARY KEY ("StixSighting_id", labels),
 	FOREIGN KEY("StixSighting_id") REFERENCES "StixSighting" (id)
 );
-CREATE INDEX "ix_StixSighting_labels_labels" ON "StixSighting_labels" (labels);
 CREATE INDEX "ix_StixSighting_labels_StixSighting_id" ON "StixSighting_labels" ("StixSighting_id");
+CREATE INDEX "ix_StixSighting_labels_labels" ON "StixSighting_labels" (labels);
 
 CREATE TABLE "StixSighting_object_marking_refs" (
 	"StixSighting_id" TEXT,
@@ -4040,5 +4040,5 @@ CREATE TABLE "StixGranularMarking_selectors" (
 	PRIMARY KEY ("StixGranularMarking_id", selectors),
 	FOREIGN KEY("StixGranularMarking_id") REFERENCES "StixGranularMarking" (id)
 );
-CREATE INDEX "ix_StixGranularMarking_selectors_StixGranularMarking_id" ON "StixGranularMarking_selectors" ("StixGranularMarking_id");
 CREATE INDEX "ix_StixGranularMarking_selectors_selectors" ON "StixGranularMarking_selectors" (selectors);
+CREATE INDEX "ix_StixGranularMarking_selectors_StixGranularMarking_id" ON "StixGranularMarking_selectors" ("StixGranularMarking_id");

@@ -10,7 +10,7 @@ import java.util.List;
 import lombok.*;
 
 /**
-  The Artifact Object permits capturing an array of bytes (8-bits), as a base64-encoded string string, or linking to a file-like payload.
+  An array of bytes, carried as base64 in payload_bin, or a link to a file-like payload.
 **/
 @Data
 @EqualsAndHashCode(callSuper=false)

@@ -2233,7 +2233,7 @@
     {
       "name": "modified",
       "definition_uri": "https://w3id.org/lmodel/stix/modified",
-      "description": "The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.",
+      "description": "The time at which this version of the object was modified.",
       "from_schema": "https://w3id.org/lmodel/stix/stix_core",
       "mappings": [
         "https://w3id.org/lmodel/stix/modified"
@@ -2465,7 +2465,7 @@
     {
       "name": "identity_class",
       "definition_uri": "https://w3id.org/lmodel/stix/identity_class",
-      "description": "The type of entity that this Identity describes, e.g., an individual or organization. Open Vocab - identity-class-ov.",
+      "description": "The kind of entity the identity describes, such as an individual or an organization.",
       "from_schema": "https://w3id.org/lmodel/stix/stix_core",
       "mappings": [
         "https://w3id.org/lmodel/stix/identity_class"
@@ -2491,7 +2491,7 @@
     {
       "name": "sectors",
       "definition_uri": "https://w3id.org/lmodel/stix/sectors",
-      "description": "The list of sectors that this Identity belongs to. Open Vocab - industry-sector-ov.",
+      "description": "The industry sectors that the identity belongs to.",
       "from_schema": "https://w3id.org/lmodel/stix/stix_core",
       "mappings": [
         "https://w3id.org/lmodel/stix/sectors"
@@ -2935,7 +2935,7 @@
     {
       "name": "mime_type",
       "definition_uri": "https://w3id.org/lmodel/stix/mime_type",
-      "description": "The value of this property MUST be a valid MIME type as specified in the IANA Media Types registry.",
+      "description": "The MIME type of the content, as the IANA Media Types registry names it.",
       "from_schema": "https://w3id.org/lmodel/stix/stix_sco",
       "mappings": [
         "https://w3id.org/lmodel/stix/mime_type"
@@ -3458,7 +3458,10 @@
     {
       "name": "body_multipart",
       "definition_uri": "https://w3id.org/lmodel/stix/body_multipart",
-      "description": "Specifies a list of the MIME parts that make up the email body. This property MAY only be used if is_multipart is true.",
+      "description": "The MIME parts that make up a multipart email body.",
+      "comments": [
+        "Present only when is_multipart is true."
+      ],
       "from_schema": "https://w3id.org/lmodel/stix/stix_sco",
       "mappings": [
         "https://w3id.org/lmodel/stix/body_multipart"
@@ -3686,7 +3689,7 @@
     {
       "name": "src_port",
       "definition_uri": "https://w3id.org/lmodel/stix/src_port",
-      "description": "Specifies the source port used in the network traffic, as an integer. The port value MUST be in the range of 0 - 65535.",
+      "description": "The source port of the traffic.",
       "from_schema": "https://w3id.org/lmodel/stix/stix_sco",
       "mappings": [
         "https://w3id.org/lmodel/stix/src_port"
@@ -3704,7 +3707,7 @@
     {
       "name": "dst_port",
       "definition_uri": "https://w3id.org/lmodel/stix/dst_port",
-      "description": "Specifies the destination port used in the network traffic, as an integer. The port value MUST be in the range of 0 - 65535.",
+      "description": "The destination port of the traffic.",
       "from_schema": "https://w3id.org/lmodel/stix/stix_sco",
       "mappings": [
         "https://w3id.org/lmodel/stix/dst_port"
@@ -4096,7 +4099,10 @@
     {
       "name": "cpe",
       "definition_uri": "https://w3id.org/lmodel/stix/cpe",
-      "description": "Specifies the Common Platform Enumeration (CPE) entry for the software, if available. The value for this property MUST be a CPE v2.3 entry from the official NVD CPE Dictionary.",
+      "description": "The Common Platform Enumeration (CPE) 2.3 name of the software, if it has one.",
+      "comments": [
+        "STIX asks for an entry of the NVD CPE Dictionary."
+      ],
       "from_schema": "https://w3id.org/lmodel/stix/stix_sco",
       "mappings": [
         "https://w3id.org/lmodel/stix/cpe"
@@ -4129,7 +4135,10 @@
     {
       "name": "languages",
       "definition_uri": "https://w3id.org/lmodel/stix/languages",
-      "description": "Specifies the languages supported by the software. The value of each list member MUST be an RFC 5646 language code. ISO 639-2 codes are accepted for backward compatibility.",
+      "description": "The languages the software supports, as RFC 5646 language codes.",
+      "comments": [
+        "ISO 639-2 codes are accepted too, for backward compatibility."
+      ],
       "from_schema": "https://w3id.org/lmodel/stix/stix_sco",
       "mappings": [
         "https://w3id.org/lmodel/stix/languages"
@@ -4180,7 +4189,10 @@
     {
       "name": "credential",
       "definition_uri": "https://w3id.org/lmodel/stix/credential",
-      "description": "Specifies a cleartext credential. This is only intended to be used in capturing metadata from malware analysis (e.g., a hard-coded domain administrator password that the malware attempts to use for lateral movement) and SHOULD NOT be used for sharing of PII.",
+      "description": "A cleartext credential, such as a hard-coded password that malware tries for lateral movement.",
+      "comments": [
+        "Meant for metadata from malware analysis, not for sharing personal information."
+      ],
       "from_schema": "https://w3id.org/lmodel/stix/stix_sco",
       "mappings": [
         "https://w3id.org/lmodel/stix/credential"
@@ -4212,7 +4224,7 @@
     {
       "name": "account_type",
       "definition_uri": "https://w3id.org/lmodel/stix/account_type",
-      "description": "Specifies the type of the account. This is an open vocabulary and values SHOULD come from the account-type-ov vocabulary.",
+      "description": "The type of the account, such as unix or ldap.",
       "from_schema": "https://w3id.org/lmodel/stix/stix_sco",
       "mappings": [
         "https://w3id.org/lmodel/stix/account_type"
@@ -4796,7 +4808,7 @@
     {
       "name": "pe_type",
       "definition_uri": "https://w3id.org/lmodel/stix/pe_type",
-      "description": "Specifies the type of the PE binary. Open Vocabulary - windows-pebinary-type-ov.",
+      "description": "The type of the PE binary, such as exe or dll.",
       "from_schema": "https://w3id.org/lmodel/stix/stix_sco",
       "mappings": [
         "https://w3id.org/lmodel/stix/pe_type"
@@ -4871,7 +4883,7 @@
     {
       "name": "time_date_stamp",
       "definition_uri": "https://w3id.org/lmodel/stix/time_date_stamp",
-      "description": "Specifies the time when the PE binary was created. The timestamp value MUST BE precise to the second.",
+      "description": "The time at which the PE binary was created.",
       "from_schema": "https://w3id.org/lmodel/stix/stix_sco",
       "mappings": [
         "https://w3id.org/lmodel/stix/time_date_stamp"
@@ -5957,7 +5969,7 @@
     {
       "name": "subsystem_hex",
       "definition_uri": "https://w3id.org/lmodel/stix/subsystem_hex",
-      "description": "Specifies the subsystem (e.g., GUI, device driver, etc.) that is required to run this image.",
+      "description": "The subsystem, such as a GUI or a device driver, needed to run the image.",
       "from_schema": "https://w3id.org/lmodel/stix/stix_sco",
       "mappings": [
         "https://w3id.org/lmodel/stix/subsystem_hex"
@@ -6308,7 +6320,7 @@
     {
       "name": "subject_directory_attributes",
       "definition_uri": "https://w3id.org/lmodel/stix/subject_directory_attributes",
-      "description": "Specifies the identification attributes (e.g., nationality) of the subject.",
+      "description": "The identification attributes of the subject, such as nationality.",
       "from_schema": "https://w3id.org/lmodel/stix/stix_sco",
       "mappings": [
         "https://w3id.org/lmodel/stix/subject_directory_attributes"
@@ -6510,7 +6522,7 @@
     {
       "name": "objective",
       "definition_uri": "https://w3id.org/lmodel/stix/objective",
-      "description": "This field defines the Campaign's primary goal, objective, desired outcome, or intended effect.",
+      "description": "The campaign's primary goal, objective, desired outcome or intended effect.",
       "from_schema": "https://w3id.org/lmodel/stix/stix_sdo",
       "mappings": [
         "https://w3id.org/lmodel/stix/objective"
@@ -6575,7 +6587,7 @@
     {
       "name": "indicator_types",
       "definition_uri": "https://w3id.org/lmodel/stix/indicator_types",
-      "description": "This field is an Open Vocabulary that specifies the type of indicator. Open vocab - indicator-type-ov.",
+      "description": "The kinds of indicator, such as malicious-activity.",
       "from_schema": "https://w3id.org/lmodel/stix/stix_sdo",
       "mappings": [
         "https://w3id.org/lmodel/stix/indicator_types"
@@ -6693,7 +6705,7 @@
     {
       "name": "infrastructure_types",
       "definition_uri": "https://w3id.org/lmodel/stix/infrastructure_types",
-      "description": "This field is an Open Vocabulary that specifies the type of infrastructure. Open vocab - infrastructure-type-ov.",
+      "description": "The kinds of infrastructure, such as botnet.",
       "from_schema": "https://w3id.org/lmodel/stix/stix_sdo",
       "mappings": [
         "https://w3id.org/lmodel/stix/infrastructure_types"
@@ -7000,7 +7012,7 @@
     {
       "name": "architecture_execution_envs",
       "definition_uri": "https://w3id.org/lmodel/stix/architecture_execution_envs",
-      "description": "The processor architectures (e.g., x86, ARM, etc.) that the malware instance or family is executable on. Open Vocab - processor-architecture-os.",
+      "description": "The processor architectures, such as x86 or ARM, that the malware runs on.",
       "from_schema": "https://w3id.org/lmodel/stix/stix_sdo",
       "mappings": [
         "https://w3id.org/lmodel/stix/architecture_execution_envs"
@@ -7028,7 +7040,7 @@
     {
       "name": "implementation_languages",
       "definition_uri": "https://w3id.org/lmodel/stix/implementation_languages",
-      "description": "The programming language(s) used to implement the malware instance or family. Open Vocab - implementation-language-ov.",
+      "description": "The programming languages used to write the malware instance or family.",
       "from_schema": "https://w3id.org/lmodel/stix/stix_sdo",
       "mappings": [
         "https://w3id.org/lmodel/stix/implementation_languages"
@@ -7056,7 +7068,7 @@
     {
       "name": "capabilities",
       "definition_uri": "https://w3id.org/lmodel/stix/capabilities",
-      "description": "Specifies any capabilities identified for the malware instance or family. Open Vocab - malware-capabilities-ov.",
+      "description": "The capabilities identified in the malware instance or family.",
       "from_schema": "https://w3id.org/lmodel/stix/stix_sdo",
       "mappings": [
         "https://w3id.org/lmodel/stix/capabilities"
@@ -7113,7 +7125,7 @@
     {
       "name": "malware_types",
       "definition_uri": "https://w3id.org/lmodel/stix/malware_types",
-      "description": "The type of malware being described. Open Vocab - malware-type-ov.",
+      "description": "The kinds of malware, such as ransomware.",
       "from_schema": "https://w3id.org/lmodel/stix/stix_sdo",
       "mappings": [
         "https://w3id.org/lmodel/stix/malware_types"
@@ -7464,7 +7476,7 @@
     {
       "name": "authors",
       "definition_uri": "https://w3id.org/lmodel/stix/authors",
-      "description": "The name of the author(s) of this note (e.g., the analyst(s) that created it).",
+      "description": "The names of the note's authors, such as the analysts who wrote it.",
       "from_schema": "https://w3id.org/lmodel/stix/stix_sdo",
       "mappings": [
         "https://w3id.org/lmodel/stix/authors"
@@ -7515,7 +7527,7 @@
     {
       "name": "number_observed",
       "definition_uri": "https://w3id.org/lmodel/stix/number_observed",
-      "description": "The number of times the data represented in the objects property was observed. This MUST be an integer between 1 and 999,999,999 inclusive.",
+      "description": "The number of times the data in objects or object_refs was observed.",
       "from_schema": "https://w3id.org/lmodel/stix/stix_sdo",
       "mappings": [
         "https://w3id.org/lmodel/stix/number_observed"
@@ -7549,7 +7561,7 @@
     {
       "name": "opinion",
       "definition_uri": "https://w3id.org/lmodel/stix/opinion",
-      "description": "The opinion that the producer has about about all of the STIX Object(s) listed in the object_refs property.",
+      "description": "The producer's opinion of the objects that object_refs lists.",
       "from_schema": "https://w3id.org/lmodel/stix/stix_sdo",
       "mappings": [
         "https://w3id.org/lmodel/stix/opinion"
@@ -7565,7 +7577,7 @@
     {
       "name": "report_types",
       "definition_uri": "https://w3id.org/lmodel/stix/report_types",
-      "description": "This field is an Open Vocabulary that specifies the primary subject of this report. The suggested values for this field are in report-type-ov.",
+      "description": "The primary subjects of the report, such as threat-actor.",
       "from_schema": "https://w3id.org/lmodel/stix/stix_sdo",
       "mappings": [
         "https://w3id.org/lmodel/stix/report_types"
@@ -7609,7 +7621,7 @@
     {
       "name": "threat_actor_types",
       "definition_uri": "https://w3id.org/lmodel/stix/threat_actor_types",
-      "description": "This field specifies the type of threat actor. Open Vocab - threat-actor-type-ov.",
+      "description": "The kinds of threat actor, such as nation-state.",
       "from_schema": "https://w3id.org/lmodel/stix/stix_sdo",
       "mappings": [
         "https://w3id.org/lmodel/stix/threat_actor_types"
@@ -7637,7 +7649,7 @@
     {
       "name": "sophistication",
       "definition_uri": "https://w3id.org/lmodel/stix/sophistication",
-      "description": "The skill, specific knowledge, special training, or expertise a Threat Actor must have to perform the attack. Open Vocab - threat-actor-sophistication-ov.",
+      "description": "The skill, knowledge, training or expertise the threat actor needs to carry out an attack.",
       "from_schema": "https://w3id.org/lmodel/stix/stix_sdo",
       "mappings": [
         "https://w3id.org/lmodel/stix/sophistication"
@@ -7663,7 +7675,7 @@
     {
       "name": "personal_motivations",
       "definition_uri": "https://w3id.org/lmodel/stix/personal_motivations",
-      "description": "The personal reasons, motivations, or purposes of the Threat Actor regardless of organizational goals. Open Vocab - attack-motivation-ov.",
+      "description": "The threat actor's personal reasons or motivations, apart from its organization's goals.",
       "from_schema": "https://w3id.org/lmodel/stix/stix_sdo",
       "mappings": [
         "https://w3id.org/lmodel/stix/personal_motivations"
@@ -7691,7 +7703,7 @@
     {
       "name": "tool_types",
       "definition_uri": "https://w3id.org/lmodel/stix/tool_types",
-      "description": "The kind(s) of tool(s) being described. Open Vocab - tool-type-ov.",
+      "description": "The kinds of tool, such as remote-access.",
       "from_schema": "https://w3id.org/lmodel/stix/stix_sdo",
       "mappings": [
         "https://w3id.org/lmodel/stix/tool_types"
@@ -8075,7 +8087,7 @@
     {
       "name": "StixCommonObject_modified",
       "definition_uri": "https://w3id.org/lmodel/stix/modified",
-      "description": "The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.",
+      "description": "The time at which this version of the object was modified.",
       "from_schema": "https://w3id.org/lmodel/stix/stix_core",
       "mappings": [
         "https://w3id.org/lmodel/stix/modified"
@@ -8715,7 +8727,7 @@
     {
       "name": "StixArtifact_mime_type",
       "definition_uri": "https://w3id.org/lmodel/stix/mime_type",
-      "description": "The value of this property MUST be a valid MIME type as specified in the IANA Media Types registry.",
+      "description": "The MIME type of the content, as the IANA Media Types registry names it.",
       "from_schema": "https://w3id.org/lmodel/stix/stix_sco",
       "mappings": [
         "https://w3id.org/lmodel/stix/mime_type"
@@ -10075,7 +10087,7 @@
     {
       "name": "StixWindowsPeBinaryExtension_pe_type",
       "definition_uri": "https://w3id.org/lmodel/stix/pe_type",
-      "description": "Specifies the type of the PE binary. Open Vocabulary - windows-pebinary-type-ov.",
+      "description": "The type of the PE binary, such as exe or dll.",
       "from_schema": "https://w3id.org/lmodel/stix/stix_sco",
       "mappings": [
         "https://w3id.org/lmodel/stix/pe_type"
@@ -11309,7 +11321,7 @@
     {
       "name": "StixObservedData_number_observed",
       "definition_uri": "https://w3id.org/lmodel/stix/number_observed",
-      "description": "The number of times the data represented in the objects property was observed. This MUST be an integer between 1 and 999,999,999 inclusive.",
+      "description": "The number of times the data in objects or object_refs was observed.",
       "from_schema": "https://w3id.org/lmodel/stix/stix_sdo",
       "mappings": [
         "https://w3id.org/lmodel/stix/number_observed"
@@ -11463,7 +11475,7 @@
     {
       "name": "StixOpinion_opinion",
       "definition_uri": "https://w3id.org/lmodel/stix/opinion",
-      "description": "The opinion that the producer has about about all of the STIX Object(s) listed in the object_refs property.",
+      "description": "The producer's opinion of the objects that object_refs lists.",
       "from_schema": "https://w3id.org/lmodel/stix/stix_sdo",
       "mappings": [
         "https://w3id.org/lmodel/stix/opinion"
@@ -12230,7 +12242,7 @@
           "@type": "Annotation"
         }
       ],
-      "description": "Identities can represent actual individuals, organizations, or groups (e.g., ACME, Inc.) as well as classes of individuals, organizations, or groups.",
+      "description": "An individual, organization or group, such as ACME, Inc., or a class of them.",
       "from_schema": "https://w3id.org/lmodel/stix/stix_core",
       "close_mappings": [
         "uco-identity:Identity"
@@ -12677,7 +12689,7 @@
           "@type": "Annotation"
         }
       ],
-      "description": "The Artifact Object permits capturing an array of bytes (8-bits), as a base64-encoded string string, or linking to a file-like payload.",
+      "description": "An array of bytes, carried as base64 in payload_bin, or a link to a file-like payload.",
       "from_schema": "https://w3id.org/lmodel/stix/stix_sco",
       "is_a": "StixCyberObservableObject",
       "slots": [
@@ -14625,7 +14637,7 @@
           "@type": "Annotation"
         }
       ],
-      "description": "The User Account Object defines the following extensions. In addition to these, producers MAY create their own.",
+      "description": "The UNIX account extension of a user account: its group, its other groups, its home directory and its shell.",
       "from_schema": "https://w3id.org/lmodel/stix/stix_sco",
       "close_mappings": [
         "uco-observable:UNIXAccountFacet"
@@ -15890,7 +15902,7 @@
           "@type": "Annotation"
         }
       ],
-      "description": "A Location represents a geographic location. The location may be described as any, some or all of the following: region (e.g., North America), civic address (e.g. New York, US), latitude and longitude.",
+      "description": "A geographic location, given as a region, a civic address, a latitude and longitude, or any mix of them.",
       "from_schema": "https://w3id.org/lmodel/stix/stix_sdo",
       "close_mappings": [
         "uco-location:Location"
@@ -16053,7 +16065,7 @@
           "@type": "Annotation"
         }
       ],
-      "description": "Malware is a type of TTP that is also known as malicious code and malicious software, refers to a program that is inserted into a system, usually covertly, with the intent of compromising the confidentiality, integrity, or availability of the victim's data, applications, or operating system (OS) or of otherwise annoying or disrupting the victim.",
+      "description": "Malicious code: a program inserted into a system, usually covertly, to compromise its data, applications or operating system, or to disrupt its owner.",
       "from_schema": "https://w3id.org/lmodel/stix/stix_sdo",
       "is_a": "StixDomainObject",
       "slots": [
@@ -16550,7 +16562,7 @@
           "@type": "Annotation"
         }
       ],
-      "description": "A Sighting denotes the belief that something in CTI (e.g., an indicator, malware, tool, threat actor, etc.) was seen.",
+      "description": "The belief that something in cyber threat intelligence, such as an indicator, malware or a threat actor, was seen.",
       "from_schema": "https://w3id.org/lmodel/stix/stix_sro",
       "is_a": "StixRelationshipObject",
       "slots": [

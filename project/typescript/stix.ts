@@ -628,7 +628,7 @@ export interface StixCommonObject extends StixObject {
     created_by_ref?: StixIdentityId,
     /** The time at which the object, or its first version, was created. */
     created: string,
-    /** The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond. */
+    /** The time at which this version of the object was modified. */
     modified: string,
     /** The revoked property indicates whether the object has been revoked. */
     revoked?: boolean,
@@ -667,7 +667,7 @@ export interface StixCyberObservableObject extends StixObject {
 
 
 /**
- * Identities can represent actual individuals, organizations, or groups (e.g., ACME, Inc.) as well as classes of individuals, organizations, or groups.
+ * An individual, organization or group, such as ACME, Inc., or a class of them.
  */
 export interface StixIdentity extends StixDomainObject {
     /** The roles that the identity or threat actor plays. */
@@ -676,9 +676,9 @@ export interface StixIdentity extends StixDomainObject {
     name: string,
     /** A description of the object, which may be long. */
     description?: string,
-    /** The type of entity that this Identity describes, e.g., an individual or organization. Open Vocab - identity-class-ov. */
+    /** The kind of entity the identity describes, such as an individual or an organization. */
     identity_class?: string,
-    /** The list of sectors that this Identity belongs to. Open Vocab - industry-sector-ov. */
+    /** The industry sectors that the identity belongs to. */
     sectors?: string[],
     /** The contact information (e-mail, phone number, etc.) for this Identity. */
     contact_information?: string,
@@ -833,10 +833,10 @@ export interface StixLanguageContents {
 
 
 /**
- * The Artifact Object permits capturing an array of bytes (8-bits), as a base64-encoded string string, or linking to a file-like payload.
+ * An array of bytes, carried as base64 in payload_bin, or a link to a file-like payload.
  */
 export interface StixArtifact extends StixCyberObservableObject {
-    /** The value of this property MUST be a valid MIME type as specified in the IANA Media Types registry. */
+    /** The MIME type of the content, as the IANA Media Types registry names it. */
     mime_type?: string,
     /** Specifies the binary data contained in the artifact as a base64-encoded string. */
     payload_bin?: string,
@@ -939,7 +939,7 @@ export interface StixEmailMessage extends StixCyberObservableObject {
     is_multipart: boolean,
     /** A body of text. */
     body?: string,
-    /** Specifies a list of the MIME parts that make up the email body. This property MAY only be used if is_multipart is true. */
+    /** The MIME parts that make up a multipart email body. */
     body_multipart?: StixMimePart[],
 }
 
@@ -958,7 +958,7 @@ export interface StixFile extends StixCyberObservableObject {
     name_enc?: string,
     /** Specifies the hexadecimal constant ('magic number') associated with a specific file format that corresponds to the file, if applicable. */
     magic_number_hex?: string,
-    /** The value of this property MUST be a valid MIME type as specified in the IANA Media Types registry. */
+    /** The MIME type of the content, as the IANA Media Types registry names it. */
     mime_type?: string,
     /** The time at which the object was created. */
     ctime?: string,
@@ -1031,9 +1031,9 @@ export interface StixNetworkTraffic extends StixCyberObservableObject {
     src_ref?: StixCyberObservableObjectId,
     /** Specifies the destination of the network traffic, as a reference to an Observable Object. */
     dst_ref?: StixCyberObservableObjectId,
-    /** Specifies the source port used in the network traffic, as an integer. The port value MUST be in the range of 0 - 65535. */
+    /** The source port of the traffic. */
     src_port?: number,
-    /** Specifies the destination port used in the network traffic, as an integer. The port value MUST be in the range of 0 - 65535. */
+    /** The destination port of the traffic. */
     dst_port?: number,
     /** Specifies the protocols observed in the network traffic, along with their corresponding state. */
     protocols: string[],
@@ -1095,11 +1095,11 @@ export interface StixProcess extends StixCyberObservableObject {
 export interface StixSoftware extends StixCyberObservableObject {
     /** A name that identifies the object. */
     name: string,
-    /** Specifies the Common Platform Enumeration (CPE) entry for the software, if available. The value for this property MUST be a CPE v2.3 entry from the official NVD CPE Dictionary. */
+    /** The Common Platform Enumeration (CPE) 2.3 name of the software, if it has one. */
     cpe?: string,
     /** Specifies the Software Identification (SWID) Tags entry for the software, if available. */
     swid?: string,
-    /** Specifies the languages supported by the software. The value of each list member MUST be an RFC 5646 language code. ISO 639-2 codes are accepted for backward compatibility. */
+    /** The languages the software supports, as RFC 5646 language codes. */
     languages?: string[],
     /** Specifies the name of the vendor of the software. */
     vendor?: string,
@@ -1123,11 +1123,11 @@ export interface StixUrl extends StixCyberObservableObject {
 export interface StixUserAccount extends StixCyberObservableObject {
     /** Specifies the identifier of the account. */
     user_id?: string,
-    /** Specifies a cleartext credential. This is only intended to be used in capturing metadata from malware analysis (e.g., a hard-coded domain administrator password that the malware attempts to use for lateral movement) and SHOULD NOT be used for sharing of PII. */
+    /** A cleartext credential, such as a hard-coded password that malware tries for lateral movement. */
     credential?: string,
     /** Specifies the account login string, used in cases where the user_id property specifies something other than what a user would type when they login. */
     account_login?: string,
-    /** Specifies the type of the account. This is an open vocabulary and values SHOULD come from the account-type-ov vocabulary. */
+    /** The type of the account, such as unix or ldap. */
     account_type?: string,
     /** A name for display. */
     display_name?: string,
@@ -1260,7 +1260,7 @@ export interface StixArchiveExtension {
  * The Windows PE Binary File extension specifies a default extension for capturing properties specific to Windows portable executable (PE) files.
  */
 export interface StixWindowsPeBinaryExtension {
-    /** Specifies the type of the PE binary. Open Vocabulary - windows-pebinary-type-ov. */
+    /** The type of the PE binary, such as exe or dll. */
     pe_type: string,
     /** Specifies the special import hash, or 'imphash', calculated for the PE Binary based on its imported libraries and functions. */
     imphash?: string,
@@ -1268,7 +1268,7 @@ export interface StixWindowsPeBinaryExtension {
     machine_hex?: string,
     /** Specifies the number of sections in the PE binary, as a non-negative integer. */
     number_of_sections?: number,
-    /** Specifies the time when the PE binary was created. The timestamp value MUST BE precise to the second. */
+    /** The time at which the PE binary was created. */
     time_date_stamp?: string,
     /** Specifies the file offset of the COFF symbol table. */
     pointer_to_symbol_table_hex?: string,
@@ -1394,7 +1394,7 @@ export interface StixWindowsServiceExtension {
 
 
 /**
- * The User Account Object defines the following extensions. In addition to these, producers MAY create their own.
+ * The UNIX account extension of a user account: its group, its other groups, its home directory and its shell.
  */
 export interface StixUnixAccountExtension {
     /** Specifies the primary group ID of the account. */
@@ -1484,7 +1484,7 @@ export interface StixWindowsPeOptionalHeader {
     size_of_headers?: number,
     /** Specifies the checksum of the PE binary. */
     checksum_hex?: string,
-    /** Specifies the subsystem (e.g., GUI, device driver, etc.) that is required to run this image. */
+    /** The subsystem, such as a GUI or a device driver, needed to run the image. */
     subsystem_hex?: string,
     /** Specifies the flags that characterize the PE binary. */
     dll_characteristics_hex?: string,
@@ -1555,7 +1555,7 @@ export interface StixX509V3Extensions {
     subject_alternative_name?: string,
     /** Specifies the additional identities to be bound to the issuer of the certificate. */
     issuer_alternative_name?: string,
-    /** Specifies the identification attributes (e.g., nationality) of the subject. */
+    /** The identification attributes of the subject, such as nationality. */
     subject_directory_attributes?: string,
     /** Specifies how CRL information is obtained. */
     crl_distribution_points?: string,
@@ -1650,7 +1650,7 @@ export interface StixCampaign extends StixDomainObject {
     first_seen?: string,
     /** The time at which the object was last seen. */
     last_seen?: string,
-    /** This field defines the Campaign's primary goal, objective, desired outcome, or intended effect. */
+    /** The campaign's primary goal, objective, desired outcome or intended effect. */
     objective?: string,
 }
 
@@ -1696,7 +1696,7 @@ export interface StixIncident extends StixDomainObject {
  * Indicators contain a pattern that can be used to detect suspicious or malicious cyber activity.
  */
 export interface StixIndicator extends StixDomainObject {
-    /** This field is an Open Vocabulary that specifies the type of indicator. Open vocab - indicator-type-ov. */
+    /** The kinds of indicator, such as malicious-activity. */
     indicator_types?: string[],
     /** A name that identifies the object. */
     name?: string,
@@ -1725,7 +1725,7 @@ export interface StixInfrastructure extends StixDomainObject {
     name: string,
     /** A description of the object, which may be long. */
     description?: string,
-    /** This field is an Open Vocabulary that specifies the type of infrastructure. Open vocab - infrastructure-type-ov. */
+    /** The kinds of infrastructure, such as botnet. */
     infrastructure_types?: string[],
     /** Other names by which the object is known. */
     aliases?: string[],
@@ -1764,7 +1764,7 @@ export interface StixIntrusionSet extends StixDomainObject {
 
 
 /**
- * A Location represents a geographic location. The location may be described as any, some or all of the following: region (e.g., North America), civic address (e.g. New York, US), latitude and longitude.
+ * A geographic location, given as a region, a civic address, a latitude and longitude, or any mix of them.
  */
 export interface StixLocation extends StixDomainObject {
     /** A description of the object, which may be long. */
@@ -1793,7 +1793,7 @@ export interface StixLocation extends StixDomainObject {
 
 
 /**
- * Malware is a type of TTP that is also known as malicious code and malicious software, refers to a program that is inserted into a system, usually covertly, with the intent of compromising the confidentiality, integrity, or availability of the victim's data, applications, or operating system (OS) or of otherwise annoying or disrupting the victim.
+ * Malicious code: a program inserted into a system, usually covertly, to compromise its data, applications or operating system, or to disrupt its owner.
  */
 export interface StixMalware extends StixDomainObject {
     /** Other names by which the object is known. */
@@ -1804,15 +1804,15 @@ export interface StixMalware extends StixDomainObject {
     last_seen?: string,
     /** The operating systems that the malware family or malware instance is executable on. */
     operating_system_refs?: StixSoftwareId[],
-    /** The processor architectures (e.g., x86, ARM, etc.) that the malware instance or family is executable on. Open Vocab - processor-architecture-os. */
+    /** The processor architectures, such as x86 or ARM, that the malware runs on. */
     architecture_execution_envs?: string[],
-    /** The programming language(s) used to implement the malware instance or family. Open Vocab - implementation-language-ov. */
+    /** The programming languages used to write the malware instance or family. */
     implementation_languages?: string[],
-    /** Specifies any capabilities identified for the malware instance or family. Open Vocab - malware-capabilities-ov. */
+    /** The capabilities identified in the malware instance or family. */
     capabilities?: string[],
     /** The sample_refs property specifies a list of identifiers of the SCO file or artifact objects associated with this malware instance(s) or family. */
     sample_refs?: StixCyberObservableObjectId[],
-    /** The type of malware being described. Open Vocab - malware-type-ov. */
+    /** The kinds of malware, such as ransomware. */
     malware_types?: string[],
     /** A name that identifies the object. */
     name?: string,
@@ -1872,7 +1872,7 @@ export interface StixNote extends StixDomainObject {
     abstract?: string,
     /** The content of the note. */
     content: string,
-    /** The name of the author(s) of this note (e.g., the analyst(s) that created it). */
+    /** The names of the note's authors, such as the analysts who wrote it. */
     authors?: string[],
     /** References to the STIX objects that this object is about or holds. */
     object_refs: StixObjectId[],
@@ -1887,7 +1887,7 @@ export interface StixObservedData extends StixDomainObject {
     first_observed: string,
     /** The end of the time window that the data was observed during. */
     last_observed: string,
-    /** The number of times the data represented in the objects property was observed. This MUST be an integer between 1 and 999,999,999 inclusive. */
+    /** The number of times the data in objects or object_refs was observed. */
     number_observed: number,
     /** The observed cyber-observable objects, as a dictionary keyed by index. Deprecated in STIX 2.1; use object_refs. */
     objects?: StixObservedObjects,
@@ -1902,11 +1902,11 @@ export interface StixObservedData extends StixDomainObject {
 export interface StixOpinion extends StixDomainObject {
     /** An explanation of why the producer has this Opinion. */
     explanation?: string,
-    /** The name of the author(s) of this note (e.g., the analyst(s) that created it). */
+    /** The names of the note's authors, such as the analysts who wrote it. */
     authors?: string[],
     /** References to the STIX objects that this object is about or holds. */
     object_refs: StixObjectId[],
-    /** The opinion that the producer has about about all of the STIX Object(s) listed in the object_refs property. */
+    /** The producer's opinion of the objects that object_refs lists. */
     opinion: string,
 }
 
@@ -1915,7 +1915,7 @@ export interface StixOpinion extends StixDomainObject {
  * Reports are collections of threat intelligence focused on one or more topics, such as a description of a threat actor, malware, or attack technique, including context and related details.
  */
 export interface StixReport extends StixDomainObject {
-    /** This field is an Open Vocabulary that specifies the primary subject of this report. The suggested values for this field are in report-type-ov. */
+    /** The primary subjects of the report, such as threat-actor. */
     report_types?: string[],
     /** A name that identifies the object. */
     name: string,
@@ -1932,7 +1932,7 @@ export interface StixReport extends StixDomainObject {
  * Threat Actors are actual individuals, groups, or organizations believed to be operating with malicious intent.
  */
 export interface StixThreatActor extends StixDomainObject {
-    /** This field specifies the type of threat actor. Open Vocab - threat-actor-type-ov. */
+    /** The kinds of threat actor, such as nation-state. */
     threat_actor_types?: string[],
     /** A name that identifies the object. */
     name: string,
@@ -1948,7 +1948,7 @@ export interface StixThreatActor extends StixDomainObject {
     first_seen?: string,
     /** The time at which the object was last seen. */
     last_seen?: string,
-    /** The skill, specific knowledge, special training, or expertise a Threat Actor must have to perform the attack. Open Vocab - threat-actor-sophistication-ov. */
+    /** The skill, knowledge, training or expertise the threat actor needs to carry out an attack. */
     sophistication?: string,
     /** The organizational level at which the actor typically works. */
     resource_level?: string,
@@ -1956,7 +1956,7 @@ export interface StixThreatActor extends StixDomainObject {
     primary_motivation?: string,
     /** The secondary reasons, motivations or purposes behind the activity. */
     secondary_motivations?: string[],
-    /** The personal reasons, motivations, or purposes of the Threat Actor regardless of organizational goals. Open Vocab - attack-motivation-ov. */
+    /** The threat actor's personal reasons or motivations, apart from its organization's goals. */
     personal_motivations?: string[],
 }
 
@@ -1967,7 +1967,7 @@ export interface StixThreatActor extends StixDomainObject {
 export interface StixTool extends StixDomainObject {
     /** Other names by which the object is known. */
     aliases?: string[],
-    /** The kind(s) of tool(s) being described. Open Vocab - tool-type-ov. */
+    /** The kinds of tool, such as remote-access. */
     tool_types?: string[],
     /** A name that identifies the object. */
     name: string,
@@ -2018,7 +2018,7 @@ export interface StixRelationship extends StixRelationshipObject {
 
 
 /**
- * A Sighting denotes the belief that something in CTI (e.g., an indicator, malware, tool, threat actor, etc.) was seen.
+ * The belief that something in cyber threat intelligence, such as an indicator, malware or a threat actor, was seen.
  */
 export interface StixSighting extends StixRelationshipObject {
     /** A description of the object, which may be long. */

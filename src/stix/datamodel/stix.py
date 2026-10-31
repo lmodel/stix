@@ -520,8 +520,7 @@ class StixCyberObservableObject(StixObject):
 @dataclass(repr=False)
 class StixIdentity(StixDomainObject):
     """
-    Identities can represent actual individuals, organizations, or groups (e.g., ACME, Inc.) as well as classes of
-    individuals, organizations, or groups.
+    An individual, organization or group, such as ACME, Inc., or a class of them.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
@@ -1003,8 +1002,7 @@ class StixLanguageContents(YAMLRoot):
 @dataclass(repr=False)
 class StixArtifact(StixCyberObservableObject):
     """
-    The Artifact Object permits capturing an array of bytes (8-bits), as a base64-encoded string string, or linking to
-    a file-like payload.
+    An array of bytes, carried as base64 in payload_bin, or a link to a file-like payload.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
@@ -2541,7 +2539,7 @@ class StixWindowsServiceExtension(YAMLRoot):
 @dataclass(repr=False)
 class StixUnixAccountExtension(YAMLRoot):
     """
-    The User Account Object defines the following extensions. In addition to these, producers MAY create their own.
+    The UNIX account extension of a user account: its group, its other groups, its home directory and its shell.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
@@ -3511,8 +3509,7 @@ class StixIntrusionSet(StixDomainObject):
 @dataclass(repr=False)
 class StixLocation(StixDomainObject):
     """
-    A Location represents a geographic location. The location may be described as any, some or all of the following:
-    region (e.g., North America), civic address (e.g. New York, US), latitude and longitude.
+    A geographic location, given as a region, a civic address, a latitude and longitude, or any mix of them.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
@@ -3596,10 +3593,8 @@ class StixLocation(StixDomainObject):
 @dataclass(repr=False)
 class StixMalware(StixDomainObject):
     """
-    Malware is a type of TTP that is also known as malicious code and malicious software, refers to a program that is
-    inserted into a system, usually covertly, with the intent of compromising the confidentiality, integrity, or
-    availability of the victim's data, applications, or operating system (OS) or of otherwise annoying or disrupting
-    the victim.
+    Malicious code: a program inserted into a system, usually covertly, to compromise its data, applications or
+    operating system, or to disrupt its owner.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
@@ -4349,8 +4344,7 @@ class StixRelationship(StixRelationshipObject):
 @dataclass(repr=False)
 class StixSighting(StixRelationshipObject):
     """
-    A Sighting denotes the belief that something in CTI (e.g., an indicator, malware, tool, threat actor, etc.) was
-    seen.
+    The belief that something in cyber threat intelligence, such as an indicator, malware or a threat actor, was seen.
     """
     _inherited_slots: ClassVar[list[str]] = []
 

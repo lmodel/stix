@@ -10,7 +10,7 @@ import java.util.List;
 import lombok.*;
 
 /**
-  Identities can represent actual individuals, organizations, or groups (e.g., ACME, Inc.) as well as classes of individuals, organizations, or groups.
+  An individual, organization or group, such as ACME, Inc., or a class of them.
 **/
 @Data
 @EqualsAndHashCode(callSuper=false)

@@ -18,7 +18,7 @@ message StixArchiveExtension {
   // Specifies a comment included as part of the archive file.
   string comment = 2;
 }
-// The Artifact Object permits capturing an array of bytes (8-bits), as a base64-encoded string string, or linking to a file-like payload.
+// An array of bytes, carried as base64 in payload_bin, or a link to a file-like payload.
 message StixArtifact {
   // The version of the STIX specification used to represent the object.
   StixSpecVersion spec_version = 1;
@@ -30,7 +30,7 @@ message StixArtifact {
   StixExtensions extensions = 4;
   // Defines whether or not the data contained within the object has been defanged.
   bool defanged = 5;
-  // The value of this property MUST be a valid MIME type as specified in the IANA Media Types registry.
+  // The MIME type of the content, as the IANA Media Types registry names it.
   string mime_type = 6;
   // Specifies the binary data contained in the artifact as a base64-encoded string.
   string payload_bin = 7;
@@ -59,7 +59,7 @@ message StixAttackPattern {
   StixIdentity created_by_ref = 4;
   // The time at which the object, or its first version, was created.
   string created = 5;
-  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  // The time at which this version of the object was modified.
   string modified = 6;
   // The revoked property indicates whether the object has been revoked.
   bool revoked = 7;
@@ -130,7 +130,7 @@ message StixCampaign {
   StixIdentity created_by_ref = 4;
   // The time at which the object, or its first version, was created.
   string created = 5;
-  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  // The time at which this version of the object was modified.
   string modified = 6;
   // The revoked property indicates whether the object has been revoked.
   bool revoked = 7;
@@ -154,7 +154,7 @@ message StixCampaign {
   string first_seen = 16;
   // The time at which the object was last seen.
   string last_seen = 17;
-  // This field defines the Campaign's primary goal, objective, desired outcome, or intended effect.
+  // The campaign's primary goal, objective, desired outcome or intended effect.
   string objective = 18;
   // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
   string id = 19;
@@ -177,7 +177,7 @@ message StixCommonObject {
   StixIdentity created_by_ref = 6;
   // The time at which the object, or its first version, was created.
   string created = 7;
-  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  // The time at which this version of the object was modified.
   string modified = 8;
   // The revoked property indicates whether the object has been revoked.
   bool revoked = 9;
@@ -204,7 +204,7 @@ message StixCourseOfAction {
   StixIdentity created_by_ref = 4;
   // The time at which the object, or its first version, was created.
   string created = 5;
-  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  // The time at which this version of the object was modified.
   string modified = 6;
   // The revoked property indicates whether the object has been revoked.
   bool revoked = 7;
@@ -313,7 +313,7 @@ message StixDomainObject {
   StixIdentity created_by_ref = 6;
   // The time at which the object, or its first version, was created.
   string created = 7;
-  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  // The time at which this version of the object was modified.
   string modified = 8;
   // The revoked property indicates whether the object has been revoked.
   bool revoked = 9;
@@ -391,7 +391,7 @@ message StixEmailMessage {
   bool is_multipart = 18;
   // A body of text.
   string body = 19;
-  // Specifies a list of the MIME parts that make up the email body. This property MAY only be used if is_multipart is true.
+  // The MIME parts that make up a multipart email body.
   repeated StixMimePart body_multipart = 20;
   // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
   string id = 21;
@@ -418,7 +418,7 @@ message StixExtensionDefinition {
   StixIdentity created_by_ref = 4;
   // The time at which the object, or its first version, was created.
   string created = 5;
-  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  // The time at which this version of the object was modified.
   string modified = 6;
   // The revoked property indicates whether the object has been revoked.
   bool revoked = 7;
@@ -485,7 +485,7 @@ message StixFile {
   string name_enc = 8;
   // Specifies the hexadecimal constant ('magic number') associated with a specific file format that corresponds to the file, if applicable.
   string magic_number_hex = 9;
-  // The value of this property MUST be a valid MIME type as specified in the IANA Media Types registry.
+  // The MIME type of the content, as the IANA Media Types registry names it.
   string mime_type = 10;
   // The time at which the object was created.
   string ctime = 11;
@@ -530,7 +530,7 @@ message StixGrouping {
   StixIdentity created_by_ref = 4;
   // The time at which the object, or its first version, was created.
   string created = 5;
-  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  // The time at which this version of the object was modified.
   string modified = 6;
   // The revoked property indicates whether the object has been revoked.
   bool revoked = 7;
@@ -582,7 +582,7 @@ message StixIcmpExtension {
   // Specifies the ICMP code byte.
   string icmp_code_hex = 2;
 }
-// Identities can represent actual individuals, organizations, or groups (e.g., ACME, Inc.) as well as classes of individuals, organizations, or groups.
+// An individual, organization or group, such as ACME, Inc., or a class of them.
 message StixIdentity {
   // References to the marking definitions that apply to the object.
   repeated StixMarkingDefinition object_marking_refs = 1;
@@ -594,7 +594,7 @@ message StixIdentity {
   StixIdentity created_by_ref = 4;
   // The time at which the object, or its first version, was created.
   string created = 5;
-  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  // The time at which this version of the object was modified.
   string modified = 6;
   // The revoked property indicates whether the object has been revoked.
   bool revoked = 7;
@@ -614,9 +614,9 @@ message StixIdentity {
   string name = 14;
   // A description of the object, which may be long.
   string description = 15;
-  // The type of entity that this Identity describes, e.g., an individual or organization. Open Vocab - identity-class-ov.
+  // The kind of entity the identity describes, such as an individual or an organization.
   string identity_class = 16;
-  // The list of sectors that this Identity belongs to. Open Vocab - industry-sector-ov.
+  // The industry sectors that the identity belongs to.
   repeated string sectors = 17;
   // The contact information (e-mail, phone number, etc.) for this Identity.
   string contact_information = 18;
@@ -637,7 +637,7 @@ message StixIncident {
   StixIdentity created_by_ref = 4;
   // The time at which the object, or its first version, was created.
   string created = 5;
-  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  // The time at which this version of the object was modified.
   string modified = 6;
   // The revoked property indicates whether the object has been revoked.
   bool revoked = 7;
@@ -672,7 +672,7 @@ message StixIndicator {
   StixIdentity created_by_ref = 4;
   // The time at which the object, or its first version, was created.
   string created = 5;
-  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  // The time at which this version of the object was modified.
   string modified = 6;
   // The revoked property indicates whether the object has been revoked.
   bool revoked = 7;
@@ -686,7 +686,7 @@ message StixIndicator {
   repeated StixExternalReference external_references = 11;
   // The version of the STIX specification used to represent the object.
   StixSpecVersion spec_version = 12;
-  // This field is an Open Vocabulary that specifies the type of indicator. Open vocab - indicator-type-ov.
+  // The kinds of indicator, such as malicious-activity.
   repeated string indicator_types = 13;
   // A name that identifies the object.
   string name = 14;
@@ -721,7 +721,7 @@ message StixInfrastructure {
   StixIdentity created_by_ref = 4;
   // The time at which the object, or its first version, was created.
   string created = 5;
-  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  // The time at which this version of the object was modified.
   string modified = 6;
   // The revoked property indicates whether the object has been revoked.
   bool revoked = 7;
@@ -739,7 +739,7 @@ message StixInfrastructure {
   string name = 13;
   // A description of the object, which may be long.
   string description = 14;
-  // This field is an Open Vocabulary that specifies the type of infrastructure. Open vocab - infrastructure-type-ov.
+  // The kinds of infrastructure, such as botnet.
   repeated string infrastructure_types = 15;
   // Other names by which the object is known.
   repeated string aliases = 16;
@@ -766,7 +766,7 @@ message StixIntrusionSet {
   StixIdentity created_by_ref = 4;
   // The time at which the object, or its first version, was created.
   string created = 5;
-  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  // The time at which this version of the object was modified.
   string modified = 6;
   // The revoked property indicates whether the object has been revoked.
   bool revoked = 7;
@@ -868,7 +868,7 @@ message StixLanguageContent {
   StixIdentity created_by_ref = 4;
   // The time at which the object, or its first version, was created.
   string created = 5;
-  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  // The time at which this version of the object was modified.
   string modified = 6;
   // The revoked property indicates whether the object has been revoked.
   bool revoked = 7;
@@ -896,7 +896,7 @@ message StixLanguageContent {
 // The translations of a language content object, keyed by language code. Each value maps the translated properties to their translations.
 message StixLanguageContents {
 }
-// A Location represents a geographic location. The location may be described as any, some or all of the following: region (e.g., North America), civic address (e.g. New York, US), latitude and longitude.
+// A geographic location, given as a region, a civic address, a latitude and longitude, or any mix of them.
 message StixLocation {
   // References to the marking definitions that apply to the object.
   repeated StixMarkingDefinition object_marking_refs = 1;
@@ -908,7 +908,7 @@ message StixLocation {
   StixIdentity created_by_ref = 4;
   // The time at which the object, or its first version, was created.
   string created = 5;
-  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  // The time at which this version of the object was modified.
   string modified = 6;
   // The revoked property indicates whether the object has been revoked.
   bool revoked = 7;
@@ -968,7 +968,7 @@ message StixMacAddress {
   // The STIX type name of the object, such as attack-pattern. Each class pins its own.
   string type = 8;
 }
-// Malware is a type of TTP that is also known as malicious code and malicious software, refers to a program that is inserted into a system, usually covertly, with the intent of compromising the confidentiality, integrity, or availability of the victim's data, applications, or operating system (OS) or of otherwise annoying or disrupting the victim.
+// Malicious code: a program inserted into a system, usually covertly, to compromise its data, applications or operating system, or to disrupt its owner.
 message StixMalware {
   // References to the marking definitions that apply to the object.
   repeated StixMarkingDefinition object_marking_refs = 1;
@@ -980,7 +980,7 @@ message StixMalware {
   StixIdentity created_by_ref = 4;
   // The time at which the object, or its first version, was created.
   string created = 5;
-  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  // The time at which this version of the object was modified.
   string modified = 6;
   // The revoked property indicates whether the object has been revoked.
   bool revoked = 7;
@@ -1002,15 +1002,15 @@ message StixMalware {
   string last_seen = 15;
   // The operating systems that the malware family or malware instance is executable on.
   repeated StixSoftware operating_system_refs = 16;
-  // The processor architectures (e.g., x86, ARM, etc.) that the malware instance or family is executable on. Open Vocab - processor-architecture-os.
+  // The processor architectures, such as x86 or ARM, that the malware runs on.
   repeated string architecture_execution_envs = 17;
-  // The programming language(s) used to implement the malware instance or family. Open Vocab - implementation-language-ov.
+  // The programming languages used to write the malware instance or family.
   repeated string implementation_languages = 18;
-  // Specifies any capabilities identified for the malware instance or family. Open Vocab - malware-capabilities-ov.
+  // The capabilities identified in the malware instance or family.
   repeated string capabilities = 19;
   // The sample_refs property specifies a list of identifiers of the SCO file or artifact objects associated with this malware instance(s) or family.
   repeated StixCyberObservableObject sample_refs = 20;
-  // The type of malware being described. Open Vocab - malware-type-ov.
+  // The kinds of malware, such as ransomware.
   repeated string malware_types = 21;
   // A name that identifies the object.
   string name = 22;
@@ -1037,7 +1037,7 @@ message StixMalwareAnalysis {
   StixIdentity created_by_ref = 4;
   // The time at which the object, or its first version, was created.
   string created = 5;
-  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  // The time at which this version of the object was modified.
   string modified = 6;
   // The revoked property indicates whether the object has been revoked.
   bool revoked = 7;
@@ -1163,9 +1163,9 @@ message StixNetworkTraffic {
   StixCyberObservableObject src_ref = 7;
   // Specifies the destination of the network traffic, as a reference to an Observable Object.
   StixCyberObservableObject dst_ref = 8;
-  // Specifies the source port used in the network traffic, as an integer. The port value MUST be in the range of 0 - 65535.
+  // The source port of the traffic.
   int32 src_port = 9;
-  // Specifies the destination port used in the network traffic, as an integer. The port value MUST be in the range of 0 - 65535.
+  // The destination port of the traffic.
   int32 dst_port = 10;
   // Specifies the protocols observed in the network traffic, along with their corresponding state.
   repeated string protocols = 11;
@@ -1211,7 +1211,7 @@ message StixNote {
   StixIdentity created_by_ref = 4;
   // The time at which the object, or its first version, was created.
   string created = 5;
-  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  // The time at which this version of the object was modified.
   string modified = 6;
   // The revoked property indicates whether the object has been revoked.
   bool revoked = 7;
@@ -1229,7 +1229,7 @@ message StixNote {
   string abstract = 13;
   // The content of the note.
   string content = 14;
-  // The name of the author(s) of this note (e.g., the analyst(s) that created it).
+  // The names of the note's authors, such as the analysts who wrote it.
   repeated string authors = 15;
   // References to the STIX objects that this object is about or holds.
   repeated StixObject object_refs = 16;
@@ -1272,7 +1272,7 @@ message StixObservedData {
   StixIdentity created_by_ref = 4;
   // The time at which the object, or its first version, was created.
   string created = 5;
-  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  // The time at which this version of the object was modified.
   string modified = 6;
   // The revoked property indicates whether the object has been revoked.
   bool revoked = 7;
@@ -1290,7 +1290,7 @@ message StixObservedData {
   string first_observed = 13;
   // The end of the time window that the data was observed during.
   string last_observed = 14;
-  // The number of times the data represented in the objects property was observed. This MUST be an integer between 1 and 999,999,999 inclusive.
+  // The number of times the data in objects or object_refs was observed.
   int32 number_observed = 15;
   // The observed cyber-observable objects, as a dictionary keyed by index. Deprecated in STIX 2.1; use object_refs.
   StixObservedObjects objects = 16;
@@ -1316,7 +1316,7 @@ message StixOpinion {
   StixIdentity created_by_ref = 4;
   // The time at which the object, or its first version, was created.
   string created = 5;
-  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  // The time at which this version of the object was modified.
   string modified = 6;
   // The revoked property indicates whether the object has been revoked.
   bool revoked = 7;
@@ -1332,11 +1332,11 @@ message StixOpinion {
   StixSpecVersion spec_version = 12;
   // An explanation of why the producer has this Opinion.
   string explanation = 13;
-  // The name of the author(s) of this note (e.g., the analyst(s) that created it).
+  // The names of the note's authors, such as the analysts who wrote it.
   repeated string authors = 14;
   // References to the STIX objects that this object is about or holds.
   repeated StixObject object_refs = 15;
-  // The opinion that the producer has about about all of the STIX Object(s) listed in the object_refs property.
+  // The producer's opinion of the objects that object_refs lists.
   StixAgreement opinion = 16;
   // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
   string id = 17;
@@ -1424,7 +1424,7 @@ message StixRelationship {
   StixIdentity created_by_ref = 4;
   // The time at which the object, or its first version, was created.
   string created = 5;
-  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  // The time at which this version of the object was modified.
   string modified = 6;
   // The revoked property indicates whether the object has been revoked.
   bool revoked = 7;
@@ -1471,7 +1471,7 @@ message StixRelationshipObject {
   StixIdentity created_by_ref = 6;
   // The time at which the object, or its first version, was created.
   string created = 7;
-  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  // The time at which this version of the object was modified.
   string modified = 8;
   // The revoked property indicates whether the object has been revoked.
   bool revoked = 9;
@@ -1498,7 +1498,7 @@ message StixReport {
   StixIdentity created_by_ref = 4;
   // The time at which the object, or its first version, was created.
   string created = 5;
-  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  // The time at which this version of the object was modified.
   string modified = 6;
   // The revoked property indicates whether the object has been revoked.
   bool revoked = 7;
@@ -1512,7 +1512,7 @@ message StixReport {
   repeated StixExternalReference external_references = 11;
   // The version of the STIX specification used to represent the object.
   StixSpecVersion spec_version = 12;
-  // This field is an Open Vocabulary that specifies the primary subject of this report. The suggested values for this field are in report-type-ov.
+  // The primary subjects of the report, such as threat-actor.
   repeated string report_types = 13;
   // A name that identifies the object.
   string name = 14;
@@ -1527,7 +1527,7 @@ message StixReport {
   // The STIX type name of the object, such as attack-pattern. Each class pins its own.
   string type = 19;
 }
-// A Sighting denotes the belief that something in CTI (e.g., an indicator, malware, tool, threat actor, etc.) was seen.
+// The belief that something in cyber threat intelligence, such as an indicator, malware or a threat actor, was seen.
 message StixSighting {
   // References to the marking definitions that apply to the object.
   repeated StixMarkingDefinition object_marking_refs = 1;
@@ -1539,7 +1539,7 @@ message StixSighting {
   StixIdentity created_by_ref = 4;
   // The time at which the object, or its first version, was created.
   string created = 5;
-  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  // The time at which this version of the object was modified.
   string modified = 6;
   // The revoked property indicates whether the object has been revoked.
   bool revoked = 7;
@@ -1608,11 +1608,11 @@ message StixSoftware {
   bool defanged = 5;
   // A name that identifies the object.
   string name = 6;
-  // Specifies the Common Platform Enumeration (CPE) entry for the software, if available. The value for this property MUST be a CPE v2.3 entry from the official NVD CPE Dictionary.
+  // The Common Platform Enumeration (CPE) 2.3 name of the software, if it has one.
   string cpe = 7;
   // Specifies the Software Identification (SWID) Tags entry for the software, if available.
   string swid = 8;
-  // Specifies the languages supported by the software. The value of each list member MUST be an RFC 5646 language code. ISO 639-2 codes are accepted for backward compatibility.
+  // The languages the software supports, as RFC 5646 language codes.
   repeated string languages = 9;
   // Specifies the name of the vendor of the software.
   string vendor = 10;
@@ -1647,7 +1647,7 @@ message StixThreatActor {
   StixIdentity created_by_ref = 4;
   // The time at which the object, or its first version, was created.
   string created = 5;
-  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  // The time at which this version of the object was modified.
   string modified = 6;
   // The revoked property indicates whether the object has been revoked.
   bool revoked = 7;
@@ -1661,7 +1661,7 @@ message StixThreatActor {
   repeated StixExternalReference external_references = 11;
   // The version of the STIX specification used to represent the object.
   StixSpecVersion spec_version = 12;
-  // This field specifies the type of threat actor. Open Vocab - threat-actor-type-ov.
+  // The kinds of threat actor, such as nation-state.
   repeated string threat_actor_types = 13;
   // A name that identifies the object.
   string name = 14;
@@ -1677,7 +1677,7 @@ message StixThreatActor {
   string first_seen = 19;
   // The time at which the object was last seen.
   string last_seen = 20;
-  // The skill, specific knowledge, special training, or expertise a Threat Actor must have to perform the attack. Open Vocab - threat-actor-sophistication-ov.
+  // The skill, knowledge, training or expertise the threat actor needs to carry out an attack.
   string sophistication = 21;
   // The organizational level at which the actor typically works.
   string resource_level = 22;
@@ -1685,7 +1685,7 @@ message StixThreatActor {
   string primary_motivation = 23;
   // The secondary reasons, motivations or purposes behind the activity.
   repeated string secondary_motivations = 24;
-  // The personal reasons, motivations, or purposes of the Threat Actor regardless of organizational goals. Open Vocab - attack-motivation-ov.
+  // The threat actor's personal reasons or motivations, apart from its organization's goals.
   repeated string personal_motivations = 25;
   // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
   string id = 26;
@@ -1709,7 +1709,7 @@ message StixTool {
   StixIdentity created_by_ref = 4;
   // The time at which the object, or its first version, was created.
   string created = 5;
-  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  // The time at which this version of the object was modified.
   string modified = 6;
   // The revoked property indicates whether the object has been revoked.
   bool revoked = 7;
@@ -1725,7 +1725,7 @@ message StixTool {
   StixSpecVersion spec_version = 12;
   // Other names by which the object is known.
   repeated string aliases = 13;
-  // The kind(s) of tool(s) being described. Open Vocab - tool-type-ov.
+  // The kinds of tool, such as remote-access.
   repeated string tool_types = 14;
   // A name that identifies the object.
   string name = 15;
@@ -1740,7 +1740,7 @@ message StixTool {
   // The STIX type name of the object, such as attack-pattern. Each class pins its own.
   string type = 20;
 }
-// The User Account Object defines the following extensions. In addition to these, producers MAY create their own.
+// The UNIX account extension of a user account: its group, its other groups, its home directory and its shell.
 message StixUnixAccountExtension {
   // Specifies the primary group ID of the account.
   float gid = 1;
@@ -1782,11 +1782,11 @@ message StixUserAccount {
   bool defanged = 4;
   // Specifies the identifier of the account.
   string user_id = 5;
-  // Specifies a cleartext credential. This is only intended to be used in capturing metadata from malware analysis (e.g., a hard-coded domain administrator password that the malware attempts to use for lateral movement) and SHOULD NOT be used for sharing of PII.
+  // A cleartext credential, such as a hard-coded password that malware tries for lateral movement.
   string credential = 6;
   // Specifies the account login string, used in cases where the user_id property specifies something other than what a user would type when they login.
   string account_login = 7;
-  // Specifies the type of the account. This is an open vocabulary and values SHOULD come from the account-type-ov vocabulary.
+  // The type of the account, such as unix or ldap.
   string account_type = 8;
   // A name for display.
   string display_name = 9;
@@ -1830,7 +1830,7 @@ message StixVulnerability {
   StixIdentity created_by_ref = 4;
   // The time at which the object, or its first version, was created.
   string created = 5;
-  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  // The time at which this version of the object was modified.
   string modified = 6;
   // The revoked property indicates whether the object has been revoked.
   bool revoked = 7;
@@ -1855,7 +1855,7 @@ message StixVulnerability {
 }
 // The Windows PE Binary File extension specifies a default extension for capturing properties specific to Windows portable executable (PE) files.
 message StixWindowsPeBinaryExtension {
-  // Specifies the type of the PE binary. Open Vocabulary - windows-pebinary-type-ov.
+  // The type of the PE binary, such as exe or dll.
   string pe_type = 1;
   // Specifies the special import hash, or 'imphash', calculated for the PE Binary based on its imported libraries and functions.
   string imphash = 2;
@@ -1863,7 +1863,7 @@ message StixWindowsPeBinaryExtension {
   string machine_hex = 3;
   // Specifies the number of sections in the PE binary, as a non-negative integer.
   int32 number_of_sections = 4;
-  // Specifies the time when the PE binary was created. The timestamp value MUST BE precise to the second.
+  // The time at which the PE binary was created.
   string time_date_stamp = 5;
   // Specifies the file offset of the COFF symbol table.
   string pointer_to_symbol_table_hex = 6;
@@ -1926,7 +1926,7 @@ message StixWindowsPeOptionalHeader {
   int32 size_of_headers = 21;
   // Specifies the checksum of the PE binary.
   string checksum_hex = 22;
-  // Specifies the subsystem (e.g., GUI, device driver, etc.) that is required to run this image.
+  // The subsystem, such as a GUI or a device driver, needed to run the image.
   string subsystem_hex = 23;
   // Specifies the flags that characterize the PE binary.
   string dll_characteristics_hex = 24;
@@ -2091,7 +2091,7 @@ message StixX509V3Extensions {
   string subject_alternative_name = 8;
   // Specifies the additional identities to be bound to the issuer of the certificate.
   string issuer_alternative_name = 9;
-  // Specifies the identification attributes (e.g., nationality) of the subject.
+  // The identification attributes of the subject, such as nationality.
   string subject_directory_attributes = 10;
   // Specifies how CRL information is obtained.
   string crl_distribution_points = 11;

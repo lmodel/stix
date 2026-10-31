@@ -44,8 +44,7 @@ slots:
     slot_uri: stix:last_seen
   objective:
     description: >-
-      This field defines the Campaign's primary goal, objective, desired outcome, or intended
-      effect.
+      The campaign's primary goal, objective, desired outcome or intended effect.
     slot_uri: stix:objective
   context:
     description: >-
@@ -64,8 +63,7 @@ slots:
     slot_uri: stix:object_refs
   indicator_types:
     description: >-
-      This field is an Open Vocabulary that specifies the type of indicator. Open vocab -
-      indicator-type-ov.
+      The kinds of indicator, such as malicious-activity.
     any_of:
       - range: StixIndicatorType
       - range: string
@@ -96,8 +94,7 @@ slots:
     slot_uri: stix:valid_until
   infrastructure_types:
     description: >-
-      This field is an Open Vocabulary that specifies the type of infrastructure. Open vocab
-      - infrastructure-type-ov.
+      The kinds of infrastructure, such as botnet.
     any_of:
       - range: StixInfrastructureType
       - range: string
@@ -179,8 +176,7 @@ slots:
     slot_uri: stix:operating_system_refs
   architecture_execution_envs:
     description: >-
-      The processor architectures (e.g., x86, ARM, etc.) that the malware instance or family
-      is executable on. Open Vocab - processor-architecture-os.
+      The processor architectures, such as x86 or ARM, that the malware runs on.
     any_of:
       - range: StixProcessorArchitecture
       - range: string
@@ -189,8 +185,7 @@ slots:
     slot_uri: stix:architecture_execution_envs
   implementation_languages:
     description: >-
-      The programming language(s) used to implement the malware instance or family. Open Vocab
-      - implementation-language-ov.
+      The programming languages used to write the malware instance or family.
     any_of:
       - range: StixImplementationLanguage
       - range: string
@@ -199,8 +194,7 @@ slots:
     slot_uri: stix:implementation_languages
   capabilities:
     description: >-
-      Specifies any capabilities identified for the malware instance or family. Open Vocab
-      - malware-capabilities-ov.
+      The capabilities identified in the malware instance or family.
     any_of:
       - range: StixMalwareCapability
       - range: string
@@ -220,7 +214,8 @@ slots:
     minimum_cardinality: 1
     slot_uri: stix:sample_refs
   malware_types:
-    description: The type of malware being described. Open Vocab - malware-type-ov.
+    description: >-
+      The kinds of malware, such as ransomware.
     any_of:
       - range: StixMalwareType
       - range: string
@@ -323,7 +318,7 @@ slots:
     slot_uri: stix:content
   authors:
     description: >-
-      The name of the author(s) of this note (e.g., the analyst(s) that created it).
+      The names of the note's authors, such as the analysts who wrote it.
     multivalued: true
     minimum_cardinality: 1
     slot_uri: stix:authors
@@ -337,8 +332,7 @@ slots:
     slot_uri: stix:last_observed
   number_observed:
     description: >-
-      The number of times the data represented in the objects property was observed. This
-      MUST be an integer between 1 and 999,999,999 inclusive.
+      The number of times the data in objects or object_refs was observed.
     range: integer
     minimum_value: 1
     maximum_value: 999999999
@@ -348,14 +342,12 @@ slots:
     slot_uri: stix:explanation
   opinion:
     description: >-
-      The opinion that the producer has about about all of the STIX Object(s) listed in the
-      object_refs property.
+      The producer's opinion of the objects that object_refs lists.
     range: StixAgreement
     slot_uri: stix:opinion
   report_types:
     description: >-
-      This field is an Open Vocabulary that specifies the primary subject of this report.
-      The suggested values for this field are in report-type-ov.
+      The primary subjects of the report, such as threat-actor.
     any_of:
       - range: StixReportType
       - range: string
@@ -369,7 +361,7 @@ slots:
     slot_uri: stix:published
   threat_actor_types:
     description: >-
-      This field specifies the type of threat actor. Open Vocab - threat-actor-type-ov.
+      The kinds of threat actor, such as nation-state.
     any_of:
       - range: StixThreatActorType
       - range: string
@@ -378,16 +370,15 @@ slots:
     slot_uri: stix:threat_actor_types
   sophistication:
     description: >-
-      The skill, specific knowledge, special training, or expertise a Threat Actor must have
-      to perform the attack. Open Vocab - threat-actor-sophistication-ov.
+      The skill, knowledge, training or expertise the threat actor needs to carry out an
+      attack.
     any_of:
       - range: StixThreatActorSophistication
       - range: string
     slot_uri: stix:sophistication
   personal_motivations:
     description: >-
-      The personal reasons, motivations, or purposes of the Threat Actor regardless of organizational
-      goals. Open Vocab - attack-motivation-ov.
+      The threat actor's personal reasons or motivations, apart from its organization's goals.
     any_of:
       - range: StixAttackMotivation
       - range: string
@@ -395,7 +386,8 @@ slots:
     minimum_cardinality: 1
     slot_uri: stix:personal_motivations
   tool_types:
-    description: The kind(s) of tool(s) being described. Open Vocab - tool-type-ov.
+    description: >-
+      The kinds of tool, such as remote-access.
     any_of:
       - range: StixToolType
       - range: string
@@ -578,9 +570,8 @@ classes:
       stix_type: intrusion-set
   StixLocation:
     description: >-
-      A Location represents a geographic location. The location may be described as any, some
-      or all of the following: region (e.g., North America), civic address (e.g. New York,
-      US), latitude and longitude.
+      A geographic location, given as a region, a civic address, a latitude and longitude, or
+      any mix of them.
     is_a: StixDomainObject
     slots:
       - description
@@ -647,10 +638,8 @@ classes:
       - uco-location:Location
   StixMalware:
     description: >-
-      Malware is a type of TTP that is also known as malicious code and malicious software,
-      refers to a program that is inserted into a system, usually covertly, with the intent
-      of compromising the confidentiality, integrity, or availability of the victim's data,
-      applications, or operating system (OS) or of otherwise annoying or disrupting the victim.
+      Malicious code: a program inserted into a system, usually covertly, to compromise its
+      data, applications or operating system, or to disrupt its owner.
     is_a: StixDomainObject
     slots:
       - aliases

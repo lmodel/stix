@@ -10,7 +10,7 @@ import java.util.List;
 import lombok.*;
 
 /**
-  A Sighting denotes the belief that something in CTI (e.g., an indicator, malware, tool, threat actor, etc.) was seen.
+  The belief that something in cyber threat intelligence, such as an indicator, malware or a threat actor, was seen.
 **/
 @Data
 @EqualsAndHashCode(callSuper=false)

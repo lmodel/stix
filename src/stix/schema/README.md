@@ -12,4 +12,6 @@ only the bundle, and the modules it imports.
 | `stix_sro.yaml` | Relationship and sighting. |
 
 Each module imports only the modules it uses, so a schema that needs part of
-STIX can import that part alone.
+STIX can import that part alone. `stix_vocabularies` imports only
+`linkml:types` and `stix_core` imports it, so the two together are the core
+that the other modules import.
