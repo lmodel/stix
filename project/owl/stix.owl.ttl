@@ -1005,6 +1005,7 @@ stix:StixMarkingDefinition a owl:Class ;
 	skos:closeMatch <https://ontology.unifiedcyberontology.org/uco/marking/MarkingDefinition> ;
 	skos:definition "A marking definition: a statement, a Traffic Light Protocol (TLP) level or another marking that applies to the objects that reference it." ;
 	skos:inScheme stix:stix_core ;
+	skos:note "created keeps the millisecond precision STIX 2.1 gives every object's created. OASIS's JSON schema asks a marking definition for a timestamp of any precision." ;
 	stix:stix_type "marking-definition" .
 stix:StixMarkingDefinitionType\#statement a owl:Class ;
 	rdfs:label "statement" ;

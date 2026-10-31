@@ -600,7 +600,7 @@ class StixMarkingDefinition(StixObject):
     class_model_uri: ClassVar[URIRef] = STIX.StixMarkingDefinition
 
     id: Union[str, StixMarkingDefinitionId] = None
-    created: Union[str, StixTimestamp] = None
+    created: Union[str, StixTimestampMillis] = None
     type: str = None
     spec_version: Union[str, "StixSpecVersion"] = None
     created_by_ref: Optional[Union[str, StixIdentityId]] = None
@@ -617,8 +617,8 @@ class StixMarkingDefinition(StixObject):
 
         if self._is_empty(self.created):
             self.MissingRequiredField("created")
-        if not isinstance(self.created, StixTimestamp):
-            self.created = StixTimestamp(self.created)
+        if not isinstance(self.created, StixTimestampMillis):
+            self.created = StixTimestampMillis(self.created)
 
         if self._is_empty(self.type):
             self.MissingRequiredField("type")
@@ -6367,7 +6367,7 @@ slots.StixMarkingDefinition_spec_version = Slot(uri=STIX.spec_version, name="Sti
                    model_uri=STIX.StixMarkingDefinition_spec_version, domain=StixMarkingDefinition, range=Union[str, "StixSpecVersion"])
 
 slots.StixMarkingDefinition_created = Slot(uri=STIX.created, name="StixMarkingDefinition_created", curie=STIX.curie('created'),
-                   model_uri=STIX.StixMarkingDefinition_created, domain=StixMarkingDefinition, range=Union[str, StixTimestamp])
+                   model_uri=STIX.StixMarkingDefinition_created, domain=StixMarkingDefinition, range=Union[str, StixTimestampMillis])
 
 slots.StixLanguageContent_id = Slot(uri=STIX.id, name="StixLanguageContent_id", curie=STIX.curie('id'),
                    model_uri=STIX.StixLanguageContent_id, domain=StixLanguageContent, range=Union[str, StixLanguageContentId],

@@ -411,7 +411,10 @@ classes:
         required: true
       created:
         required: true
-        range: stix_timestamp
+    comments:
+      - >-
+        created keeps the millisecond precision STIX 2.1 gives every object's created. OASIS's
+        JSON schema asks a marking definition for a timestamp of any precision.
     rules:
       - description: >-
           Without extensions, a marking definition states its definition and definition type.

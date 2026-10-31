@@ -604,7 +604,7 @@ linkml:Sparqlpath xsd:string
     (  $<StixMarkingDefinition_tes> (  &<StixObject_tes> ;
           rdf:type [ <StixObject> ] ? ;
           <created_by_ref> @<StixIdentity> ? ;
-          <created> @<StixTimestamp> ;
+          <created> @<StixTimestampMillis> ;
           <external_references> @<StixExternalReference> * ;
           <name> @linkml:String ? ;
           <definition_type> @linkml:String ? ;

@@ -6319,7 +6319,7 @@ slots:
     - StixMarkingDefinition
     is_usage_slot: true
     usage_slot_name: created
-    range: stix_timestamp
+    range: stix_timestamp_millis
     required: true
   StixLanguageContent_id:
     name: StixLanguageContent_id
@@ -9712,6 +9712,9 @@ classes:
         value: marking-definition
     description: 'A marking definition: a statement, a Traffic Light Protocol (TLP)
       level or another marking that applies to the objects that reference it.'
+    comments:
+    - created keeps the millisecond precision STIX 2.1 gives every object's created.
+      OASIS's JSON schema asks a marking definition for a timestamp of any precision.
     from_schema: https://w3id.org/lmodel/stix/stix_core
     close_mappings:
     - uco-marking:MarkingDefinition
@@ -9741,7 +9744,6 @@ classes:
         required: true
       created:
         name: created
-        range: stix_timestamp
         required: true
     class_uri: stix:StixMarkingDefinition
     rules:

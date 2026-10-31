@@ -1137,7 +1137,7 @@ type StixMarkingDefinition
     granularMarkings: [StixGranularMarking]
     extensions: StixExtensions
     createdByRef: StixIdentity
-    created: StixTimestamp!
+    created: StixTimestampMillis!
     externalReferences: [StixExternalReference]
     name: String
     definitionType: String

@@ -1166,6 +1166,9 @@ class StixMarkingDefinition(StixObject):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'annotations': {'stix_type': {'tag': 'stix_type',
                                        'value': 'marking-definition'}},
          'close_mappings': ['uco-marking:MarkingDefinition'],
+         'comments': ['created keeps the millisecond precision STIX 2.1 gives every '
+                      "object's created. OASIS's JSON schema asks a marking definition "
+                      'for a timestamp of any precision.'],
          'from_schema': 'https://w3id.org/lmodel/stix/stix_core',
          'rules': [{'description': 'Without extensions, a marking definition states '
                                    'its definition and definition type.',
@@ -1175,9 +1178,7 @@ class StixMarkingDefinition(StixObject):
                                                                                'required': True}}},
                     'preconditions': {'slot_conditions': {'extensions': {'name': 'extensions',
                                                                          'value_presence': 'ABSENT'}}}}],
-         'slot_usage': {'created': {'name': 'created',
-                                    'range': 'stix_timestamp',
-                                    'required': True},
+         'slot_usage': {'created': {'name': 'created', 'required': True},
                         'id': {'name': 'id',
                                'pattern': '^marking-definition--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$'},
                         'spec_version': {'name': 'spec_version', 'required': True},
