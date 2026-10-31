@@ -1,0 +1,1746 @@
+# metamodel_version: 1.12.0
+# version: 2.1
+enum StixAccountType
+  {
+    facebook
+    ldap
+    nis
+    openid
+    radius
+    skype
+    tacacs
+    twitter
+    unix
+    windows__HYPHEN_MINUS__local
+    windows__HYPHEN_MINUS__domain
+  }
+
+enum StixAgreement
+  {
+    strongly__HYPHEN_MINUS__disagree
+    disagree
+    neutral
+    agree
+    strongly__HYPHEN_MINUS__agree
+  }
+
+enum StixAttackMotivation
+  {
+    accidental
+    coercion
+    dominance
+    ideology
+    notoriety
+    organizational__HYPHEN_MINUS__gain
+    personal__HYPHEN_MINUS__gain
+    personal__HYPHEN_MINUS__satisfaction
+    revenge
+    unpredictable
+  }
+
+enum StixAttackResourceLevel
+  {
+    individual
+    club
+    contest
+    team
+    organization
+    government
+  }
+
+enum StixEncryptionAlgorithm
+  {
+    AES__HYPHEN_MINUS__256__HYPHEN_MINUS__GCM
+    ChaCha20__HYPHEN_MINUS__Poly1305
+    mime__HYPHEN_MINUS__type__HYPHEN_MINUS__indicated
+  }
+
+enum StixExtensionType
+  {
+    new__HYPHEN_MINUS__sdo
+    new__HYPHEN_MINUS__sco
+    new__HYPHEN_MINUS__sro
+    property__HYPHEN_MINUS__extension
+    toplevel__HYPHEN_MINUS__property__HYPHEN_MINUS__extension
+  }
+
+enum StixGroupingContext
+  {
+    suspicious__HYPHEN_MINUS__activity
+    malware__HYPHEN_MINUS__analysis
+    unspecified
+  }
+
+enum StixHashAlgorithm
+  {
+    MD5
+    SHA__HYPHEN_MINUS__1
+    SHA__HYPHEN_MINUS__256
+    SHA__HYPHEN_MINUS__512
+    SHA3__HYPHEN_MINUS__256
+    SHA3__HYPHEN_MINUS__512
+    SSDEEP
+    TLSH
+  }
+
+enum StixIdentityClass
+  {
+    individual
+    group
+    system
+    organization
+    class
+    unknown
+  }
+
+enum StixImplementationLanguage
+  {
+    applescript
+    bash
+    c
+    c__PLUS_SIGN____PLUS_SIGN__
+    c__NUMBER_SIGN__
+    go
+    java
+    javascript
+    lua
+    objective__HYPHEN_MINUS__c
+    perl
+    php
+    powershell
+    python
+    ruby
+    scala
+    swift
+    typescript
+    visual__HYPHEN_MINUS__basic
+    x86__HYPHEN_MINUS__32
+    x86__HYPHEN_MINUS__64
+  }
+
+enum StixIndicatorType
+  {
+    anomalous__HYPHEN_MINUS__activity
+    anonymization
+    benign
+    compromised
+    malicious__HYPHEN_MINUS__activity
+    attribution
+    unknown
+  }
+
+enum StixIndustrySector
+  {
+    agriculture
+    aerospace
+    automotive
+    chemical
+    commercial
+    communications
+    construction
+    defense
+    education
+    energy
+    entertainment
+    financial__HYPHEN_MINUS__services
+    government
+    emergency__HYPHEN_MINUS__services
+    government__HYPHEN_MINUS__local
+    government__HYPHEN_MINUS__national
+    government__HYPHEN_MINUS__public__HYPHEN_MINUS__services
+    government__HYPHEN_MINUS__regional
+    healthcare
+    hospitality__HYPHEN_MINUS__leisure
+    infrastructure
+    dams
+    nuclear
+    water
+    insurance
+    manufacturing
+    mining
+    non__HYPHEN_MINUS__profit
+    pharmaceuticals
+    retail
+    technology
+    telecommunications
+    transportation
+    utilities
+  }
+
+enum StixInfrastructureType
+  {
+    amplification
+    anonymization
+    botnet
+    command__HYPHEN_MINUS__and__HYPHEN_MINUS__control
+    control__HYPHEN_MINUS__system
+    exfiltration
+    firewall
+    hosting__HYPHEN_MINUS__malware
+    hosting__HYPHEN_MINUS__target__HYPHEN_MINUS__lists
+    phishing
+    reconnaissance
+    routers__HYPHEN_MINUS__switches
+    staging
+    workstation
+    unknown
+  }
+
+enum StixMalwareCapability
+  {
+    accesses__HYPHEN_MINUS__remote__HYPHEN_MINUS__machines
+    anti__HYPHEN_MINUS__debugging
+    anti__HYPHEN_MINUS__disassembly
+    anti__HYPHEN_MINUS__emulation
+    anti__HYPHEN_MINUS__memory__HYPHEN_MINUS__forensics
+    anti__HYPHEN_MINUS__sandbox
+    anti__HYPHEN_MINUS__vm
+    captures__HYPHEN_MINUS__input__HYPHEN_MINUS__peripherals
+    captures__HYPHEN_MINUS__output__HYPHEN_MINUS__peripherals
+    captures__HYPHEN_MINUS__system__HYPHEN_MINUS__state__HYPHEN_MINUS__data
+    cleans__HYPHEN_MINUS__traces__HYPHEN_MINUS__of__HYPHEN_MINUS__infection
+    commits__HYPHEN_MINUS__fraud
+    communicates__HYPHEN_MINUS__with__HYPHEN_MINUS__c2
+    compromises__HYPHEN_MINUS__data__HYPHEN_MINUS__availability
+    compromises__HYPHEN_MINUS__data__HYPHEN_MINUS__integrity
+    compromises__HYPHEN_MINUS__system__HYPHEN_MINUS__availability
+    controls__HYPHEN_MINUS__local__HYPHEN_MINUS__machine
+    degrades__HYPHEN_MINUS__security__HYPHEN_MINUS__software
+    degrades__HYPHEN_MINUS__system__HYPHEN_MINUS__updates
+    determines__HYPHEN_MINUS__c2__HYPHEN_MINUS__server
+    emails__HYPHEN_MINUS__spam
+    escalates__HYPHEN_MINUS__privileges
+    evades__HYPHEN_MINUS__av
+    exfiltrates__HYPHEN_MINUS__data
+    fingerprints__HYPHEN_MINUS__host
+    hides__HYPHEN_MINUS__artifacts
+    hides__HYPHEN_MINUS__executing__HYPHEN_MINUS__code
+    infects__HYPHEN_MINUS__files
+    infects__HYPHEN_MINUS__remote__HYPHEN_MINUS__machines
+    installs__HYPHEN_MINUS__other__HYPHEN_MINUS__components
+    persists__HYPHEN_MINUS__after__HYPHEN_MINUS__system__HYPHEN_MINUS__reboot
+    prevents__HYPHEN_MINUS__artifact__HYPHEN_MINUS__access
+    prevents__HYPHEN_MINUS__artifact__HYPHEN_MINUS__deletion
+    probes__HYPHEN_MINUS__network__HYPHEN_MINUS__environment
+    self__HYPHEN_MINUS__modifies
+    steals__HYPHEN_MINUS__authentication__HYPHEN_MINUS__credentials
+    violates__HYPHEN_MINUS__system__HYPHEN_MINUS__operational__HYPHEN_MINUS__integrity
+  }
+
+enum StixMalwareResult
+  {
+    malicious
+    suspicious
+    benign
+    unknown
+  }
+
+enum StixMalwareType
+  {
+    adware
+    backdoor
+    bot
+    bootkit
+    ddos
+    downloader
+    dropper
+    exploit__HYPHEN_MINUS__kit
+    keylogger
+    ransomware
+    remote__HYPHEN_MINUS__access__HYPHEN_MINUS__trojan
+    resource__HYPHEN_MINUS__exploitation
+    rogue__HYPHEN_MINUS__security__HYPHEN_MINUS__software
+    rootkit
+    screen__HYPHEN_MINUS__capture
+    spyware
+    trojan
+    unknown
+    virus
+    webshell
+    wiper
+    worm
+  }
+
+enum StixMarkingDefinitionType
+  {
+    statement
+    tlp
+  }
+
+enum StixNetworkSocketAddressFamily
+  {
+    AF_UNSPEC
+    AF_INET
+    AF_IPX
+    AF_APPLETALK
+    AF_NETBIOS
+    AF_INET6
+    AF_IRDA
+    AF_BTH
+  }
+
+enum StixNetworkSocketType
+  {
+    SOCK_STREAM
+    SOCK_DGRAM
+    SOCK_RAW
+    SOCK_RDM
+    SOCK_SEQPACKET
+  }
+
+enum StixPatternType
+  {
+    stix
+    pcre
+    sigma
+    snort
+    suricata
+    yara
+  }
+
+enum StixProcessorArchitecture
+  {
+    alpha
+    arm
+    ia__HYPHEN_MINUS__64
+    mips
+    powerpc
+    sparc
+    x86
+    x86__HYPHEN_MINUS__64
+  }
+
+enum StixRegion
+  {
+    africa
+    eastern__HYPHEN_MINUS__africa
+    middle__HYPHEN_MINUS__africa
+    northern__HYPHEN_MINUS__africa
+    southern__HYPHEN_MINUS__africa
+    western__HYPHEN_MINUS__africa
+    americas
+    caribbean
+    central__HYPHEN_MINUS__america
+    latin__HYPHEN_MINUS__america__HYPHEN_MINUS__caribbean
+    northern__HYPHEN_MINUS__america
+    south__HYPHEN_MINUS__america
+    asia
+    central__HYPHEN_MINUS__asia
+    eastern__HYPHEN_MINUS__asia
+    southern__HYPHEN_MINUS__asia
+    south__HYPHEN_MINUS__eastern__HYPHEN_MINUS__asia
+    western__HYPHEN_MINUS__asia
+    europe
+    eastern__HYPHEN_MINUS__europe
+    northern__HYPHEN_MINUS__europe
+    southern__HYPHEN_MINUS__europe
+    western__HYPHEN_MINUS__europe
+    oceania
+    antarctica
+    australia__HYPHEN_MINUS__new__HYPHEN_MINUS__zealand
+    melanesia
+    micronesia
+    polynesia
+  }
+
+enum StixReportType
+  {
+    attack__HYPHEN_MINUS__pattern
+    campaign
+    identity
+    indicator
+    intrusion__HYPHEN_MINUS__set
+    malware
+    observed__HYPHEN_MINUS__data
+    threat__HYPHEN_MINUS__actor
+    threat__HYPHEN_MINUS__report
+    tool
+    vulnerability
+  }
+
+enum StixSpecVersion
+  {
+    __2__FULL_STOP__0
+    __2__FULL_STOP__1
+  }
+
+enum StixThreatActorRole
+  {
+    agent
+    director
+    independent
+    infrastructure__HYPHEN_MINUS__architect
+    infrastructure__HYPHEN_MINUS__operator
+    malware__HYPHEN_MINUS__author
+    sponsor
+  }
+
+enum StixThreatActorSophistication
+  {
+    none
+    minimal
+    intermediate
+    advanced
+    expert
+    innovator
+    strategic
+  }
+
+enum StixThreatActorType
+  {
+    activist
+    competitor
+    crime__HYPHEN_MINUS__syndicate
+    criminal
+    hacker
+    insider__HYPHEN_MINUS__accidental
+    insider__HYPHEN_MINUS__disgruntled
+    nation__HYPHEN_MINUS__state
+    sensationalist
+    spy
+    terrorist
+    unknown
+  }
+
+enum StixTlpLevel
+  {
+    white
+    green
+    amber
+    red
+  }
+
+enum StixToolType
+  {
+    denial__HYPHEN_MINUS__of__HYPHEN_MINUS__service
+    exploitation
+    information__HYPHEN_MINUS__gathering
+    network__HYPHEN_MINUS__capture
+    credential__HYPHEN_MINUS__exploitation
+    remote__HYPHEN_MINUS__access
+    vulnerability__HYPHEN_MINUS__scanning
+    unknown
+  }
+
+enum StixWindowsIntegrityLevel
+  {
+    low
+    medium
+    high
+    system
+  }
+
+enum StixWindowsPeBinaryType
+  {
+    dll
+    exe
+    sys
+  }
+
+enum StixWindowsRegistryDatatype
+  {
+    REG_NONE
+    REG_SZ
+    REG_EXPAND_SZ
+    REG_BINARY
+    REG_DWORD
+    REG_DWORD_BIG_ENDIAN
+    REG_DWORD_LITTLE_ENDIAN
+    REG_LINK
+    REG_MULTI_SZ
+    REG_RESOURCE_LIST
+    REG_FULL_RESOURCE_DESCRIPTION
+    REG_RESOURCE_REQUIREMENTS_LIST
+    REG_QWORD
+    REG_INVALID_TYPE
+  }
+
+enum StixWindowsServiceStartType
+  {
+    SERVICE_AUTO_START
+    SERVICE_BOOT_START
+    SERVICE_DEMAND_START
+    SERVICE_DISABLED
+    SERVICE_SYSTEM_ALERT
+  }
+
+enum StixWindowsServiceStatus
+  {
+    SERVICE_CONTINUE_PENDING
+    SERVICE_PAUSE_PENDING
+    SERVICE_PAUSED
+    SERVICE_RUNNING
+    SERVICE_START_PENDING
+    SERVICE_STOP_PENDING
+    SERVICE_STOPPED
+  }
+
+enum StixWindowsServiceType
+  {
+    SERVICE_KERNEL_DRIVER
+    SERVICE_FILE_SYSTEM_DRIVER
+    SERVICE_WIN32_OWN_PROCESS
+    SERVICE_WIN32_SHARE_PROCESS
+  }
+
+type StixAlternateDataStream
+  {
+    name: String!
+    hashes: StixHashes
+    size: Int
+  }
+
+type StixArchiveExtension
+  {
+    containsRefs: [StixCyberObservableObject]!
+    comment: String
+  }
+
+type StixArtifact
+  {
+    specVersion: StixSpecVersion
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    defanged: Boolean
+    mimeType: String
+    payloadBin: StixBinary
+    url: String
+    hashes: StixHashes
+    encryptionAlgorithm: StixEncryptionAlgorithm
+    decryptionKey: String
+    id: StixIdentifier!
+    type: String!
+  }
+
+type StixAttackPattern
+  {
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    createdByRef: StixIdentity
+    created: StixTimestampMillis!
+    modified: StixTimestampMillis!
+    revoked: Boolean
+    labels: [String]
+    confidence: Int
+    lang: String
+    externalReferences: [StixExternalReference]
+    specVersion: StixSpecVersion!
+    aliases: [String]
+    name: String!
+    description: String
+    killChainPhases: [StixKillChainPhase]
+    id: StixIdentifier!
+    type: String!
+  }
+
+type StixAutonomousSystem
+  {
+    specVersion: StixSpecVersion
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    defanged: Boolean
+    number: Int!
+    name: String
+    rir: String
+    id: StixIdentifier!
+    type: String!
+  }
+
+type StixBundle
+  {
+    id: StixIdentifier!
+    type: String!
+    objects: [StixObject]
+  }
+
+type StixCampaign
+  {
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    createdByRef: StixIdentity
+    created: StixTimestampMillis!
+    modified: StixTimestampMillis!
+    revoked: Boolean
+    labels: [String]
+    confidence: Int
+    lang: String
+    externalReferences: [StixExternalReference]
+    specVersion: StixSpecVersion!
+    name: String!
+    description: String
+    aliases: [String]
+    firstSeen: StixTimestamp
+    lastSeen: StixTimestamp
+    objective: String
+    id: StixIdentifier!
+    type: String!
+  }
+
+interface StixCommonObject
+  {
+    id: StixIdentifier!
+    type: String!
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    createdByRef: StixIdentity
+    created: StixTimestampMillis!
+    modified: StixTimestampMillis!
+    revoked: Boolean
+    labels: [String]
+    confidence: Int
+    lang: String
+    externalReferences: [StixExternalReference]
+    specVersion: StixSpecVersion!
+  }
+
+type StixCourseOfAction
+  {
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    createdByRef: StixIdentity
+    created: StixTimestampMillis!
+    modified: StixTimestampMillis!
+    revoked: Boolean
+    labels: [String]
+    confidence: Int
+    lang: String
+    externalReferences: [StixExternalReference]
+    specVersion: StixSpecVersion!
+    name: String!
+    description: String
+    id: StixIdentifier!
+    type: String!
+  }
+
+interface StixCyberObservableObject
+  {
+    id: StixIdentifier!
+    type: String!
+    specVersion: StixSpecVersion
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    defanged: Boolean
+  }
+
+type StixDictionary
+  {
+  }
+
+type StixDirectory
+  {
+    specVersion: StixSpecVersion
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    defanged: Boolean
+    path: String!
+    pathEnc: String
+    ctime: StixTimestamp
+    mtime: StixTimestamp
+    atime: StixTimestamp
+    containsRefs: [StixCyberObservableObject]
+    id: StixIdentifier!
+    type: String!
+  }
+
+type StixDomainName
+  {
+    specVersion: StixSpecVersion
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    defanged: Boolean
+    value: String!
+    resolvesToRefs: [StixCyberObservableObject]
+    id: StixIdentifier!
+    type: String!
+  }
+
+interface StixDomainObject
+  {
+    id: StixIdentifier!
+    type: String!
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    createdByRef: StixIdentity
+    created: StixTimestampMillis!
+    modified: StixTimestampMillis!
+    revoked: Boolean
+    labels: [String]
+    confidence: Int
+    lang: String
+    externalReferences: [StixExternalReference]
+    specVersion: StixSpecVersion!
+  }
+
+type StixEmailAddress
+  {
+    specVersion: StixSpecVersion
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    defanged: Boolean
+    value: String!
+    displayName: String
+    belongsToRef: StixUserAccount
+    id: StixIdentifier!
+    type: String!
+  }
+
+type StixEmailMessage
+  {
+    specVersion: StixSpecVersion
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    defanged: Boolean
+    date: StixTimestamp
+    contentType: String
+    fromRef: StixEmailAddress
+    senderRef: StixEmailAddress
+    toRefs: [StixEmailAddress]
+    ccRefs: [StixEmailAddress]
+    bccRefs: [StixEmailAddress]
+    messageId: String
+    subject: String
+    receivedLines: [String]
+    additionalHeaderFields: StixDictionary
+    rawEmailRef: StixArtifact
+    isMultipart: Boolean!
+    body: String
+    bodyMultipart: [StixMimePart]
+    id: StixIdentifier!
+    type: String!
+  }
+
+type StixExifTags
+  {
+  }
+
+type StixExtension
+  {
+    extensionType: StixExtensionType!
+  }
+
+type StixExtensionDefinition
+  {
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    createdByRef: StixIdentity
+    created: StixTimestampMillis!
+    modified: StixTimestampMillis!
+    revoked: Boolean
+    labels: [String]
+    confidence: Int
+    lang: String
+    externalReferences: [StixExternalReference]
+    specVersion: StixSpecVersion!
+    name: String!
+    description: String
+    schema: String!
+    version: String!
+    extensionTypes: [StixExtensionType]!
+    extensionProperties: [String]
+    id: StixIdentifier!
+    type: String!
+  }
+
+type StixExtensions
+  {
+  }
+
+type StixExternalReference
+  {
+    sourceName: String!
+    description: String
+    url: String
+    hashes: StixHashes
+    externalId: String
+  }
+
+type StixFile
+  {
+    specVersion: StixSpecVersion
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    defanged: Boolean
+    hashes: StixHashes
+    size: Int
+    name: String
+    nameEnc: String
+    magicNumberHex: StixHex
+    mimeType: String
+    ctime: StixTimestamp
+    mtime: StixTimestamp
+    atime: StixTimestamp
+    parentDirectoryRef: StixDirectory
+    containsRefs: [StixCyberObservableObject]
+    contentRef: StixArtifact
+    id: StixIdentifier!
+    type: String!
+    extensions: StixFileExtensions
+  }
+
+type StixFileExtensions
+  {
+  }
+
+type StixGranularMarking
+  {
+    markingRef: StixMarkingDefinition!
+    selectors: [String]!
+    lang: String
+  }
+
+type StixGrouping
+  {
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    createdByRef: StixIdentity
+    created: StixTimestampMillis!
+    modified: StixTimestampMillis!
+    revoked: Boolean
+    labels: [String]
+    confidence: Int
+    lang: String
+    externalReferences: [StixExternalReference]
+    specVersion: StixSpecVersion!
+    name: String
+    description: String
+    context: String!
+    objectRefs: [StixObject]!
+    id: StixIdentifier!
+    type: String!
+  }
+
+type StixHashes
+  {
+  }
+
+type StixHttpRequestExtension
+  {
+    requestMethod: String!
+    requestValue: String!
+    requestVersion: String
+    requestHeader: StixDictionary
+    messageBodyLength: Int
+    messageBodyDataRef: StixArtifact
+  }
+
+type StixIcmpExtension
+  {
+    icmpTypeHex: StixHex!
+    icmpCodeHex: StixHex!
+  }
+
+type StixIdentity
+  {
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    createdByRef: StixIdentity
+    created: StixTimestampMillis!
+    modified: StixTimestampMillis!
+    revoked: Boolean
+    labels: [String]
+    confidence: Int
+    lang: String
+    externalReferences: [StixExternalReference]
+    specVersion: StixSpecVersion!
+    roles: [String]
+    name: String!
+    description: String
+    identityClass: String
+    sectors: [String]
+    contactInformation: String
+    id: StixIdentifier!
+    type: String!
+  }
+
+type StixIncident
+  {
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    createdByRef: StixIdentity
+    created: StixTimestampMillis!
+    modified: StixTimestampMillis!
+    revoked: Boolean
+    labels: [String]
+    confidence: Int
+    lang: String
+    externalReferences: [StixExternalReference]
+    specVersion: StixSpecVersion!
+    name: String!
+    description: String
+    id: StixIdentifier!
+    type: String!
+  }
+
+type StixIndicator
+  {
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    createdByRef: StixIdentity
+    created: StixTimestampMillis!
+    modified: StixTimestampMillis!
+    revoked: Boolean
+    labels: [String]
+    confidence: Int
+    lang: String
+    externalReferences: [StixExternalReference]
+    specVersion: StixSpecVersion!
+    indicatorTypes: [String]
+    name: String
+    description: String
+    pattern: String!
+    patternType: String!
+    patternVersion: String
+    validFrom: StixTimestamp!
+    validUntil: StixTimestamp
+    killChainPhases: [StixKillChainPhase]
+    id: StixIdentifier!
+    type: String!
+  }
+
+type StixInfrastructure
+  {
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    createdByRef: StixIdentity
+    created: StixTimestampMillis!
+    modified: StixTimestampMillis!
+    revoked: Boolean
+    labels: [String]
+    confidence: Int
+    lang: String
+    externalReferences: [StixExternalReference]
+    specVersion: StixSpecVersion!
+    name: String!
+    description: String
+    infrastructureTypes: [String]
+    aliases: [String]
+    killChainPhases: [StixKillChainPhase]
+    firstSeen: StixTimestamp
+    lastSeen: StixTimestamp
+    id: StixIdentifier!
+    type: String!
+  }
+
+type StixIntrusionSet
+  {
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    createdByRef: StixIdentity
+    created: StixTimestampMillis!
+    modified: StixTimestampMillis!
+    revoked: Boolean
+    labels: [String]
+    confidence: Int
+    lang: String
+    externalReferences: [StixExternalReference]
+    specVersion: StixSpecVersion!
+    name: String!
+    description: String
+    aliases: [String]
+    firstSeen: StixTimestamp
+    lastSeen: StixTimestamp
+    goals: [String]
+    resourceLevel: String
+    primaryMotivation: String
+    secondaryMotivations: [String]
+    id: StixIdentifier!
+    type: String!
+  }
+
+type StixIpv4Address
+  {
+    specVersion: StixSpecVersion
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    defanged: Boolean
+    value: String!
+    resolvesToRefs: [StixMacAddress]
+    belongsToRefs: [StixAutonomousSystem]
+    id: StixIdentifier!
+    type: String!
+  }
+
+type StixIpv6Address
+  {
+    specVersion: StixSpecVersion
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    defanged: Boolean
+    value: String!
+    resolvesToRefs: [StixMacAddress]
+    belongsToRefs: [StixAutonomousSystem]
+    id: StixIdentifier!
+    type: String!
+  }
+
+type StixKillChainPhase
+  {
+    killChainName: String!
+    phaseName: String!
+  }
+
+type StixLanguageContent
+  {
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    createdByRef: StixIdentity
+    created: StixTimestampMillis!
+    modified: StixTimestampMillis!
+    revoked: Boolean
+    labels: [String]
+    confidence: Int
+    lang: String
+    externalReferences: [StixExternalReference]
+    specVersion: StixSpecVersion!
+    objectRef: StixObject!
+    objectModified: StixTimestamp
+    contents: StixLanguageContents!
+    id: StixIdentifier!
+    type: String!
+  }
+
+type StixLanguageContents
+  {
+  }
+
+type StixLocation
+  {
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    createdByRef: StixIdentity
+    created: StixTimestampMillis!
+    modified: StixTimestampMillis!
+    revoked: Boolean
+    labels: [String]
+    confidence: Int
+    lang: String
+    externalReferences: [StixExternalReference]
+    specVersion: StixSpecVersion!
+    description: String
+    name: String
+    latitude: Float
+    longitude: Float
+    precision: Float
+    region: String
+    country: String
+    administrativeArea: String
+    city: String
+    streetAddress: String
+    postalCode: String
+    id: StixIdentifier!
+    type: String!
+  }
+
+type StixMacAddress
+  {
+    specVersion: StixSpecVersion
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    defanged: Boolean
+    value: String!
+    id: StixIdentifier!
+    type: String!
+  }
+
+type StixMalware
+  {
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    createdByRef: StixIdentity
+    created: StixTimestampMillis!
+    modified: StixTimestampMillis!
+    revoked: Boolean
+    labels: [String]
+    confidence: Int
+    lang: String
+    externalReferences: [StixExternalReference]
+    specVersion: StixSpecVersion!
+    aliases: [String]
+    firstSeen: StixTimestamp
+    lastSeen: StixTimestamp
+    operatingSystemRefs: [StixSoftware]
+    architectureExecutionEnvs: [String]
+    implementationLanguages: [String]
+    capabilities: [String]
+    sampleRefs: [StixCyberObservableObject]
+    malwareTypes: [String]
+    name: String
+    description: String
+    killChainPhases: [StixKillChainPhase]
+    isFamily: Boolean!
+    id: StixIdentifier!
+    type: String!
+  }
+
+type StixMalwareAnalysis
+  {
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    createdByRef: StixIdentity
+    created: StixTimestampMillis!
+    modified: StixTimestampMillis!
+    revoked: Boolean
+    labels: [String]
+    confidence: Int
+    lang: String
+    externalReferences: [StixExternalReference]
+    specVersion: StixSpecVersion!
+    product: String!
+    version: String
+    configurationVersion: String
+    modules: [String]
+    analysisEngineVersion: String
+    analysisDefinitionVersion: String
+    submitted: StixTimestamp
+    analysisStarted: StixTimestamp
+    analysisEnded: StixTimestamp
+    resultName: String
+    result: String
+    hostVmRef: StixSoftware
+    operatingSystemRef: StixSoftware
+    installedSoftwareRefs: [StixSoftware]
+    analysisScoRefs: [StixCyberObservableObject]
+    sampleRef: StixCyberObservableObject
+    id: StixIdentifier!
+    type: String!
+  }
+
+type StixMarkingDefinition
+  {
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    createdByRef: StixIdentity
+    created: StixTimestamp!
+    externalReferences: [StixExternalReference]
+    name: String
+    definitionType: String
+    definition: String
+    id: StixIdentifier!
+    type: String!
+    specVersion: StixSpecVersion!
+  }
+
+type StixMimePart
+  {
+    body: String
+    bodyRawRef: StixCyberObservableObject
+    contentType: String
+    contentDisposition: String
+  }
+
+type StixMutex
+  {
+    specVersion: StixSpecVersion
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    defanged: Boolean
+    name: String!
+    id: StixIdentifier!
+    type: String!
+  }
+
+type StixNetworkTraffic
+  {
+    specVersion: StixSpecVersion
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    defanged: Boolean
+    start: StixTimestamp
+    end: StixTimestamp
+    srcRef: StixCyberObservableObject
+    dstRef: StixCyberObservableObject
+    srcPort: Int
+    dstPort: Int
+    protocols: [String]!
+    srcByteCount: Int
+    dstByteCount: Int
+    srcPackets: Int
+    dstPackets: Int
+    ipfix: StixDictionary
+    srcPayloadRef: StixArtifact
+    dstPayloadRef: StixArtifact
+    encapsulatesRefs: [StixNetworkTraffic]
+    encapsulatedByRef: StixNetworkTraffic
+    isActive: Boolean
+    id: StixIdentifier!
+    type: String!
+    extensions: StixNetworkTrafficExtensions
+  }
+
+type StixNetworkTrafficExtensions
+  {
+  }
+
+type StixNote
+  {
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    createdByRef: StixIdentity
+    created: StixTimestampMillis!
+    modified: StixTimestampMillis!
+    revoked: Boolean
+    labels: [String]
+    confidence: Int
+    lang: String
+    externalReferences: [StixExternalReference]
+    specVersion: StixSpecVersion!
+    abstract: String
+    content: String!
+    authors: [String]
+    objectRefs: [StixObject]!
+    id: StixIdentifier!
+    type: String!
+  }
+
+type StixNtfsExtension
+  {
+    sid: String
+    alternateDataStreams: [StixAlternateDataStream]
+  }
+
+interface StixObject
+  {
+    id: StixIdentifier!
+    type: String!
+    specVersion: StixSpecVersion
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+  }
+
+type StixObservedData
+  {
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    createdByRef: StixIdentity
+    created: StixTimestampMillis!
+    modified: StixTimestampMillis!
+    revoked: Boolean
+    labels: [String]
+    confidence: Int
+    lang: String
+    externalReferences: [StixExternalReference]
+    specVersion: StixSpecVersion!
+    firstObserved: StixTimestamp!
+    lastObserved: StixTimestamp!
+    numberObserved: Int!
+    objects: StixObservedObjects
+    objectRefs: [StixObject]
+    id: StixIdentifier!
+    type: String!
+  }
+
+type StixObservedObjects
+  {
+  }
+
+type StixOpinion
+  {
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    createdByRef: StixIdentity
+    created: StixTimestampMillis!
+    modified: StixTimestampMillis!
+    revoked: Boolean
+    labels: [String]
+    confidence: Int
+    lang: String
+    externalReferences: [StixExternalReference]
+    specVersion: StixSpecVersion!
+    explanation: String
+    authors: [String]
+    objectRefs: [StixObject]!
+    opinion: StixAgreement!
+    id: StixIdentifier!
+    type: String!
+  }
+
+type StixPdfDocumentInfo
+  {
+  }
+
+type StixPdfExtension
+  {
+    version: String
+    isOptimized: Boolean
+    documentInfoDict: StixPdfDocumentInfo
+    pdfid0: String
+    pdfid1: String
+  }
+
+type StixProcess
+  {
+    specVersion: StixSpecVersion
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    defanged: Boolean
+    isHidden: Boolean
+    pid: Int
+    createdTime: StixTimestamp
+    cwd: String
+    commandLine: String
+    environmentVariables: StixDictionary
+    openedConnectionRefs: [StixNetworkTraffic]
+    creatorUserRef: StixUserAccount
+    imageRef: StixFile
+    parentRef: StixProcess
+    childRefs: [StixProcess]
+    id: StixIdentifier!
+    type: String!
+    extensions: StixProcessExtensions
+  }
+
+type StixProcessExtensions
+  {
+  }
+
+type StixRasterImageExtension
+  {
+    imageHeight: Int
+    imageWidth: Int
+    bitsPerPixel: Int
+    exifTags: StixExifTags
+  }
+
+type StixRelationship
+  {
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    createdByRef: StixIdentity
+    created: StixTimestampMillis!
+    modified: StixTimestampMillis!
+    revoked: Boolean
+    labels: [String]
+    confidence: Int
+    lang: String
+    externalReferences: [StixExternalReference]
+    specVersion: StixSpecVersion!
+    relationshipType: String!
+    description: String
+    sourceRef: StixObject!
+    targetRef: StixObject!
+    startTime: StixTimestamp
+    stopTime: StixTimestamp
+    id: StixIdentifier!
+    type: String!
+  }
+
+interface StixRelationshipObject
+  {
+    id: StixIdentifier!
+    type: String!
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    createdByRef: StixIdentity
+    created: StixTimestampMillis!
+    modified: StixTimestampMillis!
+    revoked: Boolean
+    labels: [String]
+    confidence: Int
+    lang: String
+    externalReferences: [StixExternalReference]
+    specVersion: StixSpecVersion!
+  }
+
+type StixReport
+  {
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    createdByRef: StixIdentity
+    created: StixTimestampMillis!
+    modified: StixTimestampMillis!
+    revoked: Boolean
+    labels: [String]
+    confidence: Int
+    lang: String
+    externalReferences: [StixExternalReference]
+    specVersion: StixSpecVersion!
+    reportTypes: [String]
+    name: String!
+    description: String
+    published: StixTimestamp!
+    objectRefs: [StixObject]!
+    id: StixIdentifier!
+    type: String!
+  }
+
+type StixSighting
+  {
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    createdByRef: StixIdentity
+    created: StixTimestampMillis!
+    modified: StixTimestampMillis!
+    revoked: Boolean
+    labels: [String]
+    confidence: Int
+    lang: String
+    externalReferences: [StixExternalReference]
+    specVersion: StixSpecVersion!
+    description: String
+    firstSeen: StixTimestamp
+    lastSeen: StixTimestamp
+    count: Int
+    sightingOfRef: StixDomainObject!
+    observedDataRefs: [StixObservedData]
+    whereSightedRefs: [StixDomainObject]
+    summary: Boolean
+    id: StixIdentifier!
+    type: String!
+  }
+
+type StixSocketExtension
+  {
+    addressFamily: StixNetworkSocketAddressFamily!
+    isBlocking: Boolean
+    isListening: Boolean
+    options: StixSocketOptions
+    socketType: StixNetworkSocketType
+    socketDescriptor: Int
+    socketHandle: Int
+  }
+
+type StixSocketOptions
+  {
+  }
+
+type StixSoftware
+  {
+    specVersion: StixSpecVersion
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    defanged: Boolean
+    name: String!
+    cpe: String
+    swid: String
+    languages: [String]
+    vendor: String
+    version: String
+    id: StixIdentifier!
+    type: String!
+  }
+
+type StixStatementMarking
+  {
+    statement: String!
+  }
+
+type StixTcpExtension
+  {
+    srcFlagsHex: StixHex
+    dstFlagsHex: StixHex
+  }
+
+type StixThreatActor
+  {
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    createdByRef: StixIdentity
+    created: StixTimestampMillis!
+    modified: StixTimestampMillis!
+    revoked: Boolean
+    labels: [String]
+    confidence: Int
+    lang: String
+    externalReferences: [StixExternalReference]
+    specVersion: StixSpecVersion!
+    threatActorTypes: [String]
+    name: String!
+    description: String
+    aliases: [String]
+    roles: [String]
+    goals: [String]
+    firstSeen: StixTimestamp
+    lastSeen: StixTimestamp
+    sophistication: String
+    resourceLevel: String
+    primaryMotivation: String
+    secondaryMotivations: [String]
+    personalMotivations: [String]
+    id: StixIdentifier!
+    type: String!
+  }
+
+type StixTlpMarking
+  {
+    tlp: StixTlpLevel!
+  }
+
+type StixTool
+  {
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    createdByRef: StixIdentity
+    created: StixTimestampMillis!
+    modified: StixTimestampMillis!
+    revoked: Boolean
+    labels: [String]
+    confidence: Int
+    lang: String
+    externalReferences: [StixExternalReference]
+    specVersion: StixSpecVersion!
+    aliases: [String]
+    toolTypes: [String]
+    name: String!
+    description: String
+    toolVersion: String
+    killChainPhases: [StixKillChainPhase]
+    id: StixIdentifier!
+    type: String!
+  }
+
+type StixUnixAccountExtension
+  {
+    gid: Float
+    groups: [String]
+    homeDir: String
+    shell: String
+  }
+
+type StixUrl
+  {
+    specVersion: StixSpecVersion
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    defanged: Boolean
+    value: String!
+    id: StixIdentifier!
+    type: String!
+  }
+
+type StixUserAccount
+  {
+    specVersion: StixSpecVersion
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    defanged: Boolean
+    userId: String
+    credential: String
+    accountLogin: String
+    accountType: String
+    displayName: String
+    isServiceAccount: Boolean
+    isPrivileged: Boolean
+    canEscalatePrivs: Boolean
+    isDisabled: Boolean
+    accountCreated: StixTimestamp
+    accountExpires: StixTimestamp
+    credentialLastChanged: StixTimestamp
+    accountFirstLogin: StixTimestamp
+    accountLastLogin: StixTimestamp
+    id: StixIdentifier!
+    type: String!
+    extensions: StixUserAccountExtensions
+  }
+
+type StixUserAccountExtensions
+  {
+  }
+
+type StixVulnerability
+  {
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    createdByRef: StixIdentity
+    created: StixTimestampMillis!
+    modified: StixTimestampMillis!
+    revoked: Boolean
+    labels: [String]
+    confidence: Int
+    lang: String
+    externalReferences: [StixExternalReference]
+    specVersion: StixSpecVersion!
+    name: String!
+    description: String
+    id: StixIdentifier!
+    type: String!
+  }
+
+type StixWindowsPeBinaryExtension
+  {
+    peType: String!
+    imphash: String
+    machineHex: StixHex
+    numberOfSections: Int
+    timeDateStamp: StixTimestampSeconds
+    pointerToSymbolTableHex: StixHex
+    numberOfSymbols: Int
+    sizeOfOptionalHeader: Int
+    characteristicsHex: StixHex
+    fileHeaderHashes: StixHashes
+    optionalHeader: StixWindowsPeOptionalHeader
+    sections: [StixWindowsPeSection]
+  }
+
+type StixWindowsPeOptionalHeader
+  {
+    magicHex: StixHex
+    majorLinkerVersion: Int
+    minorLinkerVersion: Int
+    sizeOfCode: Int
+    sizeOfInitializedData: Int
+    sizeOfUninitializedData: Int
+    addressOfEntryPoint: Int
+    baseOfCode: Int
+    baseOfData: Int
+    imageBase: Int
+    sectionAlignment: Int
+    fileAlignment: Int
+    majorOsVersion: Int
+    minorOsVersion: Int
+    majorImageVersion: Int
+    minorImageVersion: Int
+    majorSubsystemVersion: Int
+    minorSubsystemVersion: Int
+    win32VersionValueHex: StixHex
+    sizeOfImage: Int
+    sizeOfHeaders: Int
+    checksumHex: StixHex
+    subsystemHex: StixHex
+    dllCharacteristicsHex: StixHex
+    sizeOfStackReserve: Int
+    sizeOfStackCommit: Int
+    sizeOfHeapReserve: Int
+    sizeOfHeapCommit: Int
+    loaderFlagsHex: StixHex
+    numberOfRvaAndSizes: Int
+    hashes: StixHashes
+  }
+
+type StixWindowsPeSection
+  {
+    name: String!
+    size: Int
+    entropy: Float
+    hashes: StixHashes
+  }
+
+type StixWindowsProcessExtension
+  {
+    aslrEnabled: Boolean
+    depEnabled: Boolean
+    priority: String
+    ownerSid: String
+    windowTitle: String
+    startupInfo: StixDictionary
+    integrityLevel: StixWindowsIntegrityLevel
+  }
+
+type StixWindowsRegistryKey
+  {
+    specVersion: StixSpecVersion
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    defanged: Boolean
+    key: String
+    values: [StixWindowsRegistryValue]
+    modifiedTime: StixTimestamp
+    creatorUserRef: StixUserAccount
+    numberOfSubkeys: Int
+    id: StixIdentifier!
+    type: String!
+  }
+
+type StixWindowsRegistryValue
+  {
+    name: String
+    data: String
+    dataType: StixWindowsRegistryDatatype
+  }
+
+type StixWindowsServiceExtension
+  {
+    serviceName: String
+    descriptions: [String]
+    displayName: String
+    groupName: String
+    startType: StixWindowsServiceStartType
+    serviceDllRefs: [StixFile]
+    serviceType: StixWindowsServiceType
+    serviceStatus: StixWindowsServiceStatus
+  }
+
+type StixX509Certificate
+  {
+    specVersion: StixSpecVersion
+    objectMarkingRefs: [StixMarkingDefinition]
+    granularMarkings: [StixGranularMarking]
+    extensions: StixExtensions
+    defanged: Boolean
+    isSelfSigned: Boolean
+    hashes: StixHashes
+    version: String
+    serialNumber: String
+    signatureAlgorithm: String
+    issuer: String
+    validityNotBefore: StixTimestamp
+    validityNotAfter: StixTimestamp
+    subject: String
+    subjectPublicKeyAlgorithm: String
+    subjectPublicKeyModulus: String
+    subjectPublicKeyExponent: Int
+    x509V3Extensions: StixX509V3Extensions
+    id: StixIdentifier!
+    type: String!
+  }
+
+type StixX509V3Extensions
+  {
+    basicConstraints: String
+    nameConstraints: String
+    policyConstraints: String
+    keyUsage: String
+    extendedKeyUsage: String
+    subjectKeyIdentifier: String
+    authorityKeyIdentifier: String
+    subjectAlternativeName: String
+    issuerAlternativeName: String
+    subjectDirectoryAttributes: String
+    crlDistributionPoints: String
+    inhibitAnyPolicy: String
+    privateKeyUsagePeriodNotBefore: StixTimestamp
+    privateKeyUsagePeriodNotAfter: StixTimestamp
+    certificatePolicies: String
+    policyMappings: String
+  }

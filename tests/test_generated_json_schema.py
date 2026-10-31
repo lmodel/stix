@@ -4,8 +4,8 @@ The other tests build their JSON Schema as linkml-validate does. gen-project
 builds project/jsonschema/stix.schema.json from the settings in
 .linkml/generators.yaml instead, so a setting there could make the generated
 file reject what the tests accept, as it once did for every bundle. These
-tests build the file from those settings, and check the file itself as well
-when a local project/ holds one (project/ is not committed).
+tests build the file from those settings, and check the committed file
+itself, which the w3id rules serve from main.
 """
 
 import copy
@@ -40,12 +40,10 @@ def from_settings():
 
 
 def schemas():
-    found = [("the generator's settings", from_settings())]
-    if GENERATED.is_file():
-        found.append(
-            (str(GENERATED.relative_to(ROOT)), json.loads(GENERATED.read_text()))
-        )
-    return found
+    return [
+        ("the generator's settings", from_settings()),
+        (str(GENERATED.relative_to(ROOT)), json.loads(GENERATED.read_text())),
+    ]
 
 
 def errors(schema, data):

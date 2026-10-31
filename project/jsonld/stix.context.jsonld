@@ -1,0 +1,1494 @@
+{
+   "@context": {
+      "xsd": "http://www.w3.org/2001/XMLSchema#",
+      "linkml": "https://w3id.org/linkml/",
+      "skos": "http://www.w3.org/2004/02/skos/core#",
+      "stix": "https://w3id.org/lmodel/stix/",
+      "uco-core": "https://ontology.unifiedcyberontology.org/uco/core/",
+      "uco-identity": "https://ontology.unifiedcyberontology.org/uco/identity/",
+      "uco-location": "https://ontology.unifiedcyberontology.org/uco/location/",
+      "uco-marking": "https://ontology.unifiedcyberontology.org/uco/marking/",
+      "uco-observable": "https://ontology.unifiedcyberontology.org/uco/observable/",
+      "uco-tool": "https://ontology.unifiedcyberontology.org/uco/tool/",
+      "@vocab": "https://w3id.org/lmodel/stix/",
+      "abstract": {
+         "@id": "abstract"
+      },
+      "account_created": {
+         "@type": "xsd:dateTime",
+         "@id": "account_created"
+      },
+      "account_expires": {
+         "@type": "xsd:dateTime",
+         "@id": "account_expires"
+      },
+      "account_first_login": {
+         "@type": "xsd:dateTime",
+         "@id": "account_first_login"
+      },
+      "account_last_login": {
+         "@type": "xsd:dateTime",
+         "@id": "account_last_login"
+      },
+      "account_login": {
+         "@id": "account_login"
+      },
+      "account_type": {
+         "@id": "account_type"
+      },
+      "additional_header_fields": {
+         "@type": "@id",
+         "@id": "additional_header_fields"
+      },
+      "address_family": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "address_family"
+      },
+      "address_of_entry_point": {
+         "@type": "xsd:integer",
+         "@id": "address_of_entry_point"
+      },
+      "administrative_area": {
+         "@id": "administrative_area"
+      },
+      "aliases": {
+         "@id": "aliases"
+      },
+      "alternate_data_streams": {
+         "@type": "@id",
+         "@id": "alternate_data_streams"
+      },
+      "analysis_definition_version": {
+         "@id": "analysis_definition_version"
+      },
+      "analysis_ended": {
+         "@type": "xsd:dateTime",
+         "@id": "analysis_ended"
+      },
+      "analysis_engine_version": {
+         "@id": "analysis_engine_version"
+      },
+      "analysis_sco_refs": {
+         "@type": "@id",
+         "@id": "analysis_sco_refs"
+      },
+      "analysis_started": {
+         "@type": "xsd:dateTime",
+         "@id": "analysis_started"
+      },
+      "architecture_execution_envs": {
+         "@id": "architecture_execution_envs"
+      },
+      "aslr_enabled": {
+         "@type": "xsd:boolean",
+         "@id": "aslr_enabled"
+      },
+      "atime": {
+         "@type": "xsd:dateTime",
+         "@id": "atime"
+      },
+      "authority_key_identifier": {
+         "@id": "authority_key_identifier"
+      },
+      "authors": {
+         "@id": "authors"
+      },
+      "base_of_code": {
+         "@type": "xsd:integer",
+         "@id": "base_of_code"
+      },
+      "base_of_data": {
+         "@type": "xsd:integer",
+         "@id": "base_of_data"
+      },
+      "basic_constraints": {
+         "@id": "basic_constraints"
+      },
+      "bcc_refs": {
+         "@type": "@id",
+         "@id": "bcc_refs"
+      },
+      "belongs_to_ref": {
+         "@type": "@id",
+         "@id": "belongs_to_ref"
+      },
+      "belongs_to_refs": {
+         "@type": "@id",
+         "@id": "belongs_to_refs"
+      },
+      "bits_per_pixel": {
+         "@type": "xsd:integer",
+         "@id": "bits_per_pixel"
+      },
+      "body": {
+         "@id": "body"
+      },
+      "body_multipart": {
+         "@type": "@id",
+         "@id": "body_multipart"
+      },
+      "body_raw_ref": {
+         "@type": "@id",
+         "@id": "body_raw_ref"
+      },
+      "can_escalate_privs": {
+         "@type": "xsd:boolean",
+         "@id": "can_escalate_privs"
+      },
+      "capabilities": {
+         "@id": "capabilities"
+      },
+      "cc_refs": {
+         "@type": "@id",
+         "@id": "cc_refs"
+      },
+      "certificate_policies": {
+         "@id": "certificate_policies"
+      },
+      "characteristics_hex": {
+         "@type": "xsd:hexBinary",
+         "@id": "characteristics_hex"
+      },
+      "checksum_hex": {
+         "@type": "xsd:hexBinary",
+         "@id": "checksum_hex"
+      },
+      "child_refs": {
+         "@type": "@id",
+         "@id": "child_refs"
+      },
+      "city": {
+         "@id": "city"
+      },
+      "command_line": {
+         "@id": "command_line"
+      },
+      "comment": {
+         "@id": "comment"
+      },
+      "confidence": {
+         "@type": "xsd:integer",
+         "@id": "confidence"
+      },
+      "configuration_version": {
+         "@id": "configuration_version"
+      },
+      "contact_information": {
+         "@id": "contact_information"
+      },
+      "contains_refs": {
+         "@type": "@id",
+         "@id": "contains_refs"
+      },
+      "content": {
+         "@id": "content"
+      },
+      "content_disposition": {
+         "@id": "content_disposition"
+      },
+      "content_ref": {
+         "@type": "@id",
+         "@id": "content_ref"
+      },
+      "content_type": {
+         "@id": "content_type"
+      },
+      "contents": {
+         "@type": "@id",
+         "@id": "contents"
+      },
+      "context": {
+         "@id": "context"
+      },
+      "count": {
+         "@type": "xsd:integer",
+         "@id": "count"
+      },
+      "country": {
+         "@id": "country"
+      },
+      "cpe": {
+         "@id": "cpe"
+      },
+      "created": {
+         "@type": "xsd:dateTime",
+         "@id": "created"
+      },
+      "created_by_ref": {
+         "@type": "@id",
+         "@id": "created_by_ref"
+      },
+      "created_time": {
+         "@type": "xsd:dateTime",
+         "@id": "created_time"
+      },
+      "creator_user_ref": {
+         "@type": "@id",
+         "@id": "creator_user_ref"
+      },
+      "credential": {
+         "@id": "credential"
+      },
+      "credential_last_changed": {
+         "@type": "xsd:dateTime",
+         "@id": "credential_last_changed"
+      },
+      "crl_distribution_points": {
+         "@id": "crl_distribution_points"
+      },
+      "ctime": {
+         "@type": "xsd:dateTime",
+         "@id": "ctime"
+      },
+      "cwd": {
+         "@id": "cwd"
+      },
+      "data": {
+         "@id": "data"
+      },
+      "data_type": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "data_type"
+      },
+      "decryption_key": {
+         "@id": "decryption_key"
+      },
+      "defanged": {
+         "@type": "xsd:boolean",
+         "@id": "defanged"
+      },
+      "definition": {
+         "@type": "@id",
+         "@id": "definition"
+      },
+      "definition_type": {
+         "@id": "definition_type"
+      },
+      "dep_enabled": {
+         "@type": "xsd:boolean",
+         "@id": "dep_enabled"
+      },
+      "description": {
+         "@id": "description"
+      },
+      "descriptions": {
+         "@id": "descriptions"
+      },
+      "display_name": {
+         "@id": "display_name"
+      },
+      "dll_characteristics_hex": {
+         "@type": "xsd:hexBinary",
+         "@id": "dll_characteristics_hex"
+      },
+      "document_info_dict": {
+         "@type": "@id",
+         "@id": "document_info_dict"
+      },
+      "dst_byte_count": {
+         "@type": "xsd:integer",
+         "@id": "dst_byte_count"
+      },
+      "dst_flags_hex": {
+         "@type": "xsd:hexBinary",
+         "@id": "dst_flags_hex"
+      },
+      "dst_packets": {
+         "@type": "xsd:integer",
+         "@id": "dst_packets"
+      },
+      "dst_payload_ref": {
+         "@type": "@id",
+         "@id": "dst_payload_ref"
+      },
+      "dst_port": {
+         "@type": "xsd:integer",
+         "@id": "dst_port"
+      },
+      "dst_ref": {
+         "@type": "@id",
+         "@id": "dst_ref"
+      },
+      "date": {
+         "@type": "xsd:dateTime",
+         "@id": "date"
+      },
+      "encapsulated_by_ref": {
+         "@type": "@id",
+         "@id": "encapsulated_by_ref"
+      },
+      "encapsulates_refs": {
+         "@type": "@id",
+         "@id": "encapsulates_refs"
+      },
+      "encryption_algorithm": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "encryption_algorithm"
+      },
+      "end": {
+         "@type": "xsd:dateTime",
+         "@id": "end"
+      },
+      "entropy": {
+         "@type": "xsd:float",
+         "@id": "entropy"
+      },
+      "environment_variables": {
+         "@type": "@id",
+         "@id": "environment_variables"
+      },
+      "exif_tags": {
+         "@type": "@id",
+         "@id": "exif_tags"
+      },
+      "explanation": {
+         "@id": "explanation"
+      },
+      "extended_key_usage": {
+         "@id": "extended_key_usage"
+      },
+      "extension_properties": {
+         "@id": "extension_properties"
+      },
+      "extension_type": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "extension_type"
+      },
+      "extension_types": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "extension_types"
+      },
+      "extensions": {
+         "@type": "@id",
+         "@id": "extensions"
+      },
+      "external_id": {
+         "@id": "external_id"
+      },
+      "external_references": {
+         "@type": "@id",
+         "@id": "external_references"
+      },
+      "file_alignment": {
+         "@type": "xsd:integer",
+         "@id": "file_alignment"
+      },
+      "file_header_hashes": {
+         "@type": "@id",
+         "@id": "file_header_hashes"
+      },
+      "first_observed": {
+         "@type": "xsd:dateTime",
+         "@id": "first_observed"
+      },
+      "first_seen": {
+         "@type": "xsd:dateTime",
+         "@id": "first_seen"
+      },
+      "from_ref": {
+         "@type": "@id",
+         "@id": "from_ref"
+      },
+      "gid": {
+         "@type": "xsd:float",
+         "@id": "gid"
+      },
+      "goals": {
+         "@id": "goals"
+      },
+      "granular_markings": {
+         "@type": "@id",
+         "@id": "granular_markings"
+      },
+      "group_name": {
+         "@id": "group_name"
+      },
+      "groups": {
+         "@id": "groups"
+      },
+      "hashes": {
+         "@type": "@id",
+         "@id": "hashes"
+      },
+      "home_dir": {
+         "@id": "home_dir"
+      },
+      "host_vm_ref": {
+         "@type": "@id",
+         "@id": "host_vm_ref"
+      },
+      "icmp_code_hex": {
+         "@type": "xsd:hexBinary",
+         "@id": "icmp_code_hex"
+      },
+      "icmp_type_hex": {
+         "@type": "xsd:hexBinary",
+         "@id": "icmp_type_hex"
+      },
+      "id": "@id",
+      "identity_class": {
+         "@id": "identity_class"
+      },
+      "image_base": {
+         "@type": "xsd:integer",
+         "@id": "image_base"
+      },
+      "image_height": {
+         "@type": "xsd:integer",
+         "@id": "image_height"
+      },
+      "image_ref": {
+         "@type": "@id",
+         "@id": "image_ref"
+      },
+      "image_width": {
+         "@type": "xsd:integer",
+         "@id": "image_width"
+      },
+      "imphash": {
+         "@id": "imphash"
+      },
+      "implementation_languages": {
+         "@id": "implementation_languages"
+      },
+      "indicator_types": {
+         "@id": "indicator_types"
+      },
+      "infrastructure_types": {
+         "@id": "infrastructure_types"
+      },
+      "inhibit_any_policy": {
+         "@id": "inhibit_any_policy"
+      },
+      "installed_software_refs": {
+         "@type": "@id",
+         "@id": "installed_software_refs"
+      },
+      "integrity_level": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "integrity_level"
+      },
+      "ipfix": {
+         "@type": "@id",
+         "@id": "ipfix"
+      },
+      "is_active": {
+         "@type": "xsd:boolean",
+         "@id": "is_active"
+      },
+      "is_blocking": {
+         "@type": "xsd:boolean",
+         "@id": "is_blocking"
+      },
+      "is_disabled": {
+         "@type": "xsd:boolean",
+         "@id": "is_disabled"
+      },
+      "is_family": {
+         "@type": "xsd:boolean",
+         "@id": "is_family"
+      },
+      "is_hidden": {
+         "@type": "xsd:boolean",
+         "@id": "is_hidden"
+      },
+      "is_listening": {
+         "@type": "xsd:boolean",
+         "@id": "is_listening"
+      },
+      "is_multipart": {
+         "@type": "xsd:boolean",
+         "@id": "is_multipart"
+      },
+      "is_optimized": {
+         "@type": "xsd:boolean",
+         "@id": "is_optimized"
+      },
+      "is_privileged": {
+         "@type": "xsd:boolean",
+         "@id": "is_privileged"
+      },
+      "is_self_signed": {
+         "@type": "xsd:boolean",
+         "@id": "is_self_signed"
+      },
+      "is_service_account": {
+         "@type": "xsd:boolean",
+         "@id": "is_service_account"
+      },
+      "issuer": {
+         "@id": "issuer"
+      },
+      "issuer_alternative_name": {
+         "@id": "issuer_alternative_name"
+      },
+      "key": {
+         "@id": "key"
+      },
+      "key_usage": {
+         "@id": "key_usage"
+      },
+      "kill_chain_name": {
+         "@id": "kill_chain_name"
+      },
+      "kill_chain_phases": {
+         "@type": "@id",
+         "@id": "kill_chain_phases"
+      },
+      "labels": {
+         "@id": "labels"
+      },
+      "lang": {
+         "@id": "lang"
+      },
+      "languages": {
+         "@id": "languages"
+      },
+      "last_observed": {
+         "@type": "xsd:dateTime",
+         "@id": "last_observed"
+      },
+      "last_seen": {
+         "@type": "xsd:dateTime",
+         "@id": "last_seen"
+      },
+      "latitude": {
+         "@type": "xsd:float",
+         "@id": "latitude"
+      },
+      "loader_flags_hex": {
+         "@type": "xsd:hexBinary",
+         "@id": "loader_flags_hex"
+      },
+      "longitude": {
+         "@type": "xsd:float",
+         "@id": "longitude"
+      },
+      "machine_hex": {
+         "@type": "xsd:hexBinary",
+         "@id": "machine_hex"
+      },
+      "magic_hex": {
+         "@type": "xsd:hexBinary",
+         "@id": "magic_hex"
+      },
+      "magic_number_hex": {
+         "@type": "xsd:hexBinary",
+         "@id": "magic_number_hex"
+      },
+      "major_image_version": {
+         "@type": "xsd:integer",
+         "@id": "major_image_version"
+      },
+      "major_linker_version": {
+         "@type": "xsd:integer",
+         "@id": "major_linker_version"
+      },
+      "major_os_version": {
+         "@type": "xsd:integer",
+         "@id": "major_os_version"
+      },
+      "major_subsystem_version": {
+         "@type": "xsd:integer",
+         "@id": "major_subsystem_version"
+      },
+      "malware_types": {
+         "@id": "malware_types"
+      },
+      "marking_ref": {
+         "@type": "@id",
+         "@id": "marking_ref"
+      },
+      "message_body_data_ref": {
+         "@type": "@id",
+         "@id": "message_body_data_ref"
+      },
+      "message_body_length": {
+         "@type": "xsd:integer",
+         "@id": "message_body_length"
+      },
+      "message_id": {
+         "@id": "message_id"
+      },
+      "mime_type": {
+         "@id": "mime_type"
+      },
+      "minor_image_version": {
+         "@type": "xsd:integer",
+         "@id": "minor_image_version"
+      },
+      "minor_linker_version": {
+         "@type": "xsd:integer",
+         "@id": "minor_linker_version"
+      },
+      "minor_os_version": {
+         "@type": "xsd:integer",
+         "@id": "minor_os_version"
+      },
+      "minor_subsystem_version": {
+         "@type": "xsd:integer",
+         "@id": "minor_subsystem_version"
+      },
+      "modified": {
+         "@type": "xsd:dateTime",
+         "@id": "modified"
+      },
+      "modified_time": {
+         "@type": "xsd:dateTime",
+         "@id": "modified_time"
+      },
+      "modules": {
+         "@id": "modules"
+      },
+      "mtime": {
+         "@type": "xsd:dateTime",
+         "@id": "mtime"
+      },
+      "name": {
+         "@id": "name"
+      },
+      "name_constraints": {
+         "@id": "name_constraints"
+      },
+      "name_enc": {
+         "@id": "name_enc"
+      },
+      "number": {
+         "@type": "xsd:integer",
+         "@id": "number"
+      },
+      "number_observed": {
+         "@type": "xsd:integer",
+         "@id": "number_observed"
+      },
+      "number_of_rva_and_sizes": {
+         "@type": "xsd:integer",
+         "@id": "number_of_rva_and_sizes"
+      },
+      "number_of_sections": {
+         "@type": "xsd:integer",
+         "@id": "number_of_sections"
+      },
+      "number_of_subkeys": {
+         "@type": "xsd:integer",
+         "@id": "number_of_subkeys"
+      },
+      "number_of_symbols": {
+         "@type": "xsd:integer",
+         "@id": "number_of_symbols"
+      },
+      "object_marking_refs": {
+         "@type": "@id",
+         "@id": "object_marking_refs"
+      },
+      "object_modified": {
+         "@type": "xsd:dateTime",
+         "@id": "object_modified"
+      },
+      "object_ref": {
+         "@type": "@id",
+         "@id": "object_ref"
+      },
+      "object_refs": {
+         "@type": "@id",
+         "@id": "object_refs"
+      },
+      "objective": {
+         "@id": "objective"
+      },
+      "objects": {
+         "@id": "objects"
+      },
+      "observed_data_refs": {
+         "@type": "@id",
+         "@id": "observed_data_refs"
+      },
+      "opened_connection_refs": {
+         "@type": "@id",
+         "@id": "opened_connection_refs"
+      },
+      "operating_system_ref": {
+         "@type": "@id",
+         "@id": "operating_system_ref"
+      },
+      "operating_system_refs": {
+         "@type": "@id",
+         "@id": "operating_system_refs"
+      },
+      "opinion": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "opinion"
+      },
+      "optional_header": {
+         "@type": "@id",
+         "@id": "optional_header"
+      },
+      "options": {
+         "@type": "@id",
+         "@id": "options"
+      },
+      "owner_sid": {
+         "@id": "owner_sid"
+      },
+      "parent_directory_ref": {
+         "@type": "@id",
+         "@id": "parent_directory_ref"
+      },
+      "parent_ref": {
+         "@type": "@id",
+         "@id": "parent_ref"
+      },
+      "path": {
+         "@id": "path"
+      },
+      "path_enc": {
+         "@id": "path_enc"
+      },
+      "pattern": {
+         "@id": "pattern"
+      },
+      "pattern_type": {
+         "@id": "pattern_type"
+      },
+      "pattern_version": {
+         "@id": "pattern_version"
+      },
+      "payload_bin": {
+         "@type": "xsd:base64Binary",
+         "@id": "payload_bin"
+      },
+      "pdfid0": {
+         "@id": "pdfid0"
+      },
+      "pdfid1": {
+         "@id": "pdfid1"
+      },
+      "pe_type": {
+         "@id": "pe_type"
+      },
+      "personal_motivations": {
+         "@id": "personal_motivations"
+      },
+      "phase_name": {
+         "@id": "phase_name"
+      },
+      "pid": {
+         "@type": "xsd:integer",
+         "@id": "pid"
+      },
+      "pointer_to_symbol_table_hex": {
+         "@type": "xsd:hexBinary",
+         "@id": "pointer_to_symbol_table_hex"
+      },
+      "policy_constraints": {
+         "@id": "policy_constraints"
+      },
+      "policy_mappings": {
+         "@id": "policy_mappings"
+      },
+      "postal_code": {
+         "@id": "postal_code"
+      },
+      "precision": {
+         "@type": "xsd:float",
+         "@id": "precision"
+      },
+      "primary_motivation": {
+         "@id": "primary_motivation"
+      },
+      "priority": {
+         "@id": "priority"
+      },
+      "private_key_usage_period_not_after": {
+         "@type": "xsd:dateTime",
+         "@id": "private_key_usage_period_not_after"
+      },
+      "private_key_usage_period_not_before": {
+         "@type": "xsd:dateTime",
+         "@id": "private_key_usage_period_not_before"
+      },
+      "product": {
+         "@id": "product"
+      },
+      "protocols": {
+         "@id": "protocols"
+      },
+      "published": {
+         "@type": "xsd:dateTime",
+         "@id": "published"
+      },
+      "raw_email_ref": {
+         "@type": "@id",
+         "@id": "raw_email_ref"
+      },
+      "received_lines": {
+         "@id": "received_lines"
+      },
+      "region": {
+         "@id": "region"
+      },
+      "relationship_type": {
+         "@id": "relationship_type"
+      },
+      "report_types": {
+         "@id": "report_types"
+      },
+      "request_header": {
+         "@type": "@id",
+         "@id": "request_header"
+      },
+      "request_method": {
+         "@id": "request_method"
+      },
+      "request_value": {
+         "@id": "request_value"
+      },
+      "request_version": {
+         "@id": "request_version"
+      },
+      "resolves_to_refs": {
+         "@type": "@id",
+         "@id": "resolves_to_refs"
+      },
+      "resource_level": {
+         "@id": "resource_level"
+      },
+      "result": {
+         "@id": "result"
+      },
+      "result_name": {
+         "@id": "result_name"
+      },
+      "revoked": {
+         "@type": "xsd:boolean",
+         "@id": "revoked"
+      },
+      "rir": {
+         "@id": "rir"
+      },
+      "roles": {
+         "@id": "roles"
+      },
+      "sample_ref": {
+         "@type": "@id",
+         "@id": "sample_ref"
+      },
+      "sample_refs": {
+         "@type": "@id",
+         "@id": "sample_refs"
+      },
+      "schema": {
+         "@id": "schema"
+      },
+      "secondary_motivations": {
+         "@id": "secondary_motivations"
+      },
+      "section_alignment": {
+         "@type": "xsd:integer",
+         "@id": "section_alignment"
+      },
+      "sections": {
+         "@type": "@id",
+         "@id": "sections"
+      },
+      "sectors": {
+         "@id": "sectors"
+      },
+      "selectors": {
+         "@id": "selectors"
+      },
+      "sender_ref": {
+         "@type": "@id",
+         "@id": "sender_ref"
+      },
+      "serial_number": {
+         "@id": "serial_number"
+      },
+      "service_dll_refs": {
+         "@type": "@id",
+         "@id": "service_dll_refs"
+      },
+      "service_name": {
+         "@id": "service_name"
+      },
+      "service_status": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "service_status"
+      },
+      "service_type": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "service_type"
+      },
+      "shell": {
+         "@id": "shell"
+      },
+      "sid": {
+         "@id": "sid"
+      },
+      "sighting_of_ref": {
+         "@type": "@id",
+         "@id": "sighting_of_ref"
+      },
+      "signature_algorithm": {
+         "@id": "signature_algorithm"
+      },
+      "size": {
+         "@type": "xsd:integer",
+         "@id": "size"
+      },
+      "size_of_code": {
+         "@type": "xsd:integer",
+         "@id": "size_of_code"
+      },
+      "size_of_headers": {
+         "@type": "xsd:integer",
+         "@id": "size_of_headers"
+      },
+      "size_of_heap_commit": {
+         "@type": "xsd:integer",
+         "@id": "size_of_heap_commit"
+      },
+      "size_of_heap_reserve": {
+         "@type": "xsd:integer",
+         "@id": "size_of_heap_reserve"
+      },
+      "size_of_image": {
+         "@type": "xsd:integer",
+         "@id": "size_of_image"
+      },
+      "size_of_initialized_data": {
+         "@type": "xsd:integer",
+         "@id": "size_of_initialized_data"
+      },
+      "size_of_optional_header": {
+         "@type": "xsd:integer",
+         "@id": "size_of_optional_header"
+      },
+      "size_of_stack_commit": {
+         "@type": "xsd:integer",
+         "@id": "size_of_stack_commit"
+      },
+      "size_of_stack_reserve": {
+         "@type": "xsd:integer",
+         "@id": "size_of_stack_reserve"
+      },
+      "size_of_uninitialized_data": {
+         "@type": "xsd:integer",
+         "@id": "size_of_uninitialized_data"
+      },
+      "socket_descriptor": {
+         "@type": "xsd:integer",
+         "@id": "socket_descriptor"
+      },
+      "socket_handle": {
+         "@type": "xsd:integer",
+         "@id": "socket_handle"
+      },
+      "socket_type": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "socket_type"
+      },
+      "sophistication": {
+         "@id": "sophistication"
+      },
+      "source_name": {
+         "@id": "source_name"
+      },
+      "source_ref": {
+         "@type": "@id",
+         "@id": "source_ref"
+      },
+      "spec_version": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "spec_version"
+      },
+      "src_byte_count": {
+         "@type": "xsd:integer",
+         "@id": "src_byte_count"
+      },
+      "src_flags_hex": {
+         "@type": "xsd:hexBinary",
+         "@id": "src_flags_hex"
+      },
+      "src_packets": {
+         "@type": "xsd:integer",
+         "@id": "src_packets"
+      },
+      "src_payload_ref": {
+         "@type": "@id",
+         "@id": "src_payload_ref"
+      },
+      "src_port": {
+         "@type": "xsd:integer",
+         "@id": "src_port"
+      },
+      "src_ref": {
+         "@type": "@id",
+         "@id": "src_ref"
+      },
+      "start": {
+         "@type": "xsd:dateTime",
+         "@id": "start"
+      },
+      "start_time": {
+         "@type": "xsd:dateTime",
+         "@id": "start_time"
+      },
+      "start_type": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "start_type"
+      },
+      "startup_info": {
+         "@type": "@id",
+         "@id": "startup_info"
+      },
+      "statement": {
+         "@id": "statement"
+      },
+      "stop_time": {
+         "@type": "xsd:dateTime",
+         "@id": "stop_time"
+      },
+      "street_address": {
+         "@id": "street_address"
+      },
+      "subject": {
+         "@id": "subject"
+      },
+      "subject_alternative_name": {
+         "@id": "subject_alternative_name"
+      },
+      "subject_directory_attributes": {
+         "@id": "subject_directory_attributes"
+      },
+      "subject_key_identifier": {
+         "@id": "subject_key_identifier"
+      },
+      "subject_public_key_algorithm": {
+         "@id": "subject_public_key_algorithm"
+      },
+      "subject_public_key_exponent": {
+         "@type": "xsd:integer",
+         "@id": "subject_public_key_exponent"
+      },
+      "subject_public_key_modulus": {
+         "@id": "subject_public_key_modulus"
+      },
+      "submitted": {
+         "@type": "xsd:dateTime",
+         "@id": "submitted"
+      },
+      "subsystem_hex": {
+         "@type": "xsd:hexBinary",
+         "@id": "subsystem_hex"
+      },
+      "summary": {
+         "@type": "xsd:boolean",
+         "@id": "summary"
+      },
+      "swid": {
+         "@id": "swid"
+      },
+      "target_ref": {
+         "@type": "@id",
+         "@id": "target_ref"
+      },
+      "threat_actor_types": {
+         "@id": "threat_actor_types"
+      },
+      "time_date_stamp": {
+         "@type": "xsd:dateTime",
+         "@id": "time_date_stamp"
+      },
+      "tlp": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "tlp"
+      },
+      "to_refs": {
+         "@type": "@id",
+         "@id": "to_refs"
+      },
+      "tool_types": {
+         "@id": "tool_types"
+      },
+      "tool_version": {
+         "@id": "tool_version"
+      },
+      "type": {
+         "@id": "type"
+      },
+      "url": {
+         "@type": "xsd:anyURI",
+         "@id": "url"
+      },
+      "user_id": {
+         "@id": "user_id"
+      },
+      "valid_from": {
+         "@type": "xsd:dateTime",
+         "@id": "valid_from"
+      },
+      "valid_until": {
+         "@type": "xsd:dateTime",
+         "@id": "valid_until"
+      },
+      "validity_not_after": {
+         "@type": "xsd:dateTime",
+         "@id": "validity_not_after"
+      },
+      "validity_not_before": {
+         "@type": "xsd:dateTime",
+         "@id": "validity_not_before"
+      },
+      "value": {
+         "@id": "value"
+      },
+      "values": {
+         "@type": "@id",
+         "@id": "values"
+      },
+      "vendor": {
+         "@id": "vendor"
+      },
+      "version": {
+         "@id": "version"
+      },
+      "where_sighted_refs": {
+         "@type": "@id",
+         "@id": "where_sighted_refs"
+      },
+      "win32_version_value_hex": {
+         "@type": "xsd:hexBinary",
+         "@id": "win32_version_value_hex"
+      },
+      "window_title": {
+         "@id": "window_title"
+      },
+      "x509_v3_extensions": {
+         "@type": "@id",
+         "@id": "x509_v3_extensions"
+      },
+      "StixAlternateDataStream": {
+         "@id": "StixAlternateDataStream"
+      },
+      "StixArchiveExtension": {
+         "@id": "StixArchiveExtension"
+      },
+      "StixArtifact": {
+         "@id": "StixArtifact"
+      },
+      "StixAttackPattern": {
+         "@id": "StixAttackPattern"
+      },
+      "StixAutonomousSystem": {
+         "@id": "StixAutonomousSystem"
+      },
+      "StixBundle": {
+         "@id": "StixBundle",
+         "@context": {
+            "objects": {
+               "@id": "objects",
+               "@type": "@id"
+            }
+         }
+      },
+      "StixCampaign": {
+         "@id": "StixCampaign"
+      },
+      "StixCommonObject": {
+         "@id": "StixCommonObject"
+      },
+      "StixCourseOfAction": {
+         "@id": "StixCourseOfAction"
+      },
+      "StixCyberObservableObject": {
+         "@id": "StixCyberObservableObject"
+      },
+      "StixDictionary": {
+         "@id": "StixDictionary"
+      },
+      "StixDirectory": {
+         "@id": "StixDirectory"
+      },
+      "StixDomainName": {
+         "@id": "StixDomainName"
+      },
+      "StixDomainObject": {
+         "@id": "StixDomainObject"
+      },
+      "StixEmailAddress": {
+         "@id": "StixEmailAddress"
+      },
+      "StixEmailMessage": {
+         "@id": "StixEmailMessage"
+      },
+      "StixExifTags": {
+         "@id": "StixExifTags"
+      },
+      "StixExtension": {
+         "@id": "StixExtension"
+      },
+      "StixExtensionDefinition": {
+         "@id": "StixExtensionDefinition"
+      },
+      "StixExtensions": {
+         "@id": "StixExtensions"
+      },
+      "StixExternalReference": {
+         "@id": "StixExternalReference"
+      },
+      "StixFile": {
+         "@id": "StixFile"
+      },
+      "StixFileExtensions": {
+         "@id": "StixFileExtensions"
+      },
+      "StixGranularMarking": {
+         "@id": "StixGranularMarking"
+      },
+      "StixGrouping": {
+         "@id": "StixGrouping"
+      },
+      "StixHashes": {
+         "@id": "StixHashes"
+      },
+      "StixHttpRequestExtension": {
+         "@id": "StixHttpRequestExtension"
+      },
+      "StixIcmpExtension": {
+         "@id": "StixIcmpExtension"
+      },
+      "StixIdentity": {
+         "@id": "StixIdentity"
+      },
+      "StixIncident": {
+         "@id": "StixIncident"
+      },
+      "StixIndicator": {
+         "@id": "StixIndicator"
+      },
+      "StixInfrastructure": {
+         "@id": "StixInfrastructure"
+      },
+      "StixIntrusionSet": {
+         "@id": "StixIntrusionSet"
+      },
+      "StixIpv4Address": {
+         "@id": "StixIpv4Address"
+      },
+      "StixIpv6Address": {
+         "@id": "StixIpv6Address"
+      },
+      "StixKillChainPhase": {
+         "@id": "StixKillChainPhase"
+      },
+      "StixLanguageContent": {
+         "@id": "StixLanguageContent"
+      },
+      "StixLanguageContents": {
+         "@id": "StixLanguageContents"
+      },
+      "StixLocation": {
+         "@id": "StixLocation"
+      },
+      "StixMacAddress": {
+         "@id": "StixMacAddress"
+      },
+      "StixMalware": {
+         "@id": "StixMalware"
+      },
+      "StixMalwareAnalysis": {
+         "@id": "StixMalwareAnalysis"
+      },
+      "StixMarkingDefinition": {
+         "@id": "StixMarkingDefinition"
+      },
+      "StixMimePart": {
+         "@id": "StixMimePart"
+      },
+      "StixMutex": {
+         "@id": "StixMutex"
+      },
+      "StixNetworkTraffic": {
+         "@id": "StixNetworkTraffic"
+      },
+      "StixNetworkTrafficExtensions": {
+         "@id": "StixNetworkTrafficExtensions"
+      },
+      "StixNote": {
+         "@id": "StixNote"
+      },
+      "StixNtfsExtension": {
+         "@id": "StixNtfsExtension"
+      },
+      "StixObject": {
+         "@id": "StixObject"
+      },
+      "StixObservedData": {
+         "@id": "StixObservedData",
+         "@context": {
+            "objects": {
+               "@id": "objects",
+               "@type": "@id"
+            }
+         }
+      },
+      "StixObservedObjects": {
+         "@id": "StixObservedObjects"
+      },
+      "StixOpinion": {
+         "@id": "StixOpinion"
+      },
+      "StixPdfDocumentInfo": {
+         "@id": "StixPdfDocumentInfo"
+      },
+      "StixPdfExtension": {
+         "@id": "StixPdfExtension"
+      },
+      "StixProcess": {
+         "@id": "StixProcess"
+      },
+      "StixProcessExtensions": {
+         "@id": "StixProcessExtensions"
+      },
+      "StixRasterImageExtension": {
+         "@id": "StixRasterImageExtension"
+      },
+      "StixRelationship": {
+         "@id": "StixRelationship"
+      },
+      "StixRelationshipObject": {
+         "@id": "StixRelationshipObject"
+      },
+      "StixReport": {
+         "@id": "StixReport"
+      },
+      "StixSighting": {
+         "@id": "StixSighting"
+      },
+      "StixSocketExtension": {
+         "@id": "StixSocketExtension"
+      },
+      "StixSocketOptions": {
+         "@id": "StixSocketOptions"
+      },
+      "StixSoftware": {
+         "@id": "StixSoftware"
+      },
+      "StixStatementMarking": {
+         "@id": "StixStatementMarking"
+      },
+      "StixTcpExtension": {
+         "@id": "StixTcpExtension"
+      },
+      "StixThreatActor": {
+         "@id": "StixThreatActor"
+      },
+      "StixTlpMarking": {
+         "@id": "StixTlpMarking"
+      },
+      "StixTool": {
+         "@id": "StixTool"
+      },
+      "StixUnixAccountExtension": {
+         "@id": "StixUnixAccountExtension"
+      },
+      "StixUrl": {
+         "@id": "StixUrl",
+         "@context": {
+            "value": {
+               "@id": "value",
+               "@type": "xsd:anyURI"
+            }
+         }
+      },
+      "StixUserAccount": {
+         "@id": "StixUserAccount"
+      },
+      "StixUserAccountExtensions": {
+         "@id": "StixUserAccountExtensions"
+      },
+      "StixVulnerability": {
+         "@id": "StixVulnerability"
+      },
+      "StixWindowsPeBinaryExtension": {
+         "@id": "StixWindowsPeBinaryExtension"
+      },
+      "StixWindowsPeOptionalHeader": {
+         "@id": "StixWindowsPeOptionalHeader"
+      },
+      "StixWindowsPeSection": {
+         "@id": "StixWindowsPeSection"
+      },
+      "StixWindowsProcessExtension": {
+         "@id": "StixWindowsProcessExtension"
+      },
+      "StixWindowsRegistryKey": {
+         "@id": "StixWindowsRegistryKey"
+      },
+      "StixWindowsRegistryValue": {
+         "@id": "StixWindowsRegistryValue"
+      },
+      "StixWindowsServiceExtension": {
+         "@id": "StixWindowsServiceExtension"
+      },
+      "StixX509Certificate": {
+         "@id": "StixX509Certificate"
+      },
+      "StixX509V3Extensions": {
+         "@id": "StixX509V3Extensions"
+      }
+   }
+}

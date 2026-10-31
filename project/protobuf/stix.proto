@@ -1,0 +1,2592 @@
+syntax = "proto3";
+package stix;
+// metamodel_version: 1.12.0
+// version: 2.1
+// An NTFS alternate data stream of a file.
+message StixAlternateDataStream {
+  // A name that identifies the object.
+  string name = 1;
+  // A dictionary of hashes of the content, keyed by hash algorithm.
+  StixHashes hashes = 2;
+  // A size in bytes, as a non-negative integer.
+  int32 size = 3;
+}
+// The Archive File extension specifies a default extension for capturing properties specific to archive files.
+message StixArchiveExtension {
+  // References to other cyber-observable objects that this one contains.
+  repeated StixCyberObservableObject contains_refs = 1;
+  // Specifies a comment included as part of the archive file.
+  string comment = 2;
+}
+// The Artifact Object permits capturing an array of bytes (8-bits), as a base64-encoded string string, or linking to a file-like payload.
+message StixArtifact {
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 1;
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 2;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 3;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 4;
+  // Defines whether or not the data contained within the object has been defanged.
+  bool defanged = 5;
+  // The value of this property MUST be a valid MIME type as specified in the IANA Media Types registry.
+  string mime_type = 6;
+  // Specifies the binary data contained in the artifact as a base64-encoded string.
+  string payload_bin = 7;
+  // A URL.
+  string url = 8;
+  // A dictionary of hashes of the content, keyed by hash algorithm.
+  StixHashes hashes = 9;
+  // If the artifact is encrypted, specifies the type of encryption algorithm the binary data (either via payload_bin or url) is encoded in.
+  StixEncryptionAlgorithm encryption_algorithm = 10;
+  // Specifies the decryption key for the encrypted binary data (either via payload_bin or url).
+  string decryption_key = 11;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 12;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 13;
+}
+// Attack Patterns are a type of TTP that describe ways that adversaries attempt to compromise targets.
+message StixAttackPattern {
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 1;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 2;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 3;
+  // A reference to the identity of the object's creator.
+  StixIdentity created_by_ref = 4;
+  // The time at which the object, or its first version, was created.
+  string created = 5;
+  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  string modified = 6;
+  // The revoked property indicates whether the object has been revoked.
+  bool revoked = 7;
+  // The labels property specifies a set of terms used to describe this object.
+  repeated string labels = 8;
+  // Identifies the confidence that the creator has in the correctness of their data.
+  int32 confidence = 9;
+  // The language of the text content, as an RFC 5646 language code.
+  string lang = 10;
+  // References to non-STIX information about the object.
+  repeated StixExternalReference external_references = 11;
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 12;
+  // Other names by which the object is known.
+  repeated string aliases = 13;
+  // A name that identifies the object.
+  string name = 14;
+  // A description of the object, which may be long.
+  string description = 15;
+  // The kill chain phases to which the object corresponds.
+  repeated StixKillChainPhase kill_chain_phases = 16;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 17;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 18;
+}
+// The AS object represents the properties of an Autonomous Systems (AS).
+message StixAutonomousSystem {
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 1;
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 2;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 3;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 4;
+  // Defines whether or not the data contained within the object has been defanged.
+  bool defanged = 5;
+  // Specifies the number assigned to the AS. Such assignments are typically performed by a Regional Internet Registries (RIR).
+  int32 number = 6;
+  // A name that identifies the object.
+  string name = 7;
+  // Specifies the name of the Regional Internet Registry (RIR) that assigned the number to the AS.
+  string rir = 8;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 9;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 10;
+}
+// A bundle: a collection of STIX objects grouped together in one container. A bundle is a container for transport, not a STIX object, so it carries no spec_version.
+message StixBundle {
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 1;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 2;
+  // The STIX objects in the bundle.
+  repeated StixObject objects = 3;
+}
+// A Campaign is a grouping of adversary behavior that describes a set of malicious activities or attacks that occur over a period of time against a specific set of targets.
+message StixCampaign {
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 1;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 2;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 3;
+  // A reference to the identity of the object's creator.
+  StixIdentity created_by_ref = 4;
+  // The time at which the object, or its first version, was created.
+  string created = 5;
+  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  string modified = 6;
+  // The revoked property indicates whether the object has been revoked.
+  bool revoked = 7;
+  // The labels property specifies a set of terms used to describe this object.
+  repeated string labels = 8;
+  // Identifies the confidence that the creator has in the correctness of their data.
+  int32 confidence = 9;
+  // The language of the text content, as an RFC 5646 language code.
+  string lang = 10;
+  // References to non-STIX information about the object.
+  repeated StixExternalReference external_references = 11;
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 12;
+  // A name that identifies the object.
+  string name = 13;
+  // A description of the object, which may be long.
+  string description = 14;
+  // Other names by which the object is known.
+  repeated string aliases = 15;
+  // The time at which the object was first seen.
+  string first_seen = 16;
+  // The time at which the object was last seen.
+  string last_seen = 17;
+  // This field defines the Campaign's primary goal, objective, desired outcome, or intended effect.
+  string objective = 18;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 19;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 20;
+}
+// The base of the objects that carry STIX's common properties: the domain and relationship objects, language content and extension definitions.
+message StixCommonObject {
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 1;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 2;
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 3;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 4;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 5;
+  // A reference to the identity of the object's creator.
+  StixIdentity created_by_ref = 6;
+  // The time at which the object, or its first version, was created.
+  string created = 7;
+  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  string modified = 8;
+  // The revoked property indicates whether the object has been revoked.
+  bool revoked = 9;
+  // The labels property specifies a set of terms used to describe this object.
+  repeated string labels = 10;
+  // Identifies the confidence that the creator has in the correctness of their data.
+  int32 confidence = 11;
+  // The language of the text content, as an RFC 5646 language code.
+  string lang = 12;
+  // References to non-STIX information about the object.
+  repeated StixExternalReference external_references = 13;
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 14;
+}
+// A Course of Action is an action taken either to prevent an attack or to respond to an attack that is in progress.
+message StixCourseOfAction {
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 1;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 2;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 3;
+  // A reference to the identity of the object's creator.
+  StixIdentity created_by_ref = 4;
+  // The time at which the object, or its first version, was created.
+  string created = 5;
+  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  string modified = 6;
+  // The revoked property indicates whether the object has been revoked.
+  bool revoked = 7;
+  // The labels property specifies a set of terms used to describe this object.
+  repeated string labels = 8;
+  // Identifies the confidence that the creator has in the correctness of their data.
+  int32 confidence = 9;
+  // The language of the text content, as an RFC 5646 language code.
+  string lang = 10;
+  // References to non-STIX information about the object.
+  repeated StixExternalReference external_references = 11;
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 12;
+  // A name that identifies the object.
+  string name = 13;
+  // A description of the object, which may be long.
+  string description = 14;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 15;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 16;
+}
+// A STIX Cyber-observable Object (SCO): a fact observed on a network or host, such as a file, an address or a process.
+message StixCyberObservableObject {
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 1;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 2;
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 3;
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 4;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 5;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 6;
+  // Defines whether or not the data contained within the object has been defanged.
+  bool defanged = 7;
+}
+// A dictionary of key and value pairs that STIX leaves open.
+message StixDictionary {
+}
+// The Directory Object represents the properties common to a file system directory.
+message StixDirectory {
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 1;
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 2;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 3;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 4;
+  // Defines whether or not the data contained within the object has been defanged.
+  bool defanged = 5;
+  // A path, as it was observed.
+  string path = 6;
+  // Specifies the observed encoding for the path.
+  string path_enc = 7;
+  // The time at which the object was created.
+  string ctime = 8;
+  // The time at which the object was last written to.
+  string mtime = 9;
+  // The time at which the object was last accessed.
+  string atime = 10;
+  // References to other cyber-observable objects that this one contains.
+  repeated StixCyberObservableObject contains_refs = 11;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 12;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 13;
+}
+// The Domain Name represents the properties of a network domain name.
+message StixDomainName {
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 1;
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 2;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 3;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 4;
+  // Defines whether or not the data contained within the object has been defanged.
+  bool defanged = 5;
+  // The value of the observable, in the form each class states.
+  string value = 6;
+  // References to the cyber-observable objects that this one resolves to.
+  repeated StixCyberObservableObject resolves_to_refs = 7;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 8;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 9;
+}
+// A STIX Domain Object (SDO): a higher-level concept of cyber threat intelligence, such as an attack pattern, a malware family or a threat actor.
+message StixDomainObject {
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 1;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 2;
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 3;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 4;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 5;
+  // A reference to the identity of the object's creator.
+  StixIdentity created_by_ref = 6;
+  // The time at which the object, or its first version, was created.
+  string created = 7;
+  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  string modified = 8;
+  // The revoked property indicates whether the object has been revoked.
+  bool revoked = 9;
+  // The labels property specifies a set of terms used to describe this object.
+  repeated string labels = 10;
+  // Identifies the confidence that the creator has in the correctness of their data.
+  int32 confidence = 11;
+  // The language of the text content, as an RFC 5646 language code.
+  string lang = 12;
+  // References to non-STIX information about the object.
+  repeated StixExternalReference external_references = 13;
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 14;
+}
+// The Email Address Object represents a single email address.
+message StixEmailAddress {
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 1;
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 2;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 3;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 4;
+  // Defines whether or not the data contained within the object has been defanged.
+  bool defanged = 5;
+  // The value of the observable, in the form each class states.
+  string value = 6;
+  // A name for display.
+  string display_name = 7;
+  // Specifies the user account that the email address belongs to, as a reference to a User Account Object.
+  StixUserAccount belongs_to_ref = 8;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 9;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 10;
+}
+// The Email Message Object represents an instance of an email message.
+message StixEmailMessage {
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 1;
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 2;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 3;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 4;
+  // Defines whether or not the data contained within the object has been defanged.
+  bool defanged = 5;
+  // Specifies the date/time that the email message was sent.
+  string date = 6;
+  // The value of a Content-Type header field.
+  string content_type = 7;
+  // Specifies the value of the 'From:' header of the email message.
+  StixEmailAddress from_ref = 8;
+  // Specifies the value of the 'From' field of the email message.
+  StixEmailAddress sender_ref = 9;
+  // Specifies the mailboxes that are 'To:' recipients of the email message.
+  repeated StixEmailAddress to_refs = 10;
+  // Specifies the mailboxes that are 'CC:' recipients of the email message.
+  repeated StixEmailAddress cc_refs = 11;
+  // Specifies the mailboxes that are 'BCC:' recipients of the email message.
+  repeated StixEmailAddress bcc_refs = 12;
+  // Specifies the Message-ID field of the email message.
+  string message_id = 13;
+  // A subject, as a string; each class says of what.
+  string subject = 14;
+  // Specifies one or more Received header fields that may be included in the email headers.
+  repeated string received_lines = 15;
+  // Specifies any other header fields found in the email message, as a dictionary.
+  StixDictionary additional_header_fields = 16;
+  // Specifies the raw binary contents of the email message, including both the headers and body, as a reference to an Artifact Object.
+  StixArtifact raw_email_ref = 17;
+  // Indicates whether the email body contains multiple MIME parts.
+  bool is_multipart = 18;
+  // A body of text.
+  string body = 19;
+  // Specifies a list of the MIME parts that make up the email body. This property MAY only be used if is_multipart is true.
+  repeated StixMimePart body_multipart = 20;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 21;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 22;
+}
+// The EXIF tags of an image file, as a dictionary of tag names to string or integer values.
+message StixExifTags {
+}
+// An extension of an object that an extension definition defines. Besides its extension type it carries the properties that its definition's schema states.
+message StixExtension {
+  // The kind of extension, as the extension's definition declares it.
+  StixExtensionType extension_type = 1;
+}
+// The STIX Extension Definition object allows producers of threat intelligence to extend existing STIX objects or to create entirely new STIX objects in a standardized way.
+message StixExtensionDefinition {
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 1;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 2;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 3;
+  // A reference to the identity of the object's creator.
+  StixIdentity created_by_ref = 4;
+  // The time at which the object, or its first version, was created.
+  string created = 5;
+  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  string modified = 6;
+  // The revoked property indicates whether the object has been revoked.
+  bool revoked = 7;
+  // The labels property specifies a set of terms used to describe this object.
+  repeated string labels = 8;
+  // Identifies the confidence that the creator has in the correctness of their data.
+  int32 confidence = 9;
+  // The language of the text content, as an RFC 5646 language code.
+  string lang = 10;
+  // References to non-STIX information about the object.
+  repeated StixExternalReference external_references = 11;
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 12;
+  // A name that identifies the object.
+  string name = 13;
+  // A description of the object, which may be long.
+  string description = 14;
+  // The normative definition of the extension, either as a URL or as plain text explaining the definition.
+  string schema = 15;
+  // A version, as a string; each class says of what.
+  string version = 16;
+  // Which extension types are contained within this extension.
+  repeated StixExtensionType extension_types = 17;
+  // The list of new property names that are added to an object by this extension.
+  repeated string extension_properties = 18;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 19;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 20;
+}
+// A dictionary of extensions, keyed by an extension definition's identifier.
+message StixExtensions {
+}
+// External references are used to describe pointers to information represented outside of STIX.
+message StixExternalReference {
+  // The source, such as a system, registry or organization, that defines the reference.
+  string source_name = 1;
+  // A description of the object, which may be long.
+  string description = 2;
+  // A URL.
+  string url = 3;
+  // A dictionary of hashes of the content, keyed by hash algorithm.
+  StixHashes hashes = 4;
+  // An identifier of the external content in its source, such as CVE-2016-1234.
+  string external_id = 5;
+}
+// The File Object represents the properties of a file.
+message StixFile {
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 1;
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 2;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 3;
+  // Defines whether or not the data contained within the object has been defanged.
+  bool defanged = 4;
+  // A dictionary of hashes of the content, keyed by hash algorithm.
+  StixHashes hashes = 5;
+  // A size in bytes, as a non-negative integer.
+  int32 size = 6;
+  // A name that identifies the object.
+  string name = 7;
+  // Specifies the observed encoding for the name of the file.
+  string name_enc = 8;
+  // Specifies the hexadecimal constant ('magic number') associated with a specific file format that corresponds to the file, if applicable.
+  string magic_number_hex = 9;
+  // The value of this property MUST be a valid MIME type as specified in the IANA Media Types registry.
+  string mime_type = 10;
+  // The time at which the object was created.
+  string ctime = 11;
+  // The time at which the object was last written to.
+  string mtime = 12;
+  // The time at which the object was last accessed.
+  string atime = 13;
+  // Specifies the parent directory of the file, as a reference to a Directory Object.
+  StixDirectory parent_directory_ref = 14;
+  // References to other cyber-observable objects that this one contains.
+  repeated StixCyberObservableObject contains_refs = 15;
+  // Specifies the content of the file, represented as an Artifact Object.
+  StixArtifact content_ref = 16;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 17;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 18;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixFileExtensions extensions = 19;
+}
+// The extensions of a file: the predefined ntfs-ext, raster-image-ext, pdf-ext, archive-ext and windows-pebinary-ext, and extensions that an extension definition defines.
+message StixFileExtensions {
+}
+// The granular-marking type defines how the list of marking-definition objects referenced by the marking_refs property to apply to a set of content identified by the list of selectors in the selectors property.
+message StixGranularMarking {
+  // The marking_ref property specifies the ID of the marking-definition object that describes the marking.
+  StixMarkingDefinition marking_ref = 1;
+  // A list of selectors for content contained within the STIX object in which this property appears.
+  repeated string selectors = 2;
+  // The language of the text content, as an RFC 5646 language code.
+  string lang = 3;
+}
+// A Grouping object explicitly asserts that the referenced STIX Objects have a shared content.
+message StixGrouping {
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 1;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 2;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 3;
+  // A reference to the identity of the object's creator.
+  StixIdentity created_by_ref = 4;
+  // The time at which the object, or its first version, was created.
+  string created = 5;
+  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  string modified = 6;
+  // The revoked property indicates whether the object has been revoked.
+  bool revoked = 7;
+  // The labels property specifies a set of terms used to describe this object.
+  repeated string labels = 8;
+  // Identifies the confidence that the creator has in the correctness of their data.
+  int32 confidence = 9;
+  // The language of the text content, as an RFC 5646 language code.
+  string lang = 10;
+  // References to non-STIX information about the object.
+  repeated StixExternalReference external_references = 11;
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 12;
+  // A name that identifies the object.
+  string name = 13;
+  // A description of the object, which may be long.
+  string description = 14;
+  // A short description of the particular context shared by the content referenced by the Grouping.
+  string context = 15;
+  // References to the STIX objects that this object is about or holds.
+  repeated StixObject object_refs = 16;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 17;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 18;
+}
+// A dictionary of hashes. Each key names a hash algorithm, from the hash-algorithm-ov vocabulary (StixHashAlgorithm) or a custom one, and each value is the hash as a string.
+message StixHashes {
+}
+// The HTTP request extension specifies a default extension for capturing network traffic properties specific to HTTP requests.
+message StixHttpRequestExtension {
+  // Specifies the HTTP method portion of the HTTP request line, as a lowercase string.
+  string request_method = 1;
+  // Specifies the value (typically a resource path) portion of the HTTP request line.
+  string request_value = 2;
+  // Specifies the HTTP version portion of the HTTP request line, as a lowercase string.
+  string request_version = 3;
+  // Specifies all of the HTTP header fields that may be found in the HTTP client request, as a dictionary.
+  StixDictionary request_header = 4;
+  // Specifies the length of the HTTP message body, if included, in bytes.
+  int32 message_body_length = 5;
+  // Specifies the data contained in the HTTP message body, if included.
+  StixArtifact message_body_data_ref = 6;
+}
+// The ICMP extension specifies a default extension for capturing network traffic properties specific to ICMP.
+message StixIcmpExtension {
+  // Specifies the ICMP type byte.
+  string icmp_type_hex = 1;
+  // Specifies the ICMP code byte.
+  string icmp_code_hex = 2;
+}
+// Identities can represent actual individuals, organizations, or groups (e.g., ACME, Inc.) as well as classes of individuals, organizations, or groups.
+message StixIdentity {
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 1;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 2;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 3;
+  // A reference to the identity of the object's creator.
+  StixIdentity created_by_ref = 4;
+  // The time at which the object, or its first version, was created.
+  string created = 5;
+  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  string modified = 6;
+  // The revoked property indicates whether the object has been revoked.
+  bool revoked = 7;
+  // The labels property specifies a set of terms used to describe this object.
+  repeated string labels = 8;
+  // Identifies the confidence that the creator has in the correctness of their data.
+  int32 confidence = 9;
+  // The language of the text content, as an RFC 5646 language code.
+  string lang = 10;
+  // References to non-STIX information about the object.
+  repeated StixExternalReference external_references = 11;
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 12;
+  // The roles that the identity or threat actor plays.
+  repeated string roles = 13;
+  // A name that identifies the object.
+  string name = 14;
+  // A description of the object, which may be long.
+  string description = 15;
+  // The type of entity that this Identity describes, e.g., an individual or organization. Open Vocab - identity-class-ov.
+  string identity_class = 16;
+  // The list of sectors that this Identity belongs to. Open Vocab - industry-sector-ov.
+  repeated string sectors = 17;
+  // The contact information (e-mail, phone number, etc.) for this Identity.
+  string contact_information = 18;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 19;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 20;
+}
+// The Incident object in STIX 2.1 is a stub, to be expanded in future STIX 2 releases.
+message StixIncident {
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 1;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 2;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 3;
+  // A reference to the identity of the object's creator.
+  StixIdentity created_by_ref = 4;
+  // The time at which the object, or its first version, was created.
+  string created = 5;
+  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  string modified = 6;
+  // The revoked property indicates whether the object has been revoked.
+  bool revoked = 7;
+  // The labels property specifies a set of terms used to describe this object.
+  repeated string labels = 8;
+  // Identifies the confidence that the creator has in the correctness of their data.
+  int32 confidence = 9;
+  // The language of the text content, as an RFC 5646 language code.
+  string lang = 10;
+  // References to non-STIX information about the object.
+  repeated StixExternalReference external_references = 11;
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 12;
+  // A name that identifies the object.
+  string name = 13;
+  // A description of the object, which may be long.
+  string description = 14;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 15;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 16;
+}
+// Indicators contain a pattern that can be used to detect suspicious or malicious cyber activity.
+message StixIndicator {
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 1;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 2;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 3;
+  // A reference to the identity of the object's creator.
+  StixIdentity created_by_ref = 4;
+  // The time at which the object, or its first version, was created.
+  string created = 5;
+  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  string modified = 6;
+  // The revoked property indicates whether the object has been revoked.
+  bool revoked = 7;
+  // The labels property specifies a set of terms used to describe this object.
+  repeated string labels = 8;
+  // Identifies the confidence that the creator has in the correctness of their data.
+  int32 confidence = 9;
+  // The language of the text content, as an RFC 5646 language code.
+  string lang = 10;
+  // References to non-STIX information about the object.
+  repeated StixExternalReference external_references = 11;
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 12;
+  // This field is an Open Vocabulary that specifies the type of indicator. Open vocab - indicator-type-ov.
+  repeated string indicator_types = 13;
+  // A name that identifies the object.
+  string name = 14;
+  // A description of the object, which may be long.
+  string description = 15;
+  // The detection pattern for this indicator.
+  string pattern = 16;
+  // The type of pattern used in this indicator.
+  string pattern_type = 17;
+  // The version of the pattern that is used.
+  string pattern_version = 18;
+  // The time from which this indicator should be considered valuable intelligence.
+  string valid_from = 19;
+  // The time at which this indicator should no longer be considered valuable intelligence.
+  string valid_until = 20;
+  // The kill chain phases to which the object corresponds.
+  repeated StixKillChainPhase kill_chain_phases = 21;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 22;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 23;
+}
+// Infrastructure objects describe systems, software services, and associated physical or virtual resources.
+message StixInfrastructure {
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 1;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 2;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 3;
+  // A reference to the identity of the object's creator.
+  StixIdentity created_by_ref = 4;
+  // The time at which the object, or its first version, was created.
+  string created = 5;
+  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  string modified = 6;
+  // The revoked property indicates whether the object has been revoked.
+  bool revoked = 7;
+  // The labels property specifies a set of terms used to describe this object.
+  repeated string labels = 8;
+  // Identifies the confidence that the creator has in the correctness of their data.
+  int32 confidence = 9;
+  // The language of the text content, as an RFC 5646 language code.
+  string lang = 10;
+  // References to non-STIX information about the object.
+  repeated StixExternalReference external_references = 11;
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 12;
+  // A name that identifies the object.
+  string name = 13;
+  // A description of the object, which may be long.
+  string description = 14;
+  // This field is an Open Vocabulary that specifies the type of infrastructure. Open vocab - infrastructure-type-ov.
+  repeated string infrastructure_types = 15;
+  // Other names by which the object is known.
+  repeated string aliases = 16;
+  // The kill chain phases to which the object corresponds.
+  repeated StixKillChainPhase kill_chain_phases = 17;
+  // The time at which the object was first seen.
+  string first_seen = 18;
+  // The time at which the object was last seen.
+  string last_seen = 19;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 20;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 21;
+}
+// An Intrusion Set is a grouped set of adversary behavior and resources with common properties that is believed to be orchestrated by a single organization.
+message StixIntrusionSet {
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 1;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 2;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 3;
+  // A reference to the identity of the object's creator.
+  StixIdentity created_by_ref = 4;
+  // The time at which the object, or its first version, was created.
+  string created = 5;
+  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  string modified = 6;
+  // The revoked property indicates whether the object has been revoked.
+  bool revoked = 7;
+  // The labels property specifies a set of terms used to describe this object.
+  repeated string labels = 8;
+  // Identifies the confidence that the creator has in the correctness of their data.
+  int32 confidence = 9;
+  // The language of the text content, as an RFC 5646 language code.
+  string lang = 10;
+  // References to non-STIX information about the object.
+  repeated StixExternalReference external_references = 11;
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 12;
+  // A name that identifies the object.
+  string name = 13;
+  // A description of the object, which may be long.
+  string description = 14;
+  // Other names by which the object is known.
+  repeated string aliases = 15;
+  // The time at which the object was first seen.
+  string first_seen = 16;
+  // The time at which the object was last seen.
+  string last_seen = 17;
+  // The high-level goals.
+  repeated string goals = 18;
+  // The organizational level at which the actor typically works.
+  string resource_level = 19;
+  // The primary reason, motivation or purpose behind the activity.
+  string primary_motivation = 20;
+  // The secondary reasons, motivations or purposes behind the activity.
+  repeated string secondary_motivations = 21;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 22;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 23;
+}
+// The IPv4 Address Object represents one or more IPv4 addresses expressed using CIDR notation.
+message StixIpv4Address {
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 1;
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 2;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 3;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 4;
+  // Defines whether or not the data contained within the object has been defanged.
+  bool defanged = 5;
+  // The value of the observable, in the form each class states.
+  string value = 6;
+  // References to the cyber-observable objects that this one resolves to.
+  repeated StixMacAddress resolves_to_refs = 7;
+  // References to the autonomous systems that this address belongs to.
+  repeated StixAutonomousSystem belongs_to_refs = 8;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 9;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 10;
+}
+// The IPv6 Address Object represents one or more IPv6 addresses expressed using CIDR notation.
+message StixIpv6Address {
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 1;
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 2;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 3;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 4;
+  // Defines whether or not the data contained within the object has been defanged.
+  bool defanged = 5;
+  // The value of the observable, in the form each class states.
+  string value = 6;
+  // References to the cyber-observable objects that this one resolves to.
+  repeated StixMacAddress resolves_to_refs = 7;
+  // References to the autonomous systems that this address belongs to.
+  repeated StixAutonomousSystem belongs_to_refs = 8;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 9;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 10;
+}
+// A phase in a kill chain, named by the chain and the phase.
+message StixKillChainPhase {
+  // The name of the kill chain.
+  string kill_chain_name = 1;
+  // The name of the phase in the kill chain.
+  string phase_name = 2;
+}
+// The language-content object represents text content for STIX Objects represented in languages other than that of the original object.
+message StixLanguageContent {
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 1;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 2;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 3;
+  // A reference to the identity of the object's creator.
+  StixIdentity created_by_ref = 4;
+  // The time at which the object, or its first version, was created.
+  string created = 5;
+  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  string modified = 6;
+  // The revoked property indicates whether the object has been revoked.
+  bool revoked = 7;
+  // The labels property specifies a set of terms used to describe this object.
+  repeated string labels = 8;
+  // Identifies the confidence that the creator has in the correctness of their data.
+  int32 confidence = 9;
+  // The language of the text content, as an RFC 5646 language code.
+  string lang = 10;
+  // References to non-STIX information about the object.
+  repeated StixExternalReference external_references = 11;
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 12;
+  // Identifies the object that this Language Content applies to.
+  StixObject object_ref = 13;
+  // Identifies the modified time of the object that this Language Content applies to.
+  string object_modified = 14;
+  // Contains the actual Language Content (translation).
+  StixLanguageContents contents = 15;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 16;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 17;
+}
+// The translations of a language content object, keyed by language code. Each value maps the translated properties to their translations.
+message StixLanguageContents {
+}
+// A Location represents a geographic location. The location may be described as any, some or all of the following: region (e.g., North America), civic address (e.g. New York, US), latitude and longitude.
+message StixLocation {
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 1;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 2;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 3;
+  // A reference to the identity of the object's creator.
+  StixIdentity created_by_ref = 4;
+  // The time at which the object, or its first version, was created.
+  string created = 5;
+  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  string modified = 6;
+  // The revoked property indicates whether the object has been revoked.
+  bool revoked = 7;
+  // The labels property specifies a set of terms used to describe this object.
+  repeated string labels = 8;
+  // Identifies the confidence that the creator has in the correctness of their data.
+  int32 confidence = 9;
+  // The language of the text content, as an RFC 5646 language code.
+  string lang = 10;
+  // References to non-STIX information about the object.
+  repeated StixExternalReference external_references = 11;
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 12;
+  // A description of the object, which may be long.
+  string description = 13;
+  // A name that identifies the object.
+  string name = 14;
+  // The latitude of the Location in decimal degrees.
+  float latitude = 15;
+  // The longitude of the Location in decimal degrees.
+  float longitude = 16;
+  // Defines the precision of the coordinates specified by the latitude and longitude properties, measured in meters.
+  float precision = 17;
+  // The region that this Location describes.
+  string region = 18;
+  // The country that this Location describes.
+  string country = 19;
+  // The state, province, or other sub-national administrative area that this Location describes.
+  string administrative_area = 20;
+  // The city that this Location describes.
+  string city = 21;
+  // The street address that this Location describes.
+  string street_address = 22;
+  // The postal code for this Location.
+  string postal_code = 23;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 24;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 25;
+}
+// The MAC Address Object represents a single Media Access Control (MAC) address.
+message StixMacAddress {
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 1;
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 2;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 3;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 4;
+  // Defines whether or not the data contained within the object has been defanged.
+  bool defanged = 5;
+  // The value of the observable, in the form each class states.
+  string value = 6;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 7;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 8;
+}
+// Malware is a type of TTP that is also known as malicious code and malicious software, refers to a program that is inserted into a system, usually covertly, with the intent of compromising the confidentiality, integrity, or availability of the victim's data, applications, or operating system (OS) or of otherwise annoying or disrupting the victim.
+message StixMalware {
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 1;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 2;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 3;
+  // A reference to the identity of the object's creator.
+  StixIdentity created_by_ref = 4;
+  // The time at which the object, or its first version, was created.
+  string created = 5;
+  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  string modified = 6;
+  // The revoked property indicates whether the object has been revoked.
+  bool revoked = 7;
+  // The labels property specifies a set of terms used to describe this object.
+  repeated string labels = 8;
+  // Identifies the confidence that the creator has in the correctness of their data.
+  int32 confidence = 9;
+  // The language of the text content, as an RFC 5646 language code.
+  string lang = 10;
+  // References to non-STIX information about the object.
+  repeated StixExternalReference external_references = 11;
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 12;
+  // Other names by which the object is known.
+  repeated string aliases = 13;
+  // The time at which the object was first seen.
+  string first_seen = 14;
+  // The time at which the object was last seen.
+  string last_seen = 15;
+  // The operating systems that the malware family or malware instance is executable on.
+  repeated StixSoftware operating_system_refs = 16;
+  // The processor architectures (e.g., x86, ARM, etc.) that the malware instance or family is executable on. Open Vocab - processor-architecture-os.
+  repeated string architecture_execution_envs = 17;
+  // The programming language(s) used to implement the malware instance or family. Open Vocab - implementation-language-ov.
+  repeated string implementation_languages = 18;
+  // Specifies any capabilities identified for the malware instance or family. Open Vocab - malware-capabilities-ov.
+  repeated string capabilities = 19;
+  // The sample_refs property specifies a list of identifiers of the SCO file or artifact objects associated with this malware instance(s) or family.
+  repeated StixCyberObservableObject sample_refs = 20;
+  // The type of malware being described. Open Vocab - malware-type-ov.
+  repeated string malware_types = 21;
+  // A name that identifies the object.
+  string name = 22;
+  // A description of the object, which may be long.
+  string description = 23;
+  // The kill chain phases to which the object corresponds.
+  repeated StixKillChainPhase kill_chain_phases = 24;
+  // Whether the object represents a malware family (if true) or a malware instance (if false).
+  bool is_family = 25;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 26;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 27;
+}
+// Malware Analysis captures the metadata and results of a particular analysis performed (static or dynamic) on the malware instance or family.
+message StixMalwareAnalysis {
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 1;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 2;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 3;
+  // A reference to the identity of the object's creator.
+  StixIdentity created_by_ref = 4;
+  // The time at which the object, or its first version, was created.
+  string created = 5;
+  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  string modified = 6;
+  // The revoked property indicates whether the object has been revoked.
+  bool revoked = 7;
+  // The labels property specifies a set of terms used to describe this object.
+  repeated string labels = 8;
+  // Identifies the confidence that the creator has in the correctness of their data.
+  int32 confidence = 9;
+  // The language of the text content, as an RFC 5646 language code.
+  string lang = 10;
+  // References to non-STIX information about the object.
+  repeated StixExternalReference external_references = 11;
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 12;
+  // The name of the analysis engine or product that was used for this analysis.
+  string product = 13;
+  // A version, as a string; each class says of what.
+  string version = 14;
+  // The version of the analysis product configuration that was used to perform this analysis.
+  string configuration_version = 15;
+  // The particular analysis product modules that were used to perform the analysis.
+  repeated string modules = 16;
+  // The version of the analysis engine or product that was used to perform this analysis.
+  string analysis_engine_version = 17;
+  // The version of the analysis definitions used by the analysis tool.
+  string analysis_definition_version = 18;
+  // The date and time that this malware was first submitted for scanning or analysis.
+  string submitted = 19;
+  // The date and time that the malware analysis was initiated.
+  string analysis_started = 20;
+  // The date and time that the malware analysis ended.
+  string analysis_ended = 21;
+  // The classification result or name assigned to the malware instance by the scanner tool.
+  string result_name = 22;
+  // The classification result as determined by the scanner or tool analysis process.
+  string result = 23;
+  // A description of the virtual machine environment used to host the guest operating system (if applicable) that was used for the dynamic analysis of the malware instance or family.
+  StixSoftware host_vm_ref = 24;
+  // The operating system that was used to perform the dynamic analysis.
+  StixSoftware operating_system_ref = 25;
+  // Any non-standard software installed on the operating system used for the dynamic analysis of the malware instance or family.
+  repeated StixSoftware installed_software_refs = 26;
+  // The list of STIX objects that were captured during the analysis process.
+  repeated StixCyberObservableObject analysis_sco_refs = 27;
+  // Refers to the object this analysis was performed against.
+  StixCyberObservableObject sample_ref = 28;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 29;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 30;
+}
+// A marking definition: a statement, a Traffic Light Protocol (TLP) level or another marking that applies to the objects that reference it.
+message StixMarkingDefinition {
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 1;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 2;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 3;
+  // A reference to the identity of the object's creator.
+  StixIdentity created_by_ref = 4;
+  // The time at which the object, or its first version, was created.
+  string created = 5;
+  // References to non-STIX information about the object.
+  repeated StixExternalReference external_references = 6;
+  // A name that identifies the object.
+  string name = 7;
+  // The type of the marking definition, such as statement or tlp.
+  string definition_type = 8;
+  // The marking itself: a statement, or a Traffic Light Protocol (TLP) level.
+  string definition = 9;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 10;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 11;
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 12;
+}
+// One MIME part of a multipart email body.
+message StixMimePart {
+  // A body of text.
+  string body = 1;
+  // Specifies the contents of non-textual MIME parts, that is those whose content_type does not start with text/, as a reference to an Artifact Object or File Object.
+  StixCyberObservableObject body_raw_ref = 2;
+  // The value of a Content-Type header field.
+  string content_type = 3;
+  // Specifies the value of the 'Content-Disposition' header field of the MIME part.
+  string content_disposition = 4;
+}
+// The Mutex Object represents the properties of a mutual exclusion (mutex) object.
+message StixMutex {
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 1;
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 2;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 3;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 4;
+  // Defines whether or not the data contained within the object has been defanged.
+  bool defanged = 5;
+  // A name that identifies the object.
+  string name = 6;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 7;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 8;
+}
+// The Network Traffic Object represents arbitrary network traffic that originates from a source and is addressed to a destination.
+message StixNetworkTraffic {
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 1;
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 2;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 3;
+  // Defines whether or not the data contained within the object has been defanged.
+  bool defanged = 4;
+  // Specifies the date/time the network traffic was initiated, if known.
+  string start = 5;
+  // Specifies the date/time the network traffic ended, if known.
+  string end = 6;
+  // Specifies the source of the network traffic, as a reference to an Observable Object.
+  StixCyberObservableObject src_ref = 7;
+  // Specifies the destination of the network traffic, as a reference to an Observable Object.
+  StixCyberObservableObject dst_ref = 8;
+  // Specifies the source port used in the network traffic, as an integer. The port value MUST be in the range of 0 - 65535.
+  int32 src_port = 9;
+  // Specifies the destination port used in the network traffic, as an integer. The port value MUST be in the range of 0 - 65535.
+  int32 dst_port = 10;
+  // Specifies the protocols observed in the network traffic, along with their corresponding state.
+  repeated string protocols = 11;
+  // Specifies the number of bytes sent from the source to the destination.
+  int32 src_byte_count = 12;
+  // Specifies the number of bytes sent from the destination to the source.
+  int32 dst_byte_count = 13;
+  // Specifies the number of packets sent from the source to the destination.
+  int32 src_packets = 14;
+  // Specifies the number of packets sent destination to the source.
+  int32 dst_packets = 15;
+  // Specifies any IP Flow Information Export (IPFIX) data for the traffic.
+  StixDictionary ipfix = 16;
+  // Specifies the bytes sent from the source to the destination.
+  StixArtifact src_payload_ref = 17;
+  // Specifies the bytes sent from the source to the destination.
+  StixArtifact dst_payload_ref = 18;
+  // Links to other network-traffic objects encapsulated by a network-traffic.
+  repeated StixNetworkTraffic encapsulates_refs = 19;
+  // Links to another network-traffic object which encapsulates this object.
+  StixNetworkTraffic encapsulated_by_ref = 20;
+  // Indicates whether the network traffic is still ongoing.
+  bool is_active = 21;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 22;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 23;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixNetworkTrafficExtensions extensions = 24;
+}
+// The extensions of network traffic: the predefined http-request-ext, icmp-ext, socket-ext and tcp-ext, and extensions that an extension definition defines.
+message StixNetworkTrafficExtensions {
+}
+// A Note is a comment or note containing informative text to help explain the context of one or more STIX Objects (SDOs or SROs) or to provide additional analysis that is not contained in the original object.
+message StixNote {
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 1;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 2;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 3;
+  // A reference to the identity of the object's creator.
+  StixIdentity created_by_ref = 4;
+  // The time at which the object, or its first version, was created.
+  string created = 5;
+  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  string modified = 6;
+  // The revoked property indicates whether the object has been revoked.
+  bool revoked = 7;
+  // The labels property specifies a set of terms used to describe this object.
+  repeated string labels = 8;
+  // Identifies the confidence that the creator has in the correctness of their data.
+  int32 confidence = 9;
+  // The language of the text content, as an RFC 5646 language code.
+  string lang = 10;
+  // References to non-STIX information about the object.
+  repeated StixExternalReference external_references = 11;
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 12;
+  // A brief summary of the note.
+  string abstract = 13;
+  // The content of the note.
+  string content = 14;
+  // The name of the author(s) of this note (e.g., the analyst(s) that created it).
+  repeated string authors = 15;
+  // References to the STIX objects that this object is about or holds.
+  repeated StixObject object_refs = 16;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 17;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 18;
+}
+// The NTFS file extension specifies a default extension for capturing properties specific to the storage of the file on the NTFS file system.
+message StixNtfsExtension {
+  // Specifies the security ID (SID) value assigned to the file.
+  string sid = 1;
+  // Specifies a list of NTFS alternate data streams that exist for the file.
+  repeated StixAlternateDataStream alternate_data_streams = 2;
+}
+// Any STIX object: the base of the domain, relationship and cyber-observable objects and of the meta objects.
+message StixObject {
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 1;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 2;
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 3;
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 4;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 5;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 6;
+}
+// Observed data conveys information that was observed on systems and networks, such as log data or network traffic, using the Cyber Observable specification.
+message StixObservedData {
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 1;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 2;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 3;
+  // A reference to the identity of the object's creator.
+  StixIdentity created_by_ref = 4;
+  // The time at which the object, or its first version, was created.
+  string created = 5;
+  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  string modified = 6;
+  // The revoked property indicates whether the object has been revoked.
+  bool revoked = 7;
+  // The labels property specifies a set of terms used to describe this object.
+  repeated string labels = 8;
+  // Identifies the confidence that the creator has in the correctness of their data.
+  int32 confidence = 9;
+  // The language of the text content, as an RFC 5646 language code.
+  string lang = 10;
+  // References to non-STIX information about the object.
+  repeated StixExternalReference external_references = 11;
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 12;
+  // The beginning of the time window that the data was observed during.
+  string first_observed = 13;
+  // The end of the time window that the data was observed during.
+  string last_observed = 14;
+  // The number of times the data represented in the objects property was observed. This MUST be an integer between 1 and 999,999,999 inclusive.
+  int32 number_observed = 15;
+  // The observed cyber-observable objects, as a dictionary keyed by index. Deprecated in STIX 2.1; use object_refs.
+  StixObservedObjects objects = 16;
+  // References to the STIX objects that this object is about or holds.
+  repeated StixObject object_refs = 17;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 18;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 19;
+}
+// The cyber-observable objects of an observed data object, keyed by an index such as "0". STIX 2.1 deprecates this form in favour of object_refs.
+message StixObservedObjects {
+}
+// An Opinion is an assessment of the correctness of the information in a STIX Object produced by a different entity and captures the level of agreement or disagreement using a fixed scale.
+message StixOpinion {
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 1;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 2;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 3;
+  // A reference to the identity of the object's creator.
+  StixIdentity created_by_ref = 4;
+  // The time at which the object, or its first version, was created.
+  string created = 5;
+  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  string modified = 6;
+  // The revoked property indicates whether the object has been revoked.
+  bool revoked = 7;
+  // The labels property specifies a set of terms used to describe this object.
+  repeated string labels = 8;
+  // Identifies the confidence that the creator has in the correctness of their data.
+  int32 confidence = 9;
+  // The language of the text content, as an RFC 5646 language code.
+  string lang = 10;
+  // References to non-STIX information about the object.
+  repeated StixExternalReference external_references = 11;
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 12;
+  // An explanation of why the producer has this Opinion.
+  string explanation = 13;
+  // The name of the author(s) of this note (e.g., the analyst(s) that created it).
+  repeated string authors = 14;
+  // References to the STIX objects that this object is about or holds.
+  repeated StixObject object_refs = 15;
+  // The opinion that the producer has about about all of the STIX Object(s) listed in the object_refs property.
+  StixAgreement opinion = 16;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 17;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 18;
+}
+// The document information dictionary of a PDF file, as a dictionary of string values.
+message StixPdfDocumentInfo {
+}
+// The PDF file extension specifies a default extension for capturing properties specific to PDF files.
+message StixPdfExtension {
+  // A version, as a string; each class says of what.
+  string version = 1;
+  // Specifies whether the PDF file has been optimized.
+  bool is_optimized = 2;
+  // Specifies details of the PDF document information dictionary (DID), which includes properties like the document creation data and producer, as a dictionary.
+  StixPdfDocumentInfo document_info_dict = 3;
+  // Specifies the first file identifier found for the PDF file.
+  string pdfid0 = 4;
+  // Specifies the second file identifier found for the PDF file.
+  string pdfid1 = 5;
+}
+// The Process Object represents common properties of an instance of a computer program as executed on an operating system.
+message StixProcess {
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 1;
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 2;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 3;
+  // Defines whether or not the data contained within the object has been defanged.
+  bool defanged = 4;
+  // Specifies whether the process is hidden.
+  bool is_hidden = 5;
+  // Specifies the Process ID, or PID, of the process.
+  int32 pid = 6;
+  // Specifies the date/time at which the process was created.
+  string created_time = 7;
+  // Specifies the current working directory of the process.
+  string cwd = 8;
+  // Specifies the full command line used in executing the process, including the process name (which may be specified individually via the binary_ref.name property) and any arguments.
+  string command_line = 9;
+  // Specifies the list of environment variables associated with the process as a dictionary.
+  StixDictionary environment_variables = 10;
+  // Specifies the list of network connections opened by the process, as a reference to one or more Network Traffic Objects.
+  repeated StixNetworkTraffic opened_connection_refs = 11;
+  // A reference to the user account that created the object.
+  StixUserAccount creator_user_ref = 12;
+  // Specifies the executable binary that was executed as the process image, as a reference to a File Object.
+  StixFile image_ref = 13;
+  // Specifies the other process that spawned (i.e. is the parent of) this one, as represented by a Process Object.
+  StixProcess parent_ref = 14;
+  // Specifies the other processes that were spawned by (i.e. children of) this process, as a reference to one or more other Process Objects.
+  repeated StixProcess child_refs = 15;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 16;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 17;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixProcessExtensions extensions = 18;
+}
+// The extensions of a process: the predefined windows-process-ext and windows-service-ext, and extensions that an extension definition defines.
+message StixProcessExtensions {
+}
+// The Raster Image file extension specifies a default extension for capturing properties specific to image files.
+message StixRasterImageExtension {
+  // Specifies the height of the image in the image file, in pixels.
+  int32 image_height = 1;
+  // Specifies the width of the image in the image file, in pixels.
+  int32 image_width = 2;
+  // Specifies the sum of bits used for each color channel in the image in the image file, and thus the total number of pixels used for expressing the color depth of the image.
+  int32 bits_per_pixel = 3;
+  // Specifies the set of EXIF tags found in the image file, as a dictionary. Each key/value pair in the dictionary represents the name/value of a single EXIF tag.
+  StixExifTags exif_tags = 4;
+}
+// The Relationship object is used to link together two SDOs in order to describe how they are related to each other.
+message StixRelationship {
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 1;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 2;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 3;
+  // A reference to the identity of the object's creator.
+  StixIdentity created_by_ref = 4;
+  // The time at which the object, or its first version, was created.
+  string created = 5;
+  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  string modified = 6;
+  // The revoked property indicates whether the object has been revoked.
+  bool revoked = 7;
+  // The labels property specifies a set of terms used to describe this object.
+  repeated string labels = 8;
+  // Identifies the confidence that the creator has in the correctness of their data.
+  int32 confidence = 9;
+  // The language of the text content, as an RFC 5646 language code.
+  string lang = 10;
+  // References to non-STIX information about the object.
+  repeated StixExternalReference external_references = 11;
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 12;
+  // The name used to identify the type of relationship.
+  string relationship_type = 13;
+  // A description of the object, which may be long.
+  string description = 14;
+  // The ID of the source (from) object.
+  StixObject source_ref = 15;
+  // The ID of the target (to) object.
+  StixObject target_ref = 16;
+  // This optional timestamp represents the earliest time at which the Relationship between the objects exists. If this property is a future timestamp, at the time the updated property is defined, then this represents an estimate by the producer of the intelligence of the earliest time at which relationship will be asserted to be true.
+  string start_time = 17;
+  // The latest time at which the Relationship between the objects exists. If this property is a future timestamp, at the time the updated property is defined, then this represents an estimate by the producer of the intelligence of the latest time at which relationship will be asserted to be true.
+  string stop_time = 18;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 19;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 20;
+}
+// A STIX Relationship Object (SRO): a relationship or a sighting that links other objects.
+message StixRelationshipObject {
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 1;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 2;
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 3;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 4;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 5;
+  // A reference to the identity of the object's creator.
+  StixIdentity created_by_ref = 6;
+  // The time at which the object, or its first version, was created.
+  string created = 7;
+  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  string modified = 8;
+  // The revoked property indicates whether the object has been revoked.
+  bool revoked = 9;
+  // The labels property specifies a set of terms used to describe this object.
+  repeated string labels = 10;
+  // Identifies the confidence that the creator has in the correctness of their data.
+  int32 confidence = 11;
+  // The language of the text content, as an RFC 5646 language code.
+  string lang = 12;
+  // References to non-STIX information about the object.
+  repeated StixExternalReference external_references = 13;
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 14;
+}
+// Reports are collections of threat intelligence focused on one or more topics, such as a description of a threat actor, malware, or attack technique, including context and related details.
+message StixReport {
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 1;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 2;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 3;
+  // A reference to the identity of the object's creator.
+  StixIdentity created_by_ref = 4;
+  // The time at which the object, or its first version, was created.
+  string created = 5;
+  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  string modified = 6;
+  // The revoked property indicates whether the object has been revoked.
+  bool revoked = 7;
+  // The labels property specifies a set of terms used to describe this object.
+  repeated string labels = 8;
+  // Identifies the confidence that the creator has in the correctness of their data.
+  int32 confidence = 9;
+  // The language of the text content, as an RFC 5646 language code.
+  string lang = 10;
+  // References to non-STIX information about the object.
+  repeated StixExternalReference external_references = 11;
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 12;
+  // This field is an Open Vocabulary that specifies the primary subject of this report. The suggested values for this field are in report-type-ov.
+  repeated string report_types = 13;
+  // A name that identifies the object.
+  string name = 14;
+  // A description of the object, which may be long.
+  string description = 15;
+  // The date that this report object was officially published by the creator of this report.
+  string published = 16;
+  // References to the STIX objects that this object is about or holds.
+  repeated StixObject object_refs = 17;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 18;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 19;
+}
+// A Sighting denotes the belief that something in CTI (e.g., an indicator, malware, tool, threat actor, etc.) was seen.
+message StixSighting {
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 1;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 2;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 3;
+  // A reference to the identity of the object's creator.
+  StixIdentity created_by_ref = 4;
+  // The time at which the object, or its first version, was created.
+  string created = 5;
+  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  string modified = 6;
+  // The revoked property indicates whether the object has been revoked.
+  bool revoked = 7;
+  // The labels property specifies a set of terms used to describe this object.
+  repeated string labels = 8;
+  // Identifies the confidence that the creator has in the correctness of their data.
+  int32 confidence = 9;
+  // The language of the text content, as an RFC 5646 language code.
+  string lang = 10;
+  // References to non-STIX information about the object.
+  repeated StixExternalReference external_references = 11;
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 12;
+  // A description of the object, which may be long.
+  string description = 13;
+  // The time at which the object was first seen.
+  string first_seen = 14;
+  // The time at which the object was last seen.
+  string last_seen = 15;
+  // This is an integer between 0 and 999,999,999 inclusive and represents the number of times the object was sighted.
+  int32 count = 16;
+  // An ID reference to the object that has been sighted.
+  StixDomainObject sighting_of_ref = 17;
+  // A list of ID references to the Observed Data objects that contain the raw cyber data for this Sighting.
+  repeated StixObservedData observed_data_refs = 18;
+  // A list of ID references to the Identity or Location objects describing the entities or types of entities that saw the sighting.
+  repeated StixDomainObject where_sighted_refs = 19;
+  // The summary property indicates whether the Sighting should be considered summary data.
+  bool summary = 20;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 21;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 22;
+}
+// The Network Socket extension specifies a default extension for capturing network traffic properties associated with network sockets.
+message StixSocketExtension {
+  // Specifies the address family (AF_*) that the socket is configured for.
+  StixNetworkSocketAddressFamily address_family = 1;
+  // Specifies whether the socket is in blocking mode.
+  bool is_blocking = 2;
+  // Specifies whether the socket is in listening mode.
+  bool is_listening = 3;
+  // Specifies any options (SO_*) that may be used by the socket, as a dictionary.
+  StixSocketOptions options = 4;
+  // Specifies the type of the socket.
+  StixNetworkSocketType socket_type = 5;
+  // Specifies the socket file descriptor value associated with the socket, as a non-negative integer.
+  int32 socket_descriptor = 6;
+  // Specifies the handle or inode value associated with the socket.
+  int32 socket_handle = 7;
+}
+// The options of a network socket, as a dictionary of option names, such as SO_RCVBUF, to integer values.
+message StixSocketOptions {
+}
+// The Software Object represents high-level properties associated with software, including software products.
+message StixSoftware {
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 1;
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 2;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 3;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 4;
+  // Defines whether or not the data contained within the object has been defanged.
+  bool defanged = 5;
+  // A name that identifies the object.
+  string name = 6;
+  // Specifies the Common Platform Enumeration (CPE) entry for the software, if available. The value for this property MUST be a CPE v2.3 entry from the official NVD CPE Dictionary.
+  string cpe = 7;
+  // Specifies the Software Identification (SWID) Tags entry for the software, if available.
+  string swid = 8;
+  // Specifies the languages supported by the software. The value of each list member MUST be an RFC 5646 language code. ISO 639-2 codes are accepted for backward compatibility.
+  repeated string languages = 9;
+  // Specifies the name of the vendor of the software.
+  string vendor = 10;
+  // A version, as a string; each class says of what.
+  string version = 11;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 12;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 13;
+}
+// The definition of a statement marking: a statement, such as a copyright or terms of use.
+message StixStatementMarking {
+  // A statement, such as a copyright or terms of use, that applies to the marked content.
+  string statement = 1;
+}
+// The TCP extension specifies a default extension for capturing network traffic properties specific to TCP.
+message StixTcpExtension {
+  // Specifies the source TCP flags, as the union of all TCP flags observed between the start of the traffic (as defined by the start property) and the end of the traffic (as defined by the end property).
+  string src_flags_hex = 1;
+  // Specifies the destination TCP flags, as the union of all TCP flags observed between the start of the traffic (as defined by the start property) and the end of the traffic (as defined by the end property).
+  string dst_flags_hex = 2;
+}
+// Threat Actors are actual individuals, groups, or organizations believed to be operating with malicious intent.
+message StixThreatActor {
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 1;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 2;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 3;
+  // A reference to the identity of the object's creator.
+  StixIdentity created_by_ref = 4;
+  // The time at which the object, or its first version, was created.
+  string created = 5;
+  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  string modified = 6;
+  // The revoked property indicates whether the object has been revoked.
+  bool revoked = 7;
+  // The labels property specifies a set of terms used to describe this object.
+  repeated string labels = 8;
+  // Identifies the confidence that the creator has in the correctness of their data.
+  int32 confidence = 9;
+  // The language of the text content, as an RFC 5646 language code.
+  string lang = 10;
+  // References to non-STIX information about the object.
+  repeated StixExternalReference external_references = 11;
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 12;
+  // This field specifies the type of threat actor. Open Vocab - threat-actor-type-ov.
+  repeated string threat_actor_types = 13;
+  // A name that identifies the object.
+  string name = 14;
+  // A description of the object, which may be long.
+  string description = 15;
+  // Other names by which the object is known.
+  repeated string aliases = 16;
+  // The roles that the identity or threat actor plays.
+  repeated string roles = 17;
+  // The high-level goals.
+  repeated string goals = 18;
+  // The time at which the object was first seen.
+  string first_seen = 19;
+  // The time at which the object was last seen.
+  string last_seen = 20;
+  // The skill, specific knowledge, special training, or expertise a Threat Actor must have to perform the attack. Open Vocab - threat-actor-sophistication-ov.
+  string sophistication = 21;
+  // The organizational level at which the actor typically works.
+  string resource_level = 22;
+  // The primary reason, motivation or purpose behind the activity.
+  string primary_motivation = 23;
+  // The secondary reasons, motivations or purposes behind the activity.
+  repeated string secondary_motivations = 24;
+  // The personal reasons, motivations, or purposes of the Threat Actor regardless of organizational goals. Open Vocab - attack-motivation-ov.
+  repeated string personal_motivations = 25;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 26;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 27;
+}
+// The definition of a Traffic Light Protocol (TLP) marking: its level.
+message StixTlpMarking {
+  // The Traffic Light Protocol level.
+  StixTlpLevel tlp = 1;
+}
+// Tools are legitimate software that can be used by threat actors to perform attacks.
+message StixTool {
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 1;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 2;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 3;
+  // A reference to the identity of the object's creator.
+  StixIdentity created_by_ref = 4;
+  // The time at which the object, or its first version, was created.
+  string created = 5;
+  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  string modified = 6;
+  // The revoked property indicates whether the object has been revoked.
+  bool revoked = 7;
+  // The labels property specifies a set of terms used to describe this object.
+  repeated string labels = 8;
+  // Identifies the confidence that the creator has in the correctness of their data.
+  int32 confidence = 9;
+  // The language of the text content, as an RFC 5646 language code.
+  string lang = 10;
+  // References to non-STIX information about the object.
+  repeated StixExternalReference external_references = 11;
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 12;
+  // Other names by which the object is known.
+  repeated string aliases = 13;
+  // The kind(s) of tool(s) being described. Open Vocab - tool-type-ov.
+  repeated string tool_types = 14;
+  // A name that identifies the object.
+  string name = 15;
+  // A description of the object, which may be long.
+  string description = 16;
+  // The version identifier associated with the tool.
+  string tool_version = 17;
+  // The kill chain phases to which the object corresponds.
+  repeated StixKillChainPhase kill_chain_phases = 18;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 19;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 20;
+}
+// The User Account Object defines the following extensions. In addition to these, producers MAY create their own.
+message StixUnixAccountExtension {
+  // Specifies the primary group ID of the account.
+  float gid = 1;
+  // Specifies a list of names of groups that the account is a member of.
+  repeated string groups = 2;
+  // Specifies the home directory of the account.
+  string home_dir = 3;
+  // Specifies the account's command shell.
+  string shell = 4;
+}
+// The URL Object represents the properties of a uniform resource locator (URL).
+message StixUrl {
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 1;
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 2;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 3;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 4;
+  // Defines whether or not the data contained within the object has been defanged.
+  bool defanged = 5;
+  // The value of the observable, in the form each class states.
+  string value = 6;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 7;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 8;
+}
+// The User Account Object represents an instance of any type of user account, including but not limited to operating system, device, messaging service, and social media platform accounts.
+message StixUserAccount {
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 1;
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 2;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 3;
+  // Defines whether or not the data contained within the object has been defanged.
+  bool defanged = 4;
+  // Specifies the identifier of the account.
+  string user_id = 5;
+  // Specifies a cleartext credential. This is only intended to be used in capturing metadata from malware analysis (e.g., a hard-coded domain administrator password that the malware attempts to use for lateral movement) and SHOULD NOT be used for sharing of PII.
+  string credential = 6;
+  // Specifies the account login string, used in cases where the user_id property specifies something other than what a user would type when they login.
+  string account_login = 7;
+  // Specifies the type of the account. This is an open vocabulary and values SHOULD come from the account-type-ov vocabulary.
+  string account_type = 8;
+  // A name for display.
+  string display_name = 9;
+  // Indicates that the account is associated with a network service or system process (daemon), not a specific individual.
+  bool is_service_account = 10;
+  // Specifies that the account has elevated privileges (i.e., in the case of root on Unix or the Windows Administrator account).
+  bool is_privileged = 11;
+  // Specifies that the account has the ability to escalate privileges (i.e., in the case of sudo on Unix or a Windows Domain Admin account).
+  bool can_escalate_privs = 12;
+  // Specifies if the account is disabled.
+  bool is_disabled = 13;
+  // Specifies when the account was created.
+  string account_created = 14;
+  // Specifies the expiration date of the account.
+  string account_expires = 15;
+  // Specifies when the account credential was last changed.
+  string credential_last_changed = 16;
+  // Specifies when the account was first accessed.
+  string account_first_login = 17;
+  // Specifies when the account was last accessed.
+  string account_last_login = 18;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 19;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 20;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixUserAccountExtensions extensions = 21;
+}
+// The extensions of a user account: the predefined unix-account-ext, and extensions that an extension definition defines.
+message StixUserAccountExtensions {
+}
+// A Vulnerability is a mistake in software that can be directly used by a hacker to gain access to a system or network.
+message StixVulnerability {
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 1;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 2;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 3;
+  // A reference to the identity of the object's creator.
+  StixIdentity created_by_ref = 4;
+  // The time at which the object, or its first version, was created.
+  string created = 5;
+  // The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.
+  string modified = 6;
+  // The revoked property indicates whether the object has been revoked.
+  bool revoked = 7;
+  // The labels property specifies a set of terms used to describe this object.
+  repeated string labels = 8;
+  // Identifies the confidence that the creator has in the correctness of their data.
+  int32 confidence = 9;
+  // The language of the text content, as an RFC 5646 language code.
+  string lang = 10;
+  // References to non-STIX information about the object.
+  repeated StixExternalReference external_references = 11;
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 12;
+  // A name that identifies the object.
+  string name = 13;
+  // A description of the object, which may be long.
+  string description = 14;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 15;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 16;
+}
+// The Windows PE Binary File extension specifies a default extension for capturing properties specific to Windows portable executable (PE) files.
+message StixWindowsPeBinaryExtension {
+  // Specifies the type of the PE binary. Open Vocabulary - windows-pebinary-type-ov.
+  string pe_type = 1;
+  // Specifies the special import hash, or 'imphash', calculated for the PE Binary based on its imported libraries and functions.
+  string imphash = 2;
+  // Specifies the type of target machine.
+  string machine_hex = 3;
+  // Specifies the number of sections in the PE binary, as a non-negative integer.
+  int32 number_of_sections = 4;
+  // Specifies the time when the PE binary was created. The timestamp value MUST BE precise to the second.
+  string time_date_stamp = 5;
+  // Specifies the file offset of the COFF symbol table.
+  string pointer_to_symbol_table_hex = 6;
+  // Specifies the number of entries in the symbol table of the PE binary, as a non-negative integer.
+  int32 number_of_symbols = 7;
+  // Specifies the size of the optional header of the PE binary.
+  int32 size_of_optional_header = 8;
+  // Specifies the flags that indicate the file's characteristics.
+  string characteristics_hex = 9;
+  // Specifies any hashes that were computed for the file header.
+  StixHashes file_header_hashes = 10;
+  // Specifies the PE optional header of the PE binary.
+  StixWindowsPeOptionalHeader optional_header = 11;
+  // Specifies metadata about the sections in the PE file.
+  repeated StixWindowsPeSection sections = 12;
+}
+// The optional header of a Windows PE binary.
+message StixWindowsPeOptionalHeader {
+  // Specifies the unsigned integer that indicates the type of the PE binary.
+  string magic_hex = 1;
+  // Specifies the linker major version number.
+  int32 major_linker_version = 2;
+  // Specifies the linker minor version number.
+  int32 minor_linker_version = 3;
+  // Specifies the size of the code (text) section. If there are multiple such sections, this refers to the sum of the sizes of each section.
+  int32 size_of_code = 4;
+  // Specifies the size of the initialized data section. If there are multiple such sections, this refers to the sum of the sizes of each section.
+  int32 size_of_initialized_data = 5;
+  // Specifies the size of the uninitialized data section. If there are multiple such sections, this refers to the sum of the sizes of each section.
+  int32 size_of_uninitialized_data = 6;
+  // Specifies the address of the entry point relative to the image base when the executable is loaded into memory.
+  int32 address_of_entry_point = 7;
+  // Specifies the address that is relative to the image base of the beginning-of-code section when it is loaded into memory.
+  int32 base_of_code = 8;
+  // Specifies the address that is relative to the image base of the beginning-of-data section when it is loaded into memory.
+  int32 base_of_data = 9;
+  // Specifies the preferred address of the first byte of the image when loaded into memory.
+  int32 image_base = 10;
+  // Specifies the alignment (in bytes) of PE sections when they are loaded into memory.
+  int32 section_alignment = 11;
+  // Specifies the factor (in bytes) that is used to align the raw data of sections in the image file.
+  int32 file_alignment = 12;
+  // Specifies the major version number of the required operating system.
+  int32 major_os_version = 13;
+  // Specifies the minor version number of the required operating system.
+  int32 minor_os_version = 14;
+  // Specifies the major version number of the image.
+  int32 major_image_version = 15;
+  // Specifies the minor version number of the image.
+  int32 minor_image_version = 16;
+  // Specifies the major version number of the subsystem.
+  int32 major_subsystem_version = 17;
+  // Specifies the minor version number of the subsystem.
+  int32 minor_subsystem_version = 18;
+  // Specifies the reserved win32 version value.
+  string win32_version_value_hex = 19;
+  // Specifies the size, in bytes, of the image, including all headers, as the image is loaded in memory.
+  int32 size_of_image = 20;
+  // Specifies the combined size of the MS-DOS, PE header, and section headers, rounded up a multiple of the value specified in the file_alignment header.
+  int32 size_of_headers = 21;
+  // Specifies the checksum of the PE binary.
+  string checksum_hex = 22;
+  // Specifies the subsystem (e.g., GUI, device driver, etc.) that is required to run this image.
+  string subsystem_hex = 23;
+  // Specifies the flags that characterize the PE binary.
+  string dll_characteristics_hex = 24;
+  // Specifies the size of the stack to reserve.
+  int32 size_of_stack_reserve = 25;
+  // Specifies the size of the stack to commit.
+  int32 size_of_stack_commit = 26;
+  // Specifies the size of the local heap space to reserve.
+  int32 size_of_heap_reserve = 27;
+  // Specifies the size of the local heap space to commit.
+  int32 size_of_heap_commit = 28;
+  // Specifies the reserved loader flags.
+  string loader_flags_hex = 29;
+  // Specifies the number of data-directory entries in the remainder of the optional header.
+  int32 number_of_rva_and_sizes = 30;
+  // A dictionary of hashes of the content, keyed by hash algorithm.
+  StixHashes hashes = 31;
+}
+// A section of a Windows PE binary.
+message StixWindowsPeSection {
+  // A name that identifies the object.
+  string name = 1;
+  // A size in bytes, as a non-negative integer.
+  int32 size = 2;
+  // Specifies the calculated entropy for the section, as calculated using the Shannon algorithm.
+  float entropy = 3;
+  // A dictionary of hashes of the content, keyed by hash algorithm.
+  StixHashes hashes = 4;
+}
+// The Windows Process extension specifies a default extension for capturing properties specific to Windows processes.
+message StixWindowsProcessExtension {
+  // Specifies whether Address Space Layout Randomization (ASLR) is enabled for the process.
+  bool aslr_enabled = 1;
+  // Specifies whether Data Execution Prevention (DEP) is enabled for the process.
+  bool dep_enabled = 2;
+  // Specifies the current priority class of the process in Windows.
+  string priority = 3;
+  // Specifies the Security ID (SID) value of the owner of the process.
+  string owner_sid = 4;
+  // Specifies the title of the main window of the process.
+  string window_title = 5;
+  // Specifies the STARTUP_INFO struct used by the process, as a dictionary.
+  StixDictionary startup_info = 6;
+  // Specifies the Windows integrity level, or trustworthiness, of the process.
+  StixWindowsIntegrityLevel integrity_level = 7;
+}
+// The Registry Key Object represents the properties of a Windows registry key.
+message StixWindowsRegistryKey {
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 1;
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 2;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 3;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 4;
+  // Defines whether or not the data contained within the object has been defanged.
+  bool defanged = 5;
+  // Specifies the full registry key including the hive.
+  string key = 6;
+  // Specifies the values found under the registry key.
+  repeated StixWindowsRegistryValue values = 7;
+  // Specifies the last date/time that the registry key was modified.
+  string modified_time = 8;
+  // A reference to the user account that created the object.
+  StixUserAccount creator_user_ref = 9;
+  // Specifies the number of subkeys contained under the registry key.
+  int32 number_of_subkeys = 10;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 11;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 12;
+}
+// A value found under a Windows registry key.
+message StixWindowsRegistryValue {
+  // A name that identifies the object.
+  string name = 1;
+  // Specifies the data contained in the registry value.
+  string data = 2;
+  // Specifies the registry (REG_*) data type used in the registry value.
+  StixWindowsRegistryDatatype data_type = 3;
+}
+// The Windows Service extension specifies a default extension for capturing properties specific to Windows services.
+message StixWindowsServiceExtension {
+  // Specifies the name of the service.
+  string service_name = 1;
+  // Specifies the descriptions defined for the service.
+  repeated string descriptions = 2;
+  // A name for display.
+  string display_name = 3;
+  // Specifies the name of the load ordering group of which the service is a member.
+  string group_name = 4;
+  // Specifies the start options defined for the service. windows-service-start-enum.
+  StixWindowsServiceStartType start_type = 5;
+  // Specifies the DLLs loaded by the service, as a reference to one or more File Objects.
+  repeated StixFile service_dll_refs = 6;
+  // Specifies the type of the service. windows-service-enum.
+  StixWindowsServiceType service_type = 7;
+  // Specifies the current status of the service. windows-service-status-enum.
+  StixWindowsServiceStatus service_status = 8;
+}
+// The X509 Certificate Object represents the properties of an X.509 certificate.
+message StixX509Certificate {
+  // The version of the STIX specification used to represent the object.
+  StixSpecVersion spec_version = 1;
+  // References to the marking definitions that apply to the object.
+  repeated StixMarkingDefinition object_marking_refs = 2;
+  // The granular markings that apply to parts of the object.
+  repeated StixGranularMarking granular_markings = 3;
+  // The object's extensions, as a dictionary keyed by extension name.
+  StixExtensions extensions = 4;
+  // Defines whether or not the data contained within the object has been defanged.
+  bool defanged = 5;
+  // Specifies whether the certificate is self-signed, i.e., whether it is signed by the same entity whose identity it certifies.
+  bool is_self_signed = 6;
+  // A dictionary of hashes of the content, keyed by hash algorithm.
+  StixHashes hashes = 7;
+  // A version, as a string; each class says of what.
+  string version = 8;
+  // Specifies the unique identifier for the certificate, as issued by a specific Certificate Authority.
+  string serial_number = 9;
+  // Specifies the name of the algorithm used to sign the certificate.
+  string signature_algorithm = 10;
+  // Specifies the name of the Certificate Authority that issued the certificate.
+  string issuer = 11;
+  // Specifies the date on which the certificate validity period begins.
+  string validity_not_before = 12;
+  // Specifies the date on which the certificate validity period ends.
+  string validity_not_after = 13;
+  // A subject, as a string; each class says of what.
+  string subject = 14;
+  // Specifies the name of the algorithm with which to encrypt data being sent to the subject.
+  string subject_public_key_algorithm = 15;
+  // Specifies the modulus portion of the subject's public RSA key.
+  string subject_public_key_modulus = 16;
+  // Specifies the exponent portion of the subject's public RSA key, as an integer.
+  int32 subject_public_key_exponent = 17;
+  // Specifies any standard X.509 v3 extensions that may be used in the certificate.
+  StixX509V3Extensions x509_v3_extensions = 18;
+  // The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.
+  string id = 19;
+  // The STIX type name of the object, such as attack-pattern. Each class pins its own.
+  string type = 20;
+}
+// The standard X.509 v3 extensions of a certificate.
+message StixX509V3Extensions {
+  // Specifies a multi-valued extension which indicates whether a certificate is a CA certificate.
+  string basic_constraints = 1;
+  // Specifies a namespace within which all subject names in subsequent certificates in a certification path MUST be located.
+  string name_constraints = 2;
+  // Specifies any constraints on path validation for certificates issued to CAs.
+  string policy_constraints = 3;
+  // Specifies a multi-valued extension consisting of a list of names of the permitted key usages.
+  string key_usage = 4;
+  // Specifies a list of usages indicating purposes for which the certificate public key can be used for.
+  string extended_key_usage = 5;
+  // Specifies the identifier that provides a means of identifying certificates that contain a particular public key.
+  string subject_key_identifier = 6;
+  // Specifies the identifier that provides a means of identifying the public key corresponding to the private key used to sign a certificate.
+  string authority_key_identifier = 7;
+  // Specifies the additional identities to be bound to the subject of the certificate.
+  string subject_alternative_name = 8;
+  // Specifies the additional identities to be bound to the issuer of the certificate.
+  string issuer_alternative_name = 9;
+  // Specifies the identification attributes (e.g., nationality) of the subject.
+  string subject_directory_attributes = 10;
+  // Specifies how CRL information is obtained.
+  string crl_distribution_points = 11;
+  // Specifies the number of additional certificates that may appear in the path before anyPolicy is no longer permitted.
+  string inhibit_any_policy = 12;
+  // Specifies the date on which the validity period begins for the private key, if it is different from the validity period of the certificate.
+  string private_key_usage_period_not_before = 13;
+  // Specifies the date on which the validity period ends for the private key, if it is different from the validity period of the certificate.
+  string private_key_usage_period_not_after = 14;
+  // Specifies a sequence of one or more policy information terms, each of which consists of an object identifier (OID) and optional qualifiers.
+  string certificate_policies = 15;
+  // Specifies one or more pairs of OIDs; each pair includes an issuerDomainPolicy and a subjectDomainPolicy.
+  string policy_mappings = 16;
+}
+
+// Types of user account. An open vocabulary: a slot that names it also takes any other string.
+enum StixAccountType {
+  STIX_ACCOUNT_TYPE_UNSPECIFIED = 0;
+  STIX_ACCOUNT_TYPE_FACEBOOK = 1;
+  STIX_ACCOUNT_TYPE_LDAP = 2;
+  STIX_ACCOUNT_TYPE_NIS = 3;
+  STIX_ACCOUNT_TYPE_OPENID = 4;
+  STIX_ACCOUNT_TYPE_RADIUS = 5;
+  STIX_ACCOUNT_TYPE_SKYPE = 6;
+  STIX_ACCOUNT_TYPE_TACACS = 7;
+  STIX_ACCOUNT_TYPE_TWITTER = 8;
+  STIX_ACCOUNT_TYPE_UNIX = 9;
+  STIX_ACCOUNT_TYPE_WINDOWS_LOCAL = 10;
+  STIX_ACCOUNT_TYPE_WINDOWS_DOMAIN = 11;
+}
+// Degrees of agreement with the information in a STIX object, from disagreement to agreement. A closed enumeration: no other value is valid.
+enum StixAgreement {
+  STIX_AGREEMENT_UNSPECIFIED = 0;
+  STIX_AGREEMENT_STRONGLY_DISAGREE = 1;
+  STIX_AGREEMENT_DISAGREE = 2;
+  STIX_AGREEMENT_NEUTRAL = 3;
+  STIX_AGREEMENT_AGREE = 4;
+  STIX_AGREEMENT_STRONGLY_AGREE = 5;
+}
+// Reasons, motivations or purposes behind an attack. An open vocabulary: a slot that names it also takes any other string.
+enum StixAttackMotivation {
+  STIX_ATTACK_MOTIVATION_UNSPECIFIED = 0;
+  STIX_ATTACK_MOTIVATION_ACCIDENTAL = 1;
+  STIX_ATTACK_MOTIVATION_COERCION = 2;
+  STIX_ATTACK_MOTIVATION_DOMINANCE = 3;
+  STIX_ATTACK_MOTIVATION_IDEOLOGY = 4;
+  STIX_ATTACK_MOTIVATION_NOTORIETY = 5;
+  STIX_ATTACK_MOTIVATION_ORGANIZATIONAL_GAIN = 6;
+  STIX_ATTACK_MOTIVATION_PERSONAL_GAIN = 7;
+  STIX_ATTACK_MOTIVATION_PERSONAL_SATISFACTION = 8;
+  STIX_ATTACK_MOTIVATION_REVENGE = 9;
+  STIX_ATTACK_MOTIVATION_UNPREDICTABLE = 10;
+}
+// Levels of the resources that an actor may have, from an individual to a government. An open vocabulary: a slot that names it also takes any other string.
+enum StixAttackResourceLevel {
+  STIX_ATTACK_RESOURCE_LEVEL_UNSPECIFIED = 0;
+  STIX_ATTACK_RESOURCE_LEVEL_INDIVIDUAL = 1;
+  STIX_ATTACK_RESOURCE_LEVEL_CLUB = 2;
+  STIX_ATTACK_RESOURCE_LEVEL_CONTEST = 3;
+  STIX_ATTACK_RESOURCE_LEVEL_TEAM = 4;
+  STIX_ATTACK_RESOURCE_LEVEL_ORGANIZATION = 5;
+  STIX_ATTACK_RESOURCE_LEVEL_GOVERNMENT = 6;
+}
+// Encryption algorithms for sharing defanged or confidential artifacts. A closed enumeration: no other value is valid.
+enum StixEncryptionAlgorithm {
+  STIX_ENCRYPTION_ALGORITHM_UNSPECIFIED = 0;
+  STIX_ENCRYPTION_ALGORITHM_AES_N256_GCM = 1;
+  STIX_ENCRYPTION_ALGORITHM_CHA_CHA20_POLY1305 = 2;
+  STIX_ENCRYPTION_ALGORITHM_MIME_TYPE_INDICATED = 3;
+}
+// The kinds of extension that an extension definition can define. A closed enumeration: no other value is valid.
+enum StixExtensionType {
+  STIX_EXTENSION_TYPE_UNSPECIFIED = 0;
+  STIX_EXTENSION_TYPE_NEW_SDO = 1;
+  STIX_EXTENSION_TYPE_NEW_SCO = 2;
+  STIX_EXTENSION_TYPE_NEW_SRO = 3;
+  STIX_EXTENSION_TYPE_PROPERTY_EXTENSION = 4;
+  STIX_EXTENSION_TYPE_TOPLEVEL_PROPERTY_EXTENSION = 5;
+}
+// Contexts of a grouping. An open vocabulary: a slot that names it also takes any other string.
+enum StixGroupingContext {
+  STIX_GROUPING_CONTEXT_UNSPECIFIED = 0;
+  STIX_GROUPING_CONTEXT_SUSPICIOUS_ACTIVITY = 1;
+  STIX_GROUPING_CONTEXT_MALWARE_ANALYSIS = 2;
+  STIX_GROUPING_CONTEXT_UNSPECIFIED_V2 = 3;
+}
+// Hash algorithms, as the keys of a hashes dictionary name them. An open vocabulary: a slot that names it also takes any other string.
+enum StixHashAlgorithm {
+  STIX_HASH_ALGORITHM_UNSPECIFIED = 0;
+  STIX_HASH_ALGORITHM_MD5 = 1;
+  STIX_HASH_ALGORITHM_SHA_N1 = 2;
+  STIX_HASH_ALGORITHM_SHA_N256 = 3;
+  STIX_HASH_ALGORITHM_SHA_N512 = 4;
+  STIX_HASH_ALGORITHM_SHA3_N256 = 5;
+  STIX_HASH_ALGORITHM_SHA3_N512 = 6;
+  STIX_HASH_ALGORITHM_SSDEEP = 7;
+  STIX_HASH_ALGORITHM_TLSH = 8;
+}
+// Kinds of entity that an identity describes. An open vocabulary: a slot that names it also takes any other string.
+enum StixIdentityClass {
+  STIX_IDENTITY_CLASS_UNSPECIFIED = 0;
+  STIX_IDENTITY_CLASS_INDIVIDUAL = 1;
+  STIX_IDENTITY_CLASS_GROUP = 2;
+  STIX_IDENTITY_CLASS_SYSTEM = 3;
+  STIX_IDENTITY_CLASS_ORGANIZATION = 4;
+  STIX_IDENTITY_CLASS_CLASS = 5;
+  STIX_IDENTITY_CLASS_UNKNOWN = 6;
+}
+// Programming languages in which malware may be implemented. An open vocabulary: a slot that names it also takes any other string.
+enum StixImplementationLanguage {
+  STIX_IMPLEMENTATION_LANGUAGE_UNSPECIFIED = 0;
+  STIX_IMPLEMENTATION_LANGUAGE_APPLESCRIPT = 1;
+  STIX_IMPLEMENTATION_LANGUAGE_BASH = 2;
+  STIX_IMPLEMENTATION_LANGUAGE_C = 3;
+  STIX_IMPLEMENTATION_LANGUAGE_C_V2 = 4;
+  STIX_IMPLEMENTATION_LANGUAGE_C_V3 = 5;
+  STIX_IMPLEMENTATION_LANGUAGE_GO = 6;
+  STIX_IMPLEMENTATION_LANGUAGE_JAVA = 7;
+  STIX_IMPLEMENTATION_LANGUAGE_JAVASCRIPT = 8;
+  STIX_IMPLEMENTATION_LANGUAGE_LUA = 9;
+  STIX_IMPLEMENTATION_LANGUAGE_OBJECTIVE_C = 10;
+  STIX_IMPLEMENTATION_LANGUAGE_PERL = 11;
+  STIX_IMPLEMENTATION_LANGUAGE_PHP = 12;
+  STIX_IMPLEMENTATION_LANGUAGE_POWERSHELL = 13;
+  STIX_IMPLEMENTATION_LANGUAGE_PYTHON = 14;
+  STIX_IMPLEMENTATION_LANGUAGE_RUBY = 15;
+  STIX_IMPLEMENTATION_LANGUAGE_SCALA = 16;
+  STIX_IMPLEMENTATION_LANGUAGE_SWIFT = 17;
+  STIX_IMPLEMENTATION_LANGUAGE_TYPESCRIPT = 18;
+  STIX_IMPLEMENTATION_LANGUAGE_VISUAL_BASIC = 19;
+  STIX_IMPLEMENTATION_LANGUAGE_X86_N32 = 20;
+  STIX_IMPLEMENTATION_LANGUAGE_X86_N64 = 21;
+}
+// High-level categories of indicator. An open vocabulary: a slot that names it also takes any other string.
+enum StixIndicatorType {
+  STIX_INDICATOR_TYPE_UNSPECIFIED = 0;
+  STIX_INDICATOR_TYPE_ANOMALOUS_ACTIVITY = 1;
+  STIX_INDICATOR_TYPE_ANONYMIZATION = 2;
+  STIX_INDICATOR_TYPE_BENIGN = 3;
+  STIX_INDICATOR_TYPE_COMPROMISED = 4;
+  STIX_INDICATOR_TYPE_MALICIOUS_ACTIVITY = 5;
+  STIX_INDICATOR_TYPE_ATTRIBUTION = 6;
+  STIX_INDICATOR_TYPE_UNKNOWN = 7;
+}
+// Industrial and commercial sectors. An open vocabulary: a slot that names it also takes any other string.
+enum StixIndustrySector {
+  STIX_INDUSTRY_SECTOR_UNSPECIFIED = 0;
+  STIX_INDUSTRY_SECTOR_AGRICULTURE = 1;
+  STIX_INDUSTRY_SECTOR_AEROSPACE = 2;
+  STIX_INDUSTRY_SECTOR_AUTOMOTIVE = 3;
+  STIX_INDUSTRY_SECTOR_CHEMICAL = 4;
+  STIX_INDUSTRY_SECTOR_COMMERCIAL = 5;
+  STIX_INDUSTRY_SECTOR_COMMUNICATIONS = 6;
+  STIX_INDUSTRY_SECTOR_CONSTRUCTION = 7;
+  STIX_INDUSTRY_SECTOR_DEFENSE = 8;
+  STIX_INDUSTRY_SECTOR_EDUCATION = 9;
+  STIX_INDUSTRY_SECTOR_ENERGY = 10;
+  STIX_INDUSTRY_SECTOR_ENTERTAINMENT = 11;
+  STIX_INDUSTRY_SECTOR_FINANCIAL_SERVICES = 12;
+  STIX_INDUSTRY_SECTOR_GOVERNMENT = 13;
+  STIX_INDUSTRY_SECTOR_EMERGENCY_SERVICES = 14;
+  STIX_INDUSTRY_SECTOR_GOVERNMENT_LOCAL = 15;
+  STIX_INDUSTRY_SECTOR_GOVERNMENT_NATIONAL = 16;
+  STIX_INDUSTRY_SECTOR_GOVERNMENT_PUBLIC_SERVICES = 17;
+  STIX_INDUSTRY_SECTOR_GOVERNMENT_REGIONAL = 18;
+  STIX_INDUSTRY_SECTOR_HEALTHCARE = 19;
+  STIX_INDUSTRY_SECTOR_HOSPITALITY_LEISURE = 20;
+  STIX_INDUSTRY_SECTOR_INFRASTRUCTURE = 21;
+  STIX_INDUSTRY_SECTOR_DAMS = 22;
+  STIX_INDUSTRY_SECTOR_NUCLEAR = 23;
+  STIX_INDUSTRY_SECTOR_WATER = 24;
+  STIX_INDUSTRY_SECTOR_INSURANCE = 25;
+  STIX_INDUSTRY_SECTOR_MANUFACTURING = 26;
+  STIX_INDUSTRY_SECTOR_MINING = 27;
+  STIX_INDUSTRY_SECTOR_NON_PROFIT = 28;
+  STIX_INDUSTRY_SECTOR_PHARMACEUTICALS = 29;
+  STIX_INDUSTRY_SECTOR_RETAIL = 30;
+  STIX_INDUSTRY_SECTOR_TECHNOLOGY = 31;
+  STIX_INDUSTRY_SECTOR_TELECOMMUNICATIONS = 32;
+  STIX_INDUSTRY_SECTOR_TRANSPORTATION = 33;
+  STIX_INDUSTRY_SECTOR_UTILITIES = 34;
+}
+// Types of infrastructure. An open vocabulary: a slot that names it also takes any other string.
+enum StixInfrastructureType {
+  STIX_INFRASTRUCTURE_TYPE_UNSPECIFIED = 0;
+  STIX_INFRASTRUCTURE_TYPE_AMPLIFICATION = 1;
+  STIX_INFRASTRUCTURE_TYPE_ANONYMIZATION = 2;
+  STIX_INFRASTRUCTURE_TYPE_BOTNET = 3;
+  STIX_INFRASTRUCTURE_TYPE_COMMAND_AND_CONTROL = 4;
+  STIX_INFRASTRUCTURE_TYPE_CONTROL_SYSTEM = 5;
+  STIX_INFRASTRUCTURE_TYPE_EXFILTRATION = 6;
+  STIX_INFRASTRUCTURE_TYPE_FIREWALL = 7;
+  STIX_INFRASTRUCTURE_TYPE_HOSTING_MALWARE = 8;
+  STIX_INFRASTRUCTURE_TYPE_HOSTING_TARGET_LISTS = 9;
+  STIX_INFRASTRUCTURE_TYPE_PHISHING = 10;
+  STIX_INFRASTRUCTURE_TYPE_RECONNAISSANCE = 11;
+  STIX_INFRASTRUCTURE_TYPE_ROUTERS_SWITCHES = 12;
+  STIX_INFRASTRUCTURE_TYPE_STAGING = 13;
+  STIX_INFRASTRUCTURE_TYPE_WORKSTATION = 14;
+  STIX_INFRASTRUCTURE_TYPE_UNKNOWN = 15;
+}
+// Capabilities that malware may have. An open vocabulary: a slot that names it also takes any other string.
+enum StixMalwareCapability {
+  STIX_MALWARE_CAPABILITY_UNSPECIFIED = 0;
+  STIX_MALWARE_CAPABILITY_ACCESSES_REMOTE_MACHINES = 1;
+  STIX_MALWARE_CAPABILITY_ANTI_DEBUGGING = 2;
+  STIX_MALWARE_CAPABILITY_ANTI_DISASSEMBLY = 3;
+  STIX_MALWARE_CAPABILITY_ANTI_EMULATION = 4;
+  STIX_MALWARE_CAPABILITY_ANTI_MEMORY_FORENSICS = 5;
+  STIX_MALWARE_CAPABILITY_ANTI_SANDBOX = 6;
+  STIX_MALWARE_CAPABILITY_ANTI_VM = 7;
+  STIX_MALWARE_CAPABILITY_CAPTURES_INPUT_PERIPHERALS = 8;
+  STIX_MALWARE_CAPABILITY_CAPTURES_OUTPUT_PERIPHERALS = 9;
+  STIX_MALWARE_CAPABILITY_CAPTURES_SYSTEM_STATE_DATA = 10;
+  STIX_MALWARE_CAPABILITY_CLEANS_TRACES_OF_INFECTION = 11;
+  STIX_MALWARE_CAPABILITY_COMMITS_FRAUD = 12;
+  STIX_MALWARE_CAPABILITY_COMMUNICATES_WITH_C2 = 13;
+  STIX_MALWARE_CAPABILITY_COMPROMISES_DATA_AVAILABILITY = 14;
+  STIX_MALWARE_CAPABILITY_COMPROMISES_DATA_INTEGRITY = 15;
+  STIX_MALWARE_CAPABILITY_COMPROMISES_SYSTEM_AVAILABILITY = 16;
+  STIX_MALWARE_CAPABILITY_CONTROLS_LOCAL_MACHINE = 17;
+  STIX_MALWARE_CAPABILITY_DEGRADES_SECURITY_SOFTWARE = 18;
+  STIX_MALWARE_CAPABILITY_DEGRADES_SYSTEM_UPDATES = 19;
+  STIX_MALWARE_CAPABILITY_DETERMINES_C2_SERVER = 20;
+  STIX_MALWARE_CAPABILITY_EMAILS_SPAM = 21;
+  STIX_MALWARE_CAPABILITY_ESCALATES_PRIVILEGES = 22;
+  STIX_MALWARE_CAPABILITY_EVADES_AV = 23;
+  STIX_MALWARE_CAPABILITY_EXFILTRATES_DATA = 24;
+  STIX_MALWARE_CAPABILITY_FINGERPRINTS_HOST = 25;
+  STIX_MALWARE_CAPABILITY_HIDES_ARTIFACTS = 26;
+  STIX_MALWARE_CAPABILITY_HIDES_EXECUTING_CODE = 27;
+  STIX_MALWARE_CAPABILITY_INFECTS_FILES = 28;
+  STIX_MALWARE_CAPABILITY_INFECTS_REMOTE_MACHINES = 29;
+  STIX_MALWARE_CAPABILITY_INSTALLS_OTHER_COMPONENTS = 30;
+  STIX_MALWARE_CAPABILITY_PERSISTS_AFTER_SYSTEM_REBOOT = 31;
+  STIX_MALWARE_CAPABILITY_PREVENTS_ARTIFACT_ACCESS = 32;
+  STIX_MALWARE_CAPABILITY_PREVENTS_ARTIFACT_DELETION = 33;
+  STIX_MALWARE_CAPABILITY_PROBES_NETWORK_ENVIRONMENT = 34;
+  STIX_MALWARE_CAPABILITY_SELF_MODIFIES = 35;
+  STIX_MALWARE_CAPABILITY_STEALS_AUTHENTICATION_CREDENTIALS = 36;
+  STIX_MALWARE_CAPABILITY_VIOLATES_SYSTEM_OPERATIONAL_INTEGRITY = 37;
+}
+// Results of a scanner's or tool's analysis of malware. An open vocabulary: a slot that names it also takes any other string.
+enum StixMalwareResult {
+  STIX_MALWARE_RESULT_UNSPECIFIED = 0;
+  STIX_MALWARE_RESULT_MALICIOUS = 1;
+  STIX_MALWARE_RESULT_SUSPICIOUS = 2;
+  STIX_MALWARE_RESULT_BENIGN = 3;
+  STIX_MALWARE_RESULT_UNKNOWN = 4;
+}
+// Types of malware. An open vocabulary: a slot that names it also takes any other string.
+enum StixMalwareType {
+  STIX_MALWARE_TYPE_UNSPECIFIED = 0;
+  STIX_MALWARE_TYPE_ADWARE = 1;
+  STIX_MALWARE_TYPE_BACKDOOR = 2;
+  STIX_MALWARE_TYPE_BOT = 3;
+  STIX_MALWARE_TYPE_BOOTKIT = 4;
+  STIX_MALWARE_TYPE_DDOS = 5;
+  STIX_MALWARE_TYPE_DOWNLOADER = 6;
+  STIX_MALWARE_TYPE_DROPPER = 7;
+  STIX_MALWARE_TYPE_EXPLOIT_KIT = 8;
+  STIX_MALWARE_TYPE_KEYLOGGER = 9;
+  STIX_MALWARE_TYPE_RANSOMWARE = 10;
+  STIX_MALWARE_TYPE_REMOTE_ACCESS_TROJAN = 11;
+  STIX_MALWARE_TYPE_RESOURCE_EXPLOITATION = 12;
+  STIX_MALWARE_TYPE_ROGUE_SECURITY_SOFTWARE = 13;
+  STIX_MALWARE_TYPE_ROOTKIT = 14;
+  STIX_MALWARE_TYPE_SCREEN_CAPTURE = 15;
+  STIX_MALWARE_TYPE_SPYWARE = 16;
+  STIX_MALWARE_TYPE_TROJAN = 17;
+  STIX_MALWARE_TYPE_UNKNOWN = 18;
+  STIX_MALWARE_TYPE_VIRUS = 19;
+  STIX_MALWARE_TYPE_WEBSHELL = 20;
+  STIX_MALWARE_TYPE_WIPER = 21;
+  STIX_MALWARE_TYPE_WORM = 22;
+}
+// The marking definition types that STIX 2.1 defines, statement and tlp. A slot that names it also takes any other string, as the JSON schemas do.
+enum StixMarkingDefinitionType {
+  STIX_MARKING_DEFINITION_TYPE_UNSPECIFIED = 0;
+  STIX_MARKING_DEFINITION_TYPE_STATEMENT = 1;
+  STIX_MARKING_DEFINITION_TYPE_TLP = 2;
+}
+// Address families of a network socket. A closed enumeration: no other value is valid.
+enum StixNetworkSocketAddressFamily {
+  STIX_NETWORK_SOCKET_ADDRESS_FAMILY_UNSPECIFIED = 0;
+  STIX_NETWORK_SOCKET_ADDRESS_FAMILY_AF_UNSPEC = 1;
+  STIX_NETWORK_SOCKET_ADDRESS_FAMILY_AF_INET = 2;
+  STIX_NETWORK_SOCKET_ADDRESS_FAMILY_AF_IPX = 3;
+  STIX_NETWORK_SOCKET_ADDRESS_FAMILY_AF_APPLETALK = 4;
+  STIX_NETWORK_SOCKET_ADDRESS_FAMILY_AF_NETBIOS = 5;
+  STIX_NETWORK_SOCKET_ADDRESS_FAMILY_AF_INET6 = 6;
+  STIX_NETWORK_SOCKET_ADDRESS_FAMILY_AF_IRDA = 7;
+  STIX_NETWORK_SOCKET_ADDRESS_FAMILY_AF_BTH = 8;
+}
+// Types of network socket. A closed enumeration: no other value is valid.
+enum StixNetworkSocketType {
+  STIX_NETWORK_SOCKET_TYPE_UNSPECIFIED = 0;
+  STIX_NETWORK_SOCKET_TYPE_SOCK_STREAM = 1;
+  STIX_NETWORK_SOCKET_TYPE_SOCK_DGRAM = 2;
+  STIX_NETWORK_SOCKET_TYPE_SOCK_RAW = 3;
+  STIX_NETWORK_SOCKET_TYPE_SOCK_RDM = 4;
+  STIX_NETWORK_SOCKET_TYPE_SOCK_SEQPACKET = 5;
+}
+// Pattern languages in which an indicator's pattern may be written. An open vocabulary: a slot that names it also takes any other string.
+enum StixPatternType {
+  STIX_PATTERN_TYPE_UNSPECIFIED = 0;
+  STIX_PATTERN_TYPE_STIX = 1;
+  STIX_PATTERN_TYPE_PCRE = 2;
+  STIX_PATTERN_TYPE_SIGMA = 3;
+  STIX_PATTERN_TYPE_SNORT = 4;
+  STIX_PATTERN_TYPE_SURICATA = 5;
+  STIX_PATTERN_TYPE_YARA = 6;
+}
+// Processor architectures. An open vocabulary: a slot that names it also takes any other string.
+enum StixProcessorArchitecture {
+  STIX_PROCESSOR_ARCHITECTURE_UNSPECIFIED = 0;
+  STIX_PROCESSOR_ARCHITECTURE_ALPHA = 1;
+  STIX_PROCESSOR_ARCHITECTURE_ARM = 2;
+  STIX_PROCESSOR_ARCHITECTURE_IA_N64 = 3;
+  STIX_PROCESSOR_ARCHITECTURE_MIPS = 4;
+  STIX_PROCESSOR_ARCHITECTURE_POWERPC = 5;
+  STIX_PROCESSOR_ARCHITECTURE_SPARC = 6;
+  STIX_PROCESSOR_ARCHITECTURE_X86 = 7;
+  STIX_PROCESSOR_ARCHITECTURE_X86_N64 = 8;
+}
+// World regions, after the United Nations geoscheme (UNSD M49). An open vocabulary: a slot that names it also takes any other string.
+enum StixRegion {
+  STIX_REGION_UNSPECIFIED = 0;
+  STIX_REGION_AFRICA = 1;
+  STIX_REGION_EASTERN_AFRICA = 2;
+  STIX_REGION_MIDDLE_AFRICA = 3;
+  STIX_REGION_NORTHERN_AFRICA = 4;
+  STIX_REGION_SOUTHERN_AFRICA = 5;
+  STIX_REGION_WESTERN_AFRICA = 6;
+  STIX_REGION_AMERICAS = 7;
+  STIX_REGION_CARIBBEAN = 8;
+  STIX_REGION_CENTRAL_AMERICA = 9;
+  STIX_REGION_LATIN_AMERICA_CARIBBEAN = 10;
+  STIX_REGION_NORTHERN_AMERICA = 11;
+  STIX_REGION_SOUTH_AMERICA = 12;
+  STIX_REGION_ASIA = 13;
+  STIX_REGION_CENTRAL_ASIA = 14;
+  STIX_REGION_EASTERN_ASIA = 15;
+  STIX_REGION_SOUTHERN_ASIA = 16;
+  STIX_REGION_SOUTH_EASTERN_ASIA = 17;
+  STIX_REGION_WESTERN_ASIA = 18;
+  STIX_REGION_EUROPE = 19;
+  STIX_REGION_EASTERN_EUROPE = 20;
+  STIX_REGION_NORTHERN_EUROPE = 21;
+  STIX_REGION_SOUTHERN_EUROPE = 22;
+  STIX_REGION_WESTERN_EUROPE = 23;
+  STIX_REGION_OCEANIA = 24;
+  STIX_REGION_ANTARCTICA = 25;
+  STIX_REGION_AUSTRALIA_NEW_ZEALAND = 26;
+  STIX_REGION_MELANESIA = 27;
+  STIX_REGION_MICRONESIA = 28;
+  STIX_REGION_POLYNESIA = 29;
+}
+// Primary subjects of a report. An open vocabulary: a slot that names it also takes any other string.
+enum StixReportType {
+  STIX_REPORT_TYPE_UNSPECIFIED = 0;
+  STIX_REPORT_TYPE_ATTACK_PATTERN = 1;
+  STIX_REPORT_TYPE_CAMPAIGN = 2;
+  STIX_REPORT_TYPE_IDENTITY = 3;
+  STIX_REPORT_TYPE_INDICATOR = 4;
+  STIX_REPORT_TYPE_INTRUSION_SET = 5;
+  STIX_REPORT_TYPE_MALWARE = 6;
+  STIX_REPORT_TYPE_OBSERVED_DATA = 7;
+  STIX_REPORT_TYPE_THREAT_ACTOR = 8;
+  STIX_REPORT_TYPE_THREAT_REPORT = 9;
+  STIX_REPORT_TYPE_TOOL = 10;
+  STIX_REPORT_TYPE_VULNERABILITY = 11;
+}
+// The STIX versions that an object may declare. The JSON schemas accept 2.0 beside 2.1. A closed enumeration.
+enum StixSpecVersion {
+  STIX_SPEC_VERSION_UNSPECIFIED = 0;
+  STIX_SPEC_VERSION_N2_N0 = 1;
+  STIX_SPEC_VERSION_N2_N1 = 2;
+}
+// Roles that a threat actor may play. An open vocabulary: a slot that names it also takes any other string.
+enum StixThreatActorRole {
+  STIX_THREAT_ACTOR_ROLE_UNSPECIFIED = 0;
+  STIX_THREAT_ACTOR_ROLE_AGENT = 1;
+  STIX_THREAT_ACTOR_ROLE_DIRECTOR = 2;
+  STIX_THREAT_ACTOR_ROLE_INDEPENDENT = 3;
+  STIX_THREAT_ACTOR_ROLE_INFRASTRUCTURE_ARCHITECT = 4;
+  STIX_THREAT_ACTOR_ROLE_INFRASTRUCTURE_OPERATOR = 5;
+  STIX_THREAT_ACTOR_ROLE_MALWARE_AUTHOR = 6;
+  STIX_THREAT_ACTOR_ROLE_SPONSOR = 7;
+}
+// Skill levels of a threat actor. An open vocabulary: a slot that names it also takes any other string.
+enum StixThreatActorSophistication {
+  STIX_THREAT_ACTOR_SOPHISTICATION_UNSPECIFIED = 0;
+  STIX_THREAT_ACTOR_SOPHISTICATION_NONE = 1;
+  STIX_THREAT_ACTOR_SOPHISTICATION_MINIMAL = 2;
+  STIX_THREAT_ACTOR_SOPHISTICATION_INTERMEDIATE = 3;
+  STIX_THREAT_ACTOR_SOPHISTICATION_ADVANCED = 4;
+  STIX_THREAT_ACTOR_SOPHISTICATION_EXPERT = 5;
+  STIX_THREAT_ACTOR_SOPHISTICATION_INNOVATOR = 6;
+  STIX_THREAT_ACTOR_SOPHISTICATION_STRATEGIC = 7;
+}
+// Types of threat actor. An open vocabulary: a slot that names it also takes any other string.
+enum StixThreatActorType {
+  STIX_THREAT_ACTOR_TYPE_UNSPECIFIED = 0;
+  STIX_THREAT_ACTOR_TYPE_ACTIVIST = 1;
+  STIX_THREAT_ACTOR_TYPE_COMPETITOR = 2;
+  STIX_THREAT_ACTOR_TYPE_CRIME_SYNDICATE = 3;
+  STIX_THREAT_ACTOR_TYPE_CRIMINAL = 4;
+  STIX_THREAT_ACTOR_TYPE_HACKER = 5;
+  STIX_THREAT_ACTOR_TYPE_INSIDER_ACCIDENTAL = 6;
+  STIX_THREAT_ACTOR_TYPE_INSIDER_DISGRUNTLED = 7;
+  STIX_THREAT_ACTOR_TYPE_NATION_STATE = 8;
+  STIX_THREAT_ACTOR_TYPE_SENSATIONALIST = 9;
+  STIX_THREAT_ACTOR_TYPE_SPY = 10;
+  STIX_THREAT_ACTOR_TYPE_TERRORIST = 11;
+  STIX_THREAT_ACTOR_TYPE_UNKNOWN = 12;
+}
+// The four levels of the Traffic Light Protocol (TLP) that STIX 2.1 defines marking definitions for. A closed enumeration.
+enum StixTlpLevel {
+  STIX_TLP_LEVEL_UNSPECIFIED = 0;
+  STIX_TLP_LEVEL_WHITE = 1;
+  STIX_TLP_LEVEL_GREEN = 2;
+  STIX_TLP_LEVEL_AMBER = 3;
+  STIX_TLP_LEVEL_RED = 4;
+}
+// Categories of tool that may be used to perform attacks. An open vocabulary: a slot that names it also takes any other string.
+enum StixToolType {
+  STIX_TOOL_TYPE_UNSPECIFIED = 0;
+  STIX_TOOL_TYPE_DENIAL_OF_SERVICE = 1;
+  STIX_TOOL_TYPE_EXPLOITATION = 2;
+  STIX_TOOL_TYPE_INFORMATION_GATHERING = 3;
+  STIX_TOOL_TYPE_NETWORK_CAPTURE = 4;
+  STIX_TOOL_TYPE_CREDENTIAL_EXPLOITATION = 5;
+  STIX_TOOL_TYPE_REMOTE_ACCESS = 6;
+  STIX_TOOL_TYPE_VULNERABILITY_SCANNING = 7;
+  STIX_TOOL_TYPE_UNKNOWN = 8;
+}
+// Windows integrity levels. A closed enumeration: no other value is valid.
+enum StixWindowsIntegrityLevel {
+  STIX_WINDOWS_INTEGRITY_LEVEL_UNSPECIFIED = 0;
+  STIX_WINDOWS_INTEGRITY_LEVEL_LOW = 1;
+  STIX_WINDOWS_INTEGRITY_LEVEL_MEDIUM = 2;
+  STIX_WINDOWS_INTEGRITY_LEVEL_HIGH = 3;
+  STIX_WINDOWS_INTEGRITY_LEVEL_SYSTEM = 4;
+}
+// Types of Windows PE binary. An open vocabulary: a slot that names it also takes any other string.
+enum StixWindowsPeBinaryType {
+  STIX_WINDOWS_PE_BINARY_TYPE_UNSPECIFIED = 0;
+  STIX_WINDOWS_PE_BINARY_TYPE_DLL = 1;
+  STIX_WINDOWS_PE_BINARY_TYPE_EXE = 2;
+  STIX_WINDOWS_PE_BINARY_TYPE_SYS = 3;
+}
+// Data types of a Windows registry value. A closed enumeration: no other value is valid.
+enum StixWindowsRegistryDatatype {
+  STIX_WINDOWS_REGISTRY_DATATYPE_UNSPECIFIED = 0;
+  STIX_WINDOWS_REGISTRY_DATATYPE_REG_NONE = 1;
+  STIX_WINDOWS_REGISTRY_DATATYPE_REG_SZ = 2;
+  STIX_WINDOWS_REGISTRY_DATATYPE_REG_EXPAND_SZ = 3;
+  STIX_WINDOWS_REGISTRY_DATATYPE_REG_BINARY = 4;
+  STIX_WINDOWS_REGISTRY_DATATYPE_REG_DWORD = 5;
+  STIX_WINDOWS_REGISTRY_DATATYPE_REG_DWORD_BIG_ENDIAN = 6;
+  STIX_WINDOWS_REGISTRY_DATATYPE_REG_DWORD_LITTLE_ENDIAN = 7;
+  STIX_WINDOWS_REGISTRY_DATATYPE_REG_LINK = 8;
+  STIX_WINDOWS_REGISTRY_DATATYPE_REG_MULTI_SZ = 9;
+  STIX_WINDOWS_REGISTRY_DATATYPE_REG_RESOURCE_LIST = 10;
+  STIX_WINDOWS_REGISTRY_DATATYPE_REG_FULL_RESOURCE_DESCRIPTION = 11;
+  STIX_WINDOWS_REGISTRY_DATATYPE_REG_RESOURCE_REQUIREMENTS_LIST = 12;
+  STIX_WINDOWS_REGISTRY_DATATYPE_REG_QWORD = 13;
+  STIX_WINDOWS_REGISTRY_DATATYPE_REG_INVALID_TYPE = 14;
+}
+// Start types of a Windows service. A closed enumeration: no other value is valid.
+enum StixWindowsServiceStartType {
+  STIX_WINDOWS_SERVICE_START_TYPE_UNSPECIFIED = 0;
+  STIX_WINDOWS_SERVICE_START_TYPE_SERVICE_AUTO_START = 1;
+  STIX_WINDOWS_SERVICE_START_TYPE_SERVICE_BOOT_START = 2;
+  STIX_WINDOWS_SERVICE_START_TYPE_SERVICE_DEMAND_START = 3;
+  STIX_WINDOWS_SERVICE_START_TYPE_SERVICE_DISABLED = 4;
+  STIX_WINDOWS_SERVICE_START_TYPE_SERVICE_SYSTEM_ALERT = 5;
+}
+// Statuses of a Windows service. A closed enumeration: no other value is valid.
+enum StixWindowsServiceStatus {
+  STIX_WINDOWS_SERVICE_STATUS_UNSPECIFIED = 0;
+  STIX_WINDOWS_SERVICE_STATUS_SERVICE_CONTINUE_PENDING = 1;
+  STIX_WINDOWS_SERVICE_STATUS_SERVICE_PAUSE_PENDING = 2;
+  STIX_WINDOWS_SERVICE_STATUS_SERVICE_PAUSED = 3;
+  STIX_WINDOWS_SERVICE_STATUS_SERVICE_RUNNING = 4;
+  STIX_WINDOWS_SERVICE_STATUS_SERVICE_START_PENDING = 5;
+  STIX_WINDOWS_SERVICE_STATUS_SERVICE_STOP_PENDING = 6;
+  STIX_WINDOWS_SERVICE_STATUS_SERVICE_STOPPED = 7;
+}
+// Types of Windows service. A closed enumeration: no other value is valid.
+enum StixWindowsServiceType {
+  STIX_WINDOWS_SERVICE_TYPE_UNSPECIFIED = 0;
+  STIX_WINDOWS_SERVICE_TYPE_SERVICE_KERNEL_DRIVER = 1;
+  STIX_WINDOWS_SERVICE_TYPE_SERVICE_FILE_SYSTEM_DRIVER = 2;
+  STIX_WINDOWS_SERVICE_TYPE_SERVICE_WIN32_OWN_PROCESS = 3;
+  STIX_WINDOWS_SERVICE_TYPE_SERVICE_WIN32_SHARE_PROCESS = 4;
+}

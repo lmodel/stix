@@ -38,7 +38,7 @@ npx skills add noelmcloughlin/knowledge-trust-ladder --skill ktl-curator --yes  
 
 ## Before opening a pull request
 
-- **Edit a module, then regenerate.** Run `just gen-project`, `just gen-doc` and `just lokf-adapt`, and commit the output; `src/stix/datamodel/`, `docs/schema/` and `.lokf/stix.yaml` are generated.
+- **Edit a module, then regenerate.** Run `just gen-project`, `just gen-doc` and `just lokf-adapt`, and commit the output; `project/`, `src/stix/datamodel/`, `docs/schema/` and `.lokf/stix.yaml` are generated.
 - **Render what STIX 2.1 defines**, name its section in the pull request, and copy none of its text ([AI_COVENANT.md](AI_COVENANT.md)). `tests/test_upstream.py` holds the schema to OASIS's JSON schemas.
 - **Leave `upstream/` as OASIS published it.** Replace it whole from one commit of oasis-open/cti-stix2-json-schemas, moving the pins in `scripts/check_upstream_release.py` and the schema header; `upstream-watch.yaml` checks it.
 - **Keep names apart.** A host imports this adapt copy beside the Linked Open Knowledge Format (LOKF) schema and the released neighbours' copies in `tests/neighbours/`, where a shared name carries one Internationalized Resource Identifier (IRI); `tests/test_schema_rules.py` checks.
