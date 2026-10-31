@@ -31,7 +31,7 @@ status: draft
 3. Merge to `main`. `semantic-release.yml` promotes the changelog section, tags `vX.Y.Z` and publishes the GitHub release, with the tools pinned in `.github/release/package-lock.json`.[^releaserc.json]
 4. Once `KNOWLEDGE_RELEASE_ENABLED` is `true`, the knowledge release attaches the bundle and `.lokf/stix.yaml` as `schema-<tag>-stix.yaml`, each with its `.sha256` and attestation.
 
-The first release needs the signed `v0.0.0` baseline tag on `main`, so that it is 0.1.0; a breaking change bumps the minor version below 1.0.0.
+The first release needs the signed `v0.0.0` baseline tag on `main`, so that it is 0.1.0. Below 1.0.0, a breaking change bumps the minor version.
 
 [^contributing.md]: CONTRIBUTING.md, the Releasing (maintainers) section
 [^releaserc.json]: .releaserc.json, the plugins and release rules

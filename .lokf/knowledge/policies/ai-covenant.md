@@ -26,6 +26,6 @@ status: draft
 - `upstream/` is upstream text: replace it whole from one commit, never edit it.
 - The namespace is this project's: everything lives under `stix:`, and STIX's property names stay as keys.
 
-The scheduled librarian commits under a bot identity, opens a pull request a person must approve, and runs with no write token; a `human:` verdict records only what that person said.
+The scheduled librarian commits under a bot identity, opens a pull request a person must approve, and runs with no write token. A `human:` verdict records only what that person said.
 
 [^ai_covenant.md]: AI_COVENANT.md, the note specific to this project and the repository-owned automation

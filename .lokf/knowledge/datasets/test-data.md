@@ -22,7 +22,9 @@ status: draft
 
 `tests/data/valid/` holds 60 valid examples, and `tests/data/invalid/` holds 152 counter-examples.[^data] Each file is named after the class it is validated against, such as `StixIndicator-c2-ip.yaml`.
 
-`tests/test_data.py` validates every file against the JSON Schema that `linkml-validate` generates.[^test_data.py] A valid example must pass. A counter-example must fail at the place its first line names, as `# Fails at: <JSON pointer>`, and its second line says why it is invalid. The test also checks that each concrete class under `StixObject`, and `StixBundle`, has a valid example, because each is a concept type of the adapt copy. Three rules that turn on a boolean, which no generated validator checks, are checked over the examples there too.
+`tests/test_data.py` validates every file against the JSON Schema that `linkml-validate` generates.[^test_data.py] A valid example must pass. A counter-example must fail at the place its first line names, as `# Fails at: <JSON pointer>`, and its second line says why it is invalid.
+
+The test also checks that each concrete class under `StixObject`, and `StixBundle`, has a valid example, because each is a concept type of the adapt copy. Over the examples, it checks the three rules that turn on a boolean, which no generated validator checks.
 
 [^data]: tests/data, the valid and invalid folders
 [^test_data.py]: tests/test_data.py, the tests

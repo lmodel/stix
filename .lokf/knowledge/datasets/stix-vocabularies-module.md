@@ -19,7 +19,7 @@ status: draft
 
 # stix_vocabularies module
 
-`src/stix/schema/stix_vocabularies.yaml` holds 35 enums and imports only `linkml:types`.[^stix_vocabularies.yaml] Each enum carries the `Stix` prefix, a singular name, and a `stix_vocabulary` annotation with the name STIX gives the list, with the section of STIX 2.1 that defines it.
+`src/stix/schema/stix_vocabularies.yaml` holds 35 enums and imports only `linkml:types`.[^stix_vocabularies.yaml] Each enum carries the `Stix` prefix and a singular name. Its `stix_vocabulary` annotation holds the name STIX gives the list and the section of STIX 2.1 that defines it.
 
 - 23 are open: a slot that names one of them takes the enum or any other string, so the enum documents the list without rejecting a value outside it. An example is `StixIndustrySector`, STIX's `industry-sector-ov`.
 - 12 are closed and reject any other value, such as `StixAgreement`, STIX's `opinion-enum`, and `StixWindowsRegistryDatatype`.

@@ -27,7 +27,7 @@ status: draft
 - The schema and the code are under the Apache License 2.0.[^license]
 - The knowledge bundle in `.lokf/knowledge/` is under CC BY 4.0, as its `index.md` declares.
 - OASIS's JSON schemas and examples under `upstream/`, and the descriptions taken from them, are under OASIS's BSD-3-Clause licence, which `NOTICE` reproduces.[^notice]
-- The STIX specification is copyright OASIS Open, with portions copyright the United States Government; the schema cites it and copies none of its text.
+- The STIX specification is copyright OASIS Open, with portions copyright the United States Government. The schema cites it and copies none of its text.
 - The template's scaffolding is under the MIT licence of linkml-project-copier, and the sidecar's scripts and the website derive from Knowledge Trust Ladder (KTL) templates under Apache-2.0.
 
 This is not an official OASIS project, and its use implies no endorsement by OASIS.

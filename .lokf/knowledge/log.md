@@ -2,6 +2,7 @@
 
 ## 2026-10-31
 
+* **Prose**: reworded 9 concept bodies in plain English. No fact, link, number or frontmatter changed.
 * **Added**: stix LinkML schema, from `src/stix/schema/stix.yaml`.
 * **Added**: stix_vocabularies module, from `src/stix/schema/stix_vocabularies.yaml`.
 * **Added**: stix_core module, from `src/stix/schema/stix_core.yaml`.

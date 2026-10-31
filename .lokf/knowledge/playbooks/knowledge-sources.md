@@ -91,7 +91,7 @@ status: draft
 
 # Knowledge sources
 
-Each row names a path the librarian reads, what it holds, and the classes it yields. Re-check a row by reading the path at the current commit; `bash .lokf/scripts/knowledge-report.sh worklist` names the concepts whose sources moved.
+Each row names a path the librarian reads, what it holds, and the classes it yields. Re-check a row by reading the path at the current commit. `bash .lokf/scripts/knowledge-report.sh worklist` names the concepts whose sources moved.
 
 | Path | Holds | Classes |
 | --- | --- | --- |

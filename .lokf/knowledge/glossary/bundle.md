@@ -22,6 +22,6 @@ status: draft
 
 # STIX bundle
 
-A STIX bundle carries a set of STIX objects together for transport. It is not a STIX object itself, so in STIX 2.1 it has a type, an identifier and its objects, and no `spec_version`. The schema renders it as `StixBundle` in the umbrella `stix.yaml`, the tree root.[^schema-stix.yaml] The validator checks each object of a bundle against the concrete class whose type it pins.
+A STIX bundle carries a set of STIX objects together for transport. It is not a STIX object, so in STIX 2.1 it has a type, an identifier and its objects, and no `spec_version`. The schema renders it as `StixBundle` in the umbrella `stix.yaml`, the tree root.[^schema-stix.yaml] The validator checks each object of a bundle against the concrete class whose type it pins.
 
 [^schema-stix.yaml]: src/stix/schema/stix.yaml, the class StixBundle
