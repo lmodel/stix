@@ -12,7 +12,7 @@ Use GitHub's [private vulnerability reporting](https://github.com/lmodel/stix/se
 
 ## What this repository releases
 
-A LinkML schema, the Python datamodel generated from it, and the schema's `lokf adapt` copy as a release asset. Nothing is published to PyPI. `scripts/check_upstream_release.py` runs only in `upstream-watch.yaml`. It reads the tree of oasis-open/cti-stix2-json-schemas, where the OASIS Cyber Threat Intelligence (CTI) Technical Committee publishes the STIX JSON schemas, and writes nothing but its report. The tests read the copy under `upstream/` with the standard library's JSON parser. A schema is data: loading one from an untrusted source with any LinkML tool is that tool's risk, not this repository's.
+The repository releases a LinkML schema, the Python datamodel generated from it, and the schema's `lokf adapt` copy as a release asset. Nothing is published to PyPI. `scripts/check_upstream_release.py` runs only in `upstream-watch.yaml`. It reads the tree of oasis-open/cti-stix2-json-schemas, where the OASIS Cyber Threat Intelligence (CTI) Technical Committee publishes the STIX JSON schemas, and writes nothing but its report. The tests read the copy under `upstream/` with the standard library's JSON parser. A schema is data: loading one from an untrusted source with any LinkML tool is that tool's risk, not this repository's.
 
 ## What executes here
 

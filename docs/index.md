@@ -52,9 +52,10 @@ its generators carry:
   CVE or CAPEC identifier;
 - the keys of a dictionary: the hash algorithms, and each hash's form for
   the eight that STIX names (an MD5 hash is 32 hexadecimal digits, and so
-  on); that an extension's key ends in `-ext` or is an extension
-  definition's identifier, and that a predefined extension sits under its
-  own key; and that a dictionary has at least one key;
+  on);
+- that an extension's key ends in `-ext` or is an extension definition's
+  identifier, and that a predefined extension sits under its own key;
+- that a dictionary has at least one key;
 - the four Traffic Light Protocol marking definitions' fixed identifiers,
   names and creation time, and that a marking's definition matches its
   definition type;
@@ -73,5 +74,5 @@ its generators carry:
 The classes are closed, so an object with a property its class does not
 declare fails. To validate custom properties or custom objects, write a
 schema that imports this one and declare them there, as a slot of a
-subclass or as a class of its own; lmodel/attack does this for MITRE's
+subclass or as a class of its own. lmodel/attack does this for MITRE's
 `x_mitre_` properties and `x-mitre-` objects.

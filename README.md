@@ -33,7 +33,7 @@ Structured Threat Information Expression (STIX) 2.1 (LinkML)
 * **Vocabularies** (`stix_vocabularies`): an open vocabulary, such as `StixIndustrySector` (`industry-sector-ov`), never rejects another string; a closed enumeration, such as `StixAgreement` (`opinion-enum`), does.
 * **The bundle** (`stix`): `StixBundle`, the tree root, which holds any STIX objects.
 
-`upstream/` copies OASIS's STIX 2.1 JSON schemas, examples and licence from [oasis-open/cti-stix2-json-schemas](https://github.com/oasis-open/cti-stix2-json-schemas) at commit `9af1db4`, since that repository publishes no releases. Tests hold the schema to the JSON schemas and validate OASIS's examples unchanged, and a weekly workflow reports when OASIS changes the copy, publishes another edition or approves STIX 2.1 Errata 01, which is a committee draft today. Release tags number the schema's versions.
+`upstream/` copies OASIS's STIX 2.1 JSON schemas, examples and licence from [oasis-open/cti-stix2-json-schemas](https://github.com/oasis-open/cti-stix2-json-schemas) at commit `9af1db4`, since that repository publishes no releases. Tests hold the schema to the JSON schemas and validate OASIS's examples unchanged. A weekly workflow reports when OASIS changes the copy, publishes another edition or approves STIX 2.1 Errata 01, which is a committee draft today. Release tags number the schema's versions.
 
 ## Influences
 
@@ -41,7 +41,7 @@ None beyond STIX: the schema renders one publication, and its release asset and 
 
 ## Mappings
 
-The schema crosses to one vocabulary and borrows from none. Classes and slots name terms of the [Unified Cyber Ontology (UCO)](https://github.com/ucoProject/UCO) 1.5.0 where the meaning matches, under UCO's own namespaces: `close_mappings` for the cyber-observable objects, their extensions and the shared objects, such as `uco-observable:File` and `uco-core:Relationship`, and `broad_mappings` for `StixTool`. The domain objects that UCO has no term for stay unmapped. `tests/test_mappings.py` checks each mapped term against UCO's own term list.
+Classes and slots name terms of the [Unified Cyber Ontology (UCO)](https://github.com/ucoProject/UCO) 1.5.0 where the meaning matches, under UCO's own namespaces: `close_mappings` for the cyber-observable objects, their extensions and the shared objects, such as `uco-observable:File` and `uco-core:Relationship`, and `broad_mappings` for `StixTool`. The domain objects that UCO has no term for stay unmapped. `tests/test_mappings.py` checks each mapped term against UCO's own term list.
 
 ## Not modelled here
 
@@ -71,7 +71,7 @@ Run `just` to list the project's [just](https://github.com/casey/just/) recipes.
 
 `.lokf/` holds this project's [KTL](https://w3id.org/ktl/) knowledge bundle, in the Linked Open Knowledge Format (LOKF). Its domain schema is `.lokf/stix.yaml`, which `lokf adapt` writes from `src/stix/schema/stix.yaml`. Edit the source, never the copy. A release carries the copy as `schema-<tag>-stix.yaml`, on the terms [CONTRIBUTING.md](CONTRIBUTING.md#releasing-maintainers) gives.
 
-`just lokf-adapt` rewrites the copy, and `just lokf-adapt-check` says when it is stale. The copy roots `StixObject` and `StixBundle` on `Concept`, so a concept may name any STIX object class as its `type`. lokf 0.9.0 requires every class that carries the schema's identifier, `id`, to be a concept type, so the domain objects cannot be the only roots. In Obsidian, add the domain objects to the KTL Registrar and KTL Curator plugins' *Known LOKF types* setting:
+`just lokf-adapt` rewrites the copy, and `just lokf-adapt-check` says when it is stale. The copy roots `StixObject` and `StixBundle` on `Concept`, so a concept may name any STIX object class as its `type`. They are the roots because lokf 0.9.0 requires every class that carries the schema's identifier, `id`, to be a concept type. In Obsidian, add the domain objects to the *Known LOKF types* setting of the KTL Registrar and KTL Curator plugins:
 
 ```text
 StixAttackPattern, StixCampaign, StixCourseOfAction, StixGrouping, StixIdentity, StixIncident, StixIndicator, StixInfrastructure, StixIntrusionSet, StixLocation, StixMalware, StixMalwareAnalysis, StixNote, StixObservedData, StixOpinion, StixReport, StixThreatActor, StixTool, StixVulnerability

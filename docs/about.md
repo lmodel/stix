@@ -20,7 +20,7 @@ because every object's `created_by_ref` points at one.
   `StixFile`, `StixIndustrySector`. Each enum names its STIX vocabulary in
   the `stix_vocabulary` annotation, such as `industry-sector-ov`.
 - Slots are STIX's property names, each a top-level slot with a `stix:`
-  slot URI. `type` holds the STIX type name, and each class pins its value;
+  slot URI. `type` holds the STIX type name, and each class pins its value.
   `id` is the identifier, and each class narrows its type prefix.
 - A `*_ref` or `*_refs` slot ranges over the class STIX says it points at
   and carries the identifier's pattern for that class.
