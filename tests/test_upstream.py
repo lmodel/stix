@@ -71,11 +71,11 @@ def test_oasis_examples_validate_unchanged(path):
 
 
 @pytest.mark.parametrize("path", EXAMPLES, ids=lambda p: p.name)
-def test_oasis_examples_keep_the_boolean_rules(path):
-    from tests.test_data import boolean_rule_problems, objects
+def test_oasis_examples_keep_the_rules_no_validator_checks(path):
+    from tests.test_data import objects, rule_problems
 
     data = json.loads(path.read_text())
-    assert not [p for item in objects(data) for p in boolean_rule_problems(item)]
+    assert not [p for item in objects(data) for p in rule_problems(item)]
 
 
 # --------------------------------------------------------------------------

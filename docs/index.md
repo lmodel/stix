@@ -38,14 +38,20 @@ Validate a file before loading it into either model in
 
 ## What no generated validator checks
 
-The JSON schemas state these rules, and LinkML cannot state them in a form
-its generators carry:
+STIX states these rules, and LinkML cannot state them in a form its
+generators carry:
 
 - a malware family has a name (`is_family: true` needs `name`);
 - an email's body matches `is_multipart`: `body` only when it is false,
   `body_multipart` only when it is true (that the two never appear together
   is checked);
 - active network traffic has no end (`is_active: true` excludes `end`);
+- a later timestamp is not before the earlier one of its pair: `modified`
+  and `created`, `last_seen` and `first_seen`, `last_observed` and
+  `first_observed`, and a network traffic's `end` and `start`; an
+  indicator's `valid_until` and a relationship's `stop_time` come strictly
+  after `valid_from` and `start_time`;
+- observed data's `object_refs` name at least one observable;
 - an extension definition lists `extension_properties` only when its types
   include `toplevel-property-extension`;
 - an external reference whose source is not `cve` or `capec` does not use a
@@ -66,7 +72,7 @@ its generators carry:
   as `HKLM`;
 - a type name's length, from 3 to 250 characters.
 
-`tests/test_data.py` checks the first three over the examples, and
+`tests/test_data.py` checks each of them over the valid examples, and
 `tests/test_upstream.py` over OASIS's examples.
 
 ## Custom properties and objects
