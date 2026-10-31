@@ -428,3 +428,43 @@ def test_ipv6_pattern_restores_the_lost_escapes():
     assert not jsonschema.Draft202012Validator({"pattern": upstream}).is_valid(
         "::ffff:192.0.2.128"
     )
+
+
+# --------------------------------------------------------------------------
+# The header, the watch's pins and the copy agree.
+
+
+@cache
+def watch():
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location(
+        "watch_pins", ROOT / "scripts" / "check_upstream_release.py"
+    )
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def test_copy_matches_the_pinned_blobs():
+    """Every copied file has the git object hash the watch pins, and nothing
+    else is in upstream/."""
+    pinned = watch().PINNED_BLOBS
+    present = {
+        p.relative_to(UPSTREAM).as_posix() for p in UPSTREAM.rglob("*") if p.is_file()
+    }
+    assert present == set(pinned)
+    for path, sha in pinned.items():
+        assert watch().blob_sha(UPSTREAM / path) == sha, path
+
+
+def test_header_pins_match_the_watch():
+    """The header records the edition, its address and the commit the watch checks."""
+    import yaml
+
+    header = yaml.safe_load(SCHEMA.read_text())
+    assert header["version"] == watch().PINNED_EDITION
+    assert header["source"] == watch().PINNED_SOURCE
+    assert header["annotations"]["json_schemas_commit"] == watch().PINNED_COMMIT
+    tree = f"https://github.com/oasis-open/cti-stix2-json-schemas/tree/{watch().PINNED_COMMIT}"
+    assert tree in header["see_also"]
