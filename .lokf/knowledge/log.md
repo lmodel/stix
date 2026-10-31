@@ -2,6 +2,10 @@
 
 ## 2026-10-31
 
+* **Changed**: Departures from OASIS's JSON schemas says which differences the upstream test lists.
+* **Changed**: Examples and counter-examples gives the new counts, the stricter place check and the rules the tests now hold the examples to.
+* **Changed**: Departures from OASIS's JSON schemas lists the granular marking, the marking definition's created and the reference targets, and says the tests check every unchecked rule.
+* **Changed**: Security policy names the three assets a release carries and what the upstream watch sends and refuses.
 * **Prose**: reworded 9 concept bodies in plain English. No fact, link, number or frontmatter changed.
 * **Added**: stix LinkML schema, from `src/stix/schema/stix.yaml`.
 * **Added**: stix_vocabularies module, from `src/stix/schema/stix_vocabularies.yaml`.

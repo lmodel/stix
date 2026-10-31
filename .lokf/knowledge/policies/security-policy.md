@@ -13,7 +13,7 @@ sources:
     title: the update entries
 generated:
   by: process:ktl-librarian
-  at: "2026-10-31T02:00:22Z"
+  at: "2026-10-31T11:01:57Z"
 status: draft
 ---
 
@@ -21,7 +21,7 @@ status: draft
 
 `SECURITY.md` asks for a vulnerability to be reported through GitHub's private vulnerability reporting, not in a public issue. One person maintains the repository, so a first reply takes days. There is no bounty, and only the latest release receives fixes.[^security.md]
 
-The repository releases the schema, the Python models generated from it and the adapt copy. Nothing is published to PyPI. The upstream watch reads the tree of OASIS's repository and docs.oasis-open.org's listings, and writes nothing but its report.
+The repository releases the schema and the Python models generated from it. Nothing is published to PyPI. A release carries three assets, each with its `.sha256` and a build-provenance attestation: the adapt copy, the knowledge bundle as a zip and a Microsoft 365 Copilot skill zip. The upstream watch reads the tree of OASIS's repository and docs.oasis-open.org's listings. It sends the workflow's token to api.github.com alone, refuses an answer over 5 MiB, and writes nothing but its report.
 
 The policy's table names each workflow and what holds it:
 
