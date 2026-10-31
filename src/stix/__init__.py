@@ -1,3 +1,8 @@
+"""stix.
+
+Structured Threat Information Expression (STIX): LinkML Schema
+"""
+
 try:
     from stix._version import __version__, __version_tuple__
 except ImportError:  # pragma: no cover
