@@ -1,0 +1,629 @@
+---
+id: https://w3id.org/lmodel/stix/stix_vocabularies
+name: stix_vocabularies
+title: STIX vocabularies and enumerations
+description: >-
+  The open vocabularies and closed enumerations of STIX 2.1 (section 10), with the Traffic
+  Light Protocol levels, the marking definition types and the specification versions. A slot
+  that names an open vocabulary also takes any other string.
+license: Apache-2.0
+see_also:
+  - https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html
+default_prefix: stix
+default_range: string
+prefixes:
+  linkml: https://w3id.org/linkml/
+  stix: https://w3id.org/lmodel/stix/
+imports:
+  - linkml:types
+enums:
+  StixAccountType:
+    description: >-
+      Types of user account. An open vocabulary: a slot that names it also takes any other
+      string.
+    annotations:
+      stix_vocabulary: account-type-ov
+      stix_section: '10.1'
+    permissible_values:
+      facebook: {}
+      ldap: {}
+      nis: {}
+      openid: {}
+      radius: {}
+      skype: {}
+      tacacs: {}
+      twitter: {}
+      unix: {}
+      windows-local: {}
+      windows-domain: {}
+  StixAttackMotivation:
+    description: >-
+      Reasons, motivations or purposes behind an attack. An open vocabulary: a slot that names
+      it also takes any other string.
+    annotations:
+      stix_vocabulary: attack-motivation-ov
+      stix_section: '10.2'
+    permissible_values:
+      accidental: {}
+      coercion: {}
+      dominance: {}
+      ideology: {}
+      notoriety: {}
+      organizational-gain: {}
+      personal-gain: {}
+      personal-satisfaction: {}
+      revenge: {}
+      unpredictable: {}
+  StixAttackResourceLevel:
+    description: >-
+      Levels of the resources that an actor may have, from an individual to a government.
+      An open vocabulary: a slot that names it also takes any other string.
+    annotations:
+      stix_vocabulary: attack-resource-level-ov
+      stix_section: '10.3'
+    permissible_values:
+      individual: {}
+      club: {}
+      contest: {}
+      team: {}
+      organization: {}
+      government: {}
+  StixEncryptionAlgorithm:
+    description: >-
+      Encryption algorithms for sharing defanged or confidential artifacts. A closed enumeration:
+      no other value is valid.
+    annotations:
+      stix_vocabulary: encryption-algorithm-enum
+      stix_section: '10.4'
+    permissible_values:
+      AES-256-GCM: {}
+      ChaCha20-Poly1305: {}
+      mime-type-indicated: {}
+  StixExtensionType:
+    description: >-
+      The kinds of extension that an extension definition can define. A closed enumeration:
+      no other value is valid.
+    annotations:
+      stix_vocabulary: extension-type-enum
+      stix_section: '10.5'
+    permissible_values:
+      new-sdo: {}
+      new-sco: {}
+      new-sro: {}
+      property-extension: {}
+      toplevel-property-extension: {}
+  StixGroupingContext:
+    description: >-
+      Contexts of a grouping. An open vocabulary: a slot that names it also takes any other
+      string.
+    annotations:
+      stix_vocabulary: grouping-context-ov
+      stix_section: '10.6'
+    permissible_values:
+      suspicious-activity: {}
+      malware-analysis: {}
+      unspecified: {}
+  StixHashAlgorithm:
+    description: >-
+      Hash algorithms, as the keys of a hashes dictionary name them. An open vocabulary: a
+      slot that names it also takes any other string.
+    annotations:
+      stix_vocabulary: hash-algorithm-ov
+      stix_section: '10.7'
+    permissible_values:
+      MD5: {}
+      SHA-1: {}
+      SHA-256: {}
+      SHA-512: {}
+      SHA3-256: {}
+      SHA3-512: {}
+      SSDEEP: {}
+      TLSH: {}
+  StixIdentityClass:
+    description: >-
+      Kinds of entity that an identity describes. An open vocabulary: a slot that names it
+      also takes any other string.
+    annotations:
+      stix_vocabulary: identity-class-ov
+      stix_section: '10.8'
+    permissible_values:
+      individual: {}
+      group: {}
+      system: {}
+      organization: {}
+      class: {}
+      unknown: {}
+  StixImplementationLanguage:
+    description: >-
+      Programming languages in which malware may be implemented. An open vocabulary: a slot
+      that names it also takes any other string.
+    annotations:
+      stix_vocabulary: implementation-language-ov
+      stix_section: '10.9'
+    permissible_values:
+      applescript: {}
+      bash: {}
+      c: {}
+      c++: {}
+      c#: {}
+      go: {}
+      java: {}
+      javascript: {}
+      lua: {}
+      objective-c: {}
+      perl: {}
+      php: {}
+      powershell: {}
+      python: {}
+      ruby: {}
+      scala: {}
+      swift: {}
+      typescript: {}
+      visual-basic: {}
+      x86-32: {}
+      x86-64: {}
+  StixIndicatorType:
+    description: >-
+      High-level categories of indicator. An open vocabulary: a slot that names it also takes
+      any other string.
+    annotations:
+      stix_vocabulary: indicator-type-ov
+      stix_section: '10.10'
+    permissible_values:
+      anomalous-activity: {}
+      anonymization: {}
+      benign: {}
+      compromised: {}
+      malicious-activity: {}
+      attribution: {}
+      unknown: {}
+  StixIndustrySector:
+    description: >-
+      Industrial and commercial sectors. An open vocabulary: a slot that names it also takes
+      any other string.
+    annotations:
+      stix_vocabulary: industry-sector-ov
+      stix_section: '10.11'
+    permissible_values:
+      agriculture: {}
+      aerospace: {}
+      automotive: {}
+      chemical: {}
+      commercial: {}
+      communications: {}
+      construction: {}
+      defense: {}
+      education: {}
+      energy: {}
+      entertainment: {}
+      financial-services: {}
+      government: {}
+      emergency-services: {}
+      government-local: {}
+      government-national: {}
+      government-public-services: {}
+      government-regional: {}
+      healthcare: {}
+      hospitality-leisure: {}
+      infrastructure: {}
+      dams: {}
+      nuclear: {}
+      water: {}
+      insurance: {}
+      manufacturing: {}
+      mining: {}
+      non-profit: {}
+      pharmaceuticals: {}
+      retail: {}
+      technology: {}
+      telecommunications: {}
+      transportation: {}
+      utilities: {}
+  StixInfrastructureType:
+    description: >-
+      Types of infrastructure. An open vocabulary: a slot that names it also takes any other
+      string.
+    annotations:
+      stix_vocabulary: infrastructure-type-ov
+      stix_section: '10.12'
+    permissible_values:
+      amplification: {}
+      anonymization: {}
+      botnet: {}
+      command-and-control: {}
+      control-system: {}
+      exfiltration: {}
+      firewall: {}
+      hosting-malware: {}
+      hosting-target-lists: {}
+      phishing: {}
+      reconnaissance: {}
+      routers-switches: {}
+      staging: {}
+      workstation: {}
+      unknown: {}
+  StixMalwareResult:
+    description: >-
+      Results of a scanner's or tool's analysis of malware. An open vocabulary: a slot that
+      names it also takes any other string.
+    annotations:
+      stix_vocabulary: malware-result-ov
+      stix_section: '10.13'
+    permissible_values:
+      malicious: {}
+      suspicious: {}
+      benign: {}
+      unknown: {}
+  StixMalwareCapability:
+    description: >-
+      Capabilities that malware may have. An open vocabulary: a slot that names it also takes
+      any other string.
+    annotations:
+      stix_vocabulary: malware-capabilities-ov
+      stix_section: '10.14'
+    permissible_values:
+      accesses-remote-machines: {}
+      anti-debugging: {}
+      anti-disassembly: {}
+      anti-emulation: {}
+      anti-memory-forensics: {}
+      anti-sandbox: {}
+      anti-vm: {}
+      captures-input-peripherals: {}
+      captures-output-peripherals: {}
+      captures-system-state-data: {}
+      cleans-traces-of-infection: {}
+      commits-fraud: {}
+      communicates-with-c2: {}
+      compromises-data-availability: {}
+      compromises-data-integrity: {}
+      compromises-system-availability: {}
+      controls-local-machine: {}
+      degrades-security-software: {}
+      degrades-system-updates: {}
+      determines-c2-server: {}
+      emails-spam: {}
+      escalates-privileges: {}
+      evades-av: {}
+      exfiltrates-data: {}
+      fingerprints-host: {}
+      hides-artifacts: {}
+      hides-executing-code: {}
+      infects-files: {}
+      infects-remote-machines: {}
+      installs-other-components: {}
+      persists-after-system-reboot: {}
+      prevents-artifact-access: {}
+      prevents-artifact-deletion: {}
+      probes-network-environment: {}
+      self-modifies: {}
+      steals-authentication-credentials: {}
+      violates-system-operational-integrity: {}
+  StixMalwareType:
+    description: >-
+      Types of malware. An open vocabulary: a slot that names it also takes any other string.
+    annotations:
+      stix_vocabulary: malware-type-ov
+      stix_section: '10.15'
+    permissible_values:
+      adware: {}
+      backdoor: {}
+      bot: {}
+      bootkit: {}
+      ddos: {}
+      downloader: {}
+      dropper: {}
+      exploit-kit: {}
+      keylogger: {}
+      ransomware: {}
+      remote-access-trojan: {}
+      resource-exploitation: {}
+      rogue-security-software: {}
+      rootkit: {}
+      screen-capture: {}
+      spyware: {}
+      trojan: {}
+      unknown: {}
+      virus: {}
+      webshell: {}
+      wiper: {}
+      worm: {}
+  StixNetworkSocketAddressFamily:
+    description: >-
+      Address families of a network socket. A closed enumeration: no other value is valid.
+    annotations:
+      stix_vocabulary: network-socket-address-family-enum
+      stix_section: '10.16'
+    permissible_values:
+      AF_UNSPEC: {}
+      AF_INET: {}
+      AF_IPX: {}
+      AF_APPLETALK: {}
+      AF_NETBIOS: {}
+      AF_INET6: {}
+      AF_IRDA: {}
+      AF_BTH: {}
+  StixNetworkSocketType:
+    description: >-
+      Types of network socket. A closed enumeration: no other value is valid.
+    annotations:
+      stix_vocabulary: network-socket-type-enum
+      stix_section: '10.17'
+    permissible_values:
+      SOCK_STREAM: {}
+      SOCK_DGRAM: {}
+      SOCK_RAW: {}
+      SOCK_RDM: {}
+      SOCK_SEQPACKET: {}
+  StixAgreement:
+    description: >-
+      Degrees of agreement with the information in a STIX object, from disagreement to agreement.
+      A closed enumeration: no other value is valid.
+    annotations:
+      stix_vocabulary: opinion-enum
+      stix_section: '10.18'
+    permissible_values:
+      strongly-disagree: {}
+      disagree: {}
+      neutral: {}
+      agree: {}
+      strongly-agree: {}
+  StixPatternType:
+    description: >-
+      Pattern languages in which an indicator's pattern may be written. An open vocabulary:
+      a slot that names it also takes any other string.
+    annotations:
+      stix_vocabulary: pattern-type-ov
+      stix_section: '10.19'
+    permissible_values:
+      stix: {}
+      pcre: {}
+      sigma: {}
+      snort: {}
+      suricata: {}
+      yara: {}
+  StixProcessorArchitecture:
+    description: >-
+      Processor architectures. An open vocabulary: a slot that names it also takes any other
+      string.
+    annotations:
+      stix_vocabulary: processor-architecture-ov
+      stix_section: '10.20'
+    permissible_values:
+      alpha: {}
+      arm: {}
+      ia-64: {}
+      mips: {}
+      powerpc: {}
+      sparc: {}
+      x86: {}
+      x86-64: {}
+  StixRegion:
+    description: >-
+      World regions, after the United Nations geoscheme (UNSD M49). An open vocabulary: a
+      slot that names it also takes any other string.
+    annotations:
+      stix_vocabulary: region-ov
+      stix_section: '10.21'
+    permissible_values:
+      africa: {}
+      eastern-africa: {}
+      middle-africa: {}
+      northern-africa: {}
+      southern-africa: {}
+      western-africa: {}
+      americas: {}
+      caribbean: {}
+      central-america: {}
+      latin-america-caribbean: {}
+      northern-america: {}
+      south-america: {}
+      asia: {}
+      central-asia: {}
+      eastern-asia: {}
+      southern-asia: {}
+      south-eastern-asia: {}
+      western-asia: {}
+      europe: {}
+      eastern-europe: {}
+      northern-europe: {}
+      southern-europe: {}
+      western-europe: {}
+      oceania: {}
+      antarctica: {}
+      australia-new-zealand: {}
+      melanesia: {}
+      micronesia: {}
+      polynesia: {}
+  StixReportType:
+    description: >-
+      Primary subjects of a report. An open vocabulary: a slot that names it also takes any
+      other string.
+    annotations:
+      stix_vocabulary: report-type-ov
+      stix_section: '10.22'
+    permissible_values:
+      attack-pattern: {}
+      campaign: {}
+      identity: {}
+      indicator: {}
+      intrusion-set: {}
+      malware: {}
+      observed-data: {}
+      threat-actor: {}
+      threat-report: {}
+      tool: {}
+      vulnerability: {}
+  StixThreatActorType:
+    description: >-
+      Types of threat actor. An open vocabulary: a slot that names it also takes any other
+      string.
+    annotations:
+      stix_vocabulary: threat-actor-type-ov
+      stix_section: '10.23'
+    permissible_values:
+      activist: {}
+      competitor: {}
+      crime-syndicate: {}
+      criminal: {}
+      hacker: {}
+      insider-accidental: {}
+      insider-disgruntled: {}
+      nation-state: {}
+      sensationalist: {}
+      spy: {}
+      terrorist: {}
+      unknown: {}
+  StixThreatActorRole:
+    description: >-
+      Roles that a threat actor may play. An open vocabulary: a slot that names it also takes
+      any other string.
+    annotations:
+      stix_vocabulary: threat-actor-role-ov
+      stix_section: '10.24'
+    permissible_values:
+      agent: {}
+      director: {}
+      independent: {}
+      infrastructure-architect: {}
+      infrastructure-operator: {}
+      malware-author: {}
+      sponsor: {}
+  StixThreatActorSophistication:
+    description: >-
+      Skill levels of a threat actor. An open vocabulary: a slot that names it also takes
+      any other string.
+    annotations:
+      stix_vocabulary: threat-actor-sophistication-ov
+      stix_section: '10.25'
+    permissible_values:
+      none: {}
+      minimal: {}
+      intermediate: {}
+      advanced: {}
+      expert: {}
+      innovator: {}
+      strategic: {}
+  StixToolType:
+    description: >-
+      Categories of tool that may be used to perform attacks. An open vocabulary: a slot that
+      names it also takes any other string.
+    annotations:
+      stix_vocabulary: tool-type-ov
+      stix_section: '10.26'
+    permissible_values:
+      denial-of-service: {}
+      exploitation: {}
+      information-gathering: {}
+      network-capture: {}
+      credential-exploitation: {}
+      remote-access: {}
+      vulnerability-scanning: {}
+      unknown: {}
+  StixWindowsIntegrityLevel:
+    description: >-
+      Windows integrity levels. A closed enumeration: no other value is valid.
+    annotations:
+      stix_vocabulary: windows-integrity-level-enum
+      stix_section: '10.27'
+    permissible_values:
+      low: {}
+      medium: {}
+      high: {}
+      system: {}
+  StixWindowsPeBinaryType:
+    description: >-
+      Types of Windows PE binary. An open vocabulary: a slot that names it also takes any
+      other string.
+    annotations:
+      stix_vocabulary: windows-pebinary-type-ov
+      stix_section: '10.28'
+    permissible_values:
+      dll: {}
+      exe: {}
+      sys: {}
+  StixWindowsRegistryDatatype:
+    description: >-
+      Data types of a Windows registry value. A closed enumeration: no other value is valid.
+    annotations:
+      stix_vocabulary: windows-registry-datatype-enum
+      stix_section: '10.29'
+    permissible_values:
+      REG_NONE: {}
+      REG_SZ: {}
+      REG_EXPAND_SZ: {}
+      REG_BINARY: {}
+      REG_DWORD: {}
+      REG_DWORD_BIG_ENDIAN: {}
+      REG_DWORD_LITTLE_ENDIAN: {}
+      REG_LINK: {}
+      REG_MULTI_SZ: {}
+      REG_RESOURCE_LIST: {}
+      REG_FULL_RESOURCE_DESCRIPTION: {}
+      REG_RESOURCE_REQUIREMENTS_LIST: {}
+      REG_QWORD: {}
+      REG_INVALID_TYPE: {}
+  StixWindowsServiceStartType:
+    description: >-
+      Start types of a Windows service. A closed enumeration: no other value is valid.
+    annotations:
+      stix_vocabulary: windows-service-start-type-enum
+      stix_section: '10.30'
+    permissible_values:
+      SERVICE_AUTO_START: {}
+      SERVICE_BOOT_START: {}
+      SERVICE_DEMAND_START: {}
+      SERVICE_DISABLED: {}
+      SERVICE_SYSTEM_ALERT: {}
+  StixWindowsServiceType:
+    description: >-
+      Types of Windows service. A closed enumeration: no other value is valid.
+    annotations:
+      stix_vocabulary: windows-service-type-enum
+      stix_section: '10.31'
+    permissible_values:
+      SERVICE_KERNEL_DRIVER: {}
+      SERVICE_FILE_SYSTEM_DRIVER: {}
+      SERVICE_WIN32_OWN_PROCESS: {}
+      SERVICE_WIN32_SHARE_PROCESS: {}
+  StixWindowsServiceStatus:
+    description: >-
+      Statuses of a Windows service. A closed enumeration: no other value is valid.
+    annotations:
+      stix_vocabulary: windows-service-status-enum
+      stix_section: '10.32'
+    permissible_values:
+      SERVICE_CONTINUE_PENDING: {}
+      SERVICE_PAUSE_PENDING: {}
+      SERVICE_PAUSED: {}
+      SERVICE_RUNNING: {}
+      SERVICE_START_PENDING: {}
+      SERVICE_STOP_PENDING: {}
+      SERVICE_STOPPED: {}
+  StixSpecVersion:
+    description: >-
+      The STIX versions that an object may declare. The JSON schemas accept 2.0 beside 2.1.
+      A closed enumeration.
+    permissible_values:
+      '2.0': {}
+      '2.1': {}
+  StixTlpLevel:
+    description: >-
+      The four levels of the Traffic Light Protocol (TLP) that STIX 2.1 defines marking definitions
+      for. A closed enumeration.
+    annotations:
+      stix_section: 7.2.1.4
+    permissible_values:
+      white: {}
+      green: {}
+      amber: {}
+      red: {}
+  StixMarkingDefinitionType:
+    description: >-
+      The marking definition types that STIX 2.1 defines, statement and tlp. A slot that names
+      it also takes any other string, as the JSON schemas do.
+    annotations:
+      stix_section: 7.2.1
+    permissible_values:
+      statement: {}
+      tlp: {}
