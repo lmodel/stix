@@ -37,6 +37,12 @@ generator_args:
     mergeimports: true
   jsonschema:
     mergeimports: true
+    # A bundle's objects range over the abstract StixObject. Without this the
+    # generated JSON Schema checks each object against that closed base, so
+    # no real object and no bundle validates; with it, against each concrete
+    # class, as linkml-validate does. StixBundle is the one tree root, so the
+    # top class needs no naming.
+    include_range_class_descendants: true
   jsonldcontext:
     mergeimports: true
   # gen-pydantic is not yet supported by gen-project.

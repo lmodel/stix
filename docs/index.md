@@ -16,7 +16,9 @@ property names are the schema's keys, so STIX JSON validates unchanged.
 
 `linkml-validate -s src/stix/schema/stix.yaml -C StixBundle bundle.json`
 checks a bundle against the JSON Schema generated from the schema, and
-`-C StixIndicator` and so on checks a single object. `tests/test_data.py`
+`-C StixIndicator` and so on checks a single object. `just gen-project`
+writes the same JSON Schema to `project/jsonschema/stix.schema.json`, for a
+validator of your own. `tests/test_data.py`
 holds every example to it, and `tests/test_upstream.py` holds OASIS's own
 examples to it.
 
@@ -30,6 +32,9 @@ Validate a file before loading it into either model in
 - Neither applies the class-level rules below, and neither accepts the
   dictionaries: hashes, extensions, language content and the open
   dictionaries of the observable objects.
+- Neither holds a bundle's objects. Both type the list as the abstract
+  `StixObject`, and LinkML 1.12.1 cannot pick a subclass from STIX's `type`
+  value, so load each object into its own class instead.
 
 ## What no generated validator checks
 
