@@ -2,6 +2,7 @@
 
 ## 2026-10-31
 
+* **Changed**: Departures from the JSON schemas says the rules no generated validator checks are STIX's, as `docs/index.md` does.
 * **Changed**: Departures from OASIS's JSON schemas says which differences the upstream test lists.
 * **Changed**: Examples and counter-examples gives the new counts, the stricter place check and the rules the tests now hold the examples to.
 * **Changed**: Departures from OASIS's JSON schemas lists the granular marking, the marking definition's created and the reference targets, and says the tests check every unchecked rule.

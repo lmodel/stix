@@ -20,7 +20,7 @@ sources:
     title: the What no generated validator checks section
 generated:
   by: process:ktl-librarian
-  at: "2026-10-31T11:02:18Z"
+  at: "2026-10-31T11:15:06Z"
 status: draft
 ---
 
@@ -35,7 +35,7 @@ The schema follows the OASIS Standard where OASIS's JSON schemas say otherwise, 
 - A sighting's `sighting_of_ref` points at a domain object, and a malware analysis's `analysis_sco_refs` and a file's `contains_refs` at observables. The JSON schemas take a wider set of identifiers.
 - The account types, regions, report types and infrastructure types follow the standard's tables.[^about.md]
 
-Some rules of the JSON schemas cannot be stated in a form LinkML's generators carry. Examples are a malware family's name and the keys of a dictionary. `docs/index.md` lists them, and the tests check each of them over the examples.
+Some rules of STIX cannot be stated in a form LinkML's generators carry. Examples are a malware family's name and the keys of a dictionary. `docs/index.md` lists them, and the tests check each of them over the examples.
 
 [^test_upstream.py]: tests/test_upstream.py, the departure lists
 [^about.md]: docs/about.md, the Vocabularies and departures sections
