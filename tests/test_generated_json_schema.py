@@ -54,7 +54,7 @@ def errors(schema, data):
         schema = {"$ref": f"#/$defs/{name}", "$defs": schema["$defs"]}
     return [
         e.message[:200]
-        for e in jsonschema.Draft202012Validator(schema).iter_errors(data)
+        for e in jsonschema.validators.validator_for(schema)(schema).iter_errors(data)
     ]
 
 
