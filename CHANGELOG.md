@@ -12,7 +12,7 @@ The `v0.0.0` tag is a baseline, not a release: it marks where versioning starts 
 - **A copy of OASIS's STIX 2.1 JSON schemas and examples at a pinned commit, and a weekly upstream watch.** Tests hold the schema's properties, required lists and closed enumerations to the JSON schemas and validate OASIS's examples unchanged. The watch reports a changed, added or dropped file, a changed licence, another edition or an approved errata.
 - **Mappings to the Unified Cyber Ontology (UCO) 1.5.0** where the meaning matches, each checked against UCO's own term list.
 - **`.lokf/stix.yaml`, the schema's `lokf adapt` copy, rooted on `StixObject` and `StixBundle`.** The knowledge release attaches it as `schema-<tag>-stix.yaml`, and tests hold its names apart from those of the Linked Open Knowledge Format (LOKF) and of nine released lmodel copies.
-- **An example of each class and a counter-example for each constraint**, held to the validator by `just test`.
+- **An example of each class and a counter-example for each constraint**, held to the validator by `just test`. The tests also check every example against the rules that no validator states, such as the order of `created` and `modified`.
 - **The repository's Knowledge Trust Ladder (KTL) knowledge bundle and its sidecar automation**, from the KTL v0.59.0 templates with the lokf floor at 0.9.0, and a knowledge website that replaces the mkdocs site.
 - **`.github/release/package-lock.json`, which pins semantic-release and every package it pulls in.** The release job installs from it with `npm ci`, and Dependabot keeps it current.
 
