@@ -37,6 +37,11 @@ comments:
   The dictionaries that hold them are classes with extra_slots, which the generated
   JSON Schema checks; the generated Python models do not, and docs/index.md lists
   what goes unchecked.'
+- 'Classes and slots map to terms of the Unified Cyber Ontology (UCO) 1.5.0 where
+  the meaning matches, under UCO''s own namespaces: close_mappings for the cyber-observable
+  objects, their extensions and the shared objects, and broad_mappings for Tool, which
+  UCO defines more widely. The domain objects that UCO has no term for are left unmapped.
+  tests/test_mappings.py checks each against UCO''s term list.'
 source: https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html
 see_also:
 - https://lmodel.github.io/stix
@@ -58,6 +63,9 @@ prefixes:
   stix:
     prefix_prefix: stix
     prefix_reference: https://w3id.org/lmodel/stix/
+  uco-core:
+    prefix_prefix: uco-core
+    prefix_reference: https://ontology.unifiedcyberontology.org/uco/core/
 default_prefix: stix
 default_range: string
 types:
@@ -1603,6 +1611,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_core
     mappings:
     - stix:object_marking_refs
+    close_mappings:
+    - uco-core:objectMarking
     slot_uri: stix:object_marking_refs
     owner: StixObject
     domain_of:
@@ -1648,6 +1658,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_core
     mappings:
     - stix:created_by_ref
+    close_mappings:
+    - uco-core:createdBy
     slot_uri: stix:created_by_ref
     owner: StixMarkingDefinition
     domain_of:
@@ -1662,6 +1674,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_core
     mappings:
     - stix:created
+    close_mappings:
+    - uco-core:objectCreatedTime
     slot_uri: stix:created
     owner: StixMarkingDefinition
     domain_of:
@@ -1677,6 +1691,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_core
     mappings:
     - stix:modified
+    close_mappings:
+    - uco-core:modifiedTime
     slot_uri: stix:modified
     owner: StixCommonObject
     domain_of:
@@ -1702,6 +1718,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_core
     mappings:
     - stix:labels
+    close_mappings:
+    - uco-core:tag
     slot_uri: stix:labels
     owner: StixCommonObject
     domain_of:
@@ -1717,6 +1735,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_core
     mappings:
     - stix:confidence
+    close_mappings:
+    - uco-core:confidence
     slot_uri: stix:confidence
     owner: StixCommonObject
     domain_of:
@@ -1744,6 +1764,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_core
     mappings:
     - stix:external_references
+    close_mappings:
+    - uco-core:externalReference
     slot_uri: stix:external_references
     owner: StixMarkingDefinition
     domain_of:
@@ -1789,6 +1811,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_core
     mappings:
     - stix:name
+    close_mappings:
+    - uco-core:name
     slot_uri: stix:name
     owner: StixVulnerability
     domain_of:
@@ -1824,6 +1848,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_core
     mappings:
     - stix:description
+    close_mappings:
+    - uco-core:description
     slot_uri: stix:description
     owner: StixSighting
     domain_of:
@@ -1899,6 +1925,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_core
     mappings:
     - stix:definition_type
+    close_mappings:
+    - uco-marking:definitionType
     slot_uri: stix:definition_type
     owner: StixMarkingDefinition
     domain_of:
@@ -1915,6 +1943,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_core
     mappings:
     - stix:definition
+    close_mappings:
+    - uco-marking:definition
     slot_uri: stix:definition
     owner: StixMarkingDefinition
     domain_of:
@@ -2075,6 +2105,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_core
     mappings:
     - stix:external_id
+    close_mappings:
+    - uco-core:externalIdentifier
     slot_uri: stix:external_id
     owner: StixExternalReference
     domain_of:
@@ -2112,6 +2144,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_core
     mappings:
     - stix:marking_ref
+    close_mappings:
+    - uco-marking:marking
     slot_uri: stix:marking_ref
     owner: StixGranularMarking
     domain_of:
@@ -2126,6 +2160,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_core
     mappings:
     - stix:selectors
+    close_mappings:
+    - uco-marking:contentSelectors
     slot_uri: stix:selectors
     owner: StixGranularMarking
     domain_of:
@@ -2142,6 +2178,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_core
     mappings:
     - stix:statement
+    close_mappings:
+    - uco-marking:statement
     slot_uri: stix:statement
     owner: StixStatementMarking
     domain_of:
@@ -5862,6 +5900,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_sro
     mappings:
     - stix:relationship_type
+    close_mappings:
+    - uco-core:kindOfRelationship
     slot_uri: stix:relationship_type
     owner: StixRelationship
     domain_of:
@@ -5875,6 +5915,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_sro
     mappings:
     - stix:source_ref
+    close_mappings:
+    - uco-core:source
     slot_uri: stix:source_ref
     owner: StixRelationship
     domain_of:
@@ -5891,6 +5933,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_sro
     mappings:
     - stix:target_ref
+    close_mappings:
+    - uco-core:target
     slot_uri: stix:target_ref
     owner: StixRelationship
     domain_of:
@@ -5911,6 +5955,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_sro
     mappings:
     - stix:start_time
+    close_mappings:
+    - uco-core:startTime
     slot_uri: stix:start_time
     owner: StixRelationship
     domain_of:
@@ -5926,6 +5972,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_sro
     mappings:
     - stix:stop_time
+    close_mappings:
+    - uco-core:endTime
     slot_uri: stix:stop_time
     owner: StixRelationship
     domain_of:
@@ -6095,6 +6143,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_core
     mappings:
     - stix:created
+    close_mappings:
+    - uco-core:objectCreatedTime
     is_a: created
     domain: StixCommonObject
     slot_uri: stix:created
@@ -6115,6 +6165,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_core
     mappings:
     - stix:modified
+    close_mappings:
+    - uco-core:modifiedTime
     is_a: modified
     domain: StixCommonObject
     slot_uri: stix:modified
@@ -6175,6 +6227,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_core
     mappings:
     - stix:name
+    close_mappings:
+    - uco-core:name
     is_a: name
     domain: StixIdentity
     slot_uri: stix:name
@@ -6253,6 +6307,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_core
     mappings:
     - stix:created
+    close_mappings:
+    - uco-core:objectCreatedTime
     is_a: created
     domain: StixMarkingDefinition
     slot_uri: stix:created
@@ -6394,6 +6450,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_core
     mappings:
     - stix:name
+    close_mappings:
+    - uco-core:name
     is_a: name
     domain: StixExtensionDefinition
     slot_uri: stix:name
@@ -6525,6 +6583,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_core
     mappings:
     - stix:marking_ref
+    close_mappings:
+    - uco-marking:marking
     is_a: marking_ref
     domain: StixGranularMarking
     slot_uri: stix:marking_ref
@@ -6545,6 +6605,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_core
     mappings:
     - stix:selectors
+    close_mappings:
+    - uco-marking:contentSelectors
     is_a: selectors
     domain: StixGranularMarking
     slot_uri: stix:selectors
@@ -6567,6 +6629,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_core
     mappings:
     - stix:statement
+    close_mappings:
+    - uco-marking:statement
     is_a: statement
     domain: StixStatementMarking
     slot_uri: stix:statement
@@ -7359,6 +7423,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_core
     mappings:
     - stix:name
+    close_mappings:
+    - uco-core:name
     is_a: name
     domain: StixMutex
     slot_uri: stix:name
@@ -7562,6 +7628,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_core
     mappings:
     - stix:name
+    close_mappings:
+    - uco-core:name
     is_a: name
     domain: StixSoftware
     slot_uri: stix:name
@@ -7923,6 +7991,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_core
     mappings:
     - stix:name
+    close_mappings:
+    - uco-core:name
     is_a: name
     domain: StixAlternateDataStream
     slot_uri: stix:name
@@ -7941,6 +8011,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_core
     mappings:
     - stix:name
+    close_mappings:
+    - uco-core:name
     is_a: name
     domain: StixWindowsPeSection
     slot_uri: stix:name
@@ -8001,6 +8073,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_core
     mappings:
     - stix:name
+    close_mappings:
+    - uco-core:name
     is_a: name
     domain: StixAttackPattern
     slot_uri: stix:name
@@ -8061,6 +8135,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_core
     mappings:
     - stix:name
+    close_mappings:
+    - uco-core:name
     is_a: name
     domain: StixCampaign
     slot_uri: stix:name
@@ -8121,6 +8197,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_core
     mappings:
     - stix:name
+    close_mappings:
+    - uco-core:name
     is_a: name
     domain: StixCourseOfAction
     slot_uri: stix:name
@@ -8266,6 +8344,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_core
     mappings:
     - stix:name
+    close_mappings:
+    - uco-core:name
     is_a: name
     domain: StixIncident
     slot_uri: stix:name
@@ -8426,6 +8506,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_core
     mappings:
     - stix:name
+    close_mappings:
+    - uco-core:name
     is_a: name
     domain: StixInfrastructure
     slot_uri: stix:name
@@ -8486,6 +8568,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_core
     mappings:
     - stix:name
+    close_mappings:
+    - uco-core:name
     is_a: name
     domain: StixIntrusionSet
     slot_uri: stix:name
@@ -9015,6 +9099,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_core
     mappings:
     - stix:name
+    close_mappings:
+    - uco-core:name
     is_a: name
     domain: StixReport
     slot_uri: stix:name
@@ -9115,6 +9201,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_core
     mappings:
     - stix:name
+    close_mappings:
+    - uco-core:name
     is_a: name
     domain: StixThreatActor
     slot_uri: stix:name
@@ -9197,6 +9285,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_core
     mappings:
     - stix:name
+    close_mappings:
+    - uco-core:name
     is_a: name
     domain: StixTool
     slot_uri: stix:name
@@ -9257,6 +9347,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_core
     mappings:
     - stix:name
+    close_mappings:
+    - uco-core:name
     is_a: name
     domain: StixVulnerability
     slot_uri: stix:name
@@ -9317,6 +9409,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_sro
     mappings:
     - stix:relationship_type
+    close_mappings:
+    - uco-core:kindOfRelationship
     is_a: relationship_type
     domain: StixRelationship
     slot_uri: stix:relationship_type
@@ -9336,6 +9430,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_sro
     mappings:
     - stix:source_ref
+    close_mappings:
+    - uco-core:source
     is_a: source_ref
     domain: StixRelationship
     slot_uri: stix:source_ref
@@ -9358,6 +9454,8 @@ slots:
     from_schema: https://w3id.org/lmodel/stix/stix_sro
     mappings:
     - stix:target_ref
+    close_mappings:
+    - uco-core:target
     is_a: target_ref
     domain: StixRelationship
     slot_uri: stix:target_ref
@@ -9445,6 +9543,8 @@ classes:
     description: 'A bundle: a collection of STIX objects grouped together in one container.
       A bundle is a container for transport, not a STIX object, so it carries no spec_version.'
     from_schema: https://w3id.org/lmodel/stix
+    close_mappings:
+    - uco-core:Bundle
     slots:
     - StixBundle_id
     - StixBundle_type
@@ -9589,6 +9689,8 @@ classes:
     description: Identities can represent actual individuals, organizations, or groups
       (e.g., ACME, Inc.) as well as classes of individuals, organizations, or groups.
     from_schema: https://w3id.org/lmodel/stix/stix_core
+    close_mappings:
+    - uco-identity:Identity
     is_a: StixDomainObject
     slots:
     - object_marking_refs
@@ -9632,6 +9734,8 @@ classes:
     description: 'A marking definition: a statement, a Traffic Light Protocol (TLP)
       level or another marking that applies to the objects that reference it.'
     from_schema: https://w3id.org/lmodel/stix/stix_core
+    close_mappings:
+    - uco-marking:MarkingDefinition
     is_a: StixObject
     slots:
     - object_marking_refs
@@ -9779,6 +9883,8 @@ classes:
     description: External references are used to describe pointers to information
       represented outside of STIX.
     from_schema: https://w3id.org/lmodel/stix/stix_core
+    close_mappings:
+    - uco-core:ExternalReference
     slots:
     - StixExternalReference_source_name
     - description
@@ -9851,6 +9957,8 @@ classes:
       objects referenced by the marking_refs property to apply to a set of content
       identified by the list of selectors in the selectors property.
     from_schema: https://w3id.org/lmodel/stix/stix_core
+    close_mappings:
+    - uco-marking:GranularMarking
     slots:
     - StixGranularMarking_marking_ref
     - StixGranularMarking_selectors
@@ -9869,6 +9977,8 @@ classes:
     description: 'The definition of a statement marking: a statement, such as a copyright
       or terms of use.'
     from_schema: https://w3id.org/lmodel/stix/stix_core
+    close_mappings:
+    - uco-marking:StatementMarking
     slots:
     - StixStatementMarking_statement
     slot_usage:
@@ -10030,6 +10140,8 @@ classes:
     description: The AS object represents the properties of an Autonomous Systems
       (AS).
     from_schema: https://w3id.org/lmodel/stix/stix_sco
+    close_mappings:
+    - uco-observable:AutonomousSystem
     is_a: StixCyberObservableObject
     slots:
     - spec_version
@@ -10063,6 +10175,8 @@ classes:
     description: The Directory Object represents the properties common to a file system
       directory.
     from_schema: https://w3id.org/lmodel/stix/stix_sco
+    close_mappings:
+    - uco-observable:Directory
     is_a: StixCyberObservableObject
     slots:
     - spec_version
@@ -10105,6 +10219,8 @@ classes:
         value: domain-name
     description: The Domain Name represents the properties of a network domain name.
     from_schema: https://w3id.org/lmodel/stix/stix_sco
+    close_mappings:
+    - uco-observable:DomainName
     is_a: StixCyberObservableObject
     slots:
     - spec_version
@@ -10144,6 +10260,8 @@ classes:
         value: email-addr
     description: The Email Address Object represents a single email address.
     from_schema: https://w3id.org/lmodel/stix/stix_sco
+    close_mappings:
+    - uco-observable:EmailAddress
     is_a: StixCyberObservableObject
     slots:
     - spec_version
@@ -10176,6 +10294,8 @@ classes:
         value: email-message
     description: The Email Message Object represents an instance of an email message.
     from_schema: https://w3id.org/lmodel/stix/stix_sco
+    close_mappings:
+    - uco-observable:EmailMessage
     is_a: StixCyberObservableObject
     slots:
     - spec_version
@@ -10232,6 +10352,8 @@ classes:
         value: file
     description: The File Object represents the properties of a file.
     from_schema: https://w3id.org/lmodel/stix/stix_sco
+    close_mappings:
+    - uco-observable:File
     is_a: StixCyberObservableObject
     slots:
     - spec_version
@@ -10283,6 +10405,8 @@ classes:
     description: The IPv4 Address Object represents one or more IPv4 addresses expressed
       using CIDR notation.
     from_schema: https://w3id.org/lmodel/stix/stix_sco
+    close_mappings:
+    - uco-observable:IPv4Address
     is_a: StixCyberObservableObject
     slots:
     - spec_version
@@ -10321,6 +10445,8 @@ classes:
     description: The IPv6 Address Object represents one or more IPv6 addresses expressed
       using CIDR notation.
     from_schema: https://w3id.org/lmodel/stix/stix_sco
+    close_mappings:
+    - uco-observable:IPv6Address
     is_a: StixCyberObservableObject
     slots:
     - spec_version
@@ -10359,6 +10485,8 @@ classes:
     description: The MAC Address Object represents a single Media Access Control (MAC)
       address.
     from_schema: https://w3id.org/lmodel/stix/stix_sco
+    close_mappings:
+    - uco-observable:MACAddress
     is_a: StixCyberObservableObject
     slots:
     - spec_version
@@ -10391,6 +10519,8 @@ classes:
     description: The Mutex Object represents the properties of a mutual exclusion
       (mutex) object.
     from_schema: https://w3id.org/lmodel/stix/stix_sco
+    close_mappings:
+    - uco-observable:Mutex
     is_a: StixCyberObservableObject
     slots:
     - spec_version
@@ -10481,6 +10611,8 @@ classes:
     description: The Process Object represents common properties of an instance of
       a computer program as executed on an operating system.
     from_schema: https://w3id.org/lmodel/stix/stix_sco
+    close_mappings:
+    - uco-observable:Process
     is_a: StixCyberObservableObject
     slots:
     - spec_version
@@ -10567,6 +10699,8 @@ classes:
     description: The Software Object represents high-level properties associated with
       software, including software products.
     from_schema: https://w3id.org/lmodel/stix/stix_sco
+    close_mappings:
+    - uco-observable:Software
     is_a: StixCyberObservableObject
     slots:
     - spec_version
@@ -10603,6 +10737,8 @@ classes:
     description: The URL Object represents the properties of a uniform resource locator
       (URL).
     from_schema: https://w3id.org/lmodel/stix/stix_sco
+    close_mappings:
+    - uco-observable:URL
     is_a: StixCyberObservableObject
     slots:
     - spec_version
@@ -10636,6 +10772,8 @@ classes:
       account, including but not limited to operating system, device, messaging service,
       and social media platform accounts.
     from_schema: https://w3id.org/lmodel/stix/stix_sco
+    close_mappings:
+    - uco-observable:UserAccount
     is_a: StixCyberObservableObject
     slots:
     - spec_version
@@ -10741,6 +10879,8 @@ classes:
     description: The Registry Key Object represents the properties of a Windows registry
       key.
     from_schema: https://w3id.org/lmodel/stix/stix_sco
+    close_mappings:
+    - uco-observable:WindowsRegistryKey
     is_a: StixCyberObservableObject
     slots:
     - spec_version
@@ -10794,6 +10934,8 @@ classes:
     description: The X509 Certificate Object represents the properties of an X.509
       certificate.
     from_schema: https://w3id.org/lmodel/stix/stix_sco
+    close_mappings:
+    - uco-observable:X509Certificate
     is_a: StixCyberObservableObject
     slots:
     - spec_version
@@ -10887,6 +11029,8 @@ classes:
     description: The NTFS file extension specifies a default extension for capturing
       properties specific to the storage of the file on the NTFS file system.
     from_schema: https://w3id.org/lmodel/stix/stix_sco
+    close_mappings:
+    - uco-observable:NTFSFileFacet
     slots:
     - sid
     - alternate_data_streams
@@ -10910,6 +11054,8 @@ classes:
     description: The Raster Image file extension specifies a default extension for
       capturing properties specific to image files.
     from_schema: https://w3id.org/lmodel/stix/stix_sco
+    close_mappings:
+    - uco-observable:RasterPictureFacet
     slots:
     - image_height
     - image_width
@@ -10943,6 +11089,8 @@ classes:
     description: The PDF file extension specifies a default extension for capturing
       properties specific to PDF files.
     from_schema: https://w3id.org/lmodel/stix/stix_sco
+    close_mappings:
+    - uco-observable:PDFFileFacet
     slots:
     - version
     - is_optimized
@@ -10981,6 +11129,8 @@ classes:
     description: The Archive File extension specifies a default extension for capturing
       properties specific to archive files.
     from_schema: https://w3id.org/lmodel/stix/stix_sco
+    close_mappings:
+    - uco-observable:ArchiveFileFacet
     slots:
     - StixArchiveExtension_contains_refs
     - comment
@@ -11004,6 +11154,8 @@ classes:
     description: The Windows PE Binary File extension specifies a default extension
       for capturing properties specific to Windows portable executable (PE) files.
     from_schema: https://w3id.org/lmodel/stix/stix_sco
+    close_mappings:
+    - uco-observable:WindowsPEBinaryFileFacet
     slots:
     - StixWindowsPeBinaryExtension_pe_type
     - imphash
@@ -11102,6 +11254,8 @@ classes:
     description: The ICMP extension specifies a default extension for capturing network
       traffic properties specific to ICMP.
     from_schema: https://w3id.org/lmodel/stix/stix_sco
+    close_mappings:
+    - uco-observable:ICMPConnectionFacet
     slots:
     - StixIcmpExtension_icmp_type_hex
     - StixIcmpExtension_icmp_code_hex
@@ -11146,6 +11300,8 @@ classes:
     description: The TCP extension specifies a default extension for capturing network
       traffic properties specific to TCP.
     from_schema: https://w3id.org/lmodel/stix/stix_sco
+    close_mappings:
+    - uco-observable:TCPConnectionFacet
     slots:
     - src_flags_hex
     - dst_flags_hex
@@ -11169,6 +11325,8 @@ classes:
     description: The Windows Process extension specifies a default extension for capturing
       properties specific to Windows processes.
     from_schema: https://w3id.org/lmodel/stix/stix_sco
+    close_mappings:
+    - uco-observable:WindowsProcessFacet
     slots:
     - aslr_enabled
     - dep_enabled
@@ -11213,6 +11371,8 @@ classes:
     description: The Windows Service extension specifies a default extension for capturing
       properties specific to Windows services.
     from_schema: https://w3id.org/lmodel/stix/stix_sco
+    close_mappings:
+    - uco-observable:WindowsServiceFacet
     slots:
     - service_name
     - descriptions
@@ -11266,6 +11426,8 @@ classes:
     description: The User Account Object defines the following extensions. In addition
       to these, producers MAY create their own.
     from_schema: https://w3id.org/lmodel/stix/stix_sco
+    close_mappings:
+    - uco-observable:UNIXAccountFacet
     slots:
     - gid
     - groups
@@ -11294,6 +11456,8 @@ classes:
     definition_uri: https://w3id.org/lmodel/stix/StixAlternateDataStream
     description: An NTFS alternate data stream of a file.
     from_schema: https://w3id.org/lmodel/stix/stix_sco
+    close_mappings:
+    - uco-observable:AlternateDataStream
     slots:
     - StixAlternateDataStream_name
     - hashes
@@ -11308,6 +11472,8 @@ classes:
     definition_uri: https://w3id.org/lmodel/stix/StixWindowsPeSection
     description: A section of a Windows PE binary.
     from_schema: https://w3id.org/lmodel/stix/stix_sco
+    close_mappings:
+    - uco-observable:WindowsPESection
     slots:
     - StixWindowsPeSection_name
     - size
@@ -11323,6 +11489,8 @@ classes:
     definition_uri: https://w3id.org/lmodel/stix/StixWindowsPeOptionalHeader
     description: The optional header of a Windows PE binary.
     from_schema: https://w3id.org/lmodel/stix/stix_sco
+    close_mappings:
+    - uco-observable:WindowsPEOptionalHeader
     slots:
     - magic_hex
     - major_linker_version
@@ -11361,6 +11529,8 @@ classes:
     definition_uri: https://w3id.org/lmodel/stix/StixMimePart
     description: One MIME part of a multipart email body.
     from_schema: https://w3id.org/lmodel/stix/stix_sco
+    close_mappings:
+    - uco-observable:MimePartType
     slots:
     - body
     - body_raw_ref
@@ -11393,6 +11563,8 @@ classes:
     definition_uri: https://w3id.org/lmodel/stix/StixWindowsRegistryValue
     description: A value found under a Windows registry key.
     from_schema: https://w3id.org/lmodel/stix/stix_sco
+    close_mappings:
+    - uco-observable:WindowsRegistryValue
     slots:
     - name
     - data
@@ -11416,6 +11588,8 @@ classes:
     definition_uri: https://w3id.org/lmodel/stix/StixX509V3Extensions
     description: The standard X.509 v3 extensions of a certificate.
     from_schema: https://w3id.org/lmodel/stix/stix_sco
+    close_mappings:
+    - uco-observable:X509V3ExtensionsFacet
     slots:
     - basic_constraints
     - name_constraints
@@ -11723,6 +11897,8 @@ classes:
     description: A Grouping object explicitly asserts that the referenced STIX Objects
       have a shared content.
     from_schema: https://w3id.org/lmodel/stix/stix_sdo
+    close_mappings:
+    - uco-core:Grouping
     is_a: StixDomainObject
     slots:
     - object_marking_refs
@@ -11949,6 +12125,8 @@ classes:
       described as any, some or all of the following: region (e.g., North America),
       civic address (e.g. New York, US), latitude and longitude.'
     from_schema: https://w3id.org/lmodel/stix/stix_sdo
+    close_mappings:
+    - uco-location:Location
     is_a: StixDomainObject
     slots:
     - object_marking_refs
@@ -12438,6 +12616,8 @@ classes:
     description: Tools are legitimate software that can be used by threat actors to
       perform attacks.
     from_schema: https://w3id.org/lmodel/stix/stix_sdo
+    broad_mappings:
+    - uco-tool:Tool
     is_a: StixDomainObject
     slots:
     - object_marking_refs
@@ -12531,6 +12711,8 @@ classes:
     description: The Relationship object is used to link together two SDOs in order
       to describe how they are related to each other.
     from_schema: https://w3id.org/lmodel/stix/stix_sro
+    close_mappings:
+    - uco-core:Relationship
     is_a: StixRelationshipObject
     slots:
     - object_marking_refs
@@ -12617,6 +12799,6 @@ classes:
     class_uri: stix:StixSighting
 metamodel_version: 1.12.0
 source_file: stix.yaml
-source_file_date: '2026-10-31T01:04:08'
-source_file_size: 3580
+source_file_date: '2026-10-31T01:26:20'
+source_file_size: 4120
 

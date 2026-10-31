@@ -13,6 +13,9 @@ default_range: string
 prefixes:
   linkml: https://w3id.org/linkml/
   stix: https://w3id.org/lmodel/stix/
+  uco-core: https://ontology.unifiedcyberontology.org/uco/core/
+  uco-location: https://ontology.unifiedcyberontology.org/uco/location/
+  uco-tool: https://ontology.unifiedcyberontology.org/uco/tool/
 imports:
   - linkml:types
   - ./stix_vocabularies
@@ -481,6 +484,8 @@ classes:
         required: true
     annotations:
       stix_type: grouping
+    close_mappings:
+      - uco-core:Grouping
   StixIncident:
     description: >-
       The Incident object in STIX 2.1 is a stub, to be expanded in future STIX 2 releases.
@@ -638,6 +643,8 @@ classes:
               required: true
     annotations:
       stix_type: location
+    close_mappings:
+      - uco-location:Location
   StixMalware:
     description: >-
       Malware is a type of TTP that is also known as malicious code and malicious software,
@@ -880,6 +887,8 @@ classes:
         required: true
     annotations:
       stix_type: tool
+    broad_mappings:
+      - uco-tool:Tool
   StixVulnerability:
     description: >-
       A Vulnerability is a mistake in software that can be directly used by a hacker to gain

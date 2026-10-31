@@ -13,6 +13,7 @@ default_range: string
 prefixes:
   linkml: https://w3id.org/linkml/
   stix: https://w3id.org/lmodel/stix/
+  uco-observable: https://ontology.unifiedcyberontology.org/uco/observable/
 imports:
   - linkml:types
   - ./stix_vocabularies
@@ -1131,6 +1132,8 @@ classes:
         required: true
     annotations:
       stix_type: autonomous-system
+    close_mappings:
+      - uco-observable:AutonomousSystem
   StixDirectory:
     description: >-
       The Directory Object represents the properties common to a file system directory.
@@ -1157,6 +1160,8 @@ classes:
         pattern: ^(file|directory)--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
     annotations:
       stix_type: directory
+    close_mappings:
+      - uco-observable:Directory
   StixDomainName:
     description: The Domain Name represents the properties of a network domain name.
     is_a: StixCyberObservableObject
@@ -1179,6 +1184,8 @@ classes:
         pattern: ^(ipv4-addr|ipv6-addr|domain-name)--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
     annotations:
       stix_type: domain-name
+    close_mappings:
+      - uco-observable:DomainName
   StixEmailAddress:
     description: The Email Address Object represents a single email address.
     is_a: StixCyberObservableObject
@@ -1195,6 +1202,8 @@ classes:
         required: true
     annotations:
       stix_type: email-addr
+    close_mappings:
+      - uco-observable:EmailAddress
   StixEmailMessage:
     description: The Email Message Object represents an instance of an email message.
     is_a: StixCyberObservableObject
@@ -1233,6 +1242,8 @@ classes:
               value_presence: ABSENT
     annotations:
       stix_type: email-message
+    close_mappings:
+      - uco-observable:EmailMessage
   StixFile:
     description: The File Object represents the properties of a file.
     is_a: StixCyberObservableObject
@@ -1265,6 +1276,8 @@ classes:
             required: true
     annotations:
       stix_type: file
+    close_mappings:
+      - uco-observable:File
   StixIpv4Address:
     description: >-
       The IPv4 Address Object represents one or more IPv4 addresses expressed using CIDR notation.
@@ -1286,6 +1299,8 @@ classes:
         pattern: ^mac-addr--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
     annotations:
       stix_type: ipv4-addr
+    close_mappings:
+      - uco-observable:IPv4Address
   StixIpv6Address:
     description: >-
       The IPv6 Address Object represents one or more IPv6 addresses expressed using CIDR notation.
@@ -1307,6 +1322,8 @@ classes:
         pattern: ^mac-addr--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
     annotations:
       stix_type: ipv6-addr
+    close_mappings:
+      - uco-observable:IPv6Address
   StixMacAddress:
     description: >-
       The MAC Address Object represents a single Media Access Control (MAC) address.
@@ -1323,6 +1340,8 @@ classes:
         pattern: ^([0-9a-f]{2}[:]){5}([0-9a-f]{2})$
     annotations:
       stix_type: mac-addr
+    close_mappings:
+      - uco-observable:MACAddress
   StixMutex:
     description: >-
       The Mutex Object represents the properties of a mutual exclusion (mutex) object.
@@ -1338,6 +1357,8 @@ classes:
         required: true
     annotations:
       stix_type: mutex
+    close_mappings:
+      - uco-observable:Mutex
   StixNetworkTraffic:
     description: >-
       The Network Traffic Object represents arbitrary network traffic that originates from
@@ -1439,6 +1460,8 @@ classes:
             required: true
     annotations:
       stix_type: process
+    close_mappings:
+      - uco-observable:Process
   StixSoftware:
     description: >-
       The Software Object represents high-level properties associated with software, including
@@ -1460,6 +1483,8 @@ classes:
         required: true
     annotations:
       stix_type: software
+    close_mappings:
+      - uco-observable:Software
   StixUrl:
     description: >-
       The URL Object represents the properties of a uniform resource locator (URL).
@@ -1476,6 +1501,8 @@ classes:
         range: uri
     annotations:
       stix_type: url
+    close_mappings:
+      - uco-observable:URL
   StixUserAccount:
     description: >-
       The User Account Object represents an instance of any type of user account, including
@@ -1552,6 +1579,8 @@ classes:
             required: true
     annotations:
       stix_type: user-account
+    close_mappings:
+      - uco-observable:UserAccount
   StixWindowsRegistryKey:
     description: >-
       The Registry Key Object represents the properties of a Windows registry key.
@@ -1585,6 +1614,8 @@ classes:
             required: true
     annotations:
       stix_type: windows-registry-key
+    close_mappings:
+      - uco-observable:WindowsRegistryKey
   StixX509Certificate:
     description: >-
       The X509 Certificate Object represents the properties of an X.509 certificate.
@@ -1650,6 +1681,8 @@ classes:
             required: true
     annotations:
       stix_type: x509-certificate
+    close_mappings:
+      - uco-observable:X509Certificate
   StixNtfsExtension:
     description: >-
       The NTFS file extension specifies a default extension for capturing properties specific
@@ -1666,6 +1699,8 @@ classes:
             required: true
     annotations:
       stix_extension_name: ntfs-ext
+    close_mappings:
+      - uco-observable:NTFSFileFacet
   StixRasterImageExtension:
     description: >-
       The Raster Image file extension specifies a default extension for capturing properties
@@ -1690,6 +1725,8 @@ classes:
             required: true
     annotations:
       stix_extension_name: raster-image-ext
+    close_mappings:
+      - uco-observable:RasterPictureFacet
   StixPdfExtension:
     description: >-
       The PDF file extension specifies a default extension for capturing properties specific
@@ -1718,6 +1755,8 @@ classes:
             required: true
     annotations:
       stix_extension_name: pdf-ext
+    close_mappings:
+      - uco-observable:PDFFileFacet
   StixArchiveExtension:
     description: >-
       The Archive File extension specifies a default extension for capturing properties specific
@@ -1735,6 +1774,8 @@ classes:
         pattern: ^(file|directory)--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
     annotations:
       stix_extension_name: archive-ext
+    close_mappings:
+      - uco-observable:ArchiveFileFacet
   StixWindowsPeBinaryExtension:
     description: >-
       The Windows PE Binary File extension specifies a default extension for capturing properties
@@ -1791,6 +1832,8 @@ classes:
             required: true
     annotations:
       stix_extension_name: windows-pebinary-ext
+    close_mappings:
+      - uco-observable:WindowsPEBinaryFileFacet
   StixHttpRequestExtension:
     description: >-
       The HTTP request extension specifies a default extension for capturing network traffic
@@ -1823,6 +1866,8 @@ classes:
         required: true
     annotations:
       stix_extension_name: icmp-ext
+    close_mappings:
+      - uco-observable:ICMPConnectionFacet
   StixSocketExtension:
     description: >-
       The Network Socket extension specifies a default extension for capturing network traffic
@@ -1856,6 +1901,8 @@ classes:
             required: true
     annotations:
       stix_extension_name: tcp-ext
+    close_mappings:
+      - uco-observable:TCPConnectionFacet
   StixWindowsProcessExtension:
     description: >-
       The Windows Process extension specifies a default extension for capturing properties
@@ -1889,6 +1936,8 @@ classes:
             required: true
     annotations:
       stix_extension_name: windows-process-ext
+    close_mappings:
+      - uco-observable:WindowsProcessFacet
   StixWindowsServiceExtension:
     description: >-
       The Windows Service extension specifies a default extension for capturing properties
@@ -1929,6 +1978,8 @@ classes:
             required: true
     annotations:
       stix_extension_name: windows-service-ext
+    close_mappings:
+      - uco-observable:WindowsServiceFacet
   StixUnixAccountExtension:
     description: >-
       The User Account Object defines the following extensions. In addition to these, producers
@@ -1953,6 +2004,8 @@ classes:
             required: true
     annotations:
       stix_extension_name: unix-account-ext
+    close_mappings:
+      - uco-observable:UNIXAccountFacet
   StixAlternateDataStream:
     description: An NTFS alternate data stream of a file.
     slots:
@@ -1962,6 +2015,8 @@ classes:
     slot_usage:
       name:
         required: true
+    close_mappings:
+      - uco-observable:AlternateDataStream
   StixWindowsPeSection:
     description: A section of a Windows PE binary.
     slots:
@@ -1972,6 +2027,8 @@ classes:
     slot_usage:
       name:
         required: true
+    close_mappings:
+      - uco-observable:WindowsPESection
   StixWindowsPeOptionalHeader:
     description: The optional header of a Windows PE binary.
     slots:
@@ -2006,6 +2063,8 @@ classes:
       - loader_flags_hex
       - number_of_rva_and_sizes
       - hashes
+    close_mappings:
+      - uco-observable:WindowsPEOptionalHeader
   StixMimePart:
     description: One MIME part of a multipart email body.
     slots:
@@ -2030,6 +2089,8 @@ classes:
           slot_conditions:
             body_raw_ref:
               value_presence: ABSENT
+    close_mappings:
+      - uco-observable:MimePartType
   StixWindowsRegistryValue:
     description: A value found under a Windows registry key.
     slots:
@@ -2046,6 +2107,8 @@ classes:
       - slot_conditions:
           data_type:
             required: true
+    close_mappings:
+      - uco-observable:WindowsRegistryValue
   StixX509V3Extensions:
     description: The standard X.509 v3 extensions of a certificate.
     slots:
@@ -2114,6 +2177,8 @@ classes:
       - slot_conditions:
           policy_mappings:
             required: true
+    close_mappings:
+      - uco-observable:X509V3ExtensionsFacet
   StixFileExtensions:
     description: >-
       The extensions of a file: the predefined ntfs-ext, raster-image-ext, pdf-ext, archive-ext

@@ -15,6 +15,9 @@ default_range: string
 prefixes:
   linkml: https://w3id.org/linkml/
   stix: https://w3id.org/lmodel/stix/
+  uco-core: https://ontology.unifiedcyberontology.org/uco/core/
+  uco-identity: https://ontology.unifiedcyberontology.org/uco/identity/
+  uco-marking: https://ontology.unifiedcyberontology.org/uco/marking/
   xsd: http://www.w3.org/2001/XMLSchema#
 imports:
   - linkml:types
@@ -86,6 +89,8 @@ slots:
     multivalued: true
     minimum_cardinality: 1
     slot_uri: stix:object_marking_refs
+    close_mappings:
+      - uco-core:objectMarking
   granular_markings:
     description: The granular markings that apply to parts of the object.
     range: StixGranularMarking
@@ -103,16 +108,22 @@ slots:
     range: StixIdentity
     pattern: ^identity--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
     slot_uri: stix:created_by_ref
+    close_mappings:
+      - uco-core:createdBy
   created:
     description: The time at which the object, or its first version, was created.
     range: stix_timestamp_millis
     slot_uri: stix:created
+    close_mappings:
+      - uco-core:objectCreatedTime
   modified:
     description: >-
       The modified property represents the time that this particular version of the object
       was modified. The timestamp value MUST be precise to the nearest millisecond.
     range: stix_timestamp_millis
     slot_uri: stix:modified
+    close_mappings:
+      - uco-core:modifiedTime
   revoked:
     description: The revoked property indicates whether the object has been revoked.
     range: boolean
@@ -123,6 +134,8 @@ slots:
     multivalued: true
     minimum_cardinality: 1
     slot_uri: stix:labels
+    close_mappings:
+      - uco-core:tag
   confidence:
     description: >-
       Identifies the confidence that the creator has in the correctness of their data.
@@ -130,6 +143,8 @@ slots:
     minimum_value: 0
     maximum_value: 100
     slot_uri: stix:confidence
+    close_mappings:
+      - uco-core:confidence
   lang:
     description: The language of the text content, as an RFC 5646 language code.
     slot_uri: stix:lang
@@ -140,6 +155,8 @@ slots:
     minimum_cardinality: 1
     inlined_as_list: true
     slot_uri: stix:external_references
+    close_mappings:
+      - uco-core:externalReference
   defanged:
     description: >-
       Defines whether or not the data contained within the object has been defanged.
@@ -153,9 +170,13 @@ slots:
   name:
     description: A name that identifies the object.
     slot_uri: stix:name
+    close_mappings:
+      - uco-core:name
   description:
     description: A description of the object, which may be long.
     slot_uri: stix:description
+    close_mappings:
+      - uco-core:description
   identity_class:
     description: >-
       The type of entity that this Identity describes, e.g., an individual or organization.
@@ -183,6 +204,8 @@ slots:
       - range: StixMarkingDefinitionType
       - range: string
     slot_uri: stix:definition_type
+    close_mappings:
+      - uco-marking:definitionType
   definition:
     description: >-
       The marking itself: a statement, or a Traffic Light Protocol (TLP) level.
@@ -191,6 +214,8 @@ slots:
     any_of:
       - range: StixStatementMarking
       - range: StixTlpMarking
+    close_mappings:
+      - uco-marking:definition
   object_ref:
     description: Identifies the object that this Language Content applies to.
     range: StixObject
@@ -243,6 +268,8 @@ slots:
     description: >-
       An identifier of the external content in its source, such as CVE-2016-1234.
     slot_uri: stix:external_id
+    close_mappings:
+      - uco-core:externalIdentifier
   kill_chain_name:
     description: The name of the kill chain.
     slot_uri: stix:kill_chain_name
@@ -256,6 +283,8 @@ slots:
     range: StixMarkingDefinition
     pattern: ^marking-definition--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$
     slot_uri: stix:marking_ref
+    close_mappings:
+      - uco-marking:marking
   selectors:
     description: >-
       A list of selectors for content contained within the STIX object in which this property
@@ -264,10 +293,14 @@ slots:
     multivalued: true
     minimum_cardinality: 1
     slot_uri: stix:selectors
+    close_mappings:
+      - uco-marking:contentSelectors
   statement:
     description: >-
       A statement, such as a copyright or terms of use, that applies to the marked content.
     slot_uri: stix:statement
+    close_mappings:
+      - uco-marking:statement
   tlp:
     range: StixTlpLevel
     description: The Traffic Light Protocol level.
@@ -355,6 +388,8 @@ classes:
         required: true
     annotations:
       stix_type: identity
+    close_mappings:
+      - uco-identity:Identity
   StixMarkingDefinition:
     description: >-
       A marking definition: a statement, a Traffic Light Protocol (TLP) level or another marking
@@ -392,6 +427,8 @@ classes:
               required: true
     annotations:
       stix_type: marking-definition
+    close_mappings:
+      - uco-marking:MarkingDefinition
   StixLanguageContent:
     description: >-
       The language-content object represents text content for STIX Objects represented in
@@ -483,6 +520,8 @@ classes:
             external_id:
               required: true
               pattern: ^CAPEC-\d+$
+    close_mappings:
+      - uco-core:ExternalReference
   StixKillChainPhase:
     description: A phase in a kill chain, named by the chain and the phase.
     slots:
@@ -507,6 +546,8 @@ classes:
         required: true
       selectors:
         required: true
+    close_mappings:
+      - uco-marking:GranularMarking
   StixStatementMarking:
     description: >-
       The definition of a statement marking: a statement, such as a copyright or terms of
@@ -516,6 +557,8 @@ classes:
     slot_usage:
       statement:
         required: true
+    close_mappings:
+      - uco-marking:StatementMarking
   StixTlpMarking:
     description: 'The definition of a Traffic Light Protocol (TLP) marking: its level.'
     slots:

@@ -47,12 +47,20 @@ comments:
     classes with extra_slots, which the generated JSON Schema checks; the
     generated Python models do not, and docs/index.md lists what goes
     unchecked.
+  - >-
+    Classes and slots map to terms of the Unified Cyber Ontology (UCO) 1.5.0
+    where the meaning matches, under UCO's own namespaces: close_mappings
+    for the cyber-observable objects, their extensions and the shared
+    objects, and broad_mappings for Tool, which UCO defines more widely. The
+    domain objects that UCO has no term for are left unmapped.
+    tests/test_mappings.py checks each against UCO's term list.
 default_prefix: stix
 default_range: string
 
 prefixes:
   linkml: https://w3id.org/linkml/
   stix: https://w3id.org/lmodel/stix/
+  uco-core: https://ontology.unifiedcyberontology.org/uco/core/
 
 imports:
   - linkml:types
@@ -86,3 +94,5 @@ classes:
         minimum_cardinality: 1
     annotations:
       stix_type: bundle
+    close_mappings:
+      - uco-core:Bundle

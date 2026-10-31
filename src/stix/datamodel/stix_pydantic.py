@@ -98,7 +98,14 @@ linkml_meta = LinkMLMeta({'annotations': {'json_schemas_commit': {'tag': 'json_s
                   '(ntfs-ext) and extension definition identifiers. The '
                   'dictionaries that hold them are classes with extra_slots, which '
                   'the generated JSON Schema checks; the generated Python models '
-                  'do not, and docs/index.md lists what goes unchecked.'],
+                  'do not, and docs/index.md lists what goes unchecked.',
+                  'Classes and slots map to terms of the Unified Cyber Ontology '
+                  "(UCO) 1.5.0 where the meaning matches, under UCO's own "
+                  'namespaces: close_mappings for the cyber-observable objects, '
+                  'their extensions and the shared objects, and broad_mappings for '
+                  'Tool, which UCO defines more widely. The domain objects that '
+                  'UCO has no term for are left unmapped. tests/test_mappings.py '
+                  "checks each against UCO's term list."],
      'default_prefix': 'stix',
      'default_range': 'string',
      'description': 'A LinkML model of Structured Threat Information Expression '
@@ -120,7 +127,9 @@ linkml_meta = LinkMLMeta({'annotations': {'json_schemas_commit': {'tag': 'json_s
      'prefixes': {'linkml': {'prefix_prefix': 'linkml',
                              'prefix_reference': 'https://w3id.org/linkml/'},
                   'stix': {'prefix_prefix': 'stix',
-                           'prefix_reference': 'https://w3id.org/lmodel/stix/'}},
+                           'prefix_reference': 'https://w3id.org/lmodel/stix/'},
+                  'uco-core': {'prefix_prefix': 'uco-core',
+                               'prefix_reference': 'https://ontology.unifiedcyberontology.org/uco/core/'}},
      'see_also': ['https://lmodel.github.io/stix',
                   'https://github.com/oasis-open/cti-stix2-json-schemas/tree/9af1db41b7b86c06324f899649ae83480134f66e'],
      'source': 'https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html',
@@ -690,7 +699,9 @@ class StixObject(ConfiguredBaseModel):
     id: str = Field(default=..., description="""The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'], 'slot_uri': 'stix:id'} })
     type: str = Field(default=..., description="""The STIX type name of the object, such as attack-pattern. Each class pins its own.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'], 'slot_uri': 'stix:type'} })
     spec_version: Optional[StixSpecVersion] = Field(default=None, description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -731,22 +742,33 @@ class StixCommonObject(StixObject):
                         'modified': {'name': 'modified', 'required': True},
                         'spec_version': {'name': 'spec_version', 'required': True}}})
 
-    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:createdBy'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created_by_ref'} })
-    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectCreatedTime'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created'} })
-    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:modified'} })
+    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:modifiedTime'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:modified'} })
     revoked: Optional[bool] = Field(default=None, description="""The revoked property indicates whether the object has been revoked.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:revoked'} })
-    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:labels'} })
-    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:confidence'} })
+    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:tag'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:labels'} })
+    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:confidence'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:confidence'} })
     lang: Optional[str] = Field(default=None, description="""The language of the text content, as an RFC 5646 language code.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixGranularMarking'],
          'slot_uri': 'stix:lang'} })
-    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:externalReference'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:external_references'} })
     id: str = Field(default=..., description="""The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'], 'slot_uri': 'stix:id'} })
     type: str = Field(default=..., description="""The STIX type name of the object, such as attack-pattern. Each class pins its own.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'], 'slot_uri': 'stix:type'} })
     spec_version: StixSpecVersion = Field(default=..., description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -796,22 +818,33 @@ class StixDomainObject(StixCommonObject):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'abstract': True, 'from_schema': 'https://w3id.org/lmodel/stix/stix_core'})
 
-    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:createdBy'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created_by_ref'} })
-    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectCreatedTime'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created'} })
-    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:modified'} })
+    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:modifiedTime'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:modified'} })
     revoked: Optional[bool] = Field(default=None, description="""The revoked property indicates whether the object has been revoked.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:revoked'} })
-    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:labels'} })
-    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:confidence'} })
+    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:tag'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:labels'} })
+    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:confidence'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:confidence'} })
     lang: Optional[str] = Field(default=None, description="""The language of the text content, as an RFC 5646 language code.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixGranularMarking'],
          'slot_uri': 'stix:lang'} })
-    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:externalReference'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:external_references'} })
     id: str = Field(default=..., description="""The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'], 'slot_uri': 'stix:id'} })
     type: str = Field(default=..., description="""The STIX type name of the object, such as attack-pattern. Each class pins its own.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'], 'slot_uri': 'stix:type'} })
     spec_version: StixSpecVersion = Field(default=..., description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -861,22 +894,33 @@ class StixRelationshipObject(StixCommonObject):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'abstract': True, 'from_schema': 'https://w3id.org/lmodel/stix/stix_core'})
 
-    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:createdBy'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created_by_ref'} })
-    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectCreatedTime'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created'} })
-    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:modified'} })
+    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:modifiedTime'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:modified'} })
     revoked: Optional[bool] = Field(default=None, description="""The revoked property indicates whether the object has been revoked.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:revoked'} })
-    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:labels'} })
-    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:confidence'} })
+    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:tag'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:labels'} })
+    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:confidence'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:confidence'} })
     lang: Optional[str] = Field(default=None, description="""The language of the text content, as an RFC 5646 language code.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixGranularMarking'],
          'slot_uri': 'stix:lang'} })
-    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:externalReference'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:external_references'} })
     id: str = Field(default=..., description="""The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'], 'slot_uri': 'stix:id'} })
     type: str = Field(default=..., description="""The STIX type name of the object, such as attack-pattern. Each class pins its own.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'], 'slot_uri': 'stix:type'} })
     spec_version: StixSpecVersion = Field(default=..., description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -930,7 +974,9 @@ class StixCyberObservableObject(StixObject):
     id: str = Field(default=..., description="""The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'], 'slot_uri': 'stix:id'} })
     type: str = Field(default=..., description="""The STIX type name of the object, such as attack-pattern. Each class pins its own.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'], 'slot_uri': 'stix:type'} })
     spec_version: Optional[StixSpecVersion] = Field(default=None, description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -966,6 +1012,7 @@ class StixIdentity(StixDomainObject):
     Identities can represent actual individuals, organizations, or groups (e.g., ACME, Inc.) as well as classes of individuals, organizations, or groups.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'annotations': {'stix_type': {'tag': 'stix_type', 'value': 'identity'}},
+         'close_mappings': ['uco-identity:Identity'],
          'from_schema': 'https://w3id.org/lmodel/stix/stix_core',
          'slot_usage': {'id': {'name': 'id',
                                'pattern': '^identity--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$'},
@@ -973,7 +1020,8 @@ class StixIdentity(StixDomainObject):
                         'type': {'equals_string': 'identity', 'name': 'type'}}})
 
     roles: Optional[list[str]] = Field(default=None, description="""The roles that the identity or threat actor plays.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity', 'StixThreatActor'], 'slot_uri': 'stix:roles'} })
-    name: str = Field(default=..., description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    name: str = Field(default=..., description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:name'],
+         'domain_of': ['StixIdentity',
                        'StixMarkingDefinition',
                        'StixExtensionDefinition',
                        'StixAutonomousSystem',
@@ -998,7 +1046,8 @@ class StixIdentity(StixDomainObject):
                        'StixTool',
                        'StixVulnerability'],
          'slot_uri': 'stix:name'} })
-    description: Optional[str] = Field(default=None, description="""A description of the object, which may be long.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    description: Optional[str] = Field(default=None, description="""A description of the object, which may be long.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:description'],
+         'domain_of': ['StixIdentity',
                        'StixExtensionDefinition',
                        'StixExternalReference',
                        'StixAttackPattern',
@@ -1025,24 +1074,35 @@ class StixIdentity(StixDomainObject):
          'domain_of': ['StixIdentity'],
          'slot_uri': 'stix:sectors'} })
     contact_information: Optional[str] = Field(default=None, description="""The contact information (e-mail, phone number, etc.) for this Identity.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity'], 'slot_uri': 'stix:contact_information'} })
-    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:createdBy'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created_by_ref'} })
-    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectCreatedTime'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created'} })
-    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:modified'} })
+    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:modifiedTime'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:modified'} })
     revoked: Optional[bool] = Field(default=None, description="""The revoked property indicates whether the object has been revoked.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:revoked'} })
-    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:labels'} })
-    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:confidence'} })
+    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:tag'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:labels'} })
+    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:confidence'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:confidence'} })
     lang: Optional[str] = Field(default=None, description="""The language of the text content, as an RFC 5646 language code.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixGranularMarking'],
          'slot_uri': 'stix:lang'} })
-    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:externalReference'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:external_references'} })
     id: str = Field(default=..., description="""The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'], 'slot_uri': 'stix:id'} })
     type: Literal["identity"] = Field(default=..., description="""The STIX type name of the object, such as attack-pattern. Each class pins its own.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'],
          'equals_string': 'identity',
          'slot_uri': 'stix:type'} })
     spec_version: StixSpecVersion = Field(default=..., description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -1105,6 +1165,7 @@ class StixMarkingDefinition(StixObject):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'annotations': {'stix_type': {'tag': 'stix_type',
                                        'value': 'marking-definition'}},
+         'close_mappings': ['uco-marking:MarkingDefinition'],
          'from_schema': 'https://w3id.org/lmodel/stix/stix_core',
          'rules': [{'description': 'Without extensions, a marking definition states '
                                    'its definition and definition type.',
@@ -1123,13 +1184,17 @@ class StixMarkingDefinition(StixObject):
                         'type': {'equals_string': 'marking-definition',
                                  'name': 'type'}}})
 
-    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:createdBy'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created_by_ref'} })
-    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectCreatedTime'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created'} })
-    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:externalReference'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:external_references'} })
-    name: Optional[str] = Field(default=None, description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    name: Optional[str] = Field(default=None, description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:name'],
+         'domain_of': ['StixIdentity',
                        'StixMarkingDefinition',
                        'StixExtensionDefinition',
                        'StixAutonomousSystem',
@@ -1155,9 +1220,11 @@ class StixMarkingDefinition(StixObject):
                        'StixVulnerability'],
          'slot_uri': 'stix:name'} })
     definition_type: Optional[Union[StixMarkingDefinitionType, str]] = Field(default=None, description="""The type of the marking definition, such as statement or tlp.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'StixMarkingDefinitionType'}, {'range': 'string'}],
+         'close_mappings': ['uco-marking:definitionType'],
          'domain_of': ['StixMarkingDefinition'],
          'slot_uri': 'stix:definition_type'} })
     definition: Optional[Union[StixStatementMarking, StixTlpMarking]] = Field(default=None, description="""The marking itself: a statement, or a Traffic Light Protocol (TLP) level.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'StixStatementMarking'}, {'range': 'StixTlpMarking'}],
+         'close_mappings': ['uco-marking:definition'],
          'domain_of': ['StixMarkingDefinition'],
          'slot_uri': 'stix:definition'} })
     id: str = Field(default=..., description="""The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'], 'slot_uri': 'stix:id'} })
@@ -1165,7 +1232,9 @@ class StixMarkingDefinition(StixObject):
          'equals_string': 'marking-definition',
          'slot_uri': 'stix:type'} })
     spec_version: StixSpecVersion = Field(default=..., description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -1238,24 +1307,35 @@ class StixLanguageContent(StixCommonObject):
     object_ref: str = Field(default=..., description="""Identifies the object that this Language Content applies to.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixLanguageContent'], 'slot_uri': 'stix:object_ref'} })
     object_modified: Optional[str] = Field(default=None, description="""Identifies the modified time of the object that this Language Content applies to.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixLanguageContent'], 'slot_uri': 'stix:object_modified'} })
     contents: StixLanguageContents = Field(default=..., description="""Contains the actual Language Content (translation).""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixLanguageContent'], 'slot_uri': 'stix:contents'} })
-    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:createdBy'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created_by_ref'} })
-    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectCreatedTime'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created'} })
-    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:modified'} })
+    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:modifiedTime'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:modified'} })
     revoked: Optional[bool] = Field(default=None, description="""The revoked property indicates whether the object has been revoked.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:revoked'} })
-    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:labels'} })
-    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:confidence'} })
+    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:tag'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:labels'} })
+    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:confidence'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:confidence'} })
     lang: Optional[str] = Field(default=None, description="""The language of the text content, as an RFC 5646 language code.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixGranularMarking'],
          'slot_uri': 'stix:lang'} })
-    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:externalReference'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:external_references'} })
     id: str = Field(default=..., description="""The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'], 'slot_uri': 'stix:id'} })
     type: Literal["language-content"] = Field(default=..., description="""The STIX type name of the object, such as attack-pattern. Each class pins its own.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'],
          'equals_string': 'language-content',
          'slot_uri': 'stix:type'} })
     spec_version: StixSpecVersion = Field(default=..., description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -1342,7 +1422,8 @@ class StixExtensionDefinition(StixCommonObject):
                                  'name': 'type'},
                         'version': {'name': 'version', 'required': True}}})
 
-    name: str = Field(default=..., description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    name: str = Field(default=..., description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:name'],
+         'domain_of': ['StixIdentity',
                        'StixMarkingDefinition',
                        'StixExtensionDefinition',
                        'StixAutonomousSystem',
@@ -1367,7 +1448,8 @@ class StixExtensionDefinition(StixCommonObject):
                        'StixTool',
                        'StixVulnerability'],
          'slot_uri': 'stix:name'} })
-    description: Optional[str] = Field(default=None, description="""A description of the object, which may be long.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    description: Optional[str] = Field(default=None, description="""A description of the object, which may be long.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:description'],
+         'domain_of': ['StixIdentity',
                        'StixExtensionDefinition',
                        'StixExternalReference',
                        'StixAttackPattern',
@@ -1397,24 +1479,35 @@ class StixExtensionDefinition(StixCommonObject):
     extension_types: list[StixExtensionType] = Field(default=..., description="""Which extension types are contained within this extension.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixExtensionDefinition'], 'slot_uri': 'stix:extension_types'} })
     extension_properties: Optional[list[str]] = Field(default=None, description="""The list of new property names that are added to an object by this extension.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixExtensionDefinition'],
          'slot_uri': 'stix:extension_properties'} })
-    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:createdBy'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created_by_ref'} })
-    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectCreatedTime'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created'} })
-    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:modified'} })
+    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:modifiedTime'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:modified'} })
     revoked: Optional[bool] = Field(default=None, description="""The revoked property indicates whether the object has been revoked.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:revoked'} })
-    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:labels'} })
-    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:confidence'} })
+    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:tag'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:labels'} })
+    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:confidence'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:confidence'} })
     lang: Optional[str] = Field(default=None, description="""The language of the text content, as an RFC 5646 language code.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixGranularMarking'],
          'slot_uri': 'stix:lang'} })
-    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:externalReference'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:external_references'} })
     id: str = Field(default=..., description="""The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'], 'slot_uri': 'stix:id'} })
     type: Literal["extension-definition"] = Field(default=..., description="""The STIX type name of the object, such as attack-pattern. Each class pins its own.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'],
          'equals_string': 'extension-definition',
          'slot_uri': 'stix:type'} })
     spec_version: StixSpecVersion = Field(default=..., description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -1480,6 +1573,7 @@ class StixExternalReference(ConfiguredBaseModel):
                     {'slot_conditions': {'description': {'name': 'description',
                                                          'required': True}}},
                     {'slot_conditions': {'url': {'name': 'url', 'required': True}}}],
+         'close_mappings': ['uco-core:ExternalReference'],
          'from_schema': 'https://w3id.org/lmodel/stix/stix_core',
          'rules': [{'description': 'A reference to the CVE list names a CVE '
                                    'identifier.',
@@ -1497,7 +1591,8 @@ class StixExternalReference(ConfiguredBaseModel):
          'slot_usage': {'source_name': {'name': 'source_name', 'required': True}}})
 
     source_name: str = Field(default=..., description="""The source, such as a system, registry or organization, that defines the reference.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixExternalReference'], 'slot_uri': 'stix:source_name'} })
-    description: Optional[str] = Field(default=None, description="""A description of the object, which may be long.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    description: Optional[str] = Field(default=None, description="""A description of the object, which may be long.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:description'],
+         'domain_of': ['StixIdentity',
                        'StixExtensionDefinition',
                        'StixExternalReference',
                        'StixAttackPattern',
@@ -1526,7 +1621,9 @@ class StixExternalReference(ConfiguredBaseModel):
                        'StixWindowsPeSection',
                        'StixWindowsPeOptionalHeader'],
          'slot_uri': 'stix:hashes'} })
-    external_id: Optional[str] = Field(default=None, description="""An identifier of the external content in its source, such as CVE-2016-1234.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixExternalReference'], 'slot_uri': 'stix:external_id'} })
+    external_id: Optional[str] = Field(default=None, description="""An identifier of the external content in its source, such as CVE-2016-1234.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:externalIdentifier'],
+         'domain_of': ['StixExternalReference'],
+         'slot_uri': 'stix:external_id'} })
 
 
 class StixKillChainPhase(ConfiguredBaseModel):
@@ -1546,12 +1643,17 @@ class StixGranularMarking(ConfiguredBaseModel):
     """
     The granular-marking type defines how the list of marking-definition objects referenced by the marking_refs property to apply to a set of content identified by the list of selectors in the selectors property.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/lmodel/stix/stix_core',
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'close_mappings': ['uco-marking:GranularMarking'],
+         'from_schema': 'https://w3id.org/lmodel/stix/stix_core',
          'slot_usage': {'marking_ref': {'name': 'marking_ref', 'required': True},
                         'selectors': {'name': 'selectors', 'required': True}}})
 
-    marking_ref: str = Field(default=..., description="""The marking_ref property specifies the ID of the marking-definition object that describes the marking.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixGranularMarking'], 'slot_uri': 'stix:marking_ref'} })
-    selectors: list[str] = Field(default=..., description="""A list of selectors for content contained within the STIX object in which this property appears.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixGranularMarking'], 'slot_uri': 'stix:selectors'} })
+    marking_ref: str = Field(default=..., description="""The marking_ref property specifies the ID of the marking-definition object that describes the marking.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-marking:marking'],
+         'domain_of': ['StixGranularMarking'],
+         'slot_uri': 'stix:marking_ref'} })
+    selectors: list[str] = Field(default=..., description="""A list of selectors for content contained within the STIX object in which this property appears.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-marking:contentSelectors'],
+         'domain_of': ['StixGranularMarking'],
+         'slot_uri': 'stix:selectors'} })
     lang: Optional[str] = Field(default=None, description="""The language of the text content, as an RFC 5646 language code.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixGranularMarking'],
          'slot_uri': 'stix:lang'} })
 
@@ -1586,10 +1688,13 @@ class StixStatementMarking(ConfiguredBaseModel):
     """
     The definition of a statement marking: a statement, such as a copyright or terms of use.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/lmodel/stix/stix_core',
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'close_mappings': ['uco-marking:StatementMarking'],
+         'from_schema': 'https://w3id.org/lmodel/stix/stix_core',
          'slot_usage': {'statement': {'name': 'statement', 'required': True}}})
 
-    statement: str = Field(default=..., description="""A statement, such as a copyright or terms of use, that applies to the marked content.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixStatementMarking'], 'slot_uri': 'stix:statement'} })
+    statement: str = Field(default=..., description="""A statement, such as a copyright or terms of use, that applies to the marked content.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-marking:statement'],
+         'domain_of': ['StixStatementMarking'],
+         'slot_uri': 'stix:statement'} })
 
 
 class StixTlpMarking(ConfiguredBaseModel):
@@ -1702,7 +1807,9 @@ class StixArtifact(StixCyberObservableObject):
          'equals_string': 'artifact',
          'slot_uri': 'stix:type'} })
     spec_version: Optional[StixSpecVersion] = Field(default=None, description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -1765,6 +1872,7 @@ class StixAutonomousSystem(StixCyberObservableObject):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'annotations': {'stix_type': {'tag': 'stix_type',
                                        'value': 'autonomous-system'}},
+         'close_mappings': ['uco-observable:AutonomousSystem'],
          'from_schema': 'https://w3id.org/lmodel/stix/stix_sco',
          'slot_usage': {'id': {'name': 'id',
                                'pattern': '^autonomous-system--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$'},
@@ -1772,7 +1880,8 @@ class StixAutonomousSystem(StixCyberObservableObject):
                         'type': {'equals_string': 'autonomous-system', 'name': 'type'}}})
 
     number: int = Field(default=..., description="""Specifies the number assigned to the AS. Such assignments are typically performed by a Regional Internet Registries (RIR).""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixAutonomousSystem'], 'slot_uri': 'stix:number'} })
-    name: Optional[str] = Field(default=None, description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    name: Optional[str] = Field(default=None, description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:name'],
+         'domain_of': ['StixIdentity',
                        'StixMarkingDefinition',
                        'StixExtensionDefinition',
                        'StixAutonomousSystem',
@@ -1804,7 +1913,9 @@ class StixAutonomousSystem(StixCyberObservableObject):
          'equals_string': 'autonomous-system',
          'slot_uri': 'stix:type'} })
     spec_version: Optional[StixSpecVersion] = Field(default=None, description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -1853,6 +1964,7 @@ class StixDirectory(StixCyberObservableObject):
     The Directory Object represents the properties common to a file system directory.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'annotations': {'stix_type': {'tag': 'stix_type', 'value': 'directory'}},
+         'close_mappings': ['uco-observable:Directory'],
          'from_schema': 'https://w3id.org/lmodel/stix/stix_sco',
          'slot_usage': {'contains_refs': {'any_of': [{'range': 'StixFile'},
                                                      {'range': 'StixDirectory'}],
@@ -1878,7 +1990,9 @@ class StixDirectory(StixCyberObservableObject):
          'equals_string': 'directory',
          'slot_uri': 'stix:type'} })
     spec_version: Optional[StixSpecVersion] = Field(default=None, description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -1953,6 +2067,7 @@ class StixDomainName(StixCyberObservableObject):
     The Domain Name represents the properties of a network domain name.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'annotations': {'stix_type': {'tag': 'stix_type', 'value': 'domain-name'}},
+         'close_mappings': ['uco-observable:DomainName'],
          'from_schema': 'https://w3id.org/lmodel/stix/stix_sco',
          'slot_usage': {'id': {'name': 'id',
                                'pattern': '^domain-name--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$'},
@@ -1983,7 +2098,9 @@ class StixDomainName(StixCyberObservableObject):
          'equals_string': 'domain-name',
          'slot_uri': 'stix:type'} })
     spec_version: Optional[StixSpecVersion] = Field(default=None, description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -2045,6 +2162,7 @@ class StixEmailAddress(StixCyberObservableObject):
     The Email Address Object represents a single email address.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'annotations': {'stix_type': {'tag': 'stix_type', 'value': 'email-addr'}},
+         'close_mappings': ['uco-observable:EmailAddress'],
          'from_schema': 'https://w3id.org/lmodel/stix/stix_sco',
          'slot_usage': {'id': {'name': 'id',
                                'pattern': '^email-addr--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$'},
@@ -2069,7 +2187,9 @@ class StixEmailAddress(StixCyberObservableObject):
          'equals_string': 'email-addr',
          'slot_uri': 'stix:type'} })
     spec_version: Optional[StixSpecVersion] = Field(default=None, description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -2131,6 +2251,7 @@ class StixEmailMessage(StixCyberObservableObject):
     The Email Message Object represents an instance of an email message.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'annotations': {'stix_type': {'tag': 'stix_type', 'value': 'email-message'}},
+         'close_mappings': ['uco-observable:EmailMessage'],
          'from_schema': 'https://w3id.org/lmodel/stix/stix_sco',
          'rules': [{'description': 'body and body_multipart exclude each other.',
                     'postconditions': {'slot_conditions': {'body_multipart': {'name': 'body_multipart',
@@ -2165,7 +2286,9 @@ class StixEmailMessage(StixCyberObservableObject):
          'equals_string': 'email-message',
          'slot_uri': 'stix:type'} })
     spec_version: Optional[StixSpecVersion] = Field(default=None, description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -2295,6 +2418,7 @@ class StixFile(StixCyberObservableObject):
          'any_of': [{'slot_conditions': {'hashes': {'name': 'hashes',
                                                     'required': True}}},
                     {'slot_conditions': {'name': {'name': 'name', 'required': True}}}],
+         'close_mappings': ['uco-observable:File'],
          'from_schema': 'https://w3id.org/lmodel/stix/stix_sco',
          'slot_usage': {'extensions': {'name': 'extensions',
                                        'range': 'StixFileExtensions'},
@@ -2312,7 +2436,8 @@ class StixFile(StixCyberObservableObject):
          'slot_uri': 'stix:hashes'} })
     size: Optional[int] = Field(default=None, description="""A size in bytes, as a non-negative integer.""", ge=0, json_schema_extra = { "linkml_meta": {'domain_of': ['StixFile', 'StixAlternateDataStream', 'StixWindowsPeSection'],
          'slot_uri': 'stix:size'} })
-    name: Optional[str] = Field(default=None, description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    name: Optional[str] = Field(default=None, description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:name'],
+         'domain_of': ['StixIdentity',
                        'StixMarkingDefinition',
                        'StixExtensionDefinition',
                        'StixAutonomousSystem',
@@ -2353,7 +2478,9 @@ class StixFile(StixCyberObservableObject):
          'equals_string': 'file',
          'slot_uri': 'stix:type'} })
     spec_version: Optional[StixSpecVersion] = Field(default=None, description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixFileExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -2454,6 +2581,7 @@ class StixIpv4Address(StixCyberObservableObject):
     The IPv4 Address Object represents one or more IPv4 addresses expressed using CIDR notation.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'annotations': {'stix_type': {'tag': 'stix_type', 'value': 'ipv4-addr'}},
+         'close_mappings': ['uco-observable:IPv4Address'],
          'from_schema': 'https://w3id.org/lmodel/stix/stix_sco',
          'slot_usage': {'id': {'name': 'id',
                                'pattern': '^ipv4-addr--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$'},
@@ -2482,7 +2610,9 @@ class StixIpv4Address(StixCyberObservableObject):
          'equals_string': 'ipv4-addr',
          'slot_uri': 'stix:type'} })
     spec_version: Optional[StixSpecVersion] = Field(default=None, description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -2570,6 +2700,7 @@ class StixIpv6Address(StixCyberObservableObject):
     The IPv6 Address Object represents one or more IPv6 addresses expressed using CIDR notation.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'annotations': {'stix_type': {'tag': 'stix_type', 'value': 'ipv6-addr'}},
+         'close_mappings': ['uco-observable:IPv6Address'],
          'from_schema': 'https://w3id.org/lmodel/stix/stix_sco',
          'slot_usage': {'id': {'name': 'id',
                                'pattern': '^ipv6-addr--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$'},
@@ -2598,7 +2729,9 @@ class StixIpv6Address(StixCyberObservableObject):
          'equals_string': 'ipv6-addr',
          'slot_uri': 'stix:type'} })
     spec_version: Optional[StixSpecVersion] = Field(default=None, description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -2686,6 +2819,7 @@ class StixMacAddress(StixCyberObservableObject):
     The MAC Address Object represents a single Media Access Control (MAC) address.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'annotations': {'stix_type': {'tag': 'stix_type', 'value': 'mac-addr'}},
+         'close_mappings': ['uco-observable:MACAddress'],
          'from_schema': 'https://w3id.org/lmodel/stix/stix_sco',
          'slot_usage': {'id': {'name': 'id',
                                'pattern': '^mac-addr--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$'},
@@ -2707,7 +2841,9 @@ class StixMacAddress(StixCyberObservableObject):
          'equals_string': 'mac-addr',
          'slot_uri': 'stix:type'} })
     spec_version: Optional[StixSpecVersion] = Field(default=None, description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -2769,13 +2905,15 @@ class StixMutex(StixCyberObservableObject):
     The Mutex Object represents the properties of a mutual exclusion (mutex) object.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'annotations': {'stix_type': {'tag': 'stix_type', 'value': 'mutex'}},
+         'close_mappings': ['uco-observable:Mutex'],
          'from_schema': 'https://w3id.org/lmodel/stix/stix_sco',
          'slot_usage': {'id': {'name': 'id',
                                'pattern': '^mutex--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$'},
                         'name': {'name': 'name', 'required': True},
                         'type': {'equals_string': 'mutex', 'name': 'type'}}})
 
-    name: str = Field(default=..., description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    name: str = Field(default=..., description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:name'],
+         'domain_of': ['StixIdentity',
                        'StixMarkingDefinition',
                        'StixExtensionDefinition',
                        'StixAutonomousSystem',
@@ -2806,7 +2944,9 @@ class StixMutex(StixCyberObservableObject):
          'equals_string': 'mutex',
          'slot_uri': 'stix:type'} })
     spec_version: Optional[StixSpecVersion] = Field(default=None, description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -2900,7 +3040,9 @@ class StixNetworkTraffic(StixCyberObservableObject):
          'equals_string': 'network-traffic',
          'slot_uri': 'stix:type'} })
     spec_version: Optional[StixSpecVersion] = Field(default=None, description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixNetworkTrafficExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -3047,6 +3189,7 @@ class StixProcess(StixCyberObservableObject):
                                                         'required': True}}},
                     {'slot_conditions': {'child_refs': {'name': 'child_refs',
                                                         'required': True}}}],
+         'close_mappings': ['uco-observable:Process'],
          'from_schema': 'https://w3id.org/lmodel/stix/stix_sco',
          'slot_usage': {'extensions': {'name': 'extensions',
                                        'range': 'StixProcessExtensions'},
@@ -3072,7 +3215,9 @@ class StixProcess(StixCyberObservableObject):
          'equals_string': 'process',
          'slot_uri': 'stix:type'} })
     spec_version: Optional[StixSpecVersion] = Field(default=None, description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixProcessExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -3186,13 +3331,15 @@ class StixSoftware(StixCyberObservableObject):
     The Software Object represents high-level properties associated with software, including software products.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'annotations': {'stix_type': {'tag': 'stix_type', 'value': 'software'}},
+         'close_mappings': ['uco-observable:Software'],
          'from_schema': 'https://w3id.org/lmodel/stix/stix_sco',
          'slot_usage': {'id': {'name': 'id',
                                'pattern': '^software--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$'},
                         'name': {'name': 'name', 'required': True},
                         'type': {'equals_string': 'software', 'name': 'type'}}})
 
-    name: str = Field(default=..., description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    name: str = Field(default=..., description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:name'],
+         'domain_of': ['StixIdentity',
                        'StixMarkingDefinition',
                        'StixExtensionDefinition',
                        'StixAutonomousSystem',
@@ -3233,7 +3380,9 @@ class StixSoftware(StixCyberObservableObject):
          'equals_string': 'software',
          'slot_uri': 'stix:type'} })
     spec_version: Optional[StixSpecVersion] = Field(default=None, description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -3308,6 +3457,7 @@ class StixUrl(StixCyberObservableObject):
     The URL Object represents the properties of a uniform resource locator (URL).
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'annotations': {'stix_type': {'tag': 'stix_type', 'value': 'url'}},
+         'close_mappings': ['uco-observable:URL'],
          'from_schema': 'https://w3id.org/lmodel/stix/stix_sco',
          'slot_usage': {'id': {'name': 'id',
                                'pattern': '^url--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$'},
@@ -3327,7 +3477,9 @@ class StixUrl(StixCyberObservableObject):
          'equals_string': 'url',
          'slot_uri': 'stix:type'} })
     spec_version: Optional[StixSpecVersion] = Field(default=None, description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -3406,6 +3558,7 @@ class StixUserAccount(StixCyberObservableObject):
                                                                  'required': True}}},
                     {'slot_conditions': {'account_last_login': {'name': 'account_last_login',
                                                                 'required': True}}}],
+         'close_mappings': ['uco-observable:UserAccount'],
          'from_schema': 'https://w3id.org/lmodel/stix/stix_sco',
          'slot_usage': {'extensions': {'name': 'extensions',
                                        'range': 'StixUserAccountExtensions'},
@@ -3438,7 +3591,9 @@ class StixUserAccount(StixCyberObservableObject):
          'equals_string': 'user-account',
          'slot_uri': 'stix:type'} })
     spec_version: Optional[StixSpecVersion] = Field(default=None, description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixUserAccountExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -3497,6 +3652,7 @@ class StixWindowsRegistryKey(StixCyberObservableObject):
                                                               'required': True}}},
                     {'slot_conditions': {'number_of_subkeys': {'name': 'number_of_subkeys',
                                                                'required': True}}}],
+         'close_mappings': ['uco-observable:WindowsRegistryKey'],
          'from_schema': 'https://w3id.org/lmodel/stix/stix_sco',
          'slot_usage': {'id': {'name': 'id',
                                'pattern': '^windows-registry-key--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$'},
@@ -3515,7 +3671,9 @@ class StixWindowsRegistryKey(StixCyberObservableObject):
          'equals_string': 'windows-registry-key',
          'slot_uri': 'stix:type'} })
     spec_version: Optional[StixSpecVersion] = Field(default=None, description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -3604,6 +3762,7 @@ class StixX509Certificate(StixCyberObservableObject):
                                                                          'required': True}}},
                     {'slot_conditions': {'x509_v3_extensions': {'name': 'x509_v3_extensions',
                                                                 'required': True}}}],
+         'close_mappings': ['uco-observable:X509Certificate'],
          'from_schema': 'https://w3id.org/lmodel/stix/stix_sco',
          'slot_usage': {'id': {'name': 'id',
                                'pattern': '^x509-certificate--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$'},
@@ -3644,7 +3803,9 @@ class StixX509Certificate(StixCyberObservableObject):
          'equals_string': 'x509-certificate',
          'slot_uri': 'stix:type'} })
     spec_version: Optional[StixSpecVersion] = Field(default=None, description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -3697,6 +3858,7 @@ class StixNtfsExtension(ConfiguredBaseModel):
          'any_of': [{'slot_conditions': {'sid': {'name': 'sid', 'required': True}}},
                     {'slot_conditions': {'alternate_data_streams': {'name': 'alternate_data_streams',
                                                                     'required': True}}}],
+         'close_mappings': ['uco-observable:NTFSFileFacet'],
          'from_schema': 'https://w3id.org/lmodel/stix/stix_sco'})
 
     sid: Optional[str] = Field(default=None, description="""Specifies the security ID (SID) value assigned to the file.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixNtfsExtension'], 'slot_uri': 'stix:sid'} })
@@ -3717,6 +3879,7 @@ class StixRasterImageExtension(ConfiguredBaseModel):
                                                             'required': True}}},
                     {'slot_conditions': {'exif_tags': {'name': 'exif_tags',
                                                        'required': True}}}],
+         'close_mappings': ['uco-observable:RasterPictureFacet'],
          'from_schema': 'https://w3id.org/lmodel/stix/stix_sco'})
 
     image_height: Optional[int] = Field(default=None, description="""Specifies the height of the image in the image file, in pixels.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixRasterImageExtension'], 'slot_uri': 'stix:image_height'} })
@@ -3741,6 +3904,7 @@ class StixPdfExtension(ConfiguredBaseModel):
                                                     'required': True}}},
                     {'slot_conditions': {'pdfid1': {'name': 'pdfid1',
                                                     'required': True}}}],
+         'close_mappings': ['uco-observable:PDFFileFacet'],
          'from_schema': 'https://w3id.org/lmodel/stix/stix_sco'})
 
     version: Optional[str] = Field(default=None, description="""A version, as a string; each class says of what.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixExtensionDefinition',
@@ -3761,6 +3925,7 @@ class StixArchiveExtension(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'annotations': {'stix_extension_name': {'tag': 'stix_extension_name',
                                                  'value': 'archive-ext'}},
+         'close_mappings': ['uco-observable:ArchiveFileFacet'],
          'from_schema': 'https://w3id.org/lmodel/stix/stix_sco',
          'slot_usage': {'contains_refs': {'any_of': [{'range': 'StixFile'},
                                                      {'range': 'StixDirectory'}],
@@ -3816,6 +3981,7 @@ class StixWindowsPeBinaryExtension(ConfiguredBaseModel):
                                                              'required': True}}},
                     {'slot_conditions': {'sections': {'name': 'sections',
                                                       'required': True}}}],
+         'close_mappings': ['uco-observable:WindowsPEBinaryFileFacet'],
          'from_schema': 'https://w3id.org/lmodel/stix/stix_sco',
          'slot_usage': {'pe_type': {'name': 'pe_type', 'required': True}}})
 
@@ -3882,6 +4048,7 @@ class StixIcmpExtension(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'annotations': {'stix_extension_name': {'tag': 'stix_extension_name',
                                                  'value': 'icmp-ext'}},
+         'close_mappings': ['uco-observable:ICMPConnectionFacet'],
          'from_schema': 'https://w3id.org/lmodel/stix/stix_sco',
          'slot_usage': {'icmp_code_hex': {'name': 'icmp_code_hex', 'required': True},
                         'icmp_type_hex': {'name': 'icmp_type_hex', 'required': True}}})
@@ -3918,6 +4085,7 @@ class StixTcpExtension(ConfiguredBaseModel):
                                                            'required': True}}},
                     {'slot_conditions': {'dst_flags_hex': {'name': 'dst_flags_hex',
                                                            'required': True}}}],
+         'close_mappings': ['uco-observable:TCPConnectionFacet'],
          'from_schema': 'https://w3id.org/lmodel/stix/stix_sco'})
 
     src_flags_hex: Optional[str] = Field(default=None, description="""Specifies the source TCP flags, as the union of all TCP flags observed between the start of the traffic (as defined by the start property) and the end of the traffic (as defined by the end property).""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixTcpExtension'], 'slot_uri': 'stix:src_flags_hex'} })
@@ -3942,6 +4110,7 @@ class StixWindowsProcessExtension(ConfiguredBaseModel):
                                                           'required': True}}},
                     {'slot_conditions': {'startup_info': {'name': 'startup_info',
                                                           'required': True}}}],
+         'close_mappings': ['uco-observable:WindowsProcessFacet'],
          'from_schema': 'https://w3id.org/lmodel/stix/stix_sco'})
 
     aslr_enabled: Optional[bool] = Field(default=None, description="""Specifies whether Address Space Layout Randomization (ASLR) is enabled for the process.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixWindowsProcessExtension'], 'slot_uri': 'stix:aslr_enabled'} })
@@ -3976,6 +4145,7 @@ class StixWindowsServiceExtension(ConfiguredBaseModel):
                                                           'required': True}}},
                     {'slot_conditions': {'service_status': {'name': 'service_status',
                                                             'required': True}}}],
+         'close_mappings': ['uco-observable:WindowsServiceFacet'],
          'from_schema': 'https://w3id.org/lmodel/stix/stix_sco'})
 
     service_name: Optional[str] = Field(default=None, description="""Specifies the name of the service.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixWindowsServiceExtension'], 'slot_uri': 'stix:service_name'} })
@@ -4019,6 +4189,7 @@ class StixUnixAccountExtension(ConfiguredBaseModel):
                                                       'required': True}}},
                     {'slot_conditions': {'shell': {'name': 'shell',
                                                    'required': True}}}],
+         'close_mappings': ['uco-observable:UNIXAccountFacet'],
          'from_schema': 'https://w3id.org/lmodel/stix/stix_sco'})
 
     gid: Optional[float] = Field(default=None, description="""Specifies the primary group ID of the account.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixUnixAccountExtension'], 'slot_uri': 'stix:gid'} })
@@ -4031,10 +4202,12 @@ class StixAlternateDataStream(ConfiguredBaseModel):
     """
     An NTFS alternate data stream of a file.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/lmodel/stix/stix_sco',
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'close_mappings': ['uco-observable:AlternateDataStream'],
+         'from_schema': 'https://w3id.org/lmodel/stix/stix_sco',
          'slot_usage': {'name': {'name': 'name', 'required': True}}})
 
-    name: str = Field(default=..., description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    name: str = Field(default=..., description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:name'],
+         'domain_of': ['StixIdentity',
                        'StixMarkingDefinition',
                        'StixExtensionDefinition',
                        'StixAutonomousSystem',
@@ -4075,10 +4248,12 @@ class StixWindowsPeSection(ConfiguredBaseModel):
     """
     A section of a Windows PE binary.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/lmodel/stix/stix_sco',
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'close_mappings': ['uco-observable:WindowsPESection'],
+         'from_schema': 'https://w3id.org/lmodel/stix/stix_sco',
          'slot_usage': {'name': {'name': 'name', 'required': True}}})
 
-    name: str = Field(default=..., description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    name: str = Field(default=..., description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:name'],
+         'domain_of': ['StixIdentity',
                        'StixMarkingDefinition',
                        'StixExtensionDefinition',
                        'StixAutonomousSystem',
@@ -4120,7 +4295,8 @@ class StixWindowsPeOptionalHeader(ConfiguredBaseModel):
     """
     The optional header of a Windows PE binary.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/lmodel/stix/stix_sco'})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'close_mappings': ['uco-observable:WindowsPEOptionalHeader'],
+         'from_schema': 'https://w3id.org/lmodel/stix/stix_sco'})
 
     magic_hex: Optional[str] = Field(default=None, description="""Specifies the unsigned integer that indicates the type of the PE binary.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixWindowsPeOptionalHeader'], 'slot_uri': 'stix:magic_hex'} })
     major_linker_version: Optional[int] = Field(default=None, description="""Specifies the linker major version number.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixWindowsPeOptionalHeader'],
@@ -4191,6 +4367,7 @@ class StixMimePart(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'any_of': [{'slot_conditions': {'body': {'name': 'body', 'required': True}}},
                     {'slot_conditions': {'body_raw_ref': {'name': 'body_raw_ref',
                                                           'required': True}}}],
+         'close_mappings': ['uco-observable:MimePartType'],
          'from_schema': 'https://w3id.org/lmodel/stix/stix_sco',
          'rules': [{'description': 'body and body_raw_ref exclude each other.',
                     'postconditions': {'slot_conditions': {'body_raw_ref': {'name': 'body_raw_ref',
@@ -4228,9 +4405,11 @@ class StixWindowsRegistryValue(ConfiguredBaseModel):
                     {'slot_conditions': {'data': {'name': 'data', 'required': True}}},
                     {'slot_conditions': {'data_type': {'name': 'data_type',
                                                        'required': True}}}],
+         'close_mappings': ['uco-observable:WindowsRegistryValue'],
          'from_schema': 'https://w3id.org/lmodel/stix/stix_sco'})
 
-    name: Optional[str] = Field(default=None, description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    name: Optional[str] = Field(default=None, description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:name'],
+         'domain_of': ['StixIdentity',
                        'StixMarkingDefinition',
                        'StixExtensionDefinition',
                        'StixAutonomousSystem',
@@ -4295,6 +4474,7 @@ class StixX509V3Extensions(ConfiguredBaseModel):
                                                                   'required': True}}},
                     {'slot_conditions': {'policy_mappings': {'name': 'policy_mappings',
                                                              'required': True}}}],
+         'close_mappings': ['uco-observable:X509V3ExtensionsFacet'],
          'from_schema': 'https://w3id.org/lmodel/stix/stix_sco'})
 
     basic_constraints: Optional[str] = Field(default=None, description="""Specifies a multi-valued extension which indicates whether a certificate is a CA certificate.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixX509V3Extensions'], 'slot_uri': 'stix:basic_constraints'} })
@@ -4425,7 +4605,8 @@ class StixAttackPattern(StixDomainObject):
                        'StixThreatActor',
                        'StixTool'],
          'slot_uri': 'stix:aliases'} })
-    name: str = Field(default=..., description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    name: str = Field(default=..., description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:name'],
+         'domain_of': ['StixIdentity',
                        'StixMarkingDefinition',
                        'StixExtensionDefinition',
                        'StixAutonomousSystem',
@@ -4450,7 +4631,8 @@ class StixAttackPattern(StixDomainObject):
                        'StixTool',
                        'StixVulnerability'],
          'slot_uri': 'stix:name'} })
-    description: Optional[str] = Field(default=None, description="""A description of the object, which may be long.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    description: Optional[str] = Field(default=None, description="""A description of the object, which may be long.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:description'],
+         'domain_of': ['StixIdentity',
                        'StixExtensionDefinition',
                        'StixExternalReference',
                        'StixAttackPattern',
@@ -4476,24 +4658,35 @@ class StixAttackPattern(StixDomainObject):
                        'StixMalware',
                        'StixTool'],
          'slot_uri': 'stix:kill_chain_phases'} })
-    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:createdBy'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created_by_ref'} })
-    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectCreatedTime'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created'} })
-    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:modified'} })
+    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:modifiedTime'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:modified'} })
     revoked: Optional[bool] = Field(default=None, description="""The revoked property indicates whether the object has been revoked.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:revoked'} })
-    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:labels'} })
-    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:confidence'} })
+    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:tag'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:labels'} })
+    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:confidence'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:confidence'} })
     lang: Optional[str] = Field(default=None, description="""The language of the text content, as an RFC 5646 language code.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixGranularMarking'],
          'slot_uri': 'stix:lang'} })
-    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:externalReference'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:external_references'} })
     id: str = Field(default=..., description="""The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'], 'slot_uri': 'stix:id'} })
     type: Literal["attack-pattern"] = Field(default=..., description="""The STIX type name of the object, such as attack-pattern. Each class pins its own.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'],
          'equals_string': 'attack-pattern',
          'slot_uri': 'stix:type'} })
     spec_version: StixSpecVersion = Field(default=..., description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -4561,7 +4754,8 @@ class StixCampaign(StixDomainObject):
                         'name': {'name': 'name', 'required': True},
                         'type': {'equals_string': 'campaign', 'name': 'type'}}})
 
-    name: str = Field(default=..., description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    name: str = Field(default=..., description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:name'],
+         'domain_of': ['StixIdentity',
                        'StixMarkingDefinition',
                        'StixExtensionDefinition',
                        'StixAutonomousSystem',
@@ -4586,7 +4780,8 @@ class StixCampaign(StixDomainObject):
                        'StixTool',
                        'StixVulnerability'],
          'slot_uri': 'stix:name'} })
-    description: Optional[str] = Field(default=None, description="""A description of the object, which may be long.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    description: Optional[str] = Field(default=None, description="""A description of the object, which may be long.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:description'],
+         'domain_of': ['StixIdentity',
                        'StixExtensionDefinition',
                        'StixExternalReference',
                        'StixAttackPattern',
@@ -4629,24 +4824,35 @@ class StixCampaign(StixDomainObject):
                        'StixSighting'],
          'slot_uri': 'stix:last_seen'} })
     objective: Optional[str] = Field(default=None, description="""This field defines the Campaign's primary goal, objective, desired outcome, or intended effect.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCampaign'], 'slot_uri': 'stix:objective'} })
-    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:createdBy'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created_by_ref'} })
-    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectCreatedTime'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created'} })
-    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:modified'} })
+    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:modifiedTime'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:modified'} })
     revoked: Optional[bool] = Field(default=None, description="""The revoked property indicates whether the object has been revoked.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:revoked'} })
-    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:labels'} })
-    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:confidence'} })
+    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:tag'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:labels'} })
+    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:confidence'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:confidence'} })
     lang: Optional[str] = Field(default=None, description="""The language of the text content, as an RFC 5646 language code.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixGranularMarking'],
          'slot_uri': 'stix:lang'} })
-    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:externalReference'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:external_references'} })
     id: str = Field(default=..., description="""The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'], 'slot_uri': 'stix:id'} })
     type: Literal["campaign"] = Field(default=..., description="""The STIX type name of the object, such as attack-pattern. Each class pins its own.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'],
          'equals_string': 'campaign',
          'slot_uri': 'stix:type'} })
     spec_version: StixSpecVersion = Field(default=..., description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -4715,7 +4921,8 @@ class StixCourseOfAction(StixDomainObject):
                         'name': {'name': 'name', 'required': True},
                         'type': {'equals_string': 'course-of-action', 'name': 'type'}}})
 
-    name: str = Field(default=..., description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    name: str = Field(default=..., description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:name'],
+         'domain_of': ['StixIdentity',
                        'StixMarkingDefinition',
                        'StixExtensionDefinition',
                        'StixAutonomousSystem',
@@ -4740,7 +4947,8 @@ class StixCourseOfAction(StixDomainObject):
                        'StixTool',
                        'StixVulnerability'],
          'slot_uri': 'stix:name'} })
-    description: Optional[str] = Field(default=None, description="""A description of the object, which may be long.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    description: Optional[str] = Field(default=None, description="""A description of the object, which may be long.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:description'],
+         'domain_of': ['StixIdentity',
                        'StixExtensionDefinition',
                        'StixExternalReference',
                        'StixAttackPattern',
@@ -4760,24 +4968,35 @@ class StixCourseOfAction(StixDomainObject):
                        'StixRelationship',
                        'StixSighting'],
          'slot_uri': 'stix:description'} })
-    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:createdBy'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created_by_ref'} })
-    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectCreatedTime'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created'} })
-    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:modified'} })
+    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:modifiedTime'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:modified'} })
     revoked: Optional[bool] = Field(default=None, description="""The revoked property indicates whether the object has been revoked.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:revoked'} })
-    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:labels'} })
-    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:confidence'} })
+    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:tag'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:labels'} })
+    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:confidence'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:confidence'} })
     lang: Optional[str] = Field(default=None, description="""The language of the text content, as an RFC 5646 language code.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixGranularMarking'],
          'slot_uri': 'stix:lang'} })
-    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:externalReference'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:external_references'} })
     id: str = Field(default=..., description="""The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'], 'slot_uri': 'stix:id'} })
     type: Literal["course-of-action"] = Field(default=..., description="""The STIX type name of the object, such as attack-pattern. Each class pins its own.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'],
          'equals_string': 'course-of-action',
          'slot_uri': 'stix:type'} })
     spec_version: StixSpecVersion = Field(default=..., description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -4839,6 +5058,7 @@ class StixGrouping(StixDomainObject):
     A Grouping object explicitly asserts that the referenced STIX Objects have a shared content.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'annotations': {'stix_type': {'tag': 'stix_type', 'value': 'grouping'}},
+         'close_mappings': ['uco-core:Grouping'],
          'from_schema': 'https://w3id.org/lmodel/stix/stix_sdo',
          'slot_usage': {'context': {'name': 'context', 'required': True},
                         'id': {'name': 'id',
@@ -4846,7 +5066,8 @@ class StixGrouping(StixDomainObject):
                         'object_refs': {'name': 'object_refs', 'required': True},
                         'type': {'equals_string': 'grouping', 'name': 'type'}}})
 
-    name: Optional[str] = Field(default=None, description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    name: Optional[str] = Field(default=None, description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:name'],
+         'domain_of': ['StixIdentity',
                        'StixMarkingDefinition',
                        'StixExtensionDefinition',
                        'StixAutonomousSystem',
@@ -4871,7 +5092,8 @@ class StixGrouping(StixDomainObject):
                        'StixTool',
                        'StixVulnerability'],
          'slot_uri': 'stix:name'} })
-    description: Optional[str] = Field(default=None, description="""A description of the object, which may be long.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    description: Optional[str] = Field(default=None, description="""A description of the object, which may be long.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:description'],
+         'domain_of': ['StixIdentity',
                        'StixExtensionDefinition',
                        'StixExternalReference',
                        'StixAttackPattern',
@@ -4900,24 +5122,35 @@ class StixGrouping(StixDomainObject):
                        'StixOpinion',
                        'StixReport'],
          'slot_uri': 'stix:object_refs'} })
-    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:createdBy'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created_by_ref'} })
-    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectCreatedTime'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created'} })
-    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:modified'} })
+    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:modifiedTime'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:modified'} })
     revoked: Optional[bool] = Field(default=None, description="""The revoked property indicates whether the object has been revoked.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:revoked'} })
-    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:labels'} })
-    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:confidence'} })
+    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:tag'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:labels'} })
+    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:confidence'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:confidence'} })
     lang: Optional[str] = Field(default=None, description="""The language of the text content, as an RFC 5646 language code.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixGranularMarking'],
          'slot_uri': 'stix:lang'} })
-    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:externalReference'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:external_references'} })
     id: str = Field(default=..., description="""The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'], 'slot_uri': 'stix:id'} })
     type: Literal["grouping"] = Field(default=..., description="""The STIX type name of the object, such as attack-pattern. Each class pins its own.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'],
          'equals_string': 'grouping',
          'slot_uri': 'stix:type'} })
     spec_version: StixSpecVersion = Field(default=..., description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -4998,7 +5231,8 @@ class StixIncident(StixDomainObject):
                         'name': {'name': 'name', 'required': True},
                         'type': {'equals_string': 'incident', 'name': 'type'}}})
 
-    name: str = Field(default=..., description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    name: str = Field(default=..., description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:name'],
+         'domain_of': ['StixIdentity',
                        'StixMarkingDefinition',
                        'StixExtensionDefinition',
                        'StixAutonomousSystem',
@@ -5023,7 +5257,8 @@ class StixIncident(StixDomainObject):
                        'StixTool',
                        'StixVulnerability'],
          'slot_uri': 'stix:name'} })
-    description: Optional[str] = Field(default=None, description="""A description of the object, which may be long.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    description: Optional[str] = Field(default=None, description="""A description of the object, which may be long.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:description'],
+         'domain_of': ['StixIdentity',
                        'StixExtensionDefinition',
                        'StixExternalReference',
                        'StixAttackPattern',
@@ -5043,24 +5278,35 @@ class StixIncident(StixDomainObject):
                        'StixRelationship',
                        'StixSighting'],
          'slot_uri': 'stix:description'} })
-    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:createdBy'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created_by_ref'} })
-    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectCreatedTime'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created'} })
-    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:modified'} })
+    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:modifiedTime'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:modified'} })
     revoked: Optional[bool] = Field(default=None, description="""The revoked property indicates whether the object has been revoked.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:revoked'} })
-    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:labels'} })
-    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:confidence'} })
+    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:tag'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:labels'} })
+    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:confidence'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:confidence'} })
     lang: Optional[str] = Field(default=None, description="""The language of the text content, as an RFC 5646 language code.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixGranularMarking'],
          'slot_uri': 'stix:lang'} })
-    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:externalReference'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:external_references'} })
     id: str = Field(default=..., description="""The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'], 'slot_uri': 'stix:id'} })
     type: Literal["incident"] = Field(default=..., description="""The STIX type name of the object, such as attack-pattern. Each class pins its own.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'],
          'equals_string': 'incident',
          'slot_uri': 'stix:type'} })
     spec_version: StixSpecVersion = Field(default=..., description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -5133,7 +5379,8 @@ class StixIndicator(StixDomainObject):
     indicator_types: Optional[list[Union[StixIndicatorType, str]]] = Field(default=None, description="""This field is an Open Vocabulary that specifies the type of indicator. Open vocab - indicator-type-ov.""", min_length=1, json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'StixIndicatorType'}, {'range': 'string'}],
          'domain_of': ['StixIndicator'],
          'slot_uri': 'stix:indicator_types'} })
-    name: Optional[str] = Field(default=None, description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    name: Optional[str] = Field(default=None, description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:name'],
+         'domain_of': ['StixIdentity',
                        'StixMarkingDefinition',
                        'StixExtensionDefinition',
                        'StixAutonomousSystem',
@@ -5158,7 +5405,8 @@ class StixIndicator(StixDomainObject):
                        'StixTool',
                        'StixVulnerability'],
          'slot_uri': 'stix:name'} })
-    description: Optional[str] = Field(default=None, description="""A description of the object, which may be long.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    description: Optional[str] = Field(default=None, description="""A description of the object, which may be long.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:description'],
+         'domain_of': ['StixIdentity',
                        'StixExtensionDefinition',
                        'StixExternalReference',
                        'StixAttackPattern',
@@ -5191,24 +5439,35 @@ class StixIndicator(StixDomainObject):
                        'StixMalware',
                        'StixTool'],
          'slot_uri': 'stix:kill_chain_phases'} })
-    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:createdBy'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created_by_ref'} })
-    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectCreatedTime'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created'} })
-    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:modified'} })
+    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:modifiedTime'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:modified'} })
     revoked: Optional[bool] = Field(default=None, description="""The revoked property indicates whether the object has been revoked.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:revoked'} })
-    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:labels'} })
-    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:confidence'} })
+    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:tag'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:labels'} })
+    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:confidence'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:confidence'} })
     lang: Optional[str] = Field(default=None, description="""The language of the text content, as an RFC 5646 language code.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixGranularMarking'],
          'slot_uri': 'stix:lang'} })
-    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:externalReference'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:external_references'} })
     id: str = Field(default=..., description="""The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'], 'slot_uri': 'stix:id'} })
     type: Literal["indicator"] = Field(default=..., description="""The STIX type name of the object, such as attack-pattern. Each class pins its own.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'],
          'equals_string': 'indicator',
          'slot_uri': 'stix:type'} })
     spec_version: StixSpecVersion = Field(default=..., description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -5276,7 +5535,8 @@ class StixInfrastructure(StixDomainObject):
                         'name': {'name': 'name', 'required': True},
                         'type': {'equals_string': 'infrastructure', 'name': 'type'}}})
 
-    name: str = Field(default=..., description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    name: str = Field(default=..., description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:name'],
+         'domain_of': ['StixIdentity',
                        'StixMarkingDefinition',
                        'StixExtensionDefinition',
                        'StixAutonomousSystem',
@@ -5301,7 +5561,8 @@ class StixInfrastructure(StixDomainObject):
                        'StixTool',
                        'StixVulnerability'],
          'slot_uri': 'stix:name'} })
-    description: Optional[str] = Field(default=None, description="""A description of the object, which may be long.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    description: Optional[str] = Field(default=None, description="""A description of the object, which may be long.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:description'],
+         'domain_of': ['StixIdentity',
                        'StixExtensionDefinition',
                        'StixExternalReference',
                        'StixAttackPattern',
@@ -5352,24 +5613,35 @@ class StixInfrastructure(StixDomainObject):
                        'StixThreatActor',
                        'StixSighting'],
          'slot_uri': 'stix:last_seen'} })
-    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:createdBy'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created_by_ref'} })
-    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectCreatedTime'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created'} })
-    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:modified'} })
+    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:modifiedTime'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:modified'} })
     revoked: Optional[bool] = Field(default=None, description="""The revoked property indicates whether the object has been revoked.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:revoked'} })
-    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:labels'} })
-    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:confidence'} })
+    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:tag'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:labels'} })
+    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:confidence'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:confidence'} })
     lang: Optional[str] = Field(default=None, description="""The language of the text content, as an RFC 5646 language code.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixGranularMarking'],
          'slot_uri': 'stix:lang'} })
-    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:externalReference'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:external_references'} })
     id: str = Field(default=..., description="""The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'], 'slot_uri': 'stix:id'} })
     type: Literal["infrastructure"] = Field(default=..., description="""The STIX type name of the object, such as attack-pattern. Each class pins its own.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'],
          'equals_string': 'infrastructure',
          'slot_uri': 'stix:type'} })
     spec_version: StixSpecVersion = Field(default=..., description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -5437,7 +5709,8 @@ class StixIntrusionSet(StixDomainObject):
                         'name': {'name': 'name', 'required': True},
                         'type': {'equals_string': 'intrusion-set', 'name': 'type'}}})
 
-    name: str = Field(default=..., description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    name: str = Field(default=..., description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:name'],
+         'domain_of': ['StixIdentity',
                        'StixMarkingDefinition',
                        'StixExtensionDefinition',
                        'StixAutonomousSystem',
@@ -5462,7 +5735,8 @@ class StixIntrusionSet(StixDomainObject):
                        'StixTool',
                        'StixVulnerability'],
          'slot_uri': 'stix:name'} })
-    description: Optional[str] = Field(default=None, description="""A description of the object, which may be long.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    description: Optional[str] = Field(default=None, description="""A description of the object, which may be long.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:description'],
+         'domain_of': ['StixIdentity',
                        'StixExtensionDefinition',
                        'StixExternalReference',
                        'StixAttackPattern',
@@ -5514,24 +5788,35 @@ class StixIntrusionSet(StixDomainObject):
     secondary_motivations: Optional[list[Union[StixAttackMotivation, str]]] = Field(default=None, description="""The secondary reasons, motivations or purposes behind the activity.""", min_length=1, json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'StixAttackMotivation'}, {'range': 'string'}],
          'domain_of': ['StixIntrusionSet', 'StixThreatActor'],
          'slot_uri': 'stix:secondary_motivations'} })
-    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:createdBy'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created_by_ref'} })
-    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectCreatedTime'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created'} })
-    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:modified'} })
+    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:modifiedTime'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:modified'} })
     revoked: Optional[bool] = Field(default=None, description="""The revoked property indicates whether the object has been revoked.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:revoked'} })
-    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:labels'} })
-    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:confidence'} })
+    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:tag'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:labels'} })
+    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:confidence'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:confidence'} })
     lang: Optional[str] = Field(default=None, description="""The language of the text content, as an RFC 5646 language code.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixGranularMarking'],
          'slot_uri': 'stix:lang'} })
-    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:externalReference'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:external_references'} })
     id: str = Field(default=..., description="""The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'], 'slot_uri': 'stix:id'} })
     type: Literal["intrusion-set"] = Field(default=..., description="""The STIX type name of the object, such as attack-pattern. Each class pins its own.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'],
          'equals_string': 'intrusion-set',
          'slot_uri': 'stix:type'} })
     spec_version: StixSpecVersion = Field(default=..., description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -5601,6 +5886,7 @@ class StixLocation(StixDomainObject):
                                                       'required': True},
                                          'longitude': {'name': 'longitude',
                                                        'required': True}}}],
+         'close_mappings': ['uco-location:Location'],
          'from_schema': 'https://w3id.org/lmodel/stix/stix_sdo',
          'rules': [{'description': 'A latitude needs a longitude.',
                     'postconditions': {'slot_conditions': {'longitude': {'name': 'longitude',
@@ -5623,7 +5909,8 @@ class StixLocation(StixDomainObject):
                                'pattern': '^location--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$'},
                         'type': {'equals_string': 'location', 'name': 'type'}}})
 
-    description: Optional[str] = Field(default=None, description="""A description of the object, which may be long.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    description: Optional[str] = Field(default=None, description="""A description of the object, which may be long.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:description'],
+         'domain_of': ['StixIdentity',
                        'StixExtensionDefinition',
                        'StixExternalReference',
                        'StixAttackPattern',
@@ -5643,7 +5930,8 @@ class StixLocation(StixDomainObject):
                        'StixRelationship',
                        'StixSighting'],
          'slot_uri': 'stix:description'} })
-    name: Optional[str] = Field(default=None, description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    name: Optional[str] = Field(default=None, description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:name'],
+         'domain_of': ['StixIdentity',
                        'StixMarkingDefinition',
                        'StixExtensionDefinition',
                        'StixAutonomousSystem',
@@ -5679,24 +5967,35 @@ class StixLocation(StixDomainObject):
     city: Optional[str] = Field(default=None, description="""The city that this Location describes.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixLocation'], 'slot_uri': 'stix:city'} })
     street_address: Optional[str] = Field(default=None, description="""The street address that this Location describes.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixLocation'], 'slot_uri': 'stix:street_address'} })
     postal_code: Optional[str] = Field(default=None, description="""The postal code for this Location.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixLocation'], 'slot_uri': 'stix:postal_code'} })
-    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:createdBy'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created_by_ref'} })
-    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectCreatedTime'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created'} })
-    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:modified'} })
+    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:modifiedTime'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:modified'} })
     revoked: Optional[bool] = Field(default=None, description="""The revoked property indicates whether the object has been revoked.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:revoked'} })
-    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:labels'} })
-    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:confidence'} })
+    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:tag'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:labels'} })
+    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:confidence'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:confidence'} })
     lang: Optional[str] = Field(default=None, description="""The language of the text content, as an RFC 5646 language code.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixGranularMarking'],
          'slot_uri': 'stix:lang'} })
-    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:externalReference'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:external_references'} })
     id: str = Field(default=..., description="""The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'], 'slot_uri': 'stix:id'} })
     type: Literal["location"] = Field(default=..., description="""The STIX type name of the object, such as attack-pattern. Each class pins its own.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'],
          'equals_string': 'location',
          'slot_uri': 'stix:type'} })
     spec_version: StixSpecVersion = Field(default=..., description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -5802,7 +6101,8 @@ class StixMalware(StixDomainObject):
     malware_types: Optional[list[Union[StixMalwareType, str]]] = Field(default=None, description="""The type of malware being described. Open Vocab - malware-type-ov.""", min_length=1, json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'StixMalwareType'}, {'range': 'string'}],
          'domain_of': ['StixMalware'],
          'slot_uri': 'stix:malware_types'} })
-    name: Optional[str] = Field(default=None, description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    name: Optional[str] = Field(default=None, description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:name'],
+         'domain_of': ['StixIdentity',
                        'StixMarkingDefinition',
                        'StixExtensionDefinition',
                        'StixAutonomousSystem',
@@ -5827,7 +6127,8 @@ class StixMalware(StixDomainObject):
                        'StixTool',
                        'StixVulnerability'],
          'slot_uri': 'stix:name'} })
-    description: Optional[str] = Field(default=None, description="""A description of the object, which may be long.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    description: Optional[str] = Field(default=None, description="""A description of the object, which may be long.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:description'],
+         'domain_of': ['StixIdentity',
                        'StixExtensionDefinition',
                        'StixExternalReference',
                        'StixAttackPattern',
@@ -5854,24 +6155,35 @@ class StixMalware(StixDomainObject):
                        'StixTool'],
          'slot_uri': 'stix:kill_chain_phases'} })
     is_family: bool = Field(default=..., description="""Whether the object represents a malware family (if true) or a malware instance (if false).""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixMalware'], 'slot_uri': 'stix:is_family'} })
-    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:createdBy'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created_by_ref'} })
-    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectCreatedTime'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created'} })
-    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:modified'} })
+    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:modifiedTime'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:modified'} })
     revoked: Optional[bool] = Field(default=None, description="""The revoked property indicates whether the object has been revoked.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:revoked'} })
-    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:labels'} })
-    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:confidence'} })
+    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:tag'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:labels'} })
+    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:confidence'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:confidence'} })
     lang: Optional[str] = Field(default=None, description="""The language of the text content, as an RFC 5646 language code.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixGranularMarking'],
          'slot_uri': 'stix:lang'} })
-    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:externalReference'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:external_references'} })
     id: str = Field(default=..., description="""The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'], 'slot_uri': 'stix:id'} })
     type: Literal["malware"] = Field(default=..., description="""The STIX type name of the object, such as attack-pattern. Each class pins its own.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'],
          'equals_string': 'malware',
          'slot_uri': 'stix:type'} })
     spec_version: StixSpecVersion = Field(default=..., description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -6000,24 +6312,35 @@ class StixMalwareAnalysis(StixDomainObject):
                     {'range': 'StixArtifact'}],
          'domain_of': ['StixMalwareAnalysis'],
          'slot_uri': 'stix:sample_ref'} })
-    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:createdBy'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created_by_ref'} })
-    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectCreatedTime'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created'} })
-    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:modified'} })
+    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:modifiedTime'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:modified'} })
     revoked: Optional[bool] = Field(default=None, description="""The revoked property indicates whether the object has been revoked.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:revoked'} })
-    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:labels'} })
-    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:confidence'} })
+    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:tag'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:labels'} })
+    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:confidence'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:confidence'} })
     lang: Optional[str] = Field(default=None, description="""The language of the text content, as an RFC 5646 language code.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixGranularMarking'],
          'slot_uri': 'stix:lang'} })
-    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:externalReference'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:external_references'} })
     id: str = Field(default=..., description="""The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'], 'slot_uri': 'stix:id'} })
     type: Literal["malware-analysis"] = Field(default=..., description="""The STIX type name of the object, such as attack-pattern. Each class pins its own.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'],
          'equals_string': 'malware-analysis',
          'slot_uri': 'stix:type'} })
     spec_version: StixSpecVersion = Field(default=..., description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -6160,24 +6483,35 @@ class StixNote(StixDomainObject):
                        'StixOpinion',
                        'StixReport'],
          'slot_uri': 'stix:object_refs'} })
-    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:createdBy'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created_by_ref'} })
-    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectCreatedTime'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created'} })
-    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:modified'} })
+    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:modifiedTime'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:modified'} })
     revoked: Optional[bool] = Field(default=None, description="""The revoked property indicates whether the object has been revoked.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:revoked'} })
-    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:labels'} })
-    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:confidence'} })
+    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:tag'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:labels'} })
+    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:confidence'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:confidence'} })
     lang: Optional[str] = Field(default=None, description="""The language of the text content, as an RFC 5646 language code.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixGranularMarking'],
          'slot_uri': 'stix:lang'} })
-    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:externalReference'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:external_references'} })
     id: str = Field(default=..., description="""The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'], 'slot_uri': 'stix:id'} })
     type: Literal["note"] = Field(default=..., description="""The STIX type name of the object, such as attack-pattern. Each class pins its own.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'],
          'equals_string': 'note',
          'slot_uri': 'stix:type'} })
     spec_version: StixSpecVersion = Field(default=..., description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -6294,24 +6628,35 @@ class StixObservedData(StixDomainObject):
                        'StixOpinion',
                        'StixReport'],
          'slot_uri': 'stix:object_refs'} })
-    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:createdBy'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created_by_ref'} })
-    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectCreatedTime'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created'} })
-    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:modified'} })
+    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:modifiedTime'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:modified'} })
     revoked: Optional[bool] = Field(default=None, description="""The revoked property indicates whether the object has been revoked.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:revoked'} })
-    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:labels'} })
-    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:confidence'} })
+    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:tag'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:labels'} })
+    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:confidence'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:confidence'} })
     lang: Optional[str] = Field(default=None, description="""The language of the text content, as an RFC 5646 language code.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixGranularMarking'],
          'slot_uri': 'stix:lang'} })
-    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:externalReference'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:external_references'} })
     id: str = Field(default=..., description="""The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'], 'slot_uri': 'stix:id'} })
     type: Literal["observed-data"] = Field(default=..., description="""The STIX type name of the object, such as attack-pattern. Each class pins its own.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'],
          'equals_string': 'observed-data',
          'slot_uri': 'stix:type'} })
     spec_version: StixSpecVersion = Field(default=..., description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -6402,24 +6747,35 @@ class StixOpinion(StixDomainObject):
                        'StixReport'],
          'slot_uri': 'stix:object_refs'} })
     opinion: StixAgreement = Field(default=..., description="""The opinion that the producer has about about all of the STIX Object(s) listed in the object_refs property.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixOpinion'], 'slot_uri': 'stix:opinion'} })
-    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:createdBy'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created_by_ref'} })
-    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectCreatedTime'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created'} })
-    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:modified'} })
+    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:modifiedTime'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:modified'} })
     revoked: Optional[bool] = Field(default=None, description="""The revoked property indicates whether the object has been revoked.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:revoked'} })
-    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:labels'} })
-    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:confidence'} })
+    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:tag'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:labels'} })
+    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:confidence'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:confidence'} })
     lang: Optional[str] = Field(default=None, description="""The language of the text content, as an RFC 5646 language code.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixGranularMarking'],
          'slot_uri': 'stix:lang'} })
-    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:externalReference'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:external_references'} })
     id: str = Field(default=..., description="""The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'], 'slot_uri': 'stix:id'} })
     type: Literal["opinion"] = Field(default=..., description="""The STIX type name of the object, such as attack-pattern. Each class pins its own.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'],
          'equals_string': 'opinion',
          'slot_uri': 'stix:type'} })
     spec_version: StixSpecVersion = Field(default=..., description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -6505,7 +6861,8 @@ class StixReport(StixDomainObject):
     report_types: Optional[list[Union[StixReportType, str]]] = Field(default=None, description="""This field is an Open Vocabulary that specifies the primary subject of this report. The suggested values for this field are in report-type-ov.""", min_length=1, json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'StixReportType'}, {'range': 'string'}],
          'domain_of': ['StixReport'],
          'slot_uri': 'stix:report_types'} })
-    name: str = Field(default=..., description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    name: str = Field(default=..., description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:name'],
+         'domain_of': ['StixIdentity',
                        'StixMarkingDefinition',
                        'StixExtensionDefinition',
                        'StixAutonomousSystem',
@@ -6530,7 +6887,8 @@ class StixReport(StixDomainObject):
                        'StixTool',
                        'StixVulnerability'],
          'slot_uri': 'stix:name'} })
-    description: Optional[str] = Field(default=None, description="""A description of the object, which may be long.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    description: Optional[str] = Field(default=None, description="""A description of the object, which may be long.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:description'],
+         'domain_of': ['StixIdentity',
                        'StixExtensionDefinition',
                        'StixExternalReference',
                        'StixAttackPattern',
@@ -6557,24 +6915,35 @@ class StixReport(StixDomainObject):
                        'StixOpinion',
                        'StixReport'],
          'slot_uri': 'stix:object_refs'} })
-    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:createdBy'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created_by_ref'} })
-    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectCreatedTime'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created'} })
-    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:modified'} })
+    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:modifiedTime'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:modified'} })
     revoked: Optional[bool] = Field(default=None, description="""The revoked property indicates whether the object has been revoked.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:revoked'} })
-    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:labels'} })
-    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:confidence'} })
+    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:tag'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:labels'} })
+    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:confidence'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:confidence'} })
     lang: Optional[str] = Field(default=None, description="""The language of the text content, as an RFC 5646 language code.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixGranularMarking'],
          'slot_uri': 'stix:lang'} })
-    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:externalReference'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:external_references'} })
     id: str = Field(default=..., description="""The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'], 'slot_uri': 'stix:id'} })
     type: Literal["report"] = Field(default=..., description="""The STIX type name of the object, such as attack-pattern. Each class pins its own.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'],
          'equals_string': 'report',
          'slot_uri': 'stix:type'} })
     spec_version: StixSpecVersion = Field(default=..., description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -6661,7 +7030,8 @@ class StixThreatActor(StixDomainObject):
     threat_actor_types: Optional[list[Union[StixThreatActorType, str]]] = Field(default=None, description="""This field specifies the type of threat actor. Open Vocab - threat-actor-type-ov.""", min_length=1, json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'StixThreatActorType'}, {'range': 'string'}],
          'domain_of': ['StixThreatActor'],
          'slot_uri': 'stix:threat_actor_types'} })
-    name: str = Field(default=..., description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    name: str = Field(default=..., description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:name'],
+         'domain_of': ['StixIdentity',
                        'StixMarkingDefinition',
                        'StixExtensionDefinition',
                        'StixAutonomousSystem',
@@ -6686,7 +7056,8 @@ class StixThreatActor(StixDomainObject):
                        'StixTool',
                        'StixVulnerability'],
          'slot_uri': 'stix:name'} })
-    description: Optional[str] = Field(default=None, description="""A description of the object, which may be long.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    description: Optional[str] = Field(default=None, description="""A description of the object, which may be long.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:description'],
+         'domain_of': ['StixIdentity',
                        'StixExtensionDefinition',
                        'StixExternalReference',
                        'StixAttackPattern',
@@ -6747,24 +7118,35 @@ class StixThreatActor(StixDomainObject):
     personal_motivations: Optional[list[Union[StixAttackMotivation, str]]] = Field(default=None, description="""The personal reasons, motivations, or purposes of the Threat Actor regardless of organizational goals. Open Vocab - attack-motivation-ov.""", min_length=1, json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'StixAttackMotivation'}, {'range': 'string'}],
          'domain_of': ['StixThreatActor'],
          'slot_uri': 'stix:personal_motivations'} })
-    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:createdBy'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created_by_ref'} })
-    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectCreatedTime'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created'} })
-    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:modified'} })
+    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:modifiedTime'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:modified'} })
     revoked: Optional[bool] = Field(default=None, description="""The revoked property indicates whether the object has been revoked.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:revoked'} })
-    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:labels'} })
-    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:confidence'} })
+    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:tag'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:labels'} })
+    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:confidence'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:confidence'} })
     lang: Optional[str] = Field(default=None, description="""The language of the text content, as an RFC 5646 language code.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixGranularMarking'],
          'slot_uri': 'stix:lang'} })
-    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:externalReference'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:external_references'} })
     id: str = Field(default=..., description="""The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'], 'slot_uri': 'stix:id'} })
     type: Literal["threat-actor"] = Field(default=..., description="""The STIX type name of the object, such as attack-pattern. Each class pins its own.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'],
          'equals_string': 'threat-actor',
          'slot_uri': 'stix:type'} })
     spec_version: StixSpecVersion = Field(default=..., description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -6826,6 +7208,7 @@ class StixTool(StixDomainObject):
     Tools are legitimate software that can be used by threat actors to perform attacks.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'annotations': {'stix_type': {'tag': 'stix_type', 'value': 'tool'}},
+         'broad_mappings': ['uco-tool:Tool'],
          'from_schema': 'https://w3id.org/lmodel/stix/stix_sdo',
          'slot_usage': {'id': {'name': 'id',
                                'pattern': '^tool--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$'},
@@ -6843,7 +7226,8 @@ class StixTool(StixDomainObject):
     tool_types: Optional[list[Union[StixToolType, str]]] = Field(default=None, description="""The kind(s) of tool(s) being described. Open Vocab - tool-type-ov.""", min_length=1, json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'StixToolType'}, {'range': 'string'}],
          'domain_of': ['StixTool'],
          'slot_uri': 'stix:tool_types'} })
-    name: str = Field(default=..., description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    name: str = Field(default=..., description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:name'],
+         'domain_of': ['StixIdentity',
                        'StixMarkingDefinition',
                        'StixExtensionDefinition',
                        'StixAutonomousSystem',
@@ -6868,7 +7252,8 @@ class StixTool(StixDomainObject):
                        'StixTool',
                        'StixVulnerability'],
          'slot_uri': 'stix:name'} })
-    description: Optional[str] = Field(default=None, description="""A description of the object, which may be long.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    description: Optional[str] = Field(default=None, description="""A description of the object, which may be long.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:description'],
+         'domain_of': ['StixIdentity',
                        'StixExtensionDefinition',
                        'StixExternalReference',
                        'StixAttackPattern',
@@ -6895,24 +7280,35 @@ class StixTool(StixDomainObject):
                        'StixMalware',
                        'StixTool'],
          'slot_uri': 'stix:kill_chain_phases'} })
-    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:createdBy'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created_by_ref'} })
-    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectCreatedTime'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created'} })
-    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:modified'} })
+    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:modifiedTime'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:modified'} })
     revoked: Optional[bool] = Field(default=None, description="""The revoked property indicates whether the object has been revoked.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:revoked'} })
-    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:labels'} })
-    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:confidence'} })
+    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:tag'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:labels'} })
+    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:confidence'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:confidence'} })
     lang: Optional[str] = Field(default=None, description="""The language of the text content, as an RFC 5646 language code.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixGranularMarking'],
          'slot_uri': 'stix:lang'} })
-    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:externalReference'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:external_references'} })
     id: str = Field(default=..., description="""The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'], 'slot_uri': 'stix:id'} })
     type: Literal["tool"] = Field(default=..., description="""The STIX type name of the object, such as attack-pattern. Each class pins its own.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'],
          'equals_string': 'tool',
          'slot_uri': 'stix:type'} })
     spec_version: StixSpecVersion = Field(default=..., description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -6980,7 +7376,8 @@ class StixVulnerability(StixDomainObject):
                         'name': {'name': 'name', 'required': True},
                         'type': {'equals_string': 'vulnerability', 'name': 'type'}}})
 
-    name: str = Field(default=..., description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    name: str = Field(default=..., description="""A name that identifies the object.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:name'],
+         'domain_of': ['StixIdentity',
                        'StixMarkingDefinition',
                        'StixExtensionDefinition',
                        'StixAutonomousSystem',
@@ -7005,7 +7402,8 @@ class StixVulnerability(StixDomainObject):
                        'StixTool',
                        'StixVulnerability'],
          'slot_uri': 'stix:name'} })
-    description: Optional[str] = Field(default=None, description="""A description of the object, which may be long.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    description: Optional[str] = Field(default=None, description="""A description of the object, which may be long.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:description'],
+         'domain_of': ['StixIdentity',
                        'StixExtensionDefinition',
                        'StixExternalReference',
                        'StixAttackPattern',
@@ -7025,24 +7423,35 @@ class StixVulnerability(StixDomainObject):
                        'StixRelationship',
                        'StixSighting'],
          'slot_uri': 'stix:description'} })
-    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:createdBy'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created_by_ref'} })
-    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectCreatedTime'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created'} })
-    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:modified'} })
+    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:modifiedTime'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:modified'} })
     revoked: Optional[bool] = Field(default=None, description="""The revoked property indicates whether the object has been revoked.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:revoked'} })
-    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:labels'} })
-    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:confidence'} })
+    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:tag'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:labels'} })
+    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:confidence'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:confidence'} })
     lang: Optional[str] = Field(default=None, description="""The language of the text content, as an RFC 5646 language code.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixGranularMarking'],
          'slot_uri': 'stix:lang'} })
-    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:externalReference'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:external_references'} })
     id: str = Field(default=..., description="""The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'], 'slot_uri': 'stix:id'} })
     type: Literal["vulnerability"] = Field(default=..., description="""The STIX type name of the object, such as attack-pattern. Each class pins its own.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'],
          'equals_string': 'vulnerability',
          'slot_uri': 'stix:type'} })
     spec_version: StixSpecVersion = Field(default=..., description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -7115,6 +7524,7 @@ class StixRelationship(StixRelationshipObject):
     The Relationship object is used to link together two SDOs in order to describe how they are related to each other.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'annotations': {'stix_type': {'tag': 'stix_type', 'value': 'relationship'}},
+         'close_mappings': ['uco-core:Relationship'],
          'from_schema': 'https://w3id.org/lmodel/stix/stix_sro',
          'slot_usage': {'id': {'name': 'id',
                                'pattern': '^relationship--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$'},
@@ -7124,8 +7534,11 @@ class StixRelationship(StixRelationshipObject):
                         'target_ref': {'name': 'target_ref', 'required': True},
                         'type': {'equals_string': 'relationship', 'name': 'type'}}})
 
-    relationship_type: str = Field(default=..., description="""The name used to identify the type of relationship.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixRelationship'], 'slot_uri': 'stix:relationship_type'} })
-    description: Optional[str] = Field(default=None, description="""A description of the object, which may be long.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    relationship_type: str = Field(default=..., description="""The name used to identify the type of relationship.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:kindOfRelationship'],
+         'domain_of': ['StixRelationship'],
+         'slot_uri': 'stix:relationship_type'} })
+    description: Optional[str] = Field(default=None, description="""A description of the object, which may be long.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:description'],
+         'domain_of': ['StixIdentity',
                        'StixExtensionDefinition',
                        'StixExternalReference',
                        'StixAttackPattern',
@@ -7147,32 +7560,49 @@ class StixRelationship(StixRelationshipObject):
          'slot_uri': 'stix:description'} })
     source_ref: str = Field(default=..., description="""The ID of the source (from) object.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'StixDomainObject'},
                     {'range': 'StixCyberObservableObject'}],
+         'close_mappings': ['uco-core:source'],
          'domain_of': ['StixRelationship'],
          'slot_uri': 'stix:source_ref'} })
     target_ref: str = Field(default=..., description="""The ID of the target (to) object.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'StixDomainObject'},
                     {'range': 'StixCyberObservableObject'}],
+         'close_mappings': ['uco-core:target'],
          'domain_of': ['StixRelationship'],
          'slot_uri': 'stix:target_ref'} })
-    start_time: Optional[str] = Field(default=None, description="""This optional timestamp represents the earliest time at which the Relationship between the objects exists. If this property is a future timestamp, at the time the updated property is defined, then this represents an estimate by the producer of the intelligence of the earliest time at which relationship will be asserted to be true.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixRelationship'], 'slot_uri': 'stix:start_time'} })
-    stop_time: Optional[str] = Field(default=None, description="""The latest time at which the Relationship between the objects exists. If this property is a future timestamp, at the time the updated property is defined, then this represents an estimate by the producer of the intelligence of the latest time at which relationship will be asserted to be true.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixRelationship'], 'slot_uri': 'stix:stop_time'} })
-    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    start_time: Optional[str] = Field(default=None, description="""This optional timestamp represents the earliest time at which the Relationship between the objects exists. If this property is a future timestamp, at the time the updated property is defined, then this represents an estimate by the producer of the intelligence of the earliest time at which relationship will be asserted to be true.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:startTime'],
+         'domain_of': ['StixRelationship'],
+         'slot_uri': 'stix:start_time'} })
+    stop_time: Optional[str] = Field(default=None, description="""The latest time at which the Relationship between the objects exists. If this property is a future timestamp, at the time the updated property is defined, then this represents an estimate by the producer of the intelligence of the latest time at which relationship will be asserted to be true.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:endTime'],
+         'domain_of': ['StixRelationship'],
+         'slot_uri': 'stix:stop_time'} })
+    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:createdBy'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created_by_ref'} })
-    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectCreatedTime'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created'} })
-    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:modified'} })
+    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:modifiedTime'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:modified'} })
     revoked: Optional[bool] = Field(default=None, description="""The revoked property indicates whether the object has been revoked.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:revoked'} })
-    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:labels'} })
-    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:confidence'} })
+    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:tag'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:labels'} })
+    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:confidence'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:confidence'} })
     lang: Optional[str] = Field(default=None, description="""The language of the text content, as an RFC 5646 language code.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixGranularMarking'],
          'slot_uri': 'stix:lang'} })
-    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:externalReference'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:external_references'} })
     id: str = Field(default=..., description="""The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'], 'slot_uri': 'stix:id'} })
     type: Literal["relationship"] = Field(default=..., description="""The STIX type name of the object, such as attack-pattern. Each class pins its own.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'],
          'equals_string': 'relationship',
          'slot_uri': 'stix:type'} })
     spec_version: StixSpecVersion = Field(default=..., description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -7280,7 +7710,8 @@ class StixSighting(StixRelationshipObject):
                                             'required': True},
                         'type': {'equals_string': 'sighting', 'name': 'type'}}})
 
-    description: Optional[str] = Field(default=None, description="""A description of the object, which may be long.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixIdentity',
+    description: Optional[str] = Field(default=None, description="""A description of the object, which may be long.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:description'],
+         'domain_of': ['StixIdentity',
                        'StixExtensionDefinition',
                        'StixExternalReference',
                        'StixAttackPattern',
@@ -7321,24 +7752,35 @@ class StixSighting(StixRelationshipObject):
          'domain_of': ['StixSighting'],
          'slot_uri': 'stix:where_sighted_refs'} })
     summary: Optional[bool] = Field(default=None, description="""The summary property indicates whether the Sighting should be considered summary data.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixSighting'], 'slot_uri': 'stix:summary'} })
-    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created_by_ref: Optional[str] = Field(default=None, description="""A reference to the identity of the object's creator.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:createdBy'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created_by_ref'} })
-    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    created: str = Field(default=..., description="""The time at which the object, or its first version, was created.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectCreatedTime'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:created'} })
-    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:modified'} })
+    modified: str = Field(default=..., description="""The modified property represents the time that this particular version of the object was modified. The timestamp value MUST be precise to the nearest millisecond.""", json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:modifiedTime'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:modified'} })
     revoked: Optional[bool] = Field(default=None, description="""The revoked property indicates whether the object has been revoked.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:revoked'} })
-    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:labels'} })
-    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject'], 'slot_uri': 'stix:confidence'} })
+    labels: Optional[list[str]] = Field(default=None, description="""The labels property specifies a set of terms used to describe this object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:tag'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:labels'} })
+    confidence: Optional[int] = Field(default=None, description="""Identifies the confidence that the creator has in the correctness of their data.""", ge=0, le=100, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:confidence'],
+         'domain_of': ['StixCommonObject'],
+         'slot_uri': 'stix:confidence'} })
     lang: Optional[str] = Field(default=None, description="""The language of the text content, as an RFC 5646 language code.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixGranularMarking'],
          'slot_uri': 'stix:lang'} })
-    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
+    external_references: Optional[list[StixExternalReference]] = Field(default=None, description="""References to non-STIX information about the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:externalReference'],
+         'domain_of': ['StixCommonObject', 'StixMarkingDefinition'],
          'slot_uri': 'stix:external_references'} })
     id: str = Field(default=..., description="""The identifier of the object: its STIX type, two hyphens and a UUID. Each class narrows the type.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'], 'slot_uri': 'stix:id'} })
     type: Literal["sighting"] = Field(default=..., description="""The STIX type name of the object, such as attack-pattern. Each class pins its own.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject', 'StixBundle'],
          'equals_string': 'sighting',
          'slot_uri': 'stix:type'} })
     spec_version: StixSpecVersion = Field(default=..., description="""The version of the STIX specification used to represent the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:spec_version'} })
-    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:object_marking_refs'} })
+    object_marking_refs: Optional[list[str]] = Field(default=None, description="""References to the marking definitions that apply to the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'close_mappings': ['uco-core:objectMarking'],
+         'domain_of': ['StixObject'],
+         'slot_uri': 'stix:object_marking_refs'} })
     granular_markings: Optional[list[StixGranularMarking]] = Field(default=None, description="""The granular markings that apply to parts of the object.""", min_length=1, json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:granular_markings'} })
     extensions: Optional[StixExtensions] = Field(default=None, description="""The object's extensions, as a dictionary keyed by extension name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StixObject'], 'slot_uri': 'stix:extensions'} })
 
@@ -7439,6 +7881,7 @@ class StixBundle(ConfiguredBaseModel):
     A bundle: a collection of STIX objects grouped together in one container. A bundle is a container for transport, not a STIX object, so it carries no spec_version.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'annotations': {'stix_type': {'tag': 'stix_type', 'value': 'bundle'}},
+         'close_mappings': ['uco-core:Bundle'],
          'from_schema': 'https://w3id.org/lmodel/stix',
          'slot_usage': {'id': {'name': 'id',
                                'pattern': '^bundle--[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$'},

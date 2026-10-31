@@ -64,6 +64,12 @@ version = "2.1"
 # Namespaces
 LINKML = CurieNamespace('linkml', 'https://w3id.org/linkml/')
 STIX = CurieNamespace('stix', 'https://w3id.org/lmodel/stix/')
+UCO_CORE = CurieNamespace('uco-core', 'https://ontology.unifiedcyberontology.org/uco/core/')
+UCO_IDENTITY = CurieNamespace('uco-identity', 'https://ontology.unifiedcyberontology.org/uco/identity/')
+UCO_LOCATION = CurieNamespace('uco-location', 'https://ontology.unifiedcyberontology.org/uco/location/')
+UCO_MARKING = CurieNamespace('uco-marking', 'https://ontology.unifiedcyberontology.org/uco/marking/')
+UCO_OBSERVABLE = CurieNamespace('uco-observable', 'https://ontology.unifiedcyberontology.org/uco/observable/')
+UCO_TOOL = CurieNamespace('uco-tool', 'https://ontology.unifiedcyberontology.org/uco/tool/')
 XSD = CurieNamespace('xsd', 'http://www.w3.org/2001/XMLSchema#')
 DEFAULT_ = STIX
 
