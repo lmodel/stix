@@ -13310,6 +13310,16 @@
         {
           "slot_conditions": [
             {
+              "name": "created_time",
+              "required": true,
+              "@type": "SlotDefinition"
+            }
+          ],
+          "@type": "AnonymousClassExpression"
+        },
+        {
+          "slot_conditions": [
+            {
               "name": "cwd",
               "required": true,
               "@type": "SlotDefinition"
@@ -14466,6 +14476,16 @@
           "slot_conditions": [
             {
               "name": "startup_info",
+              "required": true,
+              "@type": "SlotDefinition"
+            }
+          ],
+          "@type": "AnonymousClassExpression"
+        },
+        {
+          "slot_conditions": [
+            {
+              "name": "integrity_level",
               "required": true,
               "@type": "SlotDefinition"
             }

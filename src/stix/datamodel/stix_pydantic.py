@@ -3180,6 +3180,8 @@ class StixProcess(StixCyberObservableObject):
                     {'slot_conditions': {'is_hidden': {'name': 'is_hidden',
                                                        'required': True}}},
                     {'slot_conditions': {'pid': {'name': 'pid', 'required': True}}},
+                    {'slot_conditions': {'created_time': {'name': 'created_time',
+                                                          'required': True}}},
                     {'slot_conditions': {'cwd': {'name': 'cwd', 'required': True}}},
                     {'slot_conditions': {'command_line': {'name': 'command_line',
                                                           'required': True}}},
@@ -4115,7 +4117,9 @@ class StixWindowsProcessExtension(ConfiguredBaseModel):
                     {'slot_conditions': {'window_title': {'name': 'window_title',
                                                           'required': True}}},
                     {'slot_conditions': {'startup_info': {'name': 'startup_info',
-                                                          'required': True}}}],
+                                                          'required': True}}},
+                    {'slot_conditions': {'integrity_level': {'name': 'integrity_level',
+                                                             'required': True}}}],
          'close_mappings': ['uco-observable:WindowsProcessFacet'],
          'from_schema': 'https://w3id.org/lmodel/stix/stix_sco'})
 

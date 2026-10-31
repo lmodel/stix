@@ -10645,6 +10645,10 @@ classes:
           name: pid
           required: true
     - slot_conditions:
+        created_time:
+          name: created_time
+          required: true
+    - slot_conditions:
         cwd:
           name: cwd
           required: true
@@ -11347,6 +11351,10 @@ classes:
     - slot_conditions:
         startup_info:
           name: startup_info
+          required: true
+    - slot_conditions:
+        integrity_level:
+          name: integrity_level
           required: true
   StixWindowsServiceExtension:
     name: StixWindowsServiceExtension

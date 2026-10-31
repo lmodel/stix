@@ -1436,6 +1436,9 @@ classes:
           pid:
             required: true
       - slot_conditions:
+          created_time:
+            required: true
+      - slot_conditions:
           cwd:
             required: true
       - slot_conditions:
@@ -1934,6 +1937,9 @@ classes:
             required: true
       - slot_conditions:
           startup_info:
+            required: true
+      - slot_conditions:
+          integrity_level:
             required: true
     annotations:
       stix_extension_name: windows-process-ext

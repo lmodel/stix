@@ -1,0 +1,6 @@
+type: process
+spec_version: '2.1'
+id: process--7e2f1d0a-5b6c-4d3e-8f9a-1b2c3d4e5f60
+extensions:
+  windows-process-ext:
+    integrity_level: low

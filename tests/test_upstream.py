@@ -356,7 +356,15 @@ AT_LEAST_ONE_DEPARTURES = {
     (
         "StixProcess",
         "created",
-    ): "a process records created_time, which the rule also names",
+    ): "the property is created_time, which the schema names instead",
+    (
+        "StixProcess",
+        "created_time",
+    ): "the JSON schema names created, which a process does not have",
+    (
+        "StixWindowsProcessExtension",
+        "integrity_level",
+    ): "STIX 2.1 counts every property of the extension; the JSON schema omits it",
     (
         "StixProcess",
         "arguments",

@@ -6820,6 +6820,14 @@
                 },
                 {
                     "properties": {
+                        "created_time": {}
+                    },
+                    "required": [
+                        "created_time"
+                    ]
+                },
+                {
+                    "properties": {
                         "cwd": {}
                     },
                     "required": [
@@ -9916,6 +9924,14 @@
                     },
                     "required": [
                         "startup_info"
+                    ]
+                },
+                {
+                    "properties": {
+                        "integrity_level": {}
+                    },
+                    "required": [
+                        "integrity_level"
                     ]
                 }
             ],
