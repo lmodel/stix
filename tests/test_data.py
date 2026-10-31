@@ -37,7 +37,7 @@ def definitions():
 
 def errors(instance, class_name):
     schema = {"$ref": f"#/$defs/{class_name}", "$defs": definitions()}
-    return list(jsonschema.Draft202012Validator(schema).iter_errors(instance))
+    return list(jsonschema.validators.validator_for(schema)(schema).iter_errors(instance))
 
 
 def pointer(error):

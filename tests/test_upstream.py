@@ -62,7 +62,7 @@ def test_oasis_examples_validate_unchanged(path):
     schema = {"$ref": f"#/$defs/{class_name}", "$defs": definitions()}
     found = [
         f"/{'/'.join(map(str, e.absolute_path))}: {e.message[:200]}"
-        for e in jsonschema.Draft202012Validator(schema).iter_errors(data)
+        for e in jsonschema.validators.validator_for(schema)(schema).iter_errors(data)
     ]
     if path.name in KNOWN_DEPARTURES:
         assert found, f"{path.name} now validates; drop it from KNOWN_DEPARTURES"
