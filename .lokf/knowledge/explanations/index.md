@@ -1,0 +1,6 @@
+# Explanations
+
+* [Closed classes and custom content](closed-classes-and-custom-content.md) - Why the schema's classes are closed, so that STIX's custom properties and custom objects validate only once a schema that imports this one declares them, as lmodel/attack does for MITRE's `x_mitre_` properties.
+* [Scope, influences and mappings](scope-influences-and-mappings.md) - What the schema models (STIX 2.1 at the OASIS Standard of 10 June 2021) and leaves out (the pattern grammar, custom content, Errata 01), what shaped it, and its mappings to the Unified Cyber Ontology (UCO) 1.5.0.
+* [Element names and shared keys](element-names-and-shared-keys.md) - Why every class and enum carries the `Stix` prefix while STIX's property names stay as keys, how the adapt copy renames the keys LOKF defines, and which keys it still shares with released lmodel copies, such as `subject` and `value`.
+* [Departures from OASIS's JSON schemas](departures-from-the-json-schemas.md) - Where the schema follows the OASIS Standard rather than OASIS's JSON schemas: the IPv6 pattern's lost escapes, the at-least-one rules that name absent properties, and four vocabularies; and the rules no generated validator checks.

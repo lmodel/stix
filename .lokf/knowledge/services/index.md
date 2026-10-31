@@ -1,4 +1,3 @@
 # Services
 
-* [Example Service A](example-service-a.md) - Placeholder service; replace with a real service of stix.
-* [Example Service B](example-service-b.md) - Placeholder service; replace with a real service of stix.
+* [Documentation website](documentation-site.md) - The knowledge website under `website/`, an Astro Starlight site built from the README, `docs/`, the schema's pages and the bundle, published at `https://lmodel.github.io/stix/` by `knowledge-website.yaml`, with redirects from the retired mkdocs addresses under `/elements/`.

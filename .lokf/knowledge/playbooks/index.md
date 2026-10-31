@@ -1,0 +1,8 @@
+# Playbooks
+
+* [Regenerate and test](regenerate-and-test.md) - How to change the schema: edit a module under `src/stix/schema/`, then run `just gen-project`, `just gen-doc` and `just lokf-adapt`, commit the output, and run `just lint` and `just test`.
+* [Validate STIX data](validate-stix-data.md) - How to validate a STIX bundle or object with `linkml-validate` (`-C StixBundle`, or the object's class), or with `project/jsonschema/stix.schema.json`, and why to validate before loading data into the generated Python models.
+* [Update the upstream pins](update-upstream-pins.md) - How to move the schema to a new commit of OASIS's STIX JSON schemas when the upstream watch reports a change: replace `upstream/` whole, move the pins in `scripts/check_upstream_release.py` and the schema header, and run the tests.
+* [Extend the schema with custom properties](extend-with-custom-properties.md) - How to validate STIX data that carries custom properties or custom objects: write a LinkML schema that imports this one, declare each `x_` property as a slot of a subclass, and each custom object as a class with its own `type` and `id` pattern.
+* [Release](release.md) - How a release is made: entries under `## [Unreleased]` in CHANGELOG.md, a releasing commit type, and the merge to main, after which semantic-release tags the version and the knowledge release attaches `schema-<tag>-stix.yaml` and the bundle.
+* [Knowledge sources](knowledge-sources.md) - The map of where this bundle's knowledge comes from: each repository path the librarian reads, the classes it yields and how to re-check it, and the paths it leaves out on purpose, with the reason.
