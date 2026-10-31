@@ -6,6 +6,8 @@ The `v0.0.0` tag is a baseline, not a release: it marks where versioning starts 
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-10-31
+
 ### Added
 
 - **A LinkML schema of Structured Threat Information Expression (STIX) Version 2.1, the OASIS Standard of 10 June 2021.** It holds the domain, relationship and cyber-observable objects, the predefined extensions, the meta objects, the vocabularies and enumerations, and the bundle, as five modules under one umbrella. STIX's own property names are its keys, so STIX JSON validates unchanged.
