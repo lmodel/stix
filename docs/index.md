@@ -58,6 +58,11 @@ its generators carry:
 - the four Traffic Light Protocol marking definitions' fixed identifiers,
   names and creation time, and that a marking's definition matches its
   definition type;
+- the forms the JSON schemas give as formats: a domain name's `value` as an
+  internationalised host name, and an email address's `value` as an email
+  address;
+- that a registry key names its hive in full, never as an abbreviation such
+  as `HKLM`;
 - a type name's length, from 3 to 250 characters.
 
 `tests/test_data.py` checks the first three over the examples, and
