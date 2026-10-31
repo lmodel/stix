@@ -1,4 +1,4 @@
-# Fails at: /extensions
+# Fails at: /extensions/extension-definition--0f1e2d3c-4b5a-4968-8776-655443322110
 # Invalid: An extension states its extension_type.
 type: indicator
 spec_version: '2.1'

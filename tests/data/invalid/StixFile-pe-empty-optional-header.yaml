@@ -1,4 +1,4 @@
-# Fails at: /extensions
+# Fails at: /extensions/windows-pebinary-ext/optional_header
 # Invalid: A PE optional header holds at least one of its properties.
 type: file
 spec_version: '2.1'

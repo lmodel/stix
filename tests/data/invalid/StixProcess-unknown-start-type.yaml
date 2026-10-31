@@ -1,4 +1,4 @@
-# Fails at: /extensions
+# Fails at: /extensions/windows-service-ext/start_type
 # Invalid: Start_type is one of five.
 type: process
 spec_version: '2.1'

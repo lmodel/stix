@@ -1,4 +1,4 @@
-# Fails at: /extensions
+# Fails at: /extensions/windows-pebinary-ext/time_date_stamp
 # Invalid: Time_date_stamp is precise to the second.
 type: file
 spec_version: '2.1'

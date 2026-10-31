@@ -1,4 +1,4 @@
-# Fails at: /definition
+# Fails at: /definition/tlp
 # Invalid: A definition is a statement or one of the four TLP levels.
 type: marking-definition
 spec_version: '2.1'

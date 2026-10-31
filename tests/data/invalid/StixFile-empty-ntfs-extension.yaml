@@ -1,4 +1,4 @@
-# Fails at: /extensions
+# Fails at: /extensions/ntfs-ext
 # Invalid: An NTFS extension has a sid or alternate data streams.
 type: file
 spec_version: '2.1'

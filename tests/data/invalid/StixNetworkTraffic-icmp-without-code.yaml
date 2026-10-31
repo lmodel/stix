@@ -1,4 +1,4 @@
-# Fails at: /extensions
+# Fails at: /extensions/icmp-ext
 # Invalid: An ICMP extension has a code.
 type: network-traffic
 spec_version: '2.1'

@@ -1,4 +1,4 @@
-# Fails at: /extensions
+# Fails at: /extensions/archive-ext
 # Invalid: An archive extension lists what it contains.
 type: file
 spec_version: '2.1'

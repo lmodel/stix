@@ -1,4 +1,4 @@
-# Fails at: /extensions
+# Fails at: /extensions/unix-account-ext
 # Invalid: A UNIX account extension has at least one property.
 type: user-account
 spec_version: '2.1'

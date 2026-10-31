@@ -1,4 +1,4 @@
-# Fails at: /extensions
+# Fails at: /extensions/windows-pebinary-ext
 # Invalid: A PE binary extension states pe_type.
 type: file
 spec_version: '2.1'

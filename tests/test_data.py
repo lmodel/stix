@@ -1,6 +1,7 @@
 """Data tests: every example against the JSON Schema the validator generates."""
 
 import json
+from collections import deque
 from functools import cache
 from pathlib import Path
 
@@ -46,6 +47,35 @@ def class_of(path):
     return path.stem.split("-")[0]
 
 
+def places(error):
+    """Where an error points: its own place, or, for an anyOf or oneOf that no
+    branch met, the places inside each branch that could have been meant. An
+    optional object's branches are the object and null, so its error points
+    inside the object; a branch for another null or another STIX type, which
+    the object's `type` rules out, is left aside."""
+    if error.validator not in ("anyOf", "oneOf") or not error.context:
+        return {pointer(error)}
+    branches = {}
+    for sub in error.context:
+        branches.setdefault(sub.relative_schema_path[0], []).append(sub)
+    found = set()
+    for subs in branches.values():
+        if any(s.validator == "type" and s.validator_value == "null" for s in subs):
+            continue
+        if any(
+            s.validator == "const" and s.relative_path == deque(["type"]) for s in subs
+        ):
+            continue
+        for sub in subs:
+            found |= places(sub)
+    return found or {pointer(error)}
+
+
+def test_the_example_folders_hold_examples():
+    """The parametrized tests below pass on an empty folder, so this one does not."""
+    assert len(VALID) >= 60 and len(INVALID) >= 150, (len(VALID), len(INVALID))
+
+
 @pytest.mark.parametrize("path", VALID, ids=lambda p: p.stem)
 def test_valid_examples_validate(path):
     """Every valid example passes."""
@@ -56,17 +86,21 @@ def test_valid_examples_validate(path):
 @pytest.mark.parametrize("path", INVALID, ids=lambda p: p.stem)
 def test_counter_examples_fail_where_they_say(path):
     """Every counter-example fails at the place its first line names, as
-    `# Fails at: <JSON pointer>`, so a file that starts failing for another
-    reason fails this test."""
+    `# Fails at: <JSON pointer>`, and nowhere else but on the way to it, so a
+    file that starts failing for another reason fails this test."""
     first = path.read_text().splitlines()[0]
     assert first.startswith("# Fails at: "), (
         f"{path.name}: the first line names where it fails"
     )
     where = first.removeprefix("# Fails at: ").strip()
     found = errors(yaml.safe_load(path.read_text()), class_of(path))
-    assert where in [pointer(e) for e in found], [
-        f"{pointer(e)}: {e.message}" for e in found
-    ]
+    reached = set().union(*(places(e) for e in found))
+    report = [f"{pointer(e)}: {e.message[:200]}" for e in found]
+    assert where in reached, (sorted(reached), report)
+    on_the_way = {
+        p for p in reached if where == p or where.startswith(p.rstrip("/") + "/")
+    }
+    assert reached == on_the_way, (sorted(reached - on_the_way), report)
 
 
 def test_validator_agrees():

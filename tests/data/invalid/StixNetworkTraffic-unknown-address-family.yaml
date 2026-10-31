@@ -1,4 +1,4 @@
-# Fails at: /extensions
+# Fails at: /extensions/socket-ext/address_family
 # Invalid: Address_family is one of eight.
 type: network-traffic
 spec_version: '2.1'
