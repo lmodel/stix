@@ -4,19 +4,9 @@
 
 Structured Threat Information Expression (STIX) 2.1 (LinkML)
 
-> **Two ways in.** This README is one; the other is a docent, a museum's name
-> for a guide. Install
-> [`ktl-docent`](https://github.com/noelmcloughlin/knowledge-trust-ladder) into
-> whatever agent you already use, by a route from
-> [the install page](https://w3id.org/ktl/docs/install/), and ask it anything
-> about this project. It answers from `.lokf/knowledge/`,
-> the checked part of what the project knows, and says how far each answer has
-> been trusted (still a draft, checked by automation only, or confirmed by a
-> named person). It opens the source for exact values, and records what it
-> could not answer so the gap gets filled. The same docent serves a person at a
-> prompt, an agent reading this file, or a chatbot that can load a skill.
-> **Agents:** if `.lokf/knowledge/index.md` exists, read it first. `llms.txt`
-> says how to weigh it.
+> **Only want to ask?** Install `ktl-docent` into any agent you use, by a route from [the install page](https://w3id.org/ktl/docs/install/), and ask it about this project. It answers from the bundle and says how far each answer has been checked.
+>
+> **Agents:** if `.lokf/knowledge/index.md` exists, read it first. `llms.txt` says how to weigh it.
 
 ## Documentation Website
 
@@ -24,24 +14,13 @@ Structured Threat Information Expression (STIX) 2.1 (LinkML)
 
 ## What it models
 
-[Structured Threat Information Expression (STIX) Version 2.1](https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html), the OASIS Standard of 10 June 2021 for exchanging cyber threat intelligence. The schema header's `version` is 2.1, and its `source` is that document. STIX's own property names are the schema's keys, so STIX JSON validates unchanged. The schema is five modules under the umbrella `stix.yaml`, so a schema that needs part of STIX can import that part alone:
+The schema models [Structured Threat Information Expression (STIX) Version 2.1](https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html), the OASIS Standard of 10 June 2021 for exchanging cyber threat intelligence. STIX's own property names are the schema's keys, so STIX JSON validates unchanged. The schema is five modules under the umbrella `stix.yaml`, so a schema that needs part of STIX can import that part alone. The modules hold the domain objects (`stix_sdo`), the relationship objects (`stix_sro`), the cyber-observable objects (`stix_sco`), the meta objects and shared types (`stix_core`) and the vocabularies (`stix_vocabularies`).
 
-* **Domain objects** (`stix_sdo`, and `StixIdentity` in `stix_core`): attack patterns, campaigns, courses of action, groupings, identities, incidents, indicators, infrastructure, intrusion sets, locations, malware, malware analyses, notes, observed data, opinions, reports, threat actors, tools and vulnerabilities.
-* **Relationship objects** (`stix_sro`): `StixRelationship` and `StixSighting`.
-* **Cyber-observable objects** (`stix_sco`): the eighteen, from `StixArtifact` to `StixX509Certificate`, with their predefined extensions, such as `StixNtfsExtension`.
-* **Meta objects and shared types** (`stix_core`): marking definitions, language content, extension definitions, external references, kill chain phases, granular markings, hashes, and the abstract bases `StixObject`, `StixDomainObject`, `StixRelationshipObject` and `StixCyberObservableObject`.
-* **Vocabularies** (`stix_vocabularies`): an open vocabulary, such as `StixIndustrySector` (`industry-sector-ov`), never rejects another string; a closed enumeration, such as `StixAgreement` (`opinion-enum`), does.
-* **The bundle** (`stix`): `StixBundle`, the tree root, which holds any STIX objects.
-
-`upstream/` copies OASIS's STIX 2.1 JSON schemas, examples and licence from [oasis-open/cti-stix2-json-schemas](https://github.com/oasis-open/cti-stix2-json-schemas) at commit `9af1db4`, since that repository publishes no releases. Tests hold the schema to the JSON schemas and validate OASIS's examples unchanged. A weekly workflow reports when OASIS changes the copy, publishes another edition or approves STIX 2.1 Errata 01, which is a committee draft today. Release tags number the schema's versions.
-
-## Influences
-
-None beyond STIX: the schema renders one publication, and its release asset and governance files follow [lmodel/slsa](https://github.com/lmodel/slsa).
+`upstream/` copies OASIS's STIX 2.1 JSON schemas, examples and licence from [oasis-open/cti-stix2-json-schemas](https://github.com/oasis-open/cti-stix2-json-schemas) at commit `9af1db4`, and the tests hold the schema to them. A weekly workflow reports when OASIS changes the copy, publishes another edition or approves STIX 2.1 Errata 01.
 
 ## Mappings
 
-Classes and slots name terms of the [Unified Cyber Ontology (UCO)](https://github.com/ucoProject/UCO) 1.5.0 where the meaning matches, under UCO's own namespaces: `close_mappings` for the cyber-observable objects, their extensions and the shared objects, such as `uco-observable:File` and `uco-core:Relationship`, and `broad_mappings` for `StixTool`. The domain objects that UCO has no term for stay unmapped. `tests/test_mappings.py` checks each mapped term against UCO's own term list.
+* **[Unified Cyber Ontology (UCO)](https://github.com/ucoProject/UCO) 1.5.0**: `close_mappings` for the cyber-observable objects, their extensions and the shared objects, and `broad_mappings` for `StixTool`. `tests/test_mappings.py` checks each term against UCO's term list.
 
 ## Not modelled here
 
@@ -69,9 +48,9 @@ Run `just` to list the project's [just](https://github.com/casey/just/) recipes.
 
 ## Knowledge Trust Ladder (KTL)
 
-`.lokf/` holds this project's [KTL](https://w3id.org/ktl/) knowledge bundle, in the Linked Open Knowledge Format (LOKF). Its domain schema is `.lokf/stix.yaml`, which `lokf adapt` writes from `src/stix/schema/stix.yaml`. Edit the source, never the copy. A release carries the copy as `schema-<tag>-stix.yaml`, on the terms [CONTRIBUTING.md](CONTRIBUTING.md#releasing-maintainers) gives.
+`.lokf/` holds this project's [KTL](https://w3id.org/ktl/) knowledge bundle. Its domain schema, `.lokf/stix.yaml`, is the copy `just lokf-adapt` writes from `src/stix/schema/stix.yaml`, and `just lokf-adapt-check` says when it is stale. Edit the source, never the copy. A release carries the copy as `schema-<tag>-stix.yaml`, on the terms [CONTRIBUTING.md](CONTRIBUTING.md#releasing-maintainers) gives.
 
-`just lokf-adapt` rewrites the copy, and `just lokf-adapt-check` says when it is stale. The copy roots `StixObject` and `StixBundle` on `Concept`, so a concept may name any STIX object class as its `type`. They are the roots because lokf 0.9.0 requires every class that carries the schema's identifier, `id`, to be a concept type. In Obsidian, add the domain objects to the *Known LOKF types* setting of the KTL Registrar and KTL Curator plugins:
+The copy roots `StixObject` and `StixBundle` on `Concept`, so a concept may name any STIX object class as its `type`. In Obsidian, add the domain objects to the *Known LOKF types* setting of the KTL Registrar and KTL Curator plugins:
 
 ```text
 StixAttackPattern, StixCampaign, StixCourseOfAction, StixGrouping, StixIdentity, StixIncident, StixIndicator, StixInfrastructure, StixIntrusionSet, StixLocation, StixMalware, StixMalwareAnalysis, StixNote, StixObservedData, StixOpinion, StixReport, StixThreatActor, StixTool, StixVulnerability
@@ -79,23 +58,13 @@ StixAttackPattern, StixCampaign, StixCourseOfAction, StixGrouping, StixIdentity,
 
 In a concept, the concept's own `id`, `title` and `description` are LOKF's, and the STIX keys that LOKF also defines are renamed with the `stix_` prefix: `stix_type`, `stix_created`, `stix_name`, `stix_description`, `stix_definition`, `stix_version`, `stix_url`, `stix_body` and `stix_context`. Each keeps its `stix:` IRI.
 
-A host imports the copy beside LOKF's schema, `lokf.yaml`, and beside other adapt copies. LinkML merges them into one namespace, where the last definition of a name wins silently. So no class, enum or type shares a name with LOKF's or with the released copies of slsa, github-actions, oscal, spdx, nist-sp-800-218, nist-sp-800-53, nist-sp-800-171, nist-csf-v2 and in-toto. STIX's own property names stay, so some keys are shared, and each projects under one copy's IRI in a composite of the two:
-
-* in-toto and slsa: `content`, `subject` and `value`;
-* spdx: `comment`, `key`, `statement`, `subject`, `summary` and `value`;
-* oscal: `capabilities`, `city`, `country`, `date`, `end`, `groups`, `hashes`, `number`, `pattern`, `postal_code`, `protocols`, `published`, `roles`, `start`, `statement`, `subject`, `value` and `values`.
-
-`tests/test_schema_rules.py` pins these lists and fails on a new shared name. [lokf #169](https://github.com/nicholsn/lokf/issues/169) asks `adapt` for a `--beside` option that would rename them too.
+No class, enum or type shares a name with LOKF's schema or with another lmodel copy. STIX's property names stay, so some keys are shared with in-toto, slsa, spdx and oscal, and `tests/test_schema_rules.py` pins them. [lokf #169](https://github.com/nicholsn/lokf/issues/169) asks `adapt` for a `--beside` option that would rename them.
 
 ## License
 
-The schema and the code are under the Apache License 2.0 ([LICENSE](LICENSE)).
+The schema and the code are under the Apache License 2.0 ([LICENSE](LICENSE)), and the knowledge bundle in `.lokf/knowledge/` is under CC BY 4.0.
 
-The knowledge bundle in `.lokf/knowledge/` is under the Creative Commons Attribution 4.0 International licence (CC BY 4.0), as its `index.md` declares.
-
-OASIS's JSON schemas and examples under `upstream/`, and the schema's descriptions taken from them, are under OASIS's BSD-3-Clause licence, which [NOTICE](NOTICE) carries. The STIX specification is copyright OASIS Open: the schema cites it and copies none of its text.
-
-This is not an official OASIS project, and its use implies no endorsement by OASIS.
+OASIS's JSON schemas and examples under `upstream/`, and the schema's descriptions taken from them, are under OASIS's BSD-3-Clause licence, which [NOTICE](NOTICE) carries. The STIX specification is copyright OASIS Open: the schema cites it and copies none of its text. This is not an official OASIS project, and its use implies no endorsement by OASIS.
 
 ## Contributing and security
 
