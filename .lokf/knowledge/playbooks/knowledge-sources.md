@@ -10,7 +10,7 @@ exclusions:
     reason: copies of the ktl-sidecar templates, which the weekly sync replaces and the sidecar documents
   - resource: .lokf/m365
     reason: the Copilot skill builder from the ktl-sidecar templates, documented there
-  - resource: .lokf/lokf.yaml
+  - resource: .lokf/schema/lokf.yaml
     reason: LOKF's own schema, pinned beside the bundle and documented by LOKF
   - resource: uv.lock
     reason: the root lock, which Dependabot keeps current and holds no knowledge of its own
@@ -63,7 +63,7 @@ sources:
     title: the recipes
   - resource: project.justfile
     title: the lokf-adapt recipes
-  - resource: .lokf/stix.yaml
+  - resource: .lokf/schema/stix.yaml
     title: the adapt copy
   - resource: .releaserc.json
     title: the release rules
@@ -85,7 +85,7 @@ sources:
     title: the pointer that tells agents to read the bundle first
 generated:
   by: process:ktl-librarian
-  at: "2026-10-31T02:00:22Z"
+  at: "2026-11-06T21:25:01Z"
 status: draft
 ---
 
@@ -114,7 +114,7 @@ Each row names a path the librarian reads, what it holds, and the classes it yie
 | `CHANGELOG.md` | the changelog | Playbook |
 | `justfile` | the recipes | Playbook |
 | `project.justfile` | the lokf-adapt recipes | Dataset |
-| `.lokf/stix.yaml` | the adapt copy | Dataset |
+| `.lokf/schema/stix.yaml` | the adapt copy | Dataset |
 | `.releaserc.json` | the release rules | Playbook |
 | `.linkml/generators.yaml` | the generators' settings | Dataset |
 | `pyproject.toml` | the Python project, its dependencies and the spell-check settings | Dataset |

@@ -2,7 +2,7 @@
 type: Dataset
 id: https://w3id.org/lmodel/stix/knowledge/datasets/neighbour-adapt-copies
 title: Neighbours' adapt copies
-description: "The released adapt copies of nine lmodel schemas under `tests/neighbours/`, each checked against its release's checksum and attestation, against which `tests/test_schema_rules.py` holds `.lokf/stix.yaml` apart: no shared class, enum or type, and only the listed shared keys."
+description: "The released adapt copies of nine lmodel schemas under `tests/neighbours/`, each checked against its release's checksum and attestation, against which `tests/test_schema_rules.py` holds `.lokf/schema/stix.yaml` apart: no shared class, enum or type, and only the listed shared keys."
 genre: reference
 resource: tests/neighbours
 sources:
@@ -13,7 +13,7 @@ sources:
     title: the nine copies
 generated:
   by: process:ktl-librarian
-  at: "2026-10-31T02:00:22Z"
+  at: "2026-11-06T21:25:01Z"
 status: draft
 ---
 

@@ -11,12 +11,12 @@ sources:
     title: the header comment, the on key and the jobs
 generated:
   by: process:ktl-librarian
-  at: "2026-10-31T02:00:22Z"
+  at: "2026-11-06T21:25:01Z"
 status: draft
 ---
 
 # Knowledge Release (knowledge-release.yaml)
 
-`.github/workflows/knowledge-release.yaml` runs on each published release once `KNOWLEDGE_RELEASE_ENABLED` is `true`, or by hand for a tag. Its `pack` job compares the bundle and the domain schema with the last release that carries them. Its `attach` job, which runs no third-party packages, attaches the bundle zip, the Copilot skill zip and `.lokf/stix.yaml` as `schema-<tag>-stix.yaml`, each with its `.sha256` and a build-provenance attestation.[^knowledge-release.yaml]
+`.github/workflows/knowledge-release.yaml` runs on each published release once `KNOWLEDGE_RELEASE_ENABLED` is `true`, or by hand for a tag. Its `pack` job compares the bundle and the domain schema with the last release that carries them. Its `attach` job, which runs no third-party packages, attaches the bundle zip, the Copilot skill zip and `.lokf/schema/stix.yaml` as `schema-<tag>-stix.yaml`, each with its `.sha256` and a build-provenance attestation.[^knowledge-release.yaml]
 
 [^knowledge-release.yaml]: .github/workflows/knowledge-release.yaml, the header comment, the on key and the jobs
