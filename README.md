@@ -48,7 +48,7 @@ Run `just` to list the project's [just](https://github.com/casey/just/) recipes.
 
 ## Knowledge Trust Ladder (KTL)
 
-`.lokf/` holds this project's [KTL](https://w3id.org/ktl/) knowledge bundle. Its domain schema, `.lokf/stix.yaml`, is the copy `just lokf-adapt` writes from `src/stix/schema/stix.yaml`, and `just lokf-adapt-check` says when it is stale. Edit the source, never the copy. A release carries the copy as `schema-<tag>-stix.yaml`, on the terms [CONTRIBUTING.md](CONTRIBUTING.md#releasing-maintainers) gives.
+`.lokf/` holds this project's [KTL](https://w3id.org/ktl/) knowledge bundle. Its domain schema, `.lokf/schema/stix.yaml`, is the copy `just lokf-adapt` writes from `src/stix/schema/stix.yaml`, and `just lokf-adapt-check` says when it is stale. Edit the source, never the copy. A release carries the copy as `schema-<tag>-stix.yaml`, on the terms [CONTRIBUTING.md](CONTRIBUTING.md#releasing-maintainers) gives.
 
 The copy roots `StixObject` and `StixBundle` on `Concept`, so a concept may name any STIX object class as its `type`. In Obsidian, add the domain objects to the *Known LOKF types* setting of the KTL Registrar and KTL Curator plugins:
 
