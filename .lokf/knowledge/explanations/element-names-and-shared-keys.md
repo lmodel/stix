@@ -18,13 +18,13 @@ sources:
     title: the shared-key lists
 generated:
   by: process:ktl-librarian
-  at: "2026-10-31T02:00:22Z"
+  at: "2026-11-06T21:25:01Z"
 status: draft
 ---
 
 # Element names and shared keys
 
-A host imports `.lokf/stix.yaml` beside LOKF's `lokf.yaml` and other adapt copies, and LinkML merges them into one namespace, where the last definition of a name wins. So every class and enum carries the `Stix` prefix, and none shares a name with LOKF's or a released neighbour's.[^readme.md]
+A host imports `.lokf/schema/stix.yaml` beside LOKF's `lokf.yaml` and other adapt copies, and LinkML merges them into one namespace, where the last definition of a name wins. So every class and enum carries the `Stix` prefix, and none shares a name with LOKF's or a released neighbour's.[^readme.md]
 
 STIX's property names are its JSON keys, so they stay, each a top-level slot with a `stix:` slot URI. `lokf adapt` renames each key LOKF also defines with the `stix_` prefix, such as `stix_type` and `stix_name`, and keeps its IRI. Other keys stay shared, and each projects under one copy's IRI in a composite:
 

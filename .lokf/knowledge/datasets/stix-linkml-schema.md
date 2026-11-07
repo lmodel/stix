@@ -2,7 +2,7 @@
 type: Dataset
 id: https://w3id.org/lmodel/stix/knowledge/datasets/stix-linkml-schema
 title: stix LinkML schema
-description: "The LinkML schema of STIX 2.1: the umbrella `src/stix/schema/stix.yaml` (schema id `https://w3id.org/lmodel/stix`, version 2.1) and its five modules, with 84 classes, 321 slots, 35 enums and 6 types. Its `lokf adapt` copy `.lokf/stix.yaml`, rooted on `StixObject` and `StixBundle`, is the bundle's domain schema."
+description: "The LinkML schema of STIX 2.1: the umbrella `src/stix/schema/stix.yaml` (schema id `https://w3id.org/lmodel/stix`, version 2.1) and its five modules, with 84 classes, 321 slots, 35 enums and 6 types. Its `lokf adapt` copy `.lokf/schema/stix.yaml`, rooted on `StixObject` and `StixBundle`, is the bundle's domain schema."
 genre: reference
 resource: src/stix/schema/stix.yaml
 version: "2.1"
@@ -30,7 +30,7 @@ sources:
     resource: project.justfile
     title: the knowledge bundle recipes
   - id: lokf-stix.yaml
-    resource: .lokf/stix.yaml
+    resource: .lokf/schema/stix.yaml
     title: the notes lokf adapt wrote
   - resource: .lokf/justfile
     title: the schema line
@@ -38,7 +38,7 @@ sources:
     title: the tool.lokf table
 generated:
   by: process:ktl-librarian
-  at: "2026-10-31T02:00:22Z"
+  at: "2026-11-06T21:25:01Z"
 status: draft
 ---
 
@@ -58,10 +58,10 @@ Together the six files hold 84 classes, of which 5 are abstract, 321 slots, 35 e
 
 ## As the bundle's domain schema
 
-`.lokf/stix.yaml` is the copy `lokf adapt` writes from the umbrella. `project.justfile` roots it on `StixObject` and `StixBundle`, because lokf 0.9.0 requires every class that carries the identifier `id` to descend from LOKF's `Concept`.[^project.justfile] The copy renames the keys LOKF also defines, such as `type` to `stix_type`, and keeps their IRIs.[^lokf-stix.yaml] The `schema :=` line of `.lokf/justfile` and the `[tool.lokf]` table of `.lokf/pyproject.toml` both name the copy.
+`.lokf/schema/stix.yaml` is the copy `lokf adapt` writes from the umbrella. `project.justfile` roots it on `StixObject` and `StixBundle`, because lokf 0.9.0 requires every class that carries the identifier `id` to descend from LOKF's `Concept`.[^project.justfile] The copy renames the keys LOKF also defines, such as `type` to `stix_type`, and keeps their IRIs.[^lokf-stix.yaml] The `schema :=` line of `.lokf/justfile` and the `[tool.lokf]` table of `.lokf/pyproject.toml` both name the copy.
 
 [^schema-stix.yaml]: src/stix/schema/stix.yaml, the header, the annotations and the comments
 [^schema]: src/stix/schema, the six schema files
 [^readme.md]: README.md, the What it models section
 [^project.justfile]: project.justfile, the knowledge bundle recipes
-[^lokf-stix.yaml]: .lokf/stix.yaml, the notes lokf adapt wrote
+[^lokf-stix.yaml]: .lokf/schema/stix.yaml, the notes lokf adapt wrote
