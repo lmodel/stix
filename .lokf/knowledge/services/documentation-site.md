@@ -18,7 +18,7 @@ sources:
     title: the pages the site shows
 generated:
   by: process:ktl-librarian
-  at: "2026-11-15T02:49:31Z"
+  at: "2026-11-15T03:07:58Z"
 status: draft
 ---
 
@@ -26,7 +26,7 @@ status: draft
 
 `website/` is a Hugo site from the ktl-website templates. It has a page per concept with its trust label, a health page, a knowledge graph, the schema's pages, and the four files `lokf export` writes under `/knowledge/`.[^readme-website]
 
-`website/site.toml` sets the site at `https://lmodel.github.io/stix`. It keeps `templates-linkml` out of the docs pages, and redirects each page of the retired mkdocs site to its successor.[^site.toml] An element that kept its name follows `/elements/<name>/` to `/schema/<name>/`. A renamed one goes to its successor, such as `/elements/Artifact/` to `/schema/StixArtifact/`, and the rest go to the schema's index. `/about` goes to `/docs/about/`.
+`website/site.toml` sets the site at `https://lmodel.github.io/stix/`. It sends the retired mkdocs site's page of a renamed element to its successor's page, such as `/elements/Artifact/` to the page of `StixArtifact`, and four others to the schema's index. It sends `/about` to the page built from `docs/about.md`.[^site.toml] Each schema page is also at `elements/<Name>/`.[^readme-website]
 
 [^readme-website]: website/README.md, the site's description
 [^site.toml]: website/site.toml, the site's address, title and redirects
