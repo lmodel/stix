@@ -32,7 +32,7 @@ The schema models [Structured Threat Information Expression (STIX) Version 2.1](
 
 ## Repository Structure
 
-* [docs/](docs/): the website's pages, with the generated schema pages in [elements/](docs/elements/)
+* [docs/](docs/): the website's pages, with the generated schema pages in `docs/elements/`
 * [examples/](examples/): usage examples
 * [project/](project/): generated project files (do not edit them)
 * [scripts/](scripts/): the upstream watch and the UCO term extractor
@@ -40,7 +40,7 @@ The schema models [Structured Threat Information Expression (STIX) Version 2.1](
 * [src/stix/datamodel/](src/stix/datamodel): the generated Python datamodel
 * [tests/](tests/): Python tests, with example data in [data/](tests/data), the neighbours' adapt copies in [neighbours/](tests/neighbours) and UCO's term list in [uco/](tests/uco)
 * [upstream/](upstream/): OASIS's JSON schemas and examples at the pinned commit (do not edit them)
-* [website/](website/): the Astro Starlight site built from the README, `docs/`, the schema's pages and the knowledge bundle
+* [website/](website/): the Hugo site built from the README, `docs/`, the schema's pages and the knowledge bundle
 
 ## Developer Tools
 
