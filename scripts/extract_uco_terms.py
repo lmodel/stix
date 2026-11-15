@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # /// script
-# requires-python = ">=3.10"
+# requires-python = ">=3.11"
 # dependencies = ["rdflib>=7.1"]
 # ///
 """List the class and property IRIs of UCO 1.5.0, for the schema's mappings.
