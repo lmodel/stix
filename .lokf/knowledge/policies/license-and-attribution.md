@@ -14,11 +14,9 @@ sources:
     title: every section
   - resource: upstream/LICENSE
     title: OASIS's BSD-3-Clause licence
-  - resource: website/NOTICE
-    title: the part adapted from the LOKF toolkit's site
 generated:
   by: process:ktl-librarian
-  at: "2026-10-31T02:00:22Z"
+  at: "2026-11-15T02:49:31Z"
 status: draft
 ---
 

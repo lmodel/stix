@@ -18,7 +18,7 @@ A [LOKF](https://lokf.nolan-nichols.com) knowledge base for stix. Every Markdown
 
 # Services
 
-* [Documentation website](services/documentation-site.md) - The knowledge website under `website/`, an Astro Starlight site built from the README, `docs/`, the schema's pages and the bundle, published at `https://lmodel.github.io/stix/` by `knowledge-website.yaml`, with redirects from the retired mkdocs addresses under `/elements/`.
+* [Documentation website](services/documentation-site.md) - The knowledge website under `website/`, a Hugo site built from the README, `docs/`, the schema's pages and the bundle, published at `https://lmodel.github.io/stix/` by `knowledge-website.yaml`, with redirects from the retired mkdocs addresses under `/elements/`.
 
 # Datasets
 
